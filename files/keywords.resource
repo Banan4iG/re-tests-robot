@@ -11,7 +11,7 @@ Setup All Tests
     Select Window    regexp=^Red.*
 
 Teardown all tests
-    Close Window    regexp=^Red.*
+    System Exit    
 
 Open connection
     Click On Tree Node    0    New Connection    2

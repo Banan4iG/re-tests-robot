@@ -143,3 +143,9 @@ docs/_build
 
 # results dir
 results/
+
+# results files
+*.err
+*.out
+*.html
+*.xml
