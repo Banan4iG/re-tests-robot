@@ -5,12 +5,13 @@ Library    help_func.py
 
 
 *** Keywords ***
-Setup All Tests
+Setup before every tests
     ${path_to_exe}=    Get Path
     Start Application    red_expert    ${path_to_exe}    timeout=10
     Select Window    regexp=^Red.*
 
-Teardown all tests
+Teardown after every tests
+    Clear History Files
     System Exit    
 
 Open connection
