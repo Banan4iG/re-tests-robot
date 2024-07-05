@@ -1,14 +1,16 @@
 import os
+import platform
 
 def get_path():
     DIST = os.environ.get('DIST')
     ARCH = os.environ.get('ARCH')
+    bin = "" if platform.system() == "Linux" else ".exe"
     if DIST:
-        path_to_exe = DIST + "\\bin"
+        path_to_exe = DIST + "/bin"
         if ARCH == "x86_64":
-            path_to_exe += "\\RedExpert64.exe" 
+            path_to_exe += f"/RedExpert64{bin}" 
         else:
-            path_to_exe += "\\RedExpert.exe"
+            path_to_exe += f"/RedExpert{bin}"
     else:
         path_to_exe = '"C:\\Program Files\\RedExpert\\bin\\RedExpert64.exe"'
 
@@ -16,7 +18,7 @@ def get_path():
 
 def clear_history_files():
     home_dir = os.path.expanduser("~")
-    if "ui-improvement" in os.environ["BRANCH"]:
+    if "ui-improvement" in os.environ.get("BRANCH"):
         build_no = "202406"
     else:
         build_no = "202301"
