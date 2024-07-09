@@ -9,13 +9,13 @@ Test Teardown    Teardown after every tests
 *** Test Cases ***
 test_1
     Create Index
-    Check Box Should Be Enabled    Active
+    Check Box Should Be Enabled    2
 
 test_2
     Create Index
-    Select From Combo Box    1    EMPLOYEE
+    Select From Combo Box    1    3
     Push Button    5
-    Click On List Item    1    EMP_NO
+    Click On List Item    1    0
     ${i}=     Set Variable    0
     FOR    ${i}     IN RANGE    5
         Push Button    10
@@ -29,5 +29,4 @@ Create Index
     Open connection
     Expand Tree Node    0    New Connection    
     Select From Tree Node Popup Menu    0    New Connection|Indices (38)    Create index
-    Select Dialog    Create index
-    
+    Select Dialog    Create index   

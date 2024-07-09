@@ -12,8 +12,8 @@ Setup before every tests
     Select Window    regexp=^Red.*
 
 Teardown after every tests
-    Clear History Files
-    System Exit    
+    System Exit
+    Clear History Files        
 
 Open connection
     Click On Tree Node    0    New Connection    2
