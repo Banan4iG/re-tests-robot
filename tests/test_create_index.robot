@@ -7,11 +7,11 @@ Test Setup       Setup before every tests
 Test Teardown    Teardown after every tests
 
 *** Test Cases ***
-test_1
+test_check_default_active
     Create Index
     Check Box Should Be Enabled    2
 
-test_2
+test_check_order_fields
     Create Index
     Select From Combo Box    1    3
     Push Button    5

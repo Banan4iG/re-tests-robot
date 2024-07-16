@@ -18,10 +18,7 @@ def get_path():
 
 def clear_history_files():
     home_dir = os.path.expanduser("~")
-    if "ui-improvement" in os.environ.get("BRANCH"):
-        build_no = "202406"
-    else:
-        build_no = "202301"
+    build_no = "202406"
 
     history_file = os.path.join(home_dir,f'.redexpert/{build_no}/ConnectionHistory.xml')
     saved_conn_file = os.path.join(home_dir,f'.redexpert/{build_no}/savedconnections.xml')
