@@ -1,6 +1,5 @@
 *** Settings ***
 Library    RemoteSwingLibrary
-Library    Process
 Library    help_func.py
 
 
@@ -13,6 +12,7 @@ Setup before every tests
 
 Teardown after every tests
     System Exit
+    # Unlock Employee
     Clear History Files        
 
 Open connection

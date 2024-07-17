@@ -1,0 +1,28 @@
+*** Settings ***
+Library    RemoteSwingLibrary
+Library    Process
+Library    Collections
+Resource   ../../files/keywords.resource 
+Test Setup       Setup before every tests
+Test Teardown    Teardown after every tests
+
+*** Test Cases ***
+test_1
+    Execute Immediate    CREATE USER TEST_USER PASSWORD 'pass'
+    Open connection
+    Select From Menu        Tools|User Manager
+    Sleep    1s
+    Select Table Cell    usersTable    1    0
+    Push Button    editUserButton
+    Select Dialog    Edit user
+    Type Into Text Field    firstNameField     first
+    Type Into Text Field    middleNameField    middle
+    Type Into Text Field    lastNameField      last
+    Select Tab    Comment
+    Type Into Text Field    0    description
+    Push Button      submitButton
+    Select Dialog    dialog1
+    Push Button      commitButton
+    ${result}=    Execute    select cast(sec$user_name as VARCHAR(9)), sec$first_name, sec$middle_name, sec$last_name, sec$active, sec$admin, sec$description, cast(sec$plugin as VARCHAR(3)) from sec$users where sec$user_name='TEST_USER'
+    Execute Immediate    DROP USER TEST_USER
+    Should Be Equal    ${result}    [('TEST_USER', 'first', 'middle', 'last', True, False, None, 'Srp')]
