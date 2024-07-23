@@ -12,7 +12,7 @@ Setup before every tests
 
 Teardown after every tests
     System Exit
-    # Unlock Employee
+    Unlock Employee
     Clear History Files        
 
 Open connection
