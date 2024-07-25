@@ -128,16 +128,18 @@ def get_server_info():
 def lock_employee():
     home_directory, version, srv_version = get_server_info()
     bin = "" if platform.system() == "Linux" else ".exe"
-    subprocess.run([f"{home_directory}nbackup{bin}", "-L", f"{home_directory}examples/empbuild/employee.fdb", "-u", "SYSDBA", "-p", "masterkey"])
+    bin_dir = "bin/" if platform.system() == "Linux" else ""
+    subprocess.run([f"{home_directory}{bin_dir}nbackup{bin}", "-L", f"{home_directory}examples/empbuild/employee.fdb", "-u", "SYSDBA", "-p", "masterkey"])
     time.sleep(1)
 
 def unlock_employee():
     home_directory, version, srv_version = get_server_info()
     bin = "" if platform.system() == "Linux" else ".exe"
+    bin_dir = "bin/" if platform.system() == "Linux" else ""
     delta_file = home_directory + "examples/empbuild/employee.fdb.delta"
     if os.path.exists(delta_file): 
         os.remove(delta_file)
-        subprocess.run([f"{home_directory}nbackup{bin}", "-F", f"{home_directory}examples/empbuild/employee.fdb"])
+        subprocess.run([f"{home_directory}{bin_dir}nbackup{bin}", "-F", f"{home_directory}examples/empbuild/employee.fdb"])
         time.sleep(1)
 
 
