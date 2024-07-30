@@ -87,7 +87,9 @@ def copy_dist_path():
     ARCH = os.environ.get('ARCH')
     # DIST = "D:/Program Files/RedExpert"
     tmp_dir = tempfile.gettempdir()
-    global return_path
+
+    if os.path.exists(tmp_dir + '/RedExpert'):
+        shutil.rmtree(tmp_dir + '/RedExpert')
     return_path = shutil.copytree(DIST, tmp_dir + '/RedExpert')
     bin = "" if platform.system() == "Linux" else ".exe"
     path_to_exe = return_path + "/bin"
