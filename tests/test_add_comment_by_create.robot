@@ -135,13 +135,12 @@ test_create_index
     Check Comment
 
 test_create_ts
-    Skip
-    Init Create    Tablespaces (38)    Create tablespace
+    Init Create    Tablespaces (0)    Create tablespace
     Check Comment
 
 test_create_job
-    Skip
-    Init Create    Job (0)    Create job
+    Init Create    Jobs (0)    Create job
+    Select From Combo Box    jobTypeCombo    BASH
     Check Comment
 
 *** Keywords ***

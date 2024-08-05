@@ -96,17 +96,15 @@ test_alter_role
     Check Comment    RDB$ROLES
 
 test_alter_ts
-    Skip
     Execute Immediate    CREATE TABLESPACE NEW_TS FILE 'test1.ts'
     Init Alter    Tablespaces (1)|NEW_TS
-    Check Comment    pass
+    Check Comment    RDB$TABLESPACES
     Execute Immediate    DROP TABLESPACE NEW_TS
 
 test_alter_job
-    Skip
     Execute Immediate    CREATE JOB NEW_JOB '* * * * *' COMMAND ''
-    Init Alter    Job (1)|NEW_JOB
-    Check Comment    pass
+    Init Alter    Jobs (1)|NEW_JOB
+    Check Comment    RDB$JOBS
     Execute Immediate    DROP JOB NEW_JOB
 
 *** Keywords ***
