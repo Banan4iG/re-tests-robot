@@ -53,12 +53,26 @@ test_create_procedure_output_p
     Check Procedure    Output Parameters
 
 test_create_procedure_variables
-    Skip
     Init Create    Procedures (10)    Create procedure
+    Check Procedure    Variables
 
 test_create_procedure_cursors
-    Skip
+    Skip    Sometimes we got java NPE
     Init Create    Procedures (10)    Create procedure
+    Select Tab As Context    Cursors
+    List Components In Context
+    Type Into Table Cell    0    0    Name    TEST
+    Type Into Table Cell    0    0    Comment    test_comment
+    Click On Table Cell    0    0    Name    2
+    Send Keyboard Event    VK_ENTER
+    Type Into Text Field    0    select * from employee
+    Send Keyboard Event    VK_ENTER
+    Select Dialog    dialog0
+    Push Button    submitButton
+    Select Dialog    dialog1
+    ${res}=    Get Text Field Value    0
+    Sleep    1s
+    Should Not Be Equal As Integers    ${{$res.find('test_comment')}}    -1
 
 test_create_function
     Init Create    Functions (0)    Create function
@@ -66,13 +80,14 @@ test_create_function
 
 test_create_function_arg
     Init Create    Functions (0)    Create function
+    Check Procedure    Arguments
 
 test_create_function_variables
-    Skip
     Init Create    Functions (0)    Create function
+    Check Procedure    Variables
 
 test_create_function_cursors
-    Skip
+    Skip    Sometimes we got java NPE
     Init Create    Functions (0)    Create function
 
 test_create_package
@@ -148,7 +163,8 @@ Check Procedure
     Push Button    submitButton
     Select Dialog    dialog1
     ${res}=    Get Text Field Value    0
-    Should Not Be Equal As Integers    ${{$res.find('\'test_comment\'')}}    -1
+    Sleep    1s
+    Should Not Be Equal As Integers    ${{$res.find('test_comment')}}    -1
 
 
 Init Column
@@ -163,6 +179,7 @@ Check Column Comment
     Push Button    submitButton
     Select Dialog    dialog1
     ${res}=    Get Text Field Value    0
+    Sleep    1s
     Should Not Be Equal As Integers    ${{$res.find('\'test_comment\'')}}    -1
 
 Check Comment
@@ -173,4 +190,5 @@ Check Comment
     Push Button    submitButton
     Select Dialog    dialog1
     ${res}=    Get Text Field Value    0
+    Sleep    1s
     Should Not Be Equal As Integers    ${{$res.find('\'test_comment\'')}}    -1
