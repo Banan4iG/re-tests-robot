@@ -96,18 +96,25 @@ test_alter_role
     Check Comment    RDB$ROLES
 
 test_alter_ts
+    Check Skip
     Execute Immediate    CREATE TABLESPACE NEW_TS FILE 'test1.ts'
     Init Alter    Tablespaces (1)|NEW_TS
     Check Comment    RDB$TABLESPACES
     Execute Immediate    DROP TABLESPACE NEW_TS
 
 test_alter_job
+    Check Skip
     Execute Immediate    CREATE JOB NEW_JOB '* * * * *' COMMAND ''
     Init Alter    Jobs (1)|NEW_JOB
     Check Comment    RDB$JOBS
     Execute Immediate    DROP JOB NEW_JOB
 
 *** Keywords ***
+Check Skip
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    Skip If    ${{$ver != '5.0'}}
+
 Init Alter
     [Arguments]    ${object}
     Open connection

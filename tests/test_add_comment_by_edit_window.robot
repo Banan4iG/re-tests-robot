@@ -112,17 +112,24 @@ test_alter_user
     Check Comment
 
 test_alter_ts
+    Check Skip
     Execute Immediate    CREATE TABLESPACE NEW_TS FILE 'temp_ts.ts'
     Init Alter    Tablespaces (1)|NEW_TS    tablespace
     Check Comment
     Execute Immediate    DROP TABLESPACE NEW_TS
 
 test_alter_job
+    Check Skip
     Execute Immediate    CREATE JOB NEW_JOB '* * * * *' COMMAND ''
     Init Alter    Jobs (1)|NEW_JOB    job
     Check Comment
 
 *** Keywords ***
+Check Skip
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    Skip If    ${{$ver != '5.0'}}
+
 Init Alter
     [Arguments]    ${object}    ${group}
     Open connection

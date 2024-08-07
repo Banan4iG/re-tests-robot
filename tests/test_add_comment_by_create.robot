@@ -135,15 +135,22 @@ test_create_index
     Check Comment
 
 test_create_ts
+    Check Skip
     Init Create    Tablespaces (0)    Create tablespace
     Check Comment
 
 test_create_job
+    Check Skip
     Init Create    Jobs (0)    Create job
     Select From Combo Box    jobTypeCombo    BASH
     Check Comment
 
 *** Keywords ***
+Check Skip
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    Skip If    ${{$ver != '5.0'}}
+
 Init Create
     [Arguments]    ${object}    ${menu}
     Open connection
