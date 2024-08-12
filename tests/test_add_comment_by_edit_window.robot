@@ -146,8 +146,8 @@ Check Param Comment
     Select Dialog    dialog0
     Push Button    submitButton
     Select Dialog    dialog1
-    ${res}=    Get Text Field Value    0
     Sleep    1s
+    ${res}=    Get Text Field Value    0
     Should Not Be Equal As Integers    ${{$res.find('test_comment')}}    -1
 
 Edit Table Column

@@ -2,7 +2,7 @@
 Library    RemoteSwingLibrary
 Resource    ../files/keywords.resource
 Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+# Test Teardown    Teardown after every tests
 
 *** Test Cases ***
 test_create_domain
@@ -30,12 +30,9 @@ test_create_gtt_columns
     Check Column Comment
 
 test_create_view
-    Skip    msg=See RS-187694
     Init Create    Views (1)    Create view
     Select Tab As Context    Select Statement
-    Click On Component    0
-    Send Keyboard Event    VK_A    CTRL_MASK
-    Send Keyboard Event    VK_BACK_SPACE
+    Clear Text Field    0
     Type Into Text Field    0    SELECT emp_no FROM employee
     Select Dialog    dialog0
     Check Comment
@@ -168,8 +165,8 @@ Check Procedure
     Select Dialog    dialog0
     Push Button    submitButton
     Select Dialog    dialog1
-    ${res}=    Get Text Field Value    0
     Sleep    1s
+    ${res}=    Get Text Field Value    0
     Should Not Be Equal As Integers    ${{$res.find('test_comment')}}    -1
 
 
@@ -184,8 +181,8 @@ Check Column Comment
     Send Keyboard Event    VK_ENTER
     Push Button    submitButton
     Select Dialog    dialog1
-    ${res}=    Get Text Field Value    0
     Sleep    1s
+    ${res}=    Get Text Field Value    0
     Should Not Be Equal As Integers    ${{$res.find('\'test_comment\'')}}    -1
 
 Check Comment
@@ -195,6 +192,6 @@ Check Comment
     Select Dialog    dialog0
     Push Button    submitButton
     Select Dialog    dialog1
-    ${res}=    Get Text Field Value    0
     Sleep    1s
+    ${res}=    Get Text Field Value    0
     Should Not Be Equal As Integers    ${{$res.find('\'test_comment\'')}}    -1
