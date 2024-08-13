@@ -44,7 +44,7 @@ test_cron_false
     ${row}=    Find Table Row    0    Success    Status
     ${script}=    Get Text Field Value    0
     Should Not Be Equal As Integers    ${row}    -1
-    Should Be Equal As Strings    ${script}    CREATE JOB NEW_JOB_1 '59 23 4 2 3' ACTIVE START DATE NULL END DATE NULL AS begin /*job is here*/ end    collapse_spaces=${True}
+    Should Be Equal As Strings    ${script}    CREATE JOB NEW_JOB_1 '59 23 11 2 3' ACTIVE START DATE NULL END DATE NULL AS begin /*job is here*/ end    collapse_spaces=${True}
 
 test_cron_true
     Init Create

@@ -11,7 +11,7 @@ Setup before every tests
     Select Window    regexp=^Red.*
 
 Teardown after every tests
-    System Exit
+    System Exit    0
     Unlock Employee
     Clear History Files        
 

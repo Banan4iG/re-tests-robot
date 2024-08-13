@@ -139,9 +139,9 @@ def unlock_employee():
     bin = "" if platform.system() == "Linux" else ".exe"
     bin_dir = "bin/" if platform.system() == "Linux" else ""
     delta_file = home_directory + "examples/empbuild/employee.fdb.delta"
-    if os.path.exists(delta_file): 
+    if os.path.exists(delta_file):
+        time.sleep(5) 
         os.remove(delta_file)
-        time.sleep(1)
         subprocess.run([f"{home_directory}{bin_dir}nbackup{bin}", "-F", f"{home_directory}examples/empbuild/employee.fdb"])
 
 def execute(query: str):
