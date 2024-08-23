@@ -17,7 +17,11 @@ test_1
     Close Dialog    Message
     Select Tab As Context    View
     Select Window    regexp=^Red.*
-    ${node_names}=    Get Tree Node Child Names    dbComponentsTree    Objects To Create    
-    ${expected_names}=    Create List    Domains (15)    Tables (10)    Global Temporary Tables (1)    Views (1)    Procedures (10)    Functions (1)    Packages (1)    Table Triggers (4)    DDL Triggers (1)    DB Triggers (1)    Sequences (2)    Exceptions (5)    UDFs (1)    Roles (1)    Indices (12)    Tablespaces    Jobs (1)    Collations (1)
+    ${node_names}=    Get Tree Node Child Names    dbComponentsTree    Objects To Create
+    IF  ${rdb5}
+        ${expected_names}=    Create List    Domains (15)    Tables (10)    Global Temporary Tables (1)    Views (1)    Procedures (10)    Functions (1)    Packages (1)    Table Triggers (4)    DDL Triggers (1)    DB Triggers (1)    Sequences (2)    Exceptions (5)    UDFs (1)    Roles (1)    Indices (12)    Tablespaces    Jobs (1)    Collations (1)
+    ELSE
+        ${expected_names}=    Create List    Domains (15)    Tables (10)    Global Temporary Tables (1)    Views (1)    Procedures (10)    Functions (1)    Packages (1)    Table Triggers (4)    DDL Triggers (1)    DB Triggers (1)    Sequences (2)    Exceptions (5)    UDFs (1)    Roles (1)    Indices (12)    Collations (1)   
+    END
     Should Be Equal As Strings    ${node_names}    ${expected_names}
     Delete Objects    ${rdb5}

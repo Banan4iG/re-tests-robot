@@ -6,6 +6,7 @@ import time
 import tempfile
 import firebird.driver as fdb
 from firebird.driver import driver_config, connect_server, SrvInfoCode
+from pathlib import Path
 
 def run_server():
     PYTHON = os.environ.get('PYTHON')

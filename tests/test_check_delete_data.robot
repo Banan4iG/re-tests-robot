@@ -19,6 +19,7 @@ test_1
     Click On Table Cell    0    ${row}    TEST_COL
     Push Button    1
     Push Button    2
+    Sleep    2s
     ${row}=    Find Table Row    0    PUBLIC    TEST_COL
     ${result}=    Execute    SELECT * from NEW_TABLE_1
     Should Be Equal As Integers    ${row}    -1
