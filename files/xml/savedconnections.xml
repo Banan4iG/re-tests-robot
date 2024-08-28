@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<savedconnections>
+       
+    <connection storepassword="true" storecontainerpassword="false" verify_server="false" use_new_api="false">
+              
+        <id>b28eaa83-37ec-4a7e-ad63-2e48cca25ee4</id>
+              
+        <name>New Connection</name>
+              
+        <user>sysdba</user>
+              
+        <password encrypted="false">masterkey</password>
+              
+        <container_password encrypted="false"/>
+              
+        <host>localhost</host>
+              
+        <datasource>employee.fdb</datasource>
+              
+        <port>3050</port>
+              
+        <charset>NONE</charset>
+              
+        <role/>
+              
+        <server_version>5</server_version>
+              
+        <minor_server_version>0</minor_server_version>
+              
+        <certificate/>
+              
+        <authmethod>Basic</authmethod>
+              
+        <connectionmethod>Standard</connectionmethod>
+              
+        <url/>
+              
+        <drivername>Jaybird 4 Driver</drivername>
+              
+        <driverid>2222222</driverid>
+              
+        <folderid/>
+              
+        <autocommit>true</autocommit>
+              
+        <txisolation>-1</txisolation>
+              
+        <sshtunnel>false</sshtunnel>
+              
+        <sshusername/>
+              
+        <sshstorepassword>false</sshstorepassword>
+              
+        <sshhost/>
+              
+        <sshport>22</sshport>
+              
+        <namestouppercase>true</namestouppercase>
+              
+        <advanced>
+                     
+            <property key="connectTimeout" value="5"/>
+                  
+        </advanced>
+           
+    </connection>
+    
+</savedconnections>
