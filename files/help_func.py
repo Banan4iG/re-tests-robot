@@ -19,7 +19,8 @@ def stop_server():
     p.terminate()
 
 def get_build_no():
-    return "202406"
+    BUILD = os.environ.get('BUILD')
+    return BUILD
 
 def bakup_user_properties():
     home_dir = os.path.expanduser("~")
@@ -165,8 +166,9 @@ def execute_immediate(query: str):
         con.commit()
 
 def delete_query_files():
+    build_no = get_build_no()
     home_dir = os.path.expanduser("~")
-    for path in Path(os.path.join(home_dir,'.redexpert/202406/QueryEditor')).glob("script*.sql"):
+    for path in Path(os.path.join(home_dir, f'.redexpert/{build_no}/QueryEditor')).glob("script*.sql"):
         os.remove(path)
 
 def check_build_config(conf_path: str, number: int):
