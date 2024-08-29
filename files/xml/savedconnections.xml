@@ -60,6 +60,8 @@
         <advanced>
                      
             <property key="connectTimeout" value="5"/>
+
+            <property key="lc_ctype" value="NONE"/>
                   
         </advanced>
            
