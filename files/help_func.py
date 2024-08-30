@@ -52,6 +52,16 @@ reddatabase.get-files.url=http\://localhost/?project\=redexpert&version\="""
     with open(user_properties_file, 'w') as f:
         f.write(context)
 
+
+def get_path_to_lib():
+    DIST = os.environ.get('DIST')
+    if DIST:
+        path_to_exe = DIST + "/lib"
+    else:
+        path_to_exe = 'C:\\Program Files\\RedExpert\\lib'
+    return path_to_exe
+
+
 def get_path():
     DIST = os.environ.get('DIST')
     ARCH = os.environ.get('ARCH')
