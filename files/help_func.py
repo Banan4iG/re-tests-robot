@@ -85,6 +85,7 @@ def clear_history_files():
     build_no = get_build_no()
     history_file = os.path.join(home_dir, f'.redexpert/{build_no}/ConnectionHistory.xml')
     saved_conn_file = os.path.join(home_dir, f'.redexpert/{build_no}/savedconnections.xml')
+    shortcuts_file = os.path.join(home_dir, f'.redexpert/{build_no}/eq.shortcuts.properties')
     if os.path.exists(saved_conn_file):
         with open(saved_conn_file, 'r') as f:
             context = f.read()
@@ -97,6 +98,8 @@ def clear_history_files():
 
     if os.path.exists(history_file):
         os.remove(history_file)
+    if os.path.exists(shortcuts_file):
+        os.remove(shortcuts_file)
 
 def copy_dist_path():
     DIST = os.environ.get('DIST')
