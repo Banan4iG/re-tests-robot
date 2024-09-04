@@ -15,9 +15,11 @@ test_data_with_space
     Click On Tree Node    0    New Connection|Tables (11)|NEW_TABLE_1    2   
     Select Tab As Context    Data
     Sleep    2s
+    Select From Table Cell Popup Menu    0    0    TEST COL    Double-Click Opens Item View
     Type Into Table Cell    0    0    TEST COL    PUBLIC
     Send Keyboard Event    VK_ENTER
     Push Button    2
+    Select From Table Cell Popup Menu    0    0    TEST COL    Double-Click Opens Item View
     ${res1}=    Execute    SELECT * FROM NEW_TABLE_1
     Click On Table Cell    0    0    TEST COL
     Push Button    1

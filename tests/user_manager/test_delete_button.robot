@@ -23,9 +23,10 @@ test_1
     Push Button      commitButton
     Sleep    1s
     Select Window    regexp=^Red.*
-    ${cellValue}=    Get Table Cell Value    usersTable    1    0
+    ${row}=    Find Table Row    usersTable    TEST    User name
+    ${cellValue}=    Get Table Cell Value    usersTable    ${row}    User name
     Should Be Equal  TEST    ${cellValue}
-    Select Table Cell    usersTable    1    0
+    Select Table Cell    usersTable    ${row}    User name
     Push Button    deleteUserButton
     Select Dialog    Dropping object
     Push Button      commitButton

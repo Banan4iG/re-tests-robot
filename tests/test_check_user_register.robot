@@ -26,8 +26,6 @@ test_1
 Check user
     [Arguments]     ${type}  
     Select From Tree Node Popup Menu    0    New Connection|Users (3)|${type}    Edit user
-    Select Dialog    Edit user
     Select Tab    DDL to create
     ${res}=    Get Text Field Value    1
-    Push Button    cancelButton
     RETURN    ${res}

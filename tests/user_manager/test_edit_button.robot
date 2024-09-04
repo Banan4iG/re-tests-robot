@@ -12,7 +12,8 @@ test_1
     Open connection
     Select From Menu        Tools|User Manager
     Sleep    1s
-    Select Table Cell    usersTable    1    0
+    ${row}=    Find Table Row    usersTable    TEST_USER    User name
+    Select Table Cell    usersTable    ${row}    User name
     Push Button    editUserButton
     Select Dialog    Edit user
     Type Into Text Field    firstNameField     first

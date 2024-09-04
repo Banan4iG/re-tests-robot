@@ -97,12 +97,12 @@ test_create_trigger_for_table
     Check Comment
 
 test_create_trigger_for_ddl
-    Init Create    DDL Triggers (0)    Create ddl trigger
+    Init Create    DDL Triggers (0)    Create DDL trigger
     Check Check Box    anyStatementCheck
     Check Comment
 
 test_create_trigger_for_db
-    Init Create    DB Triggers (0)    Create db trigger
+    Init Create    DB Triggers (0)    Create DB trigger
     Check Comment
 
 test_create_sequence
@@ -114,7 +114,7 @@ test_create_exception
     Check Comment
 
 test_create_udf
-    Init Create    UDFs (0)    Create udf
+    Init Create    UDFs (0)    Create UDF
     Check Comment 
 
 test_create_user

@@ -36,7 +36,7 @@ test_1
 
     #fill log file
     Select Tab As Context    Session Manager
-    Push Button    Refresh
+    Push Button    Refresh list
     Select Window    regexp=^Red.*
     Push Button    visibleColumnsButton
     Select Dialog    Visible Columns
@@ -51,7 +51,7 @@ test_1
     Select Window    regexp=^Red.*
     Select Tab As Context    Session Manager
     Click On List Item    0    New
-    Push Button    Stop
+    Push Button    Stop session
     Sleep    5s
     Select Window    regexp=^Red.*
     Push Button    Stop

@@ -13,7 +13,7 @@ test_drop_trigger_for_ddl
     ...    AS
     ...    BEGIN
     ...    END
-    Drop Trigger    ${script}    DDL Triggers (1)|NEW_TRIGGER    ddl
+    Drop Trigger    ${script}    DDL Triggers (1)|NEW_TRIGGER    DDL
 
 test_drop_trigger_for_db
     VAR    ${script}   CREATE OR ALTER TRIGGER NEW_TRIGGER
@@ -21,7 +21,7 @@ test_drop_trigger_for_db
     ...    AS
     ...    BEGIN
     ...    END
-    Drop Trigger    ${script}    DB Triggers (1)|NEW_TRIGGER    db
+    Drop Trigger    ${script}    DB Triggers (1)|NEW_TRIGGER    DB
 
 *** Keywords ***
 Drop Trigger

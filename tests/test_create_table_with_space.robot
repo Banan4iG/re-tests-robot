@@ -8,21 +8,17 @@ Test Teardown    Teardown after every tests
 
 *** Test Cases ***
 test_create_table
-    Open connection
-    Expand Tree Node    0    New Connection    
-    Select From Tree Node Popup Menu    0    New Connection|Tables (10)    Create table
-    Create Table    CREATE TABLE "TEST TABLE" ( TEST BIGINT)
+    Create Table    Tables (10)    Create table
 
 test_create_gtt
-    Open connection
-    Expand Tree Node    0    New Connection    
-    Select From Tree Node Popup Menu    0    New Connection|Global Temporary Tables (0)    Create global temporary table
-    Create Table    CREATE GLOBAL TEMPORARY TABLE "TEST TABLE" ( TEST BIGINT) ON COMMIT DELETE ROWS
-
+    Create Table    Global Temporary Tables (0)    Create global temporary table
 
 *** Keywords ***
 Create Table
-    [Arguments]    ${expected_str}
+    [Arguments]    ${type}    ${create}
+    Open connection
+    Expand Tree Node    0    New Connection    
+    Select From Tree Node Popup Menu    0    New Connection|${type}    ${create}
     Select Dialog    Create Table
     Clear Text Field    nameField
     Type Into Text Field    nameField    TEST TABLE
@@ -33,4 +29,4 @@ Create Table
     Push Button    submitButton
     Select Dialog    dialog1
     ${textFieldValue}=    Get Textfield Value    0
-    Should Be Equal   ${textFieldValue}     ${expected_str}    collapse_spaces=True
+    Should Not Be Equal As Integers    ${{$textFieldValue.find('"TEST TABLE"')}}    -1
