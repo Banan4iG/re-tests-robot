@@ -86,6 +86,9 @@ def clear_history_files():
     history_file = os.path.join(home_dir, f'.redexpert/{build_no}/ConnectionHistory.xml')
     saved_conn_file = os.path.join(home_dir, f'.redexpert/{build_no}/savedconnections.xml')
     shortcuts_file = os.path.join(home_dir, f'.redexpert/{build_no}/eq.shortcuts.properties')
+    query_dir = os.path.join(home_dir, f'.redexpert/{build_no}/QueryEditor')
+    if os.path.exists(query_dir):
+        shutil.rmtree(query_dir)
     if os.path.exists(saved_conn_file):
         with open(saved_conn_file, 'r') as f:
             context = f.read()
