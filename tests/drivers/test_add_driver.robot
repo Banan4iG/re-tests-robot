@@ -117,6 +117,7 @@ test_connect_with_new_driver
     Teardown after every tests
     Setup before every tests
     Select From Main Menu    System|Drivers
+    Sleep    1s
     ${row}=    Find Table Row    0    New Driver   Driver Name
     Click On Table Cell    0     ${row}    Driver Name
     Push Button    removeDriverButton

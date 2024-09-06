@@ -12,6 +12,9 @@ test_check_default_active
     Check Box Should Be Enabled    2
 
 test_check_order_fields
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    Skip If    ${{$ver != '3.0'}}    
     Create Index
     Select From Combo Box    1    3
     Push Button    5
