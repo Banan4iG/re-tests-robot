@@ -12,7 +12,7 @@ test_1
     Lock Employee
     Create Objects    ${rdb5}
     Push Button    extract-metadata-command
-    Push Button    compareButton
+    Push Button    extractButton
     Sleep    5s
     Close Dialog    Message
     Select Tab As Context    View

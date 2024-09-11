@@ -14,7 +14,7 @@ test_check_no_ignore
 
 test_check_ignore
     ${rdb5}=    Init extract
-    Push Button    selectAllPropertiesButton
+    Push Button    selectAllExtractPropertiesButton
     ${script_without_properties}=    Extract
     @{result}=    Check Ignore    ${script_without_properties}
     Delete Objects    ${rdb5} 
@@ -32,7 +32,7 @@ Init extract
     RETURN    ${rdb5}
 
 Extract
-    Push Button    compareButton
+    Push Button    extractButton
     Sleep    5s
     Close Dialog    Message
     Select Tab As Context    SQL
