@@ -25,3 +25,4 @@ Create New Conn
     Type Into Text Field    5    sysdba
     Type Into Text Field    6    masterkey
     Check Check Box    Store Password
+    Push Button    saveButton
