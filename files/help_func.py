@@ -305,7 +305,7 @@ ENTRY_POINT '123' MODULE_NAME '123'
         if rdb5:
         #     con.execute_immediate("CREATE TABLESPACE NEW_TABLESPACE_1 FILE 'file.ts';")
             con.execute_immediate("""                                 
-CREATE JOB NEW_JOB
+CREATE JOB NEW_JOB_EXPORT
 '13 17 * * *'
 INACTIVE
 START DATE NULL
@@ -341,7 +341,7 @@ def delete_objects(rdb5: bool):
 
         if rdb5:
             # con.execute_immediate("DROP TABLESPACE NEW_TABLESPACE_1;")
-            con.execute_immediate("DROP JOB NEW_JOB;")
+            con.execute_immediate("DROP JOB NEW_JOB_EXPORT;")
             con.commit()
 
 def delete_files(files: list):
@@ -361,7 +361,8 @@ def create_database(script_path: str, base_path: str):
     
     con = fdb.create_database(base_path)
     con.close()
-    subprocess.call(f"{home_directory}\isql -q -i \"{script_path}\"")
+    bin = "bin/" if platform.system() == "Linux" else ".exe"
+    subprocess.call(f"{home_directory}{bin}isql -q -i \"{script_path}\"")
 	
 
 #sql script
