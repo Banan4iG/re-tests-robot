@@ -9,7 +9,7 @@ test_1
     ${info}=    Get Server Info
     ${ver}=     Set Variable    ${info}[1]
     VAR    ${rdb5}    ${{$ver == '5.0'}}
-    Lock Employee
+    Lock Employee  
     Create Objects    ${rdb5}
     Push Button    extract-metadata-command
     Push Button    extractButton
@@ -19,7 +19,7 @@ test_1
     Select Window    regexp=^Red.*
     Click On Tree Node    dbComponentsTree    Objects To Create|Tables (10)|COUNTRY
     ${script}=    Get Text Field Value    0
-    Should Be Equal As Strings    ${script}    CREATE TABLE COUNTRY (COUNTRY COUNTRYNAME NOT NULL, CURRENCY VARCHAR(10) NOT NULL);    strip_spaces=${True}    collapse_spaces=${True}
+    Should Be Equal As Strings    ${script}    CREATE TABLE COUNTRY ( COUNTRY COUNTRYNAME NOT NULL, CURRENCY VARCHAR(10) NOT NULL);    strip_spaces=${True}    collapse_spaces=${True}
     ${node_names}=    Get Tree Node Child Names    dbComponentsTree    Objects To Create
     IF  ${rdb5}
         ${expected_names}=    Create List    Domains (15)    Tables (10)    Global Temporary Tables (1)    Views (1)    Procedures (10)    Functions (1)    Packages (1)    Table Triggers (4)    DDL Triggers (1)    DB Triggers (1)    Sequences (2)    Exceptions (5)    UDFs (1)    Roles (1)    Indices (12)    Tablespaces    Jobs (1)    Collations (1)

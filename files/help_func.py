@@ -361,8 +361,11 @@ def create_database(script_path: str, base_path: str):
     
     con = fdb.create_database(base_path)
     con.close()
-    bin = "bin/" if platform.system() == "Linux" else ".exe"
-    subprocess.call(f"{home_directory}{bin}isql -q -i \"{script_path}\"")
+    bin_dir = "bin/" if platform.system() == "Linux" else ""
+    bin = "" if platform.system() == "Linux" else ".exe"
+    run_line = f"{home_directory}{bin_dir}isql{bin} -q -i \"{script_path}\""
+    print(run_line)
+    subprocess.call(run_line)
 	
 
 #sql script

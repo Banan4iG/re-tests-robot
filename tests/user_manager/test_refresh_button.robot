@@ -10,6 +10,7 @@ Test Teardown    Teardown after every tests
 test_1
     Open connection
     Select From Menu        Tools|User Manager
+    Sleep    2s
     Execute Immediate    CREATE USER TEST_REFRESH_USER PASSWORD 'pass'
     ${rowCount}=    Get Table Row Count    usersTable
     Should Be Equal As Integers    1    ${rowCount}

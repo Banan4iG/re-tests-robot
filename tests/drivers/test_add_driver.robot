@@ -12,8 +12,8 @@ test_empty_name
     Clear Text Field    nameField
     Push Button    Save
     Select Main Window
-    ${row}=    Find Table Row    0    ${EMPTY}   Driver Name
-    Click On Table Cell    0     ${row}    Driver Name
+    ${row}=    Find Table Row    driversTable    ${EMPTY}   Driver Name
+    Click On Table Cell    driversTable     ${row}    Driver Name
     Push Button    removeDriverButton
     Select Dialog    Confirmation
     Push Button    Yes
@@ -38,11 +38,11 @@ test_check_combo
 
     Push Button    Save
     Select Main Window
-    ${row}=    Find Table Row    0    New Driver   Driver Name
-    ${table_values}=    Get Table Row Values    0    ${row}
+    ${row}=    Find Table Row    driversTable    New Driver   Driver Name
+    ${table_values}=    Get Table Row Values    driversTable    ${row}
     Should Be Equal As Strings    ${table_values}    ['New Driver', 'This is Description', 'Firebird', '']
 
-    Click On Table Cell    0     ${row}    Driver Name
+    Click On Table Cell    driversTable     ${row}    Driver Name
     Push Button    removeDriverButton
     Select Dialog    Confirmation
     Push Button    Yes
@@ -51,7 +51,7 @@ test_check_library
     Select From Main Menu    System|Drivers
     Push Button    addDriverButton
     Select Dialog    Add New Driver
-    Push Button    Add Library
+    Push Button    browseButton
     Select Dialog    Select JDBC Drivers...
     ${path_to_lib}=    Get Path To Lib 
     Clear Text Field    0
@@ -70,12 +70,12 @@ test_check_library
 
     Select Dialog    Add New Driver
     Click On List Item    0    0
-    Push Button    Remove
+    Push Button    removeButton
     ${lib_list}=    Get List Values    0    
     Should Be Equal As Strings    ${lib_list}    []
 
     Select Dialog    Add New Driver
-    Push Button    Add Library
+    Push Button    browseButton
     Select Dialog    Select JDBC Drivers...
     Clear Text Field    0
     Type Into Text Field    0    ${path_to_lib}/batik-dom-1.16.jar
@@ -95,7 +95,7 @@ test_connect_with_new_driver
     Push Button    addDriverButton
     Select Dialog    Add New Driver
     Select From Combo Box    databaseNameCombo    Firebird
-    Push Button    Add Library
+    Push Button    browseButton
     Select Dialog    Select JDBC Drivers...
     ${path_to_lib}=    Get Path To Lib 
     Clear Text Field    0
@@ -118,8 +118,8 @@ test_connect_with_new_driver
     Setup before every tests
     Select From Main Menu    System|Drivers
     Sleep    1s
-    ${row}=    Find Table Row    0    New Driver   Driver Name
-    Click On Table Cell    0     ${row}    Driver Name
+    ${row}=    Find Table Row    driversTable    New Driver   Driver Name
+    Click On Table Cell    driversTable     ${row}    Driver Name
     Push Button    removeDriverButton
     Select Dialog    Confirmation
     Push Button    Yes

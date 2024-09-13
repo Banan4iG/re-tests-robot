@@ -1,6 +1,5 @@
 *** Settings ***
 Library    RemoteSwingLibrary
-Library    firebird.driver
 Resource   ../../files/keywords.resource 
 Test Setup       Setup before every tests
 Test Teardown    Teardown after every tests
@@ -18,7 +17,7 @@ test_save_script
     Type Into Text Field    0    ${script_path}
     Push Button    Save Script
     Sleep    2s
-    help_func.Create Database   ${script_path}    ${test_base_path}
+    Create Database   ${script_path}    ${test_base_path}
     Create Connect    ${test_base_path}
     Compare DB
     Delete Objects    ${rdb5}

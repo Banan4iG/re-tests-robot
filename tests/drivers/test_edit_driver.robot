@@ -7,8 +7,8 @@ Test Teardown    Teardown after every tests
 *** Test Cases ***
 test_1
     Select From Main Menu    System|Drivers
-    ${row}=    Find Table Row    0    Jaybird 4 Driver    Driver Name
-    Run Keyword In Separate Thread    Click On Table Cell    0     ${row}    Driver Name    2    BUTTON1_MASK
+    ${row}=    Find Table Row    driversTable    Jaybird 4 Driver    Driver Name
+    Run Keyword In Separate Thread    Click On Table Cell    driversTable     ${row}    Driver Name    2    BUTTON1_MASK
     Select Dialog    Edit Driver
     ${name}=    Get Text Field Value    nameField
     Should Be Equal As Strings    ${name}    Jaybird 4 Driver
