@@ -11,8 +11,15 @@ test_1
     Push Button    saveScriptButton
     Select Dialog    Warning
     Push Button    OK
+
     Select Window    regexp=^Red.*
     Select Tab As Context    SQL
+    Push Button    executeScriptButton
+    Select Dialog    Warning
+    Push Button    OK
+    
+    Select Window    regexp=^Red.*
+    Push Button    selectAllExtractAttributesButton
     Push Button    executeScriptButton
     Select Dialog    Warning
     Push Button    OK
