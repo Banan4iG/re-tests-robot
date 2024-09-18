@@ -22,7 +22,20 @@ def get_build_no():
     BUILD = os.environ.get('BUILD')
     return BUILD
 
-def bakup_user_properties():
+def backup_savedconnections_file():
+    home_dir = os.path.expanduser("~")
+    build_no = get_build_no()
+    saved_conn_file = os.path.join(home_dir, f'.redexpert/{build_no}/savedconnections.xml')
+    shutil.move(saved_conn_file, saved_conn_file + ".bak")
+
+def restore_savedconnections_file():
+    home_dir = os.path.expanduser("~")
+    build_no = get_build_no()
+    saved_conn_file = os.path.join(home_dir, f'.redexpert/{build_no}/savedconnections.xml')
+    if os.path.exists(saved_conn_file + ".bak"):
+        shutil.move(saved_conn_file + ".bak", saved_conn_file)
+
+def backup_user_properties():
     home_dir = os.path.expanduser("~")
     build_no = get_build_no()
     user_properties_file = os.path.join(home_dir, f'.redexpert/{build_no}/eq.user.properties')
@@ -303,7 +316,7 @@ ENTRY_POINT '123' MODULE_NAME '123'
         con.execute_immediate("COMMENT ON INDEX CHANGEX IS 'comment'")
         
         if rdb5:
-        #     con.execute_immediate("CREATE TABLESPACE NEW_TABLESPACE_1 FILE 'file.ts';")
+            # con.execute_immediate("CREATE TABLESPACE NEW_TABLESPACE_1 FILE 'file.ts';")
             con.execute_immediate("""                                 
 CREATE JOB NEW_JOB_EXPORT
 '13 17 * * *'
@@ -318,27 +331,6 @@ end
 
 def delete_objects(rdb5: bool):
     with fdb.connect("employee") as con:
-
-#         #remove objects
-#         con.execute_immediate("DROP TABLE NEW_GLOBAL_TEMPORARY_1")
-#         con.execute_immediate("DROP FUNCTION NEW_FUNC")
-#         con.execute_immediate("DROP PACKAGE NEW_PACK")
-#         con.execute_immediate("DROP TRIGGER NEW_DDL_TRIGGER")
-#         con.execute_immediate("DROP TRIGGER NEW_DB_TRIGGER")
-#         con.execute_immediate("DROP EXTERNAL FUNCTION NEW_UDF")
-#         con.execute_immediate("DROP ROLE TEST_ROLE")
-#         con.execute_immediate("DROP COLLATION iso8859_1_unicode")
-
-#         #remove comment
-#         con.execute_immediate("COMMENT ON DOMAIN EMPNO IS ''")
-#         con.execute_immediate("COMMENT ON TABLE EMPLOYEE IS ''")
-#         con.execute_immediate("COMMENT ON VIEW PHONE_LIST IS ''")
-#         con.execute_immediate("COMMENT ON PROCEDURE ADD_EMP_PROJ IS ''")
-#         con.execute_immediate("COMMENT ON TRIGGER POST_NEW_ORDER IS ''")
-#         con.execute_immediate("COMMENT ON SEQUENCE CUST_NO_GEN IS ''")
-#         con.execute_immediate("COMMENT ON EXCEPTION CUSTOMER_CHECK IS ''")
-#         con.execute_immediate("COMMENT ON INDEX CHANGEX IS ''")
-
         if rdb5:
             # con.execute_immediate("DROP TABLESPACE NEW_TABLESPACE_1;")
             con.execute_immediate("DROP JOB NEW_JOB_EXPORT;")
@@ -364,26 +356,3 @@ def create_database(script_path: str, base_path: str):
     bin_dir = "bin/" if platform.system() == "Linux" else ""
     bin = "" if platform.system() == "Linux" else ".exe"
     subprocess.call([f"{home_directory}{bin_dir}isql{bin}",  "-q", "-i", f"\"{script_path}\""])
-	
-
-#sql script
-"""
-DROP TABLE NEW_GLOBAL_TEMPORARY_1;
-DROP FUNCTION NEW_FUNC;
-DROP PACKAGE NEW_PACK;
-DROP TRIGGER NEW_DDL_TRIGGER;
-DROP TRIGGER NEW_DB_TRIGGER;
-DROP EXTERNAL FUNCTION NEW_UDF;
-DROP ROLE TEST_ROLE;
-DROP COLLATION iso8859_1_unicode;
-DROP TABLESPACE NEW_TABLESPACE_1;
-DROP JOB NEW_JOB;
-COMMENT ON DOMAIN EMPNO IS '';
-COMMENT ON TABLE EMPLOYEE IS '';
-COMMENT ON VIEW PHONE_LIST IS '';
-COMMENT ON PROCEDURE ADD_EMP_PROJ IS '';
-COMMENT ON TRIGGER POST_NEW_ORDER IS '';
-COMMENT ON SEQUENCE CUST_NO_GEN IS '';
-COMMENT ON EXCEPTION CUSTOMER_CHECK IS '';
-COMMENT ON INDEX CHANGEX IS '';
-"""

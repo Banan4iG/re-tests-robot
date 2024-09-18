@@ -6,7 +6,8 @@ Test Teardown    Teardown after every tests
 
 *** Test Cases ***
 test_1
-    Push Button    extract-metadata-command
+    Open connection
+    Select From Tree Node Popup Menu    0    New Connection    Extract Metadata
     Select Tab As Context    SQL    
     Push Button    saveScriptButton
     Select Dialog    Warning

@@ -7,7 +7,7 @@ Test Teardown    Teardown
 *** Test Cases ***
 first
     Run Server
-    Bakup User Properties
+    Backup User Properties
     Set Urls
     ${path_to_exe}=    Copy Dist Path
     Start Red Expert    ${path_to_exe}
