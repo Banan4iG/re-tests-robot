@@ -8,10 +8,10 @@ Test Teardown    Local Teardown
 test_extract
     Push Button    extract-metadata-command
     Combo Box Should Be Disabled    dbTargetComboBox
-    # Push Button    extractButton
-    # Select Dialog    Warning
-    # Run Keyword And Continue On Failure    Label Text Should Be    0    Unable to compare.
-    # Run Keyword And Continue On Failure    Label Text Should Be    1    .
+    Push Button    extractButton
+    Select Dialog    Warning
+    Run Keyword And Continue On Failure    Label Text Should Be    0    Unable to compare.
+    Run Keyword And Continue On Failure    Label Text Should Be    1    Connection is inactive.
 
 
 test_compare
