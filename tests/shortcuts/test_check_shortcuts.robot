@@ -141,4 +141,5 @@ Set Shortcut
     Push Button    applyButton
     Push Button    OK
     Select Main Window
-    Click On Tree Node    0    New Connection    1
+    Focus To Component    0
+    # Click On Tree Node    0    New Connection    1
