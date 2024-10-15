@@ -143,6 +143,7 @@ docs/_build
 
 # results dir
 results/
+report-directory/
 
 # results files
 *.err

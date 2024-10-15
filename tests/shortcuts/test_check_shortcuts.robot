@@ -60,7 +60,7 @@ test_open_extract_md
     Set Shortcut    Extract database metadata into SQL script
     Send Keyboard Event    VK_Q    	CTRL_MASK
     Sleep    2s
-    Component Should Exist    compareButton
+    Component Should Exist    extractButton
 
 test_open_grant_manager
     Set Shortcut    Grant Manager

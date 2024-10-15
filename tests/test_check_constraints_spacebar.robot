@@ -15,7 +15,7 @@ test_1
     Select Tab As Context    Constraints
     Push Button    addConstraintButton
     Select Dialog    Create constraint
-    Select From Combo Box    1    UNIQUE
+    Select From Combo Box    typesCombo    UNIQUE
     Click On List Item    0    TEST COMMENT    2
     Push Button    submitButton
     Select Dialog    dialog1
