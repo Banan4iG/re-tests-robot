@@ -16,5 +16,8 @@ test_1
     ${row2}=    Find Table Row    0    SET_EMP_NO    Trigger Name
     Should Not Be Equal As Integers    ${row1}    -1
     Should Not Be Equal As Integers    ${row2}    -1
-    Run Keyword In Separate Thread    Click On Table Cell    0    ${row1}     Trigger Name    2    BUTTON1_MASK
-    Select Dialog    Edit Trigger
+    Click On Table Cell    0    ${row1}     Trigger Name    2    BUTTON1_MASK
+    Select Main Window
+    Component Should Exist    nameField
+    ${trigger_name}=    Get Text Field Value    nameField
+    Should Be Equal As Strings    ${trigger_name}    SAVE_SALARY_CHANGE
