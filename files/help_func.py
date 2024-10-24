@@ -49,19 +49,15 @@ def restore_user_properties():
         os.remove(user_properties_file)
     shutil.move(user_properties_file + ".bak", user_properties_file)
 
-def set_urls():
+def set_urls(urls: str):
     home_dir = os.path.expanduser("~")
     build_no = get_build_no()
     user_properties_file = os.path.join(home_dir, f'.redexpert/{build_no}/eq.user.properties')
     with open(user_properties_file, 'r') as f:
         context = f.read()
 
-    context += """
-update.use.https=false
-reddatabase.check.rc.url=http\://localhost
-reddatabase.check.url=http\://localhost
-reddatabase.get-files.url=http\://localhost/?project\=redexpert&version\="""
-
+    context += urls
+    
     with open(user_properties_file, 'w') as f:
         f.write(context)
 

@@ -26,6 +26,22 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 "link": "http://builds.red-soft.biz/release_hub/red_expert/2023.10/download/red_expert:bin:2023.10:zip"
             }
             init_response(data)
+        elif "project" in url_path:
+            data = {
+                "base_url": "http://builds.red-soft.biz",
+                "version": "9999.99",
+                "changelog": {
+                "ru": "Добавлено:",
+                "en": "Added:"
+                },
+                "files": [
+                    {
+                        "FILE_NAME": "RedExpert-9999.99.zip",
+                        "FILE_PATH": "/release_hub/red_expert/2023.10/download/red_expert:bin:2023.10:zip"
+                    },]
+
+            }
+            init_response(data)       
         else:
             data = {
                 "version": "9999.99",
