@@ -42,6 +42,8 @@ test_full_check
     Select From Main Menu    Database|Database Backup/Restore
     
     Check All Checkboxes
+    Select Tab    Backup
+    Check All Checkboxes
     Sleep    3s
     Clear Text Field     fileLogFieldBackup
     Type Into Text Field    fileLogFieldBackup    ${log_path}
@@ -57,14 +59,18 @@ test_full_check
     File Should Exist    ${log_path}
     File Should Exist    ${bk_path} 
     Select Main Window
+    ${mew_db_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /employee_restore.fdb1
+    Clear Text Field    databaseFileField
+    Type Into Text Field    databaseFileField    ${mew_db_path}
+
     Select Tab    Restore   
     Check All Checkboxes
-
     Push Button    restoreButton
     Sleep    2s
-    Select Dialog    Message
+    Select Dialog    Confirmation
     Label Text Should Be    0    Restore completed successfully!
-    Push Button    OK
+    Label Text Should Be    1    Register restored database?
+    Push Button    No
 
     #delete files
-    Remove Files    ${log_path}    ${bk_path}
+    Remove Files    ${log_path}    ${bk_path}    ${mew_db_path}
