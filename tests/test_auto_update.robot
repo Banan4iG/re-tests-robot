@@ -8,7 +8,7 @@ Test Teardown    Teardown
 old_api
     Run Server
     Backup User Properties
-    Set Urls    urls=\nupdate.use.https=false \n reddatabase.check.rc.url=http\://localhost\nreddatabase.check.url=http\://localhost\nreddatabase.get-files.url=http\://localhost/?project\=redexpert&version\=
+    Set Urls    urls=\nupdate.use.https=false \n reddatabase.check.rc.url=http\://localhost\nreddatabase.check.url=http\://localhost\nreddatabase.get-files.url=http\://localhost/?project\=redexpert&version\=    
     ${path_to_exe}=    Copy Dist Path
     Start Red Expert    ${path_to_exe}
     Select Window    regexp=^Red.*
@@ -24,7 +24,7 @@ old_api
     Push Button      No
     Select Dialog    Message
     Push Button      OK
-    System Exit
+    System Exit    0
     Sleep       10s
     Start Red Expert    ${path_to_exe}
     Select Window    regexp=^Red Expert - 2023\.10.*
@@ -32,7 +32,7 @@ old_api
 new_api
     Run Server
     Backup User Properties
-    Set Urls    urls=\nupdate.use.https=false\nupdate.check.url=http\://localhost/?project=redexpert\nupdate.check.rc.url=http\://localhost/?project=redexpert&showrc=true
+    Set Urls   urls=\nupdate.use.https=false\nupdate.check.url=http\://localhost/?project=redexpert\nupdate.check.rc.url=http\://localhost/?project=redexpert&showrc=true
     ${path_to_exe}=    Copy Dist Path
     Start Red Expert    ${path_to_exe}
     Select Window    regexp=^Red.*
@@ -49,7 +49,7 @@ new_api
     Push Button      No
     Select Dialog    Message
     Push Button      OK
-    System Exit
+    System Exit    0
     Sleep       10s
     Start Red Expert    ${path_to_exe}
     Select Window    regexp=^Red Expert - 2023\.10.*
