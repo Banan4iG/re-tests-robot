@@ -11,6 +11,9 @@ test_execute_3
     Sleep    10s
 
 test_execute_5
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    Skip If    ${{$ver != '5.0'}}
     Init    test_script5.sql
     Sleep    5s
 

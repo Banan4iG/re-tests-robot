@@ -23,7 +23,7 @@ test_4
 action
     [Arguments]    ${type}
     Open connection
-    Select From Tree Node Popup Menu   0    New Connection|Tables (10)|EMPLOYEE    SQL|${type} statement       
+    Select From Tree Node Popup Menu   0    New Connection|Tables (10)|EMPLOYEE    Generate SQL|${type} statement       
     Send Keyboard Event    VK_Z   CTRL_MASK
     ${res}=    Get Text Field Value    0
     Should Be Equal As Strings    ${res}     second=
