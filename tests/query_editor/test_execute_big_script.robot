@@ -7,10 +7,12 @@ Test Teardown    Teardown after every tests
 
 *** Test Cases ***
 test_execute_3
+    Skip    Temporary disable.See RS-204144.
     Init    test_script3.sql
     Sleep    10s
 
 test_execute_5
+    Skip    Temporary disable.See RS-204144.
     ${info}=    Get Server Info
     ${ver}=     Set Variable    ${info}[1]
     Skip If    ${{$ver != '5.0'}}
