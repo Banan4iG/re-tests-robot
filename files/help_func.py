@@ -7,6 +7,15 @@ import tempfile
 import firebird.driver as fdb
 from firebird.driver import driver_config, connect_server, SrvInfoCode
 from pathlib import Path
+import psutil
+
+
+def kill_redexpert():
+    time.sleep(10)
+    bin = "" if platform.system() == "Linux" else ".exe"
+    for proc in psutil.process_iter():
+        if proc.name() == f'RedExpert64{bin}':
+            proc.terminate()
 
 def run_server():
     PYTHON = os.environ.get('PYTHON')

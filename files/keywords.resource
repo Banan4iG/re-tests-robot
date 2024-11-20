@@ -7,7 +7,13 @@ Library    help_func.py
 Setup before every tests
     ${path_to_exe}=    Get Path
     Log    ${path_to_exe}    console=True
-    Start Application    red_expert    ${path_to_exe}    timeout=20
+    TRY
+        Start Application    red_expert    ${path_to_exe}    timeout=20   
+    EXCEPT    RemoteSwingLibraryTimeoutError: Agent port not received before timeout
+        Log    Red Expert failed to launch    console=True
+        Kill RedExpert
+    END
+
     Select Window    regexp=^Red.*
 
 Teardown after every tests
