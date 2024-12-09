@@ -361,3 +361,18 @@ def create_database(script_path: str, base_path: str):
     bin_dir = "bin/" if platform.system() == "Linux" else ""
     bin = "" if platform.system() == "Linux" else ".exe"
     subprocess.call([f"{home_directory}{bin_dir}isql{bin}",  "-q", "-i", f"\"{script_path}\""])
+
+def build_procedure():
+    import firebird.driver as fdb
+    with fdb.connect("employee", user="SYSDBA", password="masterkey") as con:
+        with con.cursor() as cur:
+            results = cur.execute("SELECT RDB$KEYWORD_NAME FROM RDB$KEYWORDS WHERE RDB$KEYWORD_RESERVED='false'")
+            res = results.fetchall()
+        
+        create_procudere_script = "CREATE OR ALTER PROCEDURE DECLARE_KEYWORDS ( NUM_ENTRIES INT ) AS"
+        for row in res:
+            create_procudere_script += f" DECLARE {row[0]} INT;\n"
+        create_procudere_script += " BEGIN END"
+
+    execute_immediate(create_procudere_script)
+    return create_procudere_script
