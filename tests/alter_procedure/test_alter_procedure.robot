@@ -25,13 +25,13 @@ alter_ddl
     Should Be Equal As Strings    ${value}    [['66']]
 
 alter_add_input_par
-    Add par    CREATE OR ALTER PROCEDURE TEST (PAR0 INTEGER) RETURNS ( TOT INTEGER ) AS BEGIN tot = 55; END    Input Parameters    CREATE OR ALTER PROCEDURE TEST ( PAR0 INTEGER, PAR1 VARCHAR(10) CHARACTER SET UTF8 NOT NULL DEFAULT test, PAR2 EMPNO, PAR3 TYPE OF CUSTNO, PAR4 TYPE OF COLUMN COUNTRY.COUNTRY ) RETURNS ( TOT INTEGER ) AS BEGIN tot = 55; END
+    Add par    CREATE OR ALTER PROCEDURE TEST (PAR0 INTEGER) RETURNS ( TOT INTEGER ) AS BEGIN tot = 55; END    Input Parameters    CREATE OR ALTER PROCEDURE TEST ( PAR0 INTEGER, PAR1 EMPNO, PAR2 TYPE OF CUSTNO, PAR3 TYPE OF COLUMN COUNTRY.COUNTRY, PAR4 VARCHAR(10) CHARACTER SET UTF8 NOT NULL DEFAULT 'test' ) RETURNS ( TOT INTEGER ) AS BEGIN tot = 55; END
     
 alter_add_out_par
-    Add par    CREATE OR ALTER PROCEDURE TEST RETURNS ( PAR0 INTEGER ) AS BEGIN PAR0 = 55; END    Output Parameters    CREATE OR ALTER PROCEDURE TEST RETURNS ( PAR0 INTEGER, PAR1 VARCHAR(10) CHARACTER SET UTF8 NOT NULL, PAR2 EMPNO, PAR3 TYPE OF CUSTNO, PAR4 TYPE OF COLUMN COUNTRY.COUNTRY ) AS BEGIN PAR0 = 55; END
+    Add par    CREATE OR ALTER PROCEDURE TEST RETURNS ( PAR0 INTEGER ) AS BEGIN PAR0 = 55; END    Output Parameters    CREATE OR ALTER PROCEDURE TEST RETURNS ( PAR0 INTEGER, PAR1 EMPNO, PAR2 TYPE OF CUSTNO, PAR3 TYPE OF COLUMN COUNTRY.COUNTRY, PAR4 VARCHAR(10) CHARACTER SET UTF8 NOT NULL ) AS BEGIN PAR0 = 55; END
 
 alter_add_var
-    Add par    CREATE OR ALTER PROCEDURE TEST RETURNS ( TOT INTEGER ) AS DECLARE PAR0 INTEGER; BEGIN tot = 55; END    Variables    CREATE OR ALTER PROCEDURE TEST RETURNS ( TOT INTEGER ) AS DECLARE PAR0 INTEGER; DECLARE PAR1 VARCHAR(10) CHARACTER SET UTF8 NOT NULL DEFAULT test; DECLARE PAR2 EMPNO; DECLARE PAR3 TYPE OF CUSTNO; DECLARE PAR4 TYPE OF COLUMN COUNTRY.COUNTRY; BEGIN tot = 55; END
+    Add par    CREATE OR ALTER PROCEDURE TEST RETURNS ( TOT INTEGER ) AS DECLARE PAR0 INTEGER; BEGIN tot = 55; END    Variables    CREATE OR ALTER PROCEDURE TEST RETURNS ( TOT INTEGER ) AS DECLARE PAR0 INTEGER; DECLARE PAR1 EMPNO; DECLARE PAR2 TYPE OF CUSTNO; DECLARE PAR3 TYPE OF COLUMN COUNTRY.COUNTRY; DECLARE PAR4 VARCHAR(10) CHARACTER SET UTF8 NOT NULL DEFAULT 'test'; BEGIN tot = 55; END
 
 alter_add_cursor
     Lock Employee
@@ -56,11 +56,10 @@ alter_add_cursor
     Push Button    submitButton
     Select Dialog    Edit procedure
     Push Button    commitButton
-    Should Be Equal As Strings    ${new_ddl1}    CREATE OR ALTER PROCEDURE TEST RETURNS ( PAR0 INTEGER ) AS DECLARE PAR1 CURSOR FOR (SELECT * FROM EMPLOYEE); DECLARE PAR2 SCROLL CURSOR FOR (SELECT * FROM EMPLOYEE); BEGIN PAR0 = 55; END    strip_spaces=${True}    collapse_spaces=${True}
+    Should Be Equal As Strings    ${new_ddl1}    CREATE OR ALTER PROCEDURE TEST RETURNS ( PAR0 INTEGER ) AS DECLARE PAR1 CURSOR FOR (SELECT * FROM EMPLOYEE); DECLARE PAR2 SCROLL CURSOR FOR (SELECT * FROM COUNTRY); BEGIN PAR0 = 55; END    strip_spaces=${True}    collapse_spaces=${True}
     Select Main Window
-    # ${new_ddl2}=    Get Text Field Value    2
-    # Should Be Equal As Strings    ${new_ddl2}    ${ddl}    strip_spaces=${True}    collapse_spaces=${True}
-
+    ${new_ddl2}=    Get Text Field Value    2
+    Should Be Equal As Strings    ${new_ddl2}    CREATE OR ALTER PROCEDURE TEST RETURNS ( PAR0 INTEGER ) AS DECLARE PAR1 CURSOR FOR (SELECT * FROM EMPLOYEE); DECLARE PAR2 SCROLL CURSOR FOR (SELECT * FROM COUNTRY); BEGIN PAR0 = 55; END    strip_spaces=${True}    collapse_spaces=${True}
 
 alter_remove_input_par
     Remove par    CREATE OR ALTER PROCEDURE TEST ( PAR0 INTEGER, PAR1 VARCHAR(10) CHARACTER SET UTF8 NOT NULL, PAR2 EMPNO, PAR3 TYPE OF CUSTNO, PAR4 TYPE OF COLUMN COUNTRY.COUNTRY ) RETURNS ( TOT INTEGER ) AS BEGIN tot = 55; END    Input Parameters    CREATE OR ALTER PROCEDURE TEST ( PAR0 INTEGER ) RETURNS ( TOT INTEGER ) AS BEGIN tot = 55; END    
@@ -91,8 +90,8 @@ alter_remove_cursor
     Push Button    commitButton
     Should Be Equal As Strings    ${new_ddl1}    CREATE OR ALTER PROCEDURE TEST RETURNS ( TOT INTEGER ) AS DECLARE PAR0 INTEGER; BEGIN tot = 55; END    strip_spaces=${True}    collapse_spaces=${True}
     Select Main Window
-    # ${new_ddl2}=    Get Text Field Value    2
-    # Should Be Equal As Strings    ${new_ddl2}    ${ddl}    strip_spaces=${True}    collapse_spaces=${True}
+    ${new_ddl2}=    Get Text Field Value    2
+    Should Be Equal As Strings    ${new_ddl2}    CREATE OR ALTER PROCEDURE TEST RETURNS ( TOT INTEGER ) AS DECLARE PAR0 INTEGER; BEGIN tot = 55; END    strip_spaces=${True}    collapse_spaces=${True}
 
 move_input_par
     Move par    CREATE OR ALTER PROCEDURE TEST ( PAR1 INTEGER, PAR2 INTEGER, PAR3 INTEGER, PAR4 INTEGER ) AS BEGIN END    Input Parameters    CREATE OR ALTER PROCEDURE TEST ( PAR1 INTEGER, PAR3 INTEGER, PAR2 INTEGER, PAR4 INTEGER ) AS BEGIN END 
@@ -114,27 +113,28 @@ Add par
     Open connection
     Click On Tree Node   0    New Connection|Procedures (11)|TEST   2
     Select Tab As Context    ${tab}
+
     Push Button    addRowButton
     Type Into Table Cell    0    1    Name    PAR1
-    Set Table Cell Value    0    1    Datatype    VARCHAR
-    Type Into Table Cell    0    1    Size or precision    10
-    Type Into Table Cell    0    1    Default Value   test
-    Set Table Cell Value    0    1    Encoding    UTF8
-    Click On Table Cell     0    1    NOT NULL
+    Set Table Cell Value    0    1    Domain    EMPNO
 
     Push Button    addRowButton
     Type Into Table Cell    0    2    Name    PAR2
-    Set Table Cell Value    0    2    Domain    EMPNO
-
+    Click On Table Cell     0    2    Type of
+    Set Table Cell Value    0    2    Domain    CUSTNO
+    
     Push Button    addRowButton
     Type Into Table Cell    0    3    Name    PAR3
     Click On Table Cell     0    3    Type of
-    Set Table Cell Value    0    3    Domain    CUSTNO
+    Set Table Cell Value    0    3    Table    COUNTRY
     
     Push Button    addRowButton
     Type Into Table Cell    0    4    Name    PAR4
-    Click On Table Cell     0    4    Type of
-    Set Table Cell Value    0    4    Table    COUNTRY
+    Set Table Cell Value    0    4    Datatype    VARCHAR
+    Type Into Table Cell    0    4    Size or precision    10
+    Type Into Table Cell    0    4    Default Value   'test'
+    Set Table Cell Value    0    4    Encoding    UTF8
+    Click On Table Cell     0    4    NOT NULL
 
     Select Main Window
     ${new_ddl1}=    Get Text Field Value    1
@@ -144,9 +144,8 @@ Add par
     Push Button    commitButton
     Should Be Equal As Strings    ${new_ddl1}    ${ddl}    strip_spaces=${True}    collapse_spaces=${True}
     Select Main Window
-    # ${new_ddl2}=    Get Text Field Value    1
-    # Should Be Equal As Strings    ${new_ddl2}    ${ddl}    strip_spaces=${True}    collapse_spaces=${True}
-
+    ${new_ddl2}=    Get Text Field Value    1
+    Should Be Equal As Strings    ${new_ddl2}    ${ddl}    strip_spaces=${True}    collapse_spaces=${True}
 
 Remove par
     [Arguments]    ${init_proc}    ${tab}    ${ddl}
@@ -168,8 +167,8 @@ Remove par
     Push Button    commitButton
     Should Be Equal As Strings    ${new_ddl1}    ${ddl}    strip_spaces=${True}    collapse_spaces=${True}
     Select Main Window
-    # ${new_ddl2}=    Get Text Field Value    1
-    # Should Be Equal As Strings    ${new_ddl2}    ${ddl}    strip_spaces=${True}    collapse_spaces=${True}
+    ${new_ddl2}=    Get Text Field Value    1
+    Should Be Equal As Strings    ${new_ddl2}    ${ddl}    strip_spaces=${True}    collapse_spaces=${True}
 
 
 Move par
