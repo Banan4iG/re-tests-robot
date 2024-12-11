@@ -369,9 +369,9 @@ def build_procedure():
             results = cur.execute("SELECT RDB$KEYWORD_NAME FROM RDB$KEYWORDS WHERE RDB$KEYWORD_RESERVED='false'")
             res = results.fetchall()
         
-        create_procudere_script = "CREATE OR ALTER PROCEDURE DECLARE_KEYWORDS ( NUM_ENTRIES INT ) AS"
+        create_procudere_script = "CREATE OR ALTER PROCEDURE DECLARE_KEYWORDS ( NUM_ENTRIES INTEGER ) AS"
         for row in res:
-            create_procudere_script += f" DECLARE {row[0]} INT;\n"
+            create_procudere_script += f" DECLARE {row[0]} INTEGER;\n"
         create_procudere_script += " BEGIN END"
 
     execute_immediate(create_procudere_script)
