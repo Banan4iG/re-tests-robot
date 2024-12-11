@@ -18,6 +18,19 @@ test_1
     Clear Text Field    0
     Check Tool
 
+test_cancel
+    Lock Employee
+    Check Tool
+    Open connection
+    Sleep    2s
+    Clear Text Field    0
+    Type Into Text Field    0    EXECUTE BLOCK AS BEGIN WHILE (1 = 1) DO BEGIN END end
+    Push Button    execute-statement-command
+    Sleep    2s
+    Push Button    stop-execution-command
+    Clear Text Field    0
+    Check Tool
+
 *** Keywords ***
 Check Tool
     Select From Main Menu    System|Preferences
