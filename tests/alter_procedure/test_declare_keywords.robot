@@ -6,6 +6,9 @@ Test Teardown    Teardown after every tests
 
 *** Test Cases ***
 test_1
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    Skip If    ${{$ver != '5.0'}}
     Lock Employee
     ${create_procudere_script}=     Build Procedure
     Open connection
