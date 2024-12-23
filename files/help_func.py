@@ -4,10 +4,11 @@ import shutil
 import subprocess
 import time
 import tempfile
+import psutil
+import openpyxl
 import firebird.driver as fdb
 from firebird.driver import driver_config, connect_server, SrvInfoCode
 from pathlib import Path
-import psutil
 
 
 def kill_redexpert():
@@ -20,15 +21,16 @@ def kill_redexpert():
 def run_server():
     PYTHON = os.environ.get('PYTHON')
     global p 
-    p = subprocess.Popen([PYTHON, "./files/run_server.py"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    # p = Popen(["python", "./files/run_server.py"])
+    # p = subprocess.Popen([PYTHON, "./files/run_server.py"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p = subprocess.Popen(["python", "./files/run_server.py"])
     time.sleep(5)
 
 def stop_server():
     p.terminate()
 
 def get_build_no():
-    BUILD = os.environ.get('BUILD')
+    # BUILD = os.environ.get('BUILD')
+    BUILD = "202408"
     return BUILD
 
 def backup_savedconnections_file():
@@ -104,6 +106,7 @@ def clear_history_files():
     history_file = os.path.join(home_dir, f'.redexpert/{build_no}/ConnectionHistory.xml')
     saved_conn_file = os.path.join(home_dir, f'.redexpert/{build_no}/savedconnections.xml')
     shortcuts_file = os.path.join(home_dir, f'.redexpert/{build_no}/eq.shortcuts.properties')
+    user_panel_state_file = os.path.join(home_dir, f'.redexpert/{build_no}/re.user.panels.state')
     query_dir = os.path.join(home_dir, f'.redexpert/{build_no}/QueryEditor')
     if os.path.exists(query_dir):
         shutil.rmtree(query_dir)
@@ -117,15 +120,15 @@ def clear_history_files():
             with open(saved_conn_file, 'w') as f:
                 f.write(context)
 
-    if os.path.exists(history_file):
-        os.remove(history_file)
-    if os.path.exists(shortcuts_file):
-        os.remove(shortcuts_file)
+    for file in [history_file, shortcuts_file, user_panel_state_file]:
+        if os.path.exists(file):
+            os.remove(file)
 
 def copy_dist_path():
-    DIST = os.environ.get('DIST')
-    ARCH = os.environ.get('ARCH')
-    # DIST = "D:/Program Files/RedExpert"
+    # DIST = os.environ.get('DIST')
+    # ARCH = os.environ.get('ARCH')
+    DIST = "C:/Program Files/RedExpert"
+    ARCH = "x86_64"
     tmp_dir = tempfile.gettempdir()
 
     if os.path.exists(tmp_dir + '/RedExpert'):
@@ -166,6 +169,31 @@ def get_server_info():
                 srv_version = srv_ver
                 break
         return home_directory, version, srv_version
+
+# def backup_security():
+#     home_directory, version, srv_version = get_server_info()
+#     type_db = "security"
+#     if version == "3.0":
+#         type_db += "3.FDB"
+#     else:
+#         type_db += "5.FDB"
+#     if os.path.exists(f"{home_directory}/{type_db}.fbk"):
+#         os.remove(f"{home_directory}/{type_db}.fbk")
+#         shutil.copy(f"{home_directory}/{type_db}", f"{home_directory}/{type_db}.fbk")
+#     time.sleep(1)
+
+# def restore_security():
+#     home_directory, version, srv_version = get_server_info()
+#     type_db = "security"
+#     if version == "3.0":
+#         type_db += "3.FDB"
+#     else:
+#         type_db += "5.FDB"
+#     if os.path.exists(f"{home_directory}/{type_db}.fbk"):
+#         os.remove(f"{home_directory}/{type_db}")
+#         shutil.copy(f"{home_directory}/{type_db}.fbk", f"{home_directory}/{type_db}")
+#         os.remove(f"{home_directory}/{type_db}.fbk")
+#         time.sleep(1)      
 
 def lock_employee():
     home_directory, version, srv_version = get_server_info()
@@ -363,7 +391,6 @@ def create_database(script_path: str, base_path: str):
     subprocess.call([f"{home_directory}{bin_dir}isql{bin}",  "-q", "-i", f"\"{script_path}\""])
 
 def build_procedure():
-    import firebird.driver as fdb
     with fdb.connect("employee", user="SYSDBA", password="masterkey") as con:
         with con.cursor() as cur:
             results = cur.execute("SELECT RDB$KEYWORD_NAME FROM RDB$KEYWORDS WHERE RDB$KEYWORD_RESERVED='false'")
@@ -376,3 +403,28 @@ def build_procedure():
 
     execute_immediate(create_procudere_script)
     return create_procudere_script
+
+
+def check_xlsx(xlsx_path: str):
+    import warnings
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        workbook = openpyxl.load_workbook(xlsx_path)
+    
+    worksheet = workbook.active
+    result = ""
+    for i in range(0, worksheet.max_row):
+        for col in worksheet.iter_cols(1, worksheet.max_column):
+            result += f"{col[i].value}\t" 
+        result += "\n"
+    
+    return result
+
+def add_rows():
+    execute_immediate("CREATE TABLE TEST_TABLE (ID BIGINT)")
+    with fdb.connect("employee") as con:
+        
+        for i in range(1048576):
+            con.execute_immediate(f"INSERT INTO TEST_TABLE VALUES ({i})")
+    
+        con.commit()
