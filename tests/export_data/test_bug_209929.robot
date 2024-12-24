@@ -24,7 +24,7 @@ test_couldnot_create_folder
     Push Button    exportButton
 
     Select Dialog    Warning
-    Label Text Should Be    0    Couldnt create directory for exported BLOBs
+    Label Text Should Be    0    Could not create directory for exported BLOBs
     Push Button    OK
     Remove File    ${blob_path}
 
