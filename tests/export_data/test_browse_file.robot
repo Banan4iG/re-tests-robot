@@ -34,6 +34,31 @@ test_1
     ${current_export_path}=    Get Text Field Value    filePathField
     Should Be Equal As Strings    ${current_export_path}    ${export_path_sql}    collapse_spaces=${True}    strip_spaces=${True}
 
+test_blob
+    Open connection
+    Clear Text Field    0
+    Type Into Text Field    0    select * from PROJECT
+    Push Button    execute-script-command
+    Sleep    1s
+    Select Table Cell Area    0    1    2    0    2    
+    Select From Table Cell Popup Menu On Selected Cells    0    Export|Selection
+    Select Dialog    Export Data
+    Select From Combo Box    typeCombo    CSV
+    
+    Clear Text Field    filePathField
+    Type Into Text Field    filePathField    ${TEMPDIR}/export.csv
+
+    Push Button    browseFolderButton   
+    Select Dialog    Select Export File Path
+    Clear Text Field    0
+    Type Into Text Field    0    ${TEMPDIR}/export
+    Push Button    Select
+    Select Dialog    Export Data
+
+    ${export_path_blob}=     Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.lob
+    ${current_export_path}=    Get Text Field Value    folderPathField
+    Should Be Equal As Strings    ${current_export_path}    ${export_path_blob}    collapse_spaces=${True}    strip_spaces=${True}
+
 
 *** Keywords ***
 Select Export File Path
