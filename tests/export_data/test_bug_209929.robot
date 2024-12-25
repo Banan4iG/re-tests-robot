@@ -82,6 +82,9 @@ test_export_in_existing_folder
     Should Be Equal As Strings    ${content2}    Integrate the hand-writing recognition module into the universal language translator.    strip_spaces=${True}    collapse_spaces=${True}
     Should Be Equal As Strings    ${content3}    Develop a prototype for the automobile version of the hand-held map browsing device.    strip_spaces=${True}    collapse_spaces=${True}
 
+    Remove File    ${export_path}
+    Remove Directory    ${blob_path}    ${True}
+
 *** Keywords ***
 Init
     Open connection
