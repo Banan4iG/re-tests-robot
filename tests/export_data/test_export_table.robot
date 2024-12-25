@@ -23,7 +23,9 @@ test_1
     Type Into Text Field    filePathField    ${export_path}
     Uncheck All Checkboxes
     ${expected_content}=    Catenate    SEPARATOR=\n    USA;Dollar    England;Pound    Canada;CdnDlr    Switzerland;SFranc    Japan;Yen    Italy;Euro    France;Euro    Germany;Euro    Australia;ADollar    Hong Kong;HKDollar    Netherlands;Euro    Belgium;Euro    Austria;Euro    Fiji;FDollar    Russia;Ruble    Romania;RLeu    ${EMPTY}
-    Push Button    exportButton 
+    Push Button    exportButton
+    Sleep    5s
+    Close Dialog    Message
     File Should Exist    ${export_path}
     ${content}=    Get File    ${export_path}
     Should Be Equal As Strings    ${content}    ${expected_content}

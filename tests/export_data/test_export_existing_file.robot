@@ -14,7 +14,7 @@ test_overwrite_yes
     
     Init double
     Push Button    Yes
-    
+    Sleep    5s
     File Should Exist    ${export_path}
     ${content2}=    Get File    ${export_path}
     Should Not Be Equal As Strings    ${content1}    ${content2}
@@ -52,7 +52,7 @@ Init
     Clear Text Field    filePathField
     Type Into Text Field    filePathField    ${export_path}
     Push Button    exportButton 
-    Sleep    1s
+    Sleep    5s
     Close Dialog    Message
 
     RETURN    ${export_path}

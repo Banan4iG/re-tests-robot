@@ -22,12 +22,6 @@ test_CSV_export_to_folder
     Type Into Text Field    folderPathField    ${export_blob}
 
     Check Check Box    saveBlobsIndividuallyCheck
-      
-    Push Button    exportButton
-    Sleep    1s
-
-    Directory Should Exist    ${export_blob}
-    Directory Should Not Be Empty    ${export_blob}   
     
     ${blob_path1}    ${blob_path2}    ${blob_path3}=    Check blobs in folder    ${export_blob}
 
@@ -49,9 +43,6 @@ test_XML_export_to_folder
     Clear Text Field    folderPathField
     Type Into Text Field    folderPathField    ${export_blob}
     Check Check Box    saveBlobsIndividuallyCheck
-      
-    Push Button    exportButton
-    Sleep    1s
     
     ${blob_path1}    ${blob_path2}    ${blob_path3}=    Check blobs in folder    ${export_blob}
 
@@ -74,8 +65,6 @@ test_XLSX_export_to_folder
     Type Into Text Field    folderPathField    ${export_blob}
     Check Check Box    saveBlobsIndividuallyCheck
     Check Check Box    addColumnHeadersCheck
-    Push Button    exportButton
-    Sleep    1s 
     
     ${blob_path1}    ${blob_path2}    ${blob_path3}=    Check blobs in folder    ${export_blob}
 
@@ -101,9 +90,6 @@ test_SQL_export_to_folder
     Check Check Box    addCreateTableStatementCheck
     Clear Text Field    exportTableNameField
     Type Into Text Field    exportTableNameField    TEST_TABLE
-
-    Push Button    exportButton
-    Sleep    1s 
     
     ${blob_path1}    ${blob_path2}    ${blob_path3}=    Check blobs in folder    ${export_blob}
 
@@ -125,8 +111,8 @@ test_CSV_export_to_file
     Clear Text Field    folderPathField
     Type Into Text Field    folderPathField    ${export_blob}
     Push Button    exportButton
-    Sleep    1s
-    
+    Sleep    5s
+    Close Dialog    Message
     ${expected_content}=    Catenate    SEPARATOR=\n    Video Database;:h00000000_00000059    DigiPizza;:h00000059_00000077    AutoMap;:h000000d0_00000055    ${EMPTY}
     File Should Exist    ${export_path}
     ${content}=    Get File    ${export_path}
@@ -146,8 +132,8 @@ test_XML_export_to_file
     Clear Text Field    folderPathField
     Type Into Text Field    folderPathField    ${export_blob}
     Push Button    exportButton
-    Sleep    1s
-    
+    Sleep    5s
+    Close Dialog    Message
     VAR    ${expected_content}    <?xml version="1.0" encoding="UTF-8" standalone="no"?> <result-set> <data> <row number="1"> <PROJ_NAME><![CDATA[Video Database]]></PROJ_NAME> <PROJ_DESC>:h00000000_00000059</PROJ_DESC> </row> <row number="2"> <PROJ_NAME><![CDATA[DigiPizza]]></PROJ_NAME> <PROJ_DESC>:h00000059_00000077</PROJ_DESC> </row> <row number="3"> <PROJ_NAME><![CDATA[AutoMap]]></PROJ_NAME> <PROJ_DESC>:h000000d0_00000055</PROJ_DESC> </row> </data> </result-set>
     File Should Exist    ${export_path}
     ${content}=    Get File    ${export_path}
@@ -168,8 +154,8 @@ test_XLSX_export_to_file
     Type Into Text Field    folderPathField    ${export_blob}
 
     Push Button    exportButton
-    Sleep    1s
-    
+    Sleep    5s
+    Close Dialog    Message
     VAR    ${expected_content}    None None Video Database :h00000000_00000059 DigiPizza :h00000059_00000077 AutoMap :h000000d0_00000055
     File Should Exist    ${export_path}
     ${content}=    Check Xlsx    ${export_path}
@@ -194,8 +180,8 @@ test_SQL_export_to_file
     Type Into Text Field    exportTableNameField    TEST_TABLE
 
     Push Button    exportButton
-    Sleep    1s
-    
+    Sleep    5s
+    Close Dialog    Message
     VAR    ${expected_content}    -- table creating -- CREATE TABLE TEST_TABLE ( PROJ_NAME BLOB SUB_TYPE TEXT, PROJ_DESC BLOB SUB_TYPE TEXT ); -- inserting data -- SET BLOBFILE '${export_blob}'; INSERT INTO TEST_TABLE ( PROJ_NAME, PROJ_DESC ) VALUES ( 'Video Database', :h00000000_00000059 ); INSERT INTO TEST_TABLE ( PROJ_NAME, PROJ_DESC ) VALUES ( 'DigiPizza', :h00000059_00000077 ); INSERT INTO TEST_TABLE ( PROJ_NAME, PROJ_DESC ) VALUES ( 'AutoMap', :h000000d0_00000055 );
     File Should Exist    ${export_path}
     ${content}=    Get File    ${export_path}
@@ -217,6 +203,9 @@ Init
 
 Check blobs in folder
     [Arguments]       ${export_blob}
+    Push Button    exportButton
+    Sleep    5s
+    Close Dialog    Message
     Directory Should Exist    ${export_blob}
     Directory Should Not Be Empty    ${export_blob}
     ${blob_path1}=     Catenate    SEPARATOR=    ${export_blob}    ${/}PROJ_DESC_0.txt

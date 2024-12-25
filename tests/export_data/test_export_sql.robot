@@ -115,7 +115,8 @@ Init SQL
 Check content
     [Arguments]   ${export_path}    ${expected_content}
     Push Button    exportButton
-    Sleep    2s
+    Sleep    5s
+    Close Dialog    Message
     File Should Exist    ${export_path}
     ${content}=    Get File    ${export_path}
     Should Be Equal As Strings    ${content}    ${expected_content}    strip_spaces=${True}    collapse_spaces=${True}

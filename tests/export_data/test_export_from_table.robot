@@ -25,20 +25,8 @@ test_export_selection
     Click On Table Cell    0    ${row_phone}    1
     Click On Table Cell    0    ${row_phone}    0
     
-    Select From Combo Box    typeCombo    CSV
-    ${export_path}=     Catenate    SEPARATOR=    ${TEMPDIR}    /export.csv
-    Remove Files    ${export_path}
-
-    Select Tab  Options
-    Select From Combo Box    columnDelimiterCombo    ;
-    Clear Text Field    filePathField
-    Type Into Text Field    filePathField    ${export_path}
-    Uncheck All Checkboxes
     ${expected_content}=    Catenate    SEPARATOR=\n    Nordstrom;1991-10-02T00:00    Leung;1992-02-18T00:00    O''Brien;1992-03-23T00:00    Burbank;1992-04-15T00:00    Sutherland;1992-04-20T00:00    Bishop;1992-06-01T00:00    ${EMPTY}
-    Push Button    exportButton 
-    File Should Exist    ${export_path}
-    ${content}=    Get File    ${export_path}
-    Should Be Equal As Strings    ${content}    ${expected_content}
+    Check    ${expected_content}
 
 test_export_table
     Open connection
@@ -48,17 +36,24 @@ test_export_table
     Select From Table Cell Popup Menu    0    0    0   Export|Table
 
     Select Dialog    Export Data
+    
+    ${expected_content}=    Catenate    SEPARATOR=\n    USA;Dollar    England;Pound    Canada;CdnDlr    Switzerland;SFranc    Japan;Yen    Italy;Euro    France;Euro    Germany;Euro    Australia;ADollar    Hong Kong;HKDollar    Netherlands;Euro    Belgium;Euro    Austria;Euro    Fiji;FDollar    Russia;Ruble    Romania;RLeu    ${EMPTY}
+    Check   ${expected_content}
+
+*** Keywords ***
+Check
+    [Arguments]   ${expected_content}
     Select From Combo Box    typeCombo    CSV
     ${export_path}=     Catenate    SEPARATOR=    ${TEMPDIR}    /export.csv
     Remove Files    ${export_path}
-
     Select Tab  Options
     Select From Combo Box    columnDelimiterCombo    ;
     Clear Text Field    filePathField
     Type Into Text Field    filePathField    ${export_path}
     Uncheck All Checkboxes
-    ${expected_content}=    Catenate    SEPARATOR=\n    USA;Dollar    England;Pound    Canada;CdnDlr    Switzerland;SFranc    Japan;Yen    Italy;Euro    France;Euro    Germany;Euro    Australia;ADollar    Hong Kong;HKDollar    Netherlands;Euro    Belgium;Euro    Austria;Euro    Fiji;FDollar    Russia;Ruble    Romania;RLeu    ${EMPTY}
-    Push Button    exportButton 
+    Push Button    exportButton
+    Sleep    5s
+    Close Dialog    Message
     File Should Exist    ${export_path}
     ${content}=    Get File    ${export_path}
     Should Be Equal As Strings    ${content}    ${expected_content}

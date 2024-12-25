@@ -36,8 +36,6 @@ test_replace_null
     Check Check Box    replaceNullCheck
     Clear Text Field    replaceNullField
     Type Into Text Field    replaceNullField    LLUN
-    Push Button    exportButton
-
     ${expected_content}=    Catenate    SEPARATOR=\n    Carol;Nordstrom;420;1991-10-02T00:00    Luke;Leung;3;1992-02-18T00:00    Sue Anne;O''Brien;877;1992-03-23T00:00    Jennifer M.;Burbank;289;1992-04-15T00:00    Claudia;Sutherland;LLUN;1992-04-20T00:00    Dana;Bishop;290;1992-06-01T00:00    ${EMPTY}
     Check content    ${export_path}    ${expected_content}
 
@@ -108,7 +106,9 @@ Init CSV
 
 Check content
     [Arguments]   ${export_path}    ${expected_content}
-    Push Button    exportButton 
+    Push Button    exportButton
+    Sleep    5s
+    Close Dialog    Message
     File Should Exist    ${export_path}
     ${content}=    Get File    ${export_path}
     Should Be Equal As Strings    ${content}    ${expected_content}

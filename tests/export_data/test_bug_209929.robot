@@ -47,7 +47,7 @@ test_export_in_existing_folder
     Check Check Box    saveBlobsIndividuallyCheck
     Push Button    exportButton
     
-    Sleep    2s
+    Sleep    5s
     Close Dialog    Message
 
     ${content1}=    Get File    ${blob_path1}
@@ -72,7 +72,7 @@ test_export_in_existing_folder
     Label Text Should Be    0    Specified BLOBs folder is not empty, some files may be overridden.
     Label Text Should Be    1    Continue anyway?
     Push Button    Yes
-    Sleep   2s
+    Sleep   5s
     Close Dialog    Message
 
     ${content1}=    Get File    ${blob_path1}

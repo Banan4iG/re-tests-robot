@@ -20,12 +20,6 @@ test_CSV_export_to_folder
     Clear Text Field    folderPathField
     Type Into Text Field    folderPathField    ${export_blob}
     Check Check Box    saveBlobsIndividuallyCheck
-      
-    Push Button    exportButton
-    Sleep    1s
-
-    Directory Should Exist    ${export_blob}
-    Directory Should Not Be Empty    ${export_blob}
  
     ${blob_path1}    ${blob_path2}    ${blob_path3}    ${blob_path4}    ${blob_path5}    ${blob_path6}=    Check blobs in folder    ${export_blob}
 
@@ -47,10 +41,7 @@ test_XML_export_to_folder
     Clear Text Field    folderPathField
     Type Into Text Field    folderPathField    ${export_blob}
     Check Check Box    saveBlobsIndividuallyCheck
-      
-    Push Button    exportButton
-    Sleep    1s
-    
+
     ${blob_path1}    ${blob_path2}    ${blob_path3}    ${blob_path4}    ${blob_path5}    ${blob_path6}=    Check blobs in folder    ${export_blob}
 
     VAR    ${expected_content}    <?xml version="1.0" encoding="UTF-8" standalone="no"?> <result-set> <data> <row number="1"> <PROJ_ID><![CDATA[VBASE]]></PROJ_ID> <PROJ_NAME><![CDATA[Video Database]]></PROJ_NAME> <PROJ_DESC>${blob_path1}</PROJ_DESC> <TEAM_LEADER>45</TEAM_LEADER> <PRODUCT><![CDATA[software]]></PRODUCT> </row> <row number="2"> <PROJ_ID><![CDATA[DGPII]]></PROJ_ID> <PROJ_NAME><![CDATA[DigiPizza]]></PROJ_NAME> <PROJ_DESC>${blob_path2}</PROJ_DESC> <TEAM_LEADER>24</TEAM_LEADER> <PRODUCT><![CDATA[other]]></PRODUCT> </row> <row number="3"> <PROJ_ID><![CDATA[GUIDE]]></PROJ_ID> <PROJ_NAME><![CDATA[AutoMap]]></PROJ_NAME> <PROJ_DESC>${blob_path3}</PROJ_DESC> <TEAM_LEADER>20</TEAM_LEADER> <PRODUCT><![CDATA[hardware]]></PRODUCT> </row> <row number="4"> <PROJ_ID><![CDATA[MAPDB]]></PROJ_ID> <PROJ_NAME><![CDATA[MapBrowser port]]></PROJ_NAME> <PROJ_DESC>${blob_path4}</PROJ_DESC> <TEAM_LEADER>4</TEAM_LEADER> <PRODUCT><![CDATA[software]]></PRODUCT> </row> <row number="5"> <PROJ_ID><![CDATA[HWRII]]></PROJ_ID> <PROJ_NAME><![CDATA[Translator upgrade]]></PROJ_NAME> <PROJ_DESC>${blob_path5}</PROJ_DESC> <TEAM_LEADER/> <PRODUCT><![CDATA[software]]></PRODUCT> </row> <row number="6"> <PROJ_ID><![CDATA[MKTPR]]></PROJ_ID> <PROJ_NAME><![CDATA[Marketing project 3]]></PROJ_NAME> <PROJ_DESC>${blob_path6}</PROJ_DESC> <TEAM_LEADER>85</TEAM_LEADER> <PRODUCT><![CDATA[N/A]]></PRODUCT> </row> </data> </result-set>
@@ -72,9 +63,7 @@ test_XLSX_export_to_folder
     Type Into Text Field    folderPathField    ${export_blob}
     Check Check Box    saveBlobsIndividuallyCheck
     Check Check Box    addColumnHeadersCheck
-    Push Button    exportButton
-    Sleep    1s 
-    
+
     ${blob_path1}    ${blob_path2}    ${blob_path3}    ${blob_path4}    ${blob_path5}    ${blob_path6}=    Check blobs in folder    ${export_blob}
 
     VAR    ${expected_content}    PROJ_ID PROJ_NAME PROJ_DESC TEAM_LEADER PRODUCT VBASE Video Database ${blob_path1} 45.0 software DGPII DigiPizza ${blob_path2} 24.0 other GUIDE AutoMap ${blob_path3} 20.0 hardware MAPDB MapBrowser port ${blob_path4} 4.0 software HWRII Translator upgrade ${blob_path5} software MKTPR Marketing project 3 ${blob_path6} 85.0 N/A    
@@ -99,9 +88,6 @@ test_SQL_export_to_folder
     Check Check Box    addCreateTableStatementCheck
     Clear Text Field    exportTableNameField
     Type Into Text Field    exportTableNameField    TEST_TABLE
-
-    Push Button    exportButton
-    Sleep    1s 
     
     ${blob_path1}    ${blob_path2}    ${blob_path3}    ${blob_path4}    ${blob_path5}    ${blob_path6}=    Check blobs in folder    ${export_blob}
 
@@ -124,8 +110,8 @@ test_CSV_export_to_file
     Clear Text Field    folderPathField
     Type Into Text Field    folderPathField    ${export_blob}
     Push Button    exportButton
-    Sleep    1s
-    
+    Sleep    5s
+    Close Dialog    Message
     ${expected_content}=    Catenate    SEPARATOR=\n    VBASE;Video Database;:h00000000_00000059;45;software    DGPII;DigiPizza;:h00000059_00000077;24;other    GUIDE;AutoMap;:h000000d0_00000055;20;hardware    MAPDB;MapBrowser port;:h00000125_00000048;4;software    HWRII;Translator upgrade;:h0000016d_00000056;;software    MKTPR;Marketing project 3;:h000001c3_00000061;85;N/A    ${EMPTY}
     File Should Exist    ${export_path}
     ${content}=    Get File    ${export_path}
@@ -145,8 +131,8 @@ test_XML_export_to_file
     Clear Text Field    folderPathField
     Type Into Text Field    folderPathField    ${export_blob}
     Push Button    exportButton
-    Sleep    1s
-    
+    Sleep    5s
+    Close Dialog    Message
     VAR    ${expected_content}    <?xml version="1.0" encoding="UTF-8" standalone="no"?> <result-set> <data> <row number="1"> <PROJ_ID><![CDATA[VBASE]]></PROJ_ID> <PROJ_NAME><![CDATA[Video Database]]></PROJ_NAME> <PROJ_DESC>:h00000000_00000059</PROJ_DESC> <TEAM_LEADER>45</TEAM_LEADER> <PRODUCT><![CDATA[software]]></PRODUCT> </row> <row number="2"> <PROJ_ID><![CDATA[DGPII]]></PROJ_ID> <PROJ_NAME><![CDATA[DigiPizza]]></PROJ_NAME> <PROJ_DESC>:h00000059_00000077</PROJ_DESC> <TEAM_LEADER>24</TEAM_LEADER> <PRODUCT><![CDATA[other]]></PRODUCT> </row> <row number="3"> <PROJ_ID><![CDATA[GUIDE]]></PROJ_ID> <PROJ_NAME><![CDATA[AutoMap]]></PROJ_NAME> <PROJ_DESC>:h000000d0_00000055</PROJ_DESC> <TEAM_LEADER>20</TEAM_LEADER> <PRODUCT><![CDATA[hardware]]></PRODUCT> </row> <row number="4"> <PROJ_ID><![CDATA[MAPDB]]></PROJ_ID> <PROJ_NAME><![CDATA[MapBrowser port]]></PROJ_NAME> <PROJ_DESC>:h00000125_00000048</PROJ_DESC> <TEAM_LEADER>4</TEAM_LEADER> <PRODUCT><![CDATA[software]]></PRODUCT> </row> <row number="5"> <PROJ_ID><![CDATA[HWRII]]></PROJ_ID> <PROJ_NAME><![CDATA[Translator upgrade]]></PROJ_NAME> <PROJ_DESC>:h0000016d_00000056</PROJ_DESC> <TEAM_LEADER/> <PRODUCT><![CDATA[software]]></PRODUCT> </row> <row number="6"> <PROJ_ID><![CDATA[MKTPR]]></PROJ_ID> <PROJ_NAME><![CDATA[Marketing project 3]]></PROJ_NAME> <PROJ_DESC>:h000001c3_00000061</PROJ_DESC> <TEAM_LEADER>85</TEAM_LEADER> <PRODUCT><![CDATA[N/A]]></PRODUCT> </row> </data> </result-set>    
     File Should Exist    ${export_path}
     ${content}=    Get File    ${export_path}
@@ -167,8 +153,8 @@ test_XLSX_export_to_file
     Type Into Text Field    folderPathField    ${export_blob}
 
     Push Button    exportButton
-    Sleep    1s
-    
+    Sleep    5s
+    Close Dialog    Message
     VAR    ${expected_content}    None None None None None VBASE Video Database :h00000000_00000059 45.0 software DGPII DigiPizza :h00000059_00000077 24.0 other GUIDE AutoMap :h000000d0_00000055 20.0 hardware MAPDB MapBrowser port :h00000125_00000048 4.0 software HWRII Translator upgrade :h0000016d_00000056 software MKTPR Marketing project 3 :h000001c3_00000061 85.0 N/A    
     File Should Exist    ${export_path}
     ${content}=    Check Xlsx    ${export_path}
@@ -193,8 +179,8 @@ test_SQL_export_to_file
     Type Into Text Field    exportTableNameField    TEST_TABLE
 
     Push Button    exportButton
-    Sleep    1s
-    
+    Sleep    5s
+    Close Dialog    Message
     VAR    ${expected_content}    -- table creating -- CREATE TABLE TEST_TABLE ( PROJ_ID CHAR(5), PROJ_NAME VARCHAR(20), PROJ_DESC BLOB SUB_TYPE 1, TEAM_LEADER SMALLINT, PRODUCT VARCHAR(12) ); -- inserting data -- SET BLOBFILE '${export_blob}'; INSERT INTO TEST_TABLE ( PROJ_ID, PROJ_NAME, PROJ_DESC, TEAM_LEADER, PRODUCT ) VALUES ( 'VBASE', 'Video Database', :h00000000_00000059, 45, 'software' ); INSERT INTO TEST_TABLE ( PROJ_ID, PROJ_NAME, PROJ_DESC, TEAM_LEADER, PRODUCT ) VALUES ( 'DGPII', 'DigiPizza', :h00000059_00000077, 24, 'other' ); INSERT INTO TEST_TABLE ( PROJ_ID, PROJ_NAME, PROJ_DESC, TEAM_LEADER, PRODUCT ) VALUES ( 'GUIDE', 'AutoMap', :h000000d0_00000055, 20, 'hardware' ); INSERT INTO TEST_TABLE ( PROJ_ID, PROJ_NAME, PROJ_DESC, TEAM_LEADER, PRODUCT ) VALUES ( 'MAPDB', 'MapBrowser port', :h00000125_00000048, 4, 'software' ); INSERT INTO TEST_TABLE ( PROJ_ID, PROJ_NAME, PROJ_DESC, TEAM_LEADER, PRODUCT ) VALUES ( 'HWRII', 'Translator upgrade', :h0000016d_00000056, NULL, 'software' ); INSERT INTO TEST_TABLE ( PROJ_ID, PROJ_NAME, PROJ_DESC, TEAM_LEADER, PRODUCT ) VALUES ( 'MKTPR', 'Marketing project 3', :h000001c3_00000061, 85, 'N/A' );
     File Should Exist    ${export_path}
     ${content}=    Get File    ${export_path}
@@ -216,6 +202,9 @@ Init
 
 Check blobs in folder
     [Arguments]       ${export_blob}
+    Push Button    exportButton
+    Sleep    5s
+    Close Dialog    Message
     Directory Should Exist    ${export_blob}
     Directory Should Not Be Empty    ${export_blob}
     ${blob_path1}=     Catenate    SEPARATOR=    ${export_blob}    ${/}PROJ_DESC_0.txt

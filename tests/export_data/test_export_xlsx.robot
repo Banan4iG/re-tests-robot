@@ -28,8 +28,7 @@ test_replace_null
     Check Check Box    replaceNullCheck
     Clear Text Field    replaceNullField
     Type Into Text Field    replaceNullField    LLUN
-    Push Button    exportButton
-
+    
     ${expected_content}=    Catenate    SEPARATOR=\n    None\tNone\tNone\tNone\t    Carol\tNordstrom\t420.0\t1991-10-02T00:00\t    Luke\tLeung\t3.0\t1992-02-18T00:00\t    Sue Anne\tO''Brien\t877.0\t1992-03-23T00:00\t    Jennifer M.\tBurbank\t289.0\t1992-04-15T00:00\t    Claudia\tSutherland\tLLUN\t1992-04-20T00:00\t    Dana\tBishop\t290.0\t1992-06-01T00:00\t    ${EMPTY}
     Check content    ${export_path}    ${expected_content}
 
@@ -79,7 +78,8 @@ Init XLSX
 Check content
     [Arguments]   ${export_path}    ${expected_content}
     Push Button    exportButton
-    Sleep    2s
+    Sleep    5s
+    Close Dialog    Message
     File Should Exist    ${export_path}
     ${content}=    Check Xlsx    ${export_path}
     Should Be Equal As Strings    ${content}    ${expected_content}
