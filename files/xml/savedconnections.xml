@@ -29,9 +29,11 @@
               
         <certificate/>
               
-        <authmethod>Basic</authmethod>
+        <authmethod>MULTI_FACTOR</authmethod>
               
-        <connectionmethod>Standard</connectionmethod>
+        <authmethod-mode>Red Database (Firebird) 3+</authmethod-mode>
+              
+        <conn-type>PURE_JAVA</conn-type>
               
         <url/>
               
