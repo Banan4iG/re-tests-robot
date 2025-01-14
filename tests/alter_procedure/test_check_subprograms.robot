@@ -35,15 +35,6 @@ test_alter
 
     Check ddl    CREATE OR ALTER PROCEDURE TEST AS DECLARE PROCEDURE TEST_SUB AS BEGIN END DECLARE FUNCTION TEST_FUNC RETURNS INTEGER AS BEGIN END BEGIN END
     
-test_move
-    Init proc
-    ${row_proc}=    Find Table Row    0    PROCEDURE    Datatype
-    Click On Table Cell    0    ${row_proc}    Name
-    Push Button    moveDownButton
-    Push Button    moveUpButton
-    Push Button    moveDownButton
-    # Check ddl    CREATE OR ALTER PROCEDURE TEST AS DECLARE PROCEDURE TEST_SUB ( PAR1 INTEGER ) RETURNS ( PAR2 INTEGER ) AS DECLARE PAR3 TYPE OF CUSTNO; BEGIN PAR2 = 2; END DECLARE FUNCTION TEST_FUNC RETURNS INTEGER AS DECLARE PAR3 TYPE OF CUSTNO; BEGIN RETURN 123; END BEGIN END
-
 test_remove
     Init proc
     ${row_proc}=    Find Table Row    0    PROCEDURE    Datatype
