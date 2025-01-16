@@ -11,7 +11,7 @@ test_1
     Push Button    No
 
     # delete files
-    Remove Files    ${bk_path}
+    Remove File    ${bk_path}
 
 test_2
     ${bk_path}=    Init
@@ -21,12 +21,13 @@ test_2
     Close Dialog    Error message
 
     # delete files
-    Remove Files    ${bk_path}
+    Remove File    ${bk_path}
 
 
 *** Keywords ***
 Init
     ${bk_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /employee_backup.fbk
+    Remove File    ${bk_path}
     Select From Main Menu    Database|Database Backup/Restore
     Uncheck All Checkboxes
     Clear Text Field     backupFileField

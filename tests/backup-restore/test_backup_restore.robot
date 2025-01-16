@@ -8,6 +8,7 @@ Test Teardown    Teardown after every tests
 *** Test Cases ***
 test_1
     ${bk_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /employee_backup.fbk
+    Remove File    ${bk_path}
     Select From Main Menu    Database|Database Backup/Restore
     Uncheck All Checkboxes
     Clear Text Field     backupFileField
@@ -24,7 +25,6 @@ test_1
     Select Main Window
     Select Tab    Restore
     Uncheck All Checkboxes
-    Check Check Box    Override database file
     
     Push Button    restoreButton
     Sleep    2s
@@ -33,12 +33,13 @@ test_1
     Push Button    OK
 
     #delete files
-    Remove Files    ${bk_path}
+    Remove File    ${bk_path}
 
 
 test_full_check
     ${log_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /test_log.txt
     ${bk_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /employee_backup.fbk
+    Remove Files   ${log_path}    ${bk_path}
     Select From Main Menu    Database|Database Backup/Restore
     
     Check All Checkboxes

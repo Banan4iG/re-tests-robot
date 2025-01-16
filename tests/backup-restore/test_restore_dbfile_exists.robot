@@ -8,6 +8,7 @@ Test Teardown    Teardown after every tests
 *** Test Cases ***
 test_1
     ${bk_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /employee_backup.fbk
+    Remove File    ${bk_path}
     Select From Main Menu    Database|Database Backup/Restore
     Clear Text Field     backupFileField
     Type Into Text Field    backupFileField    ${bk_path}
@@ -28,4 +29,4 @@ test_1
     Close Dialog    Error message
 
     #delete files
-    Remove Files    ${bk_path}
+    Remove File    ${bk_path}

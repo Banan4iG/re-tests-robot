@@ -8,6 +8,7 @@ Test Teardown    Teardown after every tests
 *** Test Cases ***
 test_1
     ${bk_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /employee_backup.fbk
+    Remove File    ${bk_path}
     Select From Main Menu    Database|Database Backup/Restore
     Uncheck All Checkboxes
     Clear Text Field     backupFileField
