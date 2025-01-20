@@ -1,5 +1,6 @@
 *** Settings ***
 Library    RemoteSwingLibrary
+Library    Collections
 Resource    ../../files/keywords.resource
 Test Setup       Setup before every tests
 Test Teardown    Teardown after every tests
@@ -19,6 +20,7 @@ test_1
     ${url}=    Get Selected Item From Combo Box   driverUrlCombo
     Should Be Equal As Strings    ${url}    jdbc:firebirdsql://[host]:[port]/[source]
     ${paths_list}=    Get List Values    0
-    Should Be Equal As Strings    ${paths_list}    ['./lib/jaybird-4.jar', './lib/jaybird-cryptoapi-4.jar', './lib/fbclient-4.jar', '../lib/jaybird-4.jar', '../lib/jaybird-cryptoapi-4.jar', '../lib/fbclient-4.jar']
+    Sort List    ${paths_list} 
+    Should Be Equal As Strings    ${paths_list}    ['../lib/fbclient-4.jar', '../lib/jaybird-4.jar', '../lib/jaybird-cryptoapi-4.jar', './lib/fbclient-4.jar', './lib/jaybird-4.jar', './lib/jaybird-cryptoapi-4.jar']
     ${classes}=    Get Selected Item From Combo Box   classField
     Should Be Equal As Strings    ${classes}    org.firebirdsql.jdbc.FBDriver

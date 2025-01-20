@@ -32,7 +32,6 @@ test_open_query_editor_yes
     Check content    ${export_path}    ${expected_content}
     Select Dialog    ${EMPTY}
     Push Button    Yes
-    Close Dialog    Message
     
     Select Main Window
     ${content_query_editor}=    Get Text Field Value    0
@@ -48,7 +47,6 @@ test_open_query_editor_no
     Check content    ${export_path}    ${expected_content}
     Select Dialog    ${EMPTY}
     Push Button    No
-    Close Dialog    Message
     
     Select Main Window
     ${content_query_editor}=    Get Text Field Value    0
@@ -72,7 +70,6 @@ test_open_empty_query_editor
     VAR    ${expected_content}    INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Carol', 'Nordstrom', '420', '1991-10-02 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Luke', 'Leung', '3', '1992-02-18 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Sue Anne', 'O''Brien', '877', '1992-03-23 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Jennifer M.', 'Burbank', '289', '1992-04-15 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Claudia', 'Sutherland', NULL, '1992-04-20 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Dana', 'Bishop', '290', '1992-06-01 00:00' );
     Check content    ${export_path}    ${expected_content}
 
-    Close Dialog    Message
     Select Main Window
     ${content_query_editor}=    Get Text Field Value    0
     Should Be Equal As Strings    ${content_query_editor}    ${expected_content}    strip_spaces=${True}    collapse_spaces=${True}
@@ -116,7 +113,7 @@ Check content
     [Arguments]   ${export_path}    ${expected_content}
     Push Button    exportButton
     Sleep    5s
-    Close Dialog    Message
+    # Close Dialog    Message
     File Should Exist    ${export_path}
     ${content}=    Get File    ${export_path}
     Should Be Equal As Strings    ${content}    ${expected_content}    strip_spaces=${True}    collapse_spaces=${True}
