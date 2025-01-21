@@ -37,18 +37,24 @@ test_5
     Should Be Equal As Strings    ${value}    Wed Wednesday 03:43 +03 PM
 
 test_6
+    Init table    TIMESTAMP WITH TIME ZONE    05.02.2025 15:43:03.008 +3:00
+    Set Pattern    Timestamp with timezone Pattern Format   MMM/yyyy HH.mm.ss.SSS O
+    ${value}=    Test
+    Should Be Equal As Strings    ${value}    Feb/2025 15.43.03.008 GMT+3
+
+test_7
     Init table    TIMESTAMP WITH TIME ZONE    05.01.0005 05:04:03.008 +3:00
     Set Pattern    Timestamp with timezone Pattern Format    'Timestamp with TZ =' dd.MM.yy G HH:mm a XX
     ${value}=    Test
     Should Be Equal As Strings    ${value}    Timestamp with TZ = 05.01.05 AD 05:04 AM +0300
 
-test_7
+test_8
     Init table    TIMESTAMP WITH TIME ZONE    05.01.0005 05:04:03.008 +3:00
-    Set Pattern    Timestamp with timezone Pattern Format    dd.MMM.yy G HH:mm a
+    Set Pattern    Timestamp with timezone Pattern Format    dd.MMM.yy G HH:mm a XX
     ${value}=    Check Query Editor
     Should Be Equal As Strings    ${value}    05.Jan.05 AD 05:04 AM +0300
 
-test_8
+test_9
     Init table    TIMESTAMP WITH TIME ZONE    05.01.0005 05:04:03.008 +3:00
     Set Pattern    Timestamp with timezone Pattern Format    'Timestamp with TZ =' dd.MM.yy G HH:mm a XX
     ${value}=    Check Query Editor

@@ -49,24 +49,36 @@ test_7
     Should Be Equal As Strings    ${value}    6 2 2025
 
 test_8
-    Init table    DATE    05.02.2025
-    Set Pattern    Date Pattern Format   F FF E EEEE
+    Init table    DATE    12.02.2025
+    Set Pattern    Date Pattern Format   F E EEEE
     ${value}=    Test
-    Should Be Equal As Strings    ${value}    6 2 1 Wed Wednesday 2025
+    Should Be Equal As Strings    ${value}    2 Wed Wednesday
 
 test_9
+    Init table    DATE    05.02.2025
+    Set Pattern    Date Pattern Format   e c
+    ${value}=    Test
+    Should Be Equal As Strings    ${value}    4 4
+
+test_10
+    Init table    DATE    05.07.2025
+    Set Pattern    Date Pattern Format   q Q
+    ${value}=    Test
+    Should Be Equal As Strings    ${value}    3 3
+
+test_11
     Init table    DATE    05.01.2025
     Set Pattern    Date Pattern Format   'Date =' dd.MMMM.yy G
     ${value}=    Test
     Should Be Equal As Strings    ${value}    Date = 05.January.25 AD
 
-test_10
+test_12
     Init table    DATE    05.01.2025
     Set Pattern    Date Pattern Format   dd.MMMM.yy G
     ${value}=    Check Query Editor
     Should Be Equal As Strings    ${value}    05.January.25 AD
 
-test_11
+test_13
     Init table    DATE    05.01.2025
     Set Pattern    Date Pattern Format   'Date =' dd.MMMM.yy G
     ${value}=    Check Query Editor
