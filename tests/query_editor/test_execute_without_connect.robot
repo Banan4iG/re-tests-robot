@@ -33,6 +33,6 @@ Check Tool
     ${values}=    Get Table Values    0
     ${row}=    Find Table Row    0    Execute single statement    2
     Click On Table Cell    0    ${row}    0
-    Push Button    applyButton
-    Push Button    saveButton
+    Push Button    OK
+    Close Dialog    Message
     Select Main Window
