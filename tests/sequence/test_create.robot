@@ -1,6 +1,6 @@
 *** Settings ***
 Library    RemoteSwingLibrary
-Resource    ../../../files/keywords.resource
+Resource    ../../files/keywords.resource
 Test Setup       Setup before every tests
 Test Teardown    Teardown after every tests
 
@@ -61,7 +61,6 @@ Check
     Sleep    0.1s
     ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout	0
     Run Keyword And Expect Error    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Create sequence'    Select Dialog    Create sequence
-    Set Jemmy Timeout	DialogWaiter.WaitDialogTimeout	${old}
 
     Select Main Window
     Tree Node Should Exist    0     New Connection|Sequences (3)|${name}
