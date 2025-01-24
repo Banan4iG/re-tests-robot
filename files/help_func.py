@@ -181,7 +181,7 @@ def unlock_employee():
     bin_dir = "bin/" if platform.system() == "Linux" else ""
     delta_file = home_directory + "examples/empbuild/employee.fdb.delta"
     if os.path.exists(delta_file):
-        time.sleep(5) 
+        time.sleep(2) 
         os.remove(delta_file)
         subprocess.run([f"{home_directory}{bin_dir}nbackup{bin}", "-F", f"{home_directory}examples/empbuild/employee.fdb"])
 
@@ -323,16 +323,16 @@ ENTRY_POINT '123' MODULE_NAME '123'
         
         if rdb5:
             # con.execute_immediate("CREATE TABLESPACE NEW_TABLESPACE_1 FILE 'file.ts';")
-            con.execute_immediate("""                                 
-CREATE JOB NEW_JOB_EXPORT
-'13 17 * * *'
-INACTIVE
-START DATE NULL
-END DATE NULL
-AS
-begin
-end
-""")
+#             con.execute_immediate("""                                 
+# CREATE JOB NEW_JOB_EXPORT
+# '13 17 * * *'
+# INACTIVE
+# START DATE NULL
+# END DATE NULL
+# AS
+# begin
+# end
+# """)
         con.commit()
 
 def delete_objects(rdb5: bool):

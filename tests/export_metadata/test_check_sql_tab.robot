@@ -20,7 +20,7 @@ test_save_script
     Create Database   ${script_path}    ${test_base_path}
     Create Connect    ${test_base_path}
     Compare DB
-    Delete Objects    ${rdb5}
+    # Delete Objects    ${rdb5}
     
 
 test_execute_script
@@ -33,7 +33,7 @@ test_execute_script
     ${text}=    Get Text Field Value    0
     Should Not Be Equal As Strings    ${text}    ${EMPTY}
     Button Should Be Enabled   execute-script-command
-    Delete Objects    ${rdb5}
+    # Delete Objects    ${rdb5}
 
 *** Keywords ***
 Start

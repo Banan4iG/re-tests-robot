@@ -9,7 +9,7 @@ test_check_no_ignore
     ${rdb5}=    Init extract
     ${script_without_properties}=    Extract
     @{result}=    Check Ignore    ${script_without_properties}
-    Delete Objects    ${rdb5} 
+    # Delete Objects    ${rdb5}
     Should Be Equal As Strings    ${result}    [15, 1, 1, 1, 1, 1]
 
 test_check_ignore
@@ -17,7 +17,7 @@ test_check_ignore
     Push Button    selectAllExtractPropertiesButton
     ${script_without_properties}=    Extract
     @{result}=    Check Ignore    ${script_without_properties}
-    Delete Objects    ${rdb5} 
+    # Delete Objects    ${rdb5}
     Should Be Equal As Strings    ${result}    [0, 0, 0, 0, 0, 0]
 
 
