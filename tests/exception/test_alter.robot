@@ -16,7 +16,10 @@ test_1
 test_2
     Init    "NEW EXP"    NEW EXP
     Select Tab As Context    Privileges
-    Check Box Should Be Enabled    Show System Objects
+    Sleep    1s
+    # Check Box Should Be Enabled    Show System Objects
+    @{values}=    Get Table Column Values    0    User
+    Should Be Equal As Strings    ${values}    ['SYSDBA', 'PUBLIC', 'PHONE_LIST', 'POST_NEW_ORDER', 'SAVE_SALARY_CHANGE', 'SET_CUST_NO', 'SET_EMP_NO', 'ADD_EMP_PROJ', 'ALL_LANGS', 'DELETE_EMPLOYEE', 'DEPT_BUDGET', 'GET_EMP_PROJ', 'MAIL_LABEL', 'ORG_CHART', 'SHIP_ORDER', 'SHOW_LANGS', 'SUB_TOT_BUDGET']
 
 test_3
     Init    """NEW EXP"""    "NEW EXP"
