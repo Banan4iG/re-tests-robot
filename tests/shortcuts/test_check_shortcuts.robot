@@ -104,7 +104,7 @@ test_open_profile
     Open connection
     Send Keyboard Event    VK_Q    	CTRL_MASK
     Sleep    2s
-    Component Should Exist    connectionsComboBox
+    Component Should Exist    connectionCombo
 
 test_open_editor
     Set Shortcut    Query Editor
