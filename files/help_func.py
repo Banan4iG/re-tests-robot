@@ -320,20 +320,21 @@ ENTRY_POINT '123' MODULE_NAME '123'
         con.execute_immediate("COMMENT ON EXTERNAL FUNCTION NEW_UDF IS 'comment'")
         con.execute_immediate("COMMENT ON ROLE TEST_ROLE IS 'comment'")
         con.execute_immediate("COMMENT ON INDEX CHANGEX IS 'comment'")
-        
-        if rdb5:
-            # con.execute_immediate("CREATE TABLESPACE NEW_TABLESPACE_1 FILE 'file.ts';")
-#             con.execute_immediate("""                                 
-# CREATE JOB NEW_JOB_EXPORT
-# '13 17 * * *'
-# INACTIVE
-# START DATE NULL
-# END DATE NULL
-# AS
-# begin
-# end
-# """)
         con.commit()
+
+        # if rdb5:
+        # con.execute_immediate("CREATE TABLESPACE NEW_TABLESPACE_1 FILE 'file.ts';")
+        #             con.execute_immediate("""                                 
+        # CREATE JOB NEW_JOB_EXPORT
+        # '13 17 * * *'
+        # INACTIVE
+        # START DATE NULL
+        # END DATE NULL
+        # AS
+        # begin
+        # end
+        # """)
+        
 
 def delete_objects(rdb5: bool):
     with fdb.connect("employee") as con:
