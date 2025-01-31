@@ -6,9 +6,9 @@ import time
 import tempfile
 import psutil
 import openpyxl
-import firebird.driver as fdb
-from firebird.driver import driver_config, connect_server, SrvInfoCode
 from pathlib import Path
+import firebird.driver as fdb
+from firebird.driver import driver_config, connect_server, SrvInfoCode   
 
 
 def kill_redexpert():
@@ -19,18 +19,15 @@ def kill_redexpert():
             proc.terminate()
 
 def run_server():
-    PYTHON = os.environ.get('PYTHON')
     global p 
-    p = subprocess.Popen([PYTHON, "./files/run_server.py"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    # p = Popen(["python", "./files/run_server.py"])
+    p = subprocess.Popen([os.environ.get('PYTHON', 'python'), "./files/run_server.py"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     time.sleep(5)
 
 def stop_server():
     p.terminate()
 
 def get_build_no():
-    BUILD = os.environ.get('BUILD')
-    return BUILD
+    return os.environ.get('BUILD', "202501")
 
 def backup_savedconnections_file():
     home_dir = os.path.expanduser("~")
@@ -71,15 +68,8 @@ def set_urls(urls: str):
     with open(user_properties_file, 'w') as f:
         f.write(context)
 
-
 def get_path_to_lib():
-    DIST = os.environ.get('DIST')
-    if DIST:
-        path_to_exe = DIST + "/lib"
-    else:
-        path_to_exe = 'C:\\Program Files\\RedExpert\\lib'
-    return path_to_exe
-
+    return os.environ.get('DIST', 'C:\\Program Files\\RedExpert') + "/lib"
 
 def get_path():
     DIST = os.environ.get('DIST')
@@ -124,61 +114,59 @@ def clear_history_files():
             os.remove(file)
 
 def copy_dist_path():
-    DIST = os.environ.get('DIST')
-    ARCH = os.environ.get('ARCH')
-    # DIST = "D:/Program Files/RedExpert"
+    DIST = os.environ.get('DIST', "C:/Program Files/RedExpert")
     tmp_dir = tempfile.gettempdir()
 
     if os.path.exists(tmp_dir + '/RedExpert'):
         shutil.rmtree(tmp_dir + '/RedExpert')
     return_path = shutil.copytree(DIST, tmp_dir + '/RedExpert')
     bin = "" if platform.system() == "Linux" else ".exe"
-    path_to_exe = return_path + "/bin"
-    if ARCH == "x86_64":
-        path_to_exe += f"/RedExpert64{bin}" 
-    else:
-        path_to_exe += f"/RedExpert{bin}"
+    path_to_exe = return_path + f"/bin/RedExpert64{bin}" 
     return path_to_exe
 
-def set_config():
-    driver_config.server_defaults.host.value = 'localhost'
-    driver_config.server_defaults.user.value = 'SYSDBA'
-    driver_config.server_defaults.password.value = 'masterkey'
+# def set_config():
+#     driver_config.server_defaults.host.value = 'localhost'
+#     driver_config.server_defaults.user.value = 'SYSDBA'
+#     driver_config.server_defaults.password.value = 'masterkey'
 
 
-def get_server_info():
+def get_server_info():    
     global home_directory
     global version
     global srv_version
 
-    set_config()
-    
-    with connect_server(server='localhost', user='SYSDBA', password='masterkey') as srv:
-        home_directory = srv.info.home_directory
-        for ver in ["3.0", "5.0"]:
-            index = srv.info.version.find(ver)
-            if index > -1:
-                version = ver
-                break
+    if is_rdb26():
+        home_directory = "/opt/RedDatabase/" if platform.system() == "Linux" else os.environ.get('INSTALL_PATH', 'D:\\Program Files\\RedDatabase(x64)\\')
+        version = "2.6"
+        srv_version = "RedDatabase"
+    else:        
+        with connect_server(server='localhost', user='SYSDBA', password='masterkey') as srv:
+            home_directory = srv.info.home_directory
+            for ver in ["3.0", "5.0"]:
+                index = srv.info.version.find(ver)
+                if index > -1:
+                    version = ver
+                    break
 
-        for srv_ver in ["Firebird", "RedDatabase"]:
-            index = srv.info.get_info(SrvInfoCode.SERVER_VERSION).find(srv_ver)
-            if index > -1:
-                srv_version = srv_ver
-                break
-        return home_directory, version, srv_version
+            for srv_ver in ["Firebird", "RedDatabase"]:
+                index = srv.info.get_info(SrvInfoCode.SERVER_VERSION).find(srv_ver)
+                if index > -1:
+                    srv_version = srv_ver
+                    break
+    
+    return home_directory, version, srv_version
 
 def lock_employee():
     home_directory, version, srv_version = get_server_info()
     bin = "" if platform.system() == "Linux" else ".exe"
-    bin_dir = "bin/" if platform.system() == "Linux" else ""
+    bin_dir = "bin/" if platform.system() == "Linux" or is_rdb26() else ""
     subprocess.run([f"{home_directory}{bin_dir}nbackup{bin}", "-L", f"{home_directory}examples/empbuild/employee.fdb", "-u", "SYSDBA", "-p", "masterkey"])
     time.sleep(1)
 
 def unlock_employee():
     home_directory, version, srv_version = get_server_info()
     bin = "" if platform.system() == "Linux" else ".exe"
-    bin_dir = "bin/" if platform.system() == "Linux" else ""
+    bin_dir = "bin/" if platform.system() == "Linux" or is_rdb26() else ""
     delta_file = home_directory + "examples/empbuild/employee.fdb.delta"
     if os.path.exists(delta_file):
         time.sleep(2) 
@@ -186,8 +174,13 @@ def unlock_employee():
         subprocess.run([f"{home_directory}{bin_dir}nbackup{bin}", "-F", f"{home_directory}examples/empbuild/employee.fdb"])
 
 def execute(query: str):
-    set_config()
-    with fdb.connect("employee") as con:
+    """
+    Execute select query and return fetchall result
+    """
+    if is_rdb26():
+        import fdb
+        load_api()
+    with fdb.connect("localhost:employee.fdb", user='SYSDBA', password='masterkey') as con:
         cur = con.cursor()
         cur.execute(query)
         result = cur.fetchall()
@@ -195,8 +188,13 @@ def execute(query: str):
     return str(result)
 
 def execute_immediate(query: str):
-    set_config()
-    with fdb.connect("employee") as con:
+    """
+    Execute query without returning result
+    """
+    if is_rdb26():
+        import fdb
+        load_api()
+    with fdb.connect("localhost:employee.fdb", user='SYSDBA', password='masterkey') as con:
         con.execute_immediate(query)
         con.commit()
 
@@ -266,74 +264,109 @@ def check_build_config(conf_path: str, number: int):
             assert check_dict[first][number] == second
             f.readline()
 
-def create_objects(rdb5: bool):
-    set_config()
-    with fdb.connect("employee") as con:
-        #add objects
-        con.execute_immediate("CREATE GLOBAL TEMPORARY TABLE NEW_GLOBAL_TEMPORARY_1 (TEST INTEGER) ON COMMIT DELETE ROWS;")
-        con.execute_immediate("""
+def create_objects():
+    if is_rdb26():
+        import fdb
+        load_api()
+        with fdb.connect("localhost:employee.fdb", user="SYSDBA", password="masterkey") as con:
+            #add objects
+            con.execute_immediate("CREATE GLOBAL TEMPORARY TABLE NEW_GLOBAL_TEMPORARY_1 (TEST INTEGER) ON COMMIT DELETE ROWS;")
+            con.execute_immediate("""
+CREATE OR ALTER TRIGGER NEW_DB_TRIGGER
+ACTIVE ON CONNECT POSITION 0
+AS
+BEGIN
+END
+""")        
+            con.execute_immediate("""
+DECLARE EXTERNAL FUNCTION NEW_UDF
+RETURNS
+BIGINT
+ENTRY_POINT '123' MODULE_NAME '123'
+""")
+            con.execute_immediate("CREATE ROLE TEST_ROLE;")       
+            con.execute_immediate("create collation iso8859_1_unicode for iso8859_1")
+            #add comments
+            con.execute_immediate("COMMENT ON DOMAIN EMPNO IS 'comment'")
+            con.execute_immediate("COMMENT ON TABLE EMPLOYEE IS 'comment'")
+            con.execute_immediate("COMMENT ON TABLE NEW_GLOBAL_TEMPORARY_1 IS 'comment'")
+            con.execute_immediate("COMMENT ON VIEW PHONE_LIST IS 'comment'")
+            con.execute_immediate("COMMENT ON PROCEDURE ADD_EMP_PROJ IS 'comment'")
+            con.execute_immediate("COMMENT ON TRIGGER POST_NEW_ORDER IS 'comment'")
+            con.execute_immediate("COMMENT ON TRIGGER NEW_DB_TRIGGER IS 'comment'")
+            con.execute_immediate("COMMENT ON SEQUENCE CUST_NO_GEN IS 'comment';")
+            con.execute_immediate("COMMENT ON EXCEPTION CUSTOMER_CHECK IS 'comment'")
+            con.execute_immediate("COMMENT ON EXTERNAL FUNCTION NEW_UDF IS 'comment'")
+            con.execute_immediate("COMMENT ON ROLE TEST_ROLE IS 'comment'")
+            con.execute_immediate("COMMENT ON INDEX CHANGEX IS 'comment'")
+            con.commit()
+    else:
+        with fdb.connect("localhost:employee.fdb", user="SYSDBA", password="masterkey") as con:
+            #add objects
+            con.execute_immediate("CREATE GLOBAL TEMPORARY TABLE NEW_GLOBAL_TEMPORARY_1 (TEST INTEGER) ON COMMIT DELETE ROWS;")
+            con.execute_immediate("""
 CREATE OR ALTER FUNCTION NEW_FUNC
 RETURNS VARCHAR(5)
 AS
 begin
-  RETURN 'five';
+RETURN 'five';
 end
 """)
-        con.execute_immediate("CREATE PACKAGE NEW_PACK AS BEGIN END;")
-        con.execute_immediate("RECREATE PACKAGE BODY NEW_PACK AS BEGIN END;")
-        con.execute_immediate("""
+            con.execute_immediate("CREATE PACKAGE NEW_PACK AS BEGIN END;")
+            con.execute_immediate("RECREATE PACKAGE BODY NEW_PACK AS BEGIN END;")
+            con.execute_immediate("""
 CREATE OR ALTER TRIGGER NEW_DDL_TRIGGER
 ACTIVE BEFORE ANY DDL STATEMENT  POSITION 0
 AS
 BEGIN
 END
 """)
-        con.execute_immediate("""
+            con.execute_immediate("""
 CREATE OR ALTER TRIGGER NEW_DB_TRIGGER
 ACTIVE ON CONNECT POSITION 0
 AS
 BEGIN
 END
 """)
-        con.execute_immediate("""
+            con.execute_immediate("""
 DECLARE EXTERNAL FUNCTION NEW_UDF
 RETURNS
 BIGINT
 ENTRY_POINT '123' MODULE_NAME '123'
 """)
-        con.execute_immediate("CREATE ROLE TEST_ROLE;")       
-        con.execute_immediate("create collation iso8859_1_unicode for iso8859_1")
+            con.execute_immediate("CREATE ROLE TEST_ROLE;")       
+            con.execute_immediate("create collation iso8859_1_unicode for iso8859_1")
 
-        #add comments
-        con.execute_immediate("COMMENT ON DOMAIN EMPNO IS 'comment'")
-        con.execute_immediate("COMMENT ON TABLE EMPLOYEE IS 'comment'")
-        con.execute_immediate("COMMENT ON TABLE NEW_GLOBAL_TEMPORARY_1 IS 'comment'")
-        con.execute_immediate("COMMENT ON VIEW PHONE_LIST IS 'comment'")
-        con.execute_immediate("COMMENT ON PROCEDURE ADD_EMP_PROJ IS 'comment'")
-        con.execute_immediate("COMMENT ON FUNCTION NEW_FUNC IS 'comment'")
-        con.execute_immediate("COMMENT ON PACKAGE NEW_PACK IS 'comment'")
-        con.execute_immediate("COMMENT ON TRIGGER POST_NEW_ORDER IS 'comment'")
-        con.execute_immediate("COMMENT ON TRIGGER NEW_DDL_TRIGGER IS 'comment'")
-        con.execute_immediate("COMMENT ON TRIGGER NEW_DB_TRIGGER IS 'comment'")
-        con.execute_immediate("COMMENT ON SEQUENCE CUST_NO_GEN IS 'comment';")
-        con.execute_immediate("COMMENT ON EXCEPTION CUSTOMER_CHECK IS 'comment'")
-        con.execute_immediate("COMMENT ON EXTERNAL FUNCTION NEW_UDF IS 'comment'")
-        con.execute_immediate("COMMENT ON ROLE TEST_ROLE IS 'comment'")
-        con.execute_immediate("COMMENT ON INDEX CHANGEX IS 'comment'")
-        con.commit()
+            #add comments
+            con.execute_immediate("COMMENT ON DOMAIN EMPNO IS 'comment'")
+            con.execute_immediate("COMMENT ON TABLE EMPLOYEE IS 'comment'")
+            con.execute_immediate("COMMENT ON TABLE NEW_GLOBAL_TEMPORARY_1 IS 'comment'")
+            con.execute_immediate("COMMENT ON VIEW PHONE_LIST IS 'comment'")
+            con.execute_immediate("COMMENT ON PROCEDURE ADD_EMP_PROJ IS 'comment'")
+            con.execute_immediate("COMMENT ON FUNCTION NEW_FUNC IS 'comment'")
+            con.execute_immediate("COMMENT ON PACKAGE NEW_PACK IS 'comment'")
+            con.execute_immediate("COMMENT ON TRIGGER POST_NEW_ORDER IS 'comment'")
+            con.execute_immediate("COMMENT ON TRIGGER NEW_DDL_TRIGGER IS 'comment'")
+            con.execute_immediate("COMMENT ON TRIGGER NEW_DB_TRIGGER IS 'comment'")
+            con.execute_immediate("COMMENT ON SEQUENCE CUST_NO_GEN IS 'comment';")
+            con.execute_immediate("COMMENT ON EXCEPTION CUSTOMER_CHECK IS 'comment'")
+            con.execute_immediate("COMMENT ON EXTERNAL FUNCTION NEW_UDF IS 'comment'")
+            con.execute_immediate("COMMENT ON ROLE TEST_ROLE IS 'comment'")
+            con.execute_immediate("COMMENT ON INDEX CHANGEX IS 'comment'")
+            con.commit()
 
-        # if rdb5:
-        # con.execute_immediate("CREATE TABLESPACE NEW_TABLESPACE_1 FILE 'file.ts';")
-        #             con.execute_immediate("""                                 
-        # CREATE JOB NEW_JOB_EXPORT
-        # '13 17 * * *'
-        # INACTIVE
-        # START DATE NULL
-        # END DATE NULL
-        # AS
-        # begin
-        # end
-        # """)
+            # if rdb5:
+            # con.execute_immediate("CREATE TABLESPACE NEW_TABLESPACE_1 FILE 'file.ts';")
+            #             con.execute_immediate("""                                 
+            # CREATE JOB NEW_JOB_EXPORT
+            # '13 17 * * *'
+            # INACTIVE
+            # START DATE NULL
+            # END DATE NULL
+            # AS
+            # begin
+            # end
+            # """)
         
 
 def delete_objects(rdb5: bool):
@@ -358,9 +391,12 @@ def create_database(script_path: str, base_path: str):
     with open(script_path, "w") as file:
         file.write(context)
     
-    con = fdb.create_database(base_path)
+    if is_rdb26():
+        import fdb
+        load_api()
+    con = fdb.create_database(database=base_path, user='SYSDBA', password='masterkey')
     con.close()
-    bin_dir = "bin/" if platform.system() == "Linux" else ""
+    bin_dir = "bin/" if platform.system() == "Linux" or is_rdb26() else ""
     bin = "" if platform.system() == "Linux" else ".exe"
     subprocess.call([f"{home_directory}{bin_dir}isql{bin}",  "-q", "-i", f"\"{script_path}\""])
 
@@ -402,3 +438,14 @@ def add_rows():
             con.execute_immediate(f"INSERT INTO TEST_TABLE VALUES ({i})")
     
         con.commit()
+
+def is_rdb26():
+    # DBMS = os.environ.get('DBMS')
+    DBMS = "rdb26"
+    return True if DBMS == "rdb26" else False
+
+def load_api():
+    import fdb
+    home_directory, _, _ = get_server_info()
+    fd_lib = "lib/libfbclient.so" if platform.system() == "Linux" else "bin/fbclient.dll"
+    fdb.load_api(home_directory + fd_lib)
