@@ -8,6 +8,9 @@ Test Teardown    Teardown after every tests
 
 *** Test Cases ***
 test_drop_trigger_for_ddl
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    Skip If    ${{$ver == '2.6'}}
     VAR    ${script}   CREATE OR ALTER TRIGGER NEW_TRIGGER
     ...    ACTIVE BEFORE ANY DDL STATEMENT POSITION 0
     ...    AS

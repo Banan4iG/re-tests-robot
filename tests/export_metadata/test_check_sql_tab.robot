@@ -6,7 +6,7 @@ Test Teardown    Teardown after every tests
 
 *** Test Cases ***
 test_save_script
-    ${rdb5}=    Start
+    Start
     Select Tab As Context    SQL
     Push Button    saveScriptButton
     ${script_path}=     Catenate    SEPARATOR=    ${TEMPDIR}    /script.sql
@@ -24,7 +24,7 @@ test_save_script
     
 
 test_execute_script
-    ${rdb5}=    Start
+    Start
     Select Tab As Context    SQL
     Push Button    executeScriptButton
     Sleep    1s
@@ -37,15 +37,11 @@ test_execute_script
 
 *** Keywords ***
 Start
-    ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
-    VAR    ${rdb5}    ${{$ver == '5.0'}}
     Lock Employee
-    Create Objects    ${rdb5}
+    Create Objects
     Push Button    extract-metadata-command
     Push Button    extractButton
     Close Dialog    Message
-    RETURN    ${rdb5}
 
 Create Connect
     [Arguments]    ${test_base_path}

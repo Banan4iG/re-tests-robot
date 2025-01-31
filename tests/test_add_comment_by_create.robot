@@ -72,14 +72,17 @@ test_create_procedure_cursors
     Should Not Be Equal As Integers    ${{$res.find('test_comment')}}    -1
 
 test_create_function
+    Check Skip 2.6
     Init Create    Functions (0)    Create function
     Check Comment
 
 test_create_function_arg
+    Check Skip 2.6
     Init Create    Functions (0)    Create function
     Check Procedure    Arguments
 
 test_create_function_variables
+    Check Skip 2.6
     Init Create    Functions (0)    Create function
     Check Procedure    Variables
 
@@ -88,6 +91,7 @@ test_create_function_cursors
     Init Create    Functions (0)    Create function
 
 test_create_package
+    Check Skip 2.6
     Init Create    Packages (0)    Create package
     Check Comment
 
@@ -97,6 +101,7 @@ test_create_trigger_for_table
     Check Comment
 
 test_create_trigger_for_ddl
+    Check Skip 2.6
     Init Create    DDL Triggers (0)    Create DDL trigger
     Check Check Box    anyStatementCheck
     Check Comment
@@ -118,6 +123,7 @@ test_create_udf
     Check Comment 
 
 test_create_user
+    Check Skip 2.6
     Init Create    Users (1)    Create user
     Type Into Text Field    passTextField    123
     Check Comment
@@ -147,6 +153,11 @@ Check Skip
     ${info}=    Get Server Info
     ${ver}=     Set Variable    ${info}[1]
     Skip If    ${{$ver != '5.0'}}
+
+Check Skip 2.6
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    Skip If    ${{$ver == '2.6'}}
 
 Init Create
     [Arguments]    ${object}    ${menu}

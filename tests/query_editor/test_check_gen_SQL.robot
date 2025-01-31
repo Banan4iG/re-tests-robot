@@ -3,7 +3,7 @@ Library    RemoteSwingLibrary
 Library    Process
 Library    Collections
 Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
+Test Setup       Setup
 Test Teardown    Teardown after every tests
 
 *** Test Cases ***
@@ -87,3 +87,9 @@ action_OTHER_TABLE
     Select From Tree Node Popup Menu   0    New Connection|Tables (11)|OTHER_TABLE    Generate SQL|${type} statement
     ${res}=    Get Text Field Value    0
     Should Be Equal As Strings    ${res}     ${expected}    strip_spaces=${True}    collapse_spaces=${True}
+
+Setup
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    Skip If    ${{$ver == '2.6'}}
+    Setup before every tests

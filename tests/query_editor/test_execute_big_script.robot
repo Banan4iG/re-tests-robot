@@ -20,8 +20,15 @@ test_execute_5
     Init    test_script5.sql
     Sleep    5s
 
+test_execute_26
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    Skip If    ${{$ver != '2.6'}}
+    Init    test_script26.sql
+    Sleep    5s
+
 test_cancel
-    Init    test_script3.sql
+    Init    test_script26.sql
     Sleep    0.5s
     Push Button    stop-execution-command
     Sleep    5s

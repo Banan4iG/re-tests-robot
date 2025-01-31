@@ -1,6 +1,9 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Library    firebird.driver
+Library    fdb
+Library    platform
+Library    OperatingSystem
 Resource   ../../files/keywords.resource 
 Test Setup       Setup before every tests
 Test Teardown    Teardown after every tests
@@ -27,9 +30,18 @@ test_check_warning
 
 test_switch_database
     ${test_base_path}=     Catenate    SEPARATOR=    ${TEMPDIR}    /test.fdb
-    @{files}=    Create List    ${test_base_path}
-    Delete Files    ${files}
-    firebird.driver.Create Database    database=${test_base_path}    user=SYSDBA    password=masterkey
+    Remove File   ${test_base_path}
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    IF    $ver != '2.6'
+        firebird.driver.Create Database    database=${test_base_path}    user=SYSDBA    password=masterkey
+    ELSE
+        ${home}=     Set Variable    ${info}[0]
+        ${system}    platform.System
+        ${fd_lib}    Set Variable If    '${system}' == 'Linux'    lib/libfbclient.so    bin/fbclient.dll
+        fdb.Load Api    ${home}${fd_lib}
+        fdb.Create Database    database=${test_base_path}    user=SYSDBA    password=masterkey
+    END
     Create Connect    ${test_base_path}
     Select Window    regexp=^Red.*
     Push Button    comparerDB-command

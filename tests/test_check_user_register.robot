@@ -8,6 +8,9 @@ Test Teardown    Teardown after every tests
 
 *** Test Cases ***
 test_1
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    Skip If    ${{$ver == '2.6'}}
     Execute Immediate    CREATE USER "DEMO" PASSWORD 'pass'
     Execute Immediate    CREATE USER "dEmO" PASSWORD 'pass'
     Open connection

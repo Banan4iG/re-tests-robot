@@ -6,14 +6,20 @@ Test Teardown    Teardown after every tests
 
 *** Test Cases ***
 test_check_no_ignore
-    ${rdb5}=    Init extract
+    Init extract
     ${script_without_properties}=    Extract
     @{result}=    Check Ignore    ${script_without_properties}
     # Delete Objects    ${rdb5}
-    Should Be Equal As Strings    ${result}    [15, 1, 1, 1, 1, 1]
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    IF    '${ver}' == '2.6'
+        Should Be Equal As Strings    ${result}    [12, 1, 1, 1, 1, 1]
+    ELSE
+        Should Be Equal As Strings    ${result}    [15, 1, 1, 1, 1, 1]
+    END
 
 test_check_ignore
-    ${rdb5}=    Init extract
+    Init extract
     Push Button    selectAllExtractPropertiesButton
     ${script_without_properties}=    Extract
     @{result}=    Check Ignore    ${script_without_properties}
@@ -23,13 +29,9 @@ test_check_ignore
 
 *** Keywords ***
 Init extract
-    ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
-    VAR    ${rdb5}    ${{$ver == '5.0'}}
     Lock Employee
-    Create Objects    ${rdb5}
+    Create Objects
     Push Button    extract-metadata-command
-    RETURN    ${rdb5}
 
 Extract
     Push Button    extractButton
