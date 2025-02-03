@@ -373,7 +373,7 @@ def build_procedure():
         create_procudere_script = "CREATE OR ALTER PROCEDURE DECLARE_KEYWORDS ( NUM_ENTRIES INTEGER ) AS"
         for row in res:
             create_procudere_script += f" DECLARE {row[0]} INTEGER;\n"
-        create_procudere_script += " BEGIN END"
+        create_procudere_script += " BEGIN END;"
 
     execute_immediate(create_procudere_script)
     return create_procudere_script

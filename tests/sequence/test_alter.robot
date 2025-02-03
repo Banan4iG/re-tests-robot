@@ -13,7 +13,7 @@ test_1
     Clear Text Field    2
     Type Into Text Field    2    10
 
-    Check    CREATE OR ALTER SEQUENCE NEW_SEQ START WITH 100 INCREMENT BY 10;
+    Check    CREATE OR ALTER SEQUENCE NEW_SEQ START WITH 100 INCREMENT BY 10
 
     Select Main Window
     ${start_value}=    Get Text Field Value    1
@@ -31,7 +31,7 @@ test_1
 
     Select Tab As Context    DDL to create
     ${res}=    Get Text Field Value    0
-    Should Be Equal As Strings    ${res}    CREATE OR ALTER SEQUENCE NEW_SEQ START WITH 100 INCREMENT BY 10;    strip_spaces=${True}    collapse_spaces=${True}
+    Should Be Equal As Strings    ${res}    CREATE OR ALTER SEQUENCE NEW_SEQ START WITH 100 INCREMENT BY 10    strip_spaces=${True}    collapse_spaces=${True}
 
 
 test_2
