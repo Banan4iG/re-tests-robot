@@ -440,8 +440,7 @@ def add_rows():
         con.commit()
 
 def is_rdb26():
-    # DBMS = os.environ.get('DBMS')
-    DBMS = "rdb26"
+    DBMS = os.environ.get('DBMS', "rdb26")
     return True if DBMS == "rdb26" else False
 
 def load_api():
