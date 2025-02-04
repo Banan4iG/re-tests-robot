@@ -177,6 +177,7 @@ def execute(query: str):
     """
     Execute select query and return fetchall result
     """
+    import firebird.driver as fdb
     if is_rdb26():
         import fdb
         load_api()
@@ -191,6 +192,7 @@ def execute_immediate(query: str):
     """
     Execute query without returning result
     """
+    import firebird.driver as fdb
     if is_rdb26():
         import fdb
         load_api()
@@ -265,6 +267,7 @@ def check_build_config(conf_path: str, number: int):
             f.readline()
 
 def create_objects():
+    import firebird.driver as fdb
     if is_rdb26():
         import fdb
         load_api()
@@ -391,6 +394,7 @@ def create_database(script_path: str, base_path: str):
     with open(script_path, "w") as file:
         file.write(context)
     
+    import firebird.driver as fdb
     if is_rdb26():
         import fdb
         load_api()
@@ -401,7 +405,11 @@ def create_database(script_path: str, base_path: str):
     subprocess.call([f"{home_directory}{bin_dir}isql{bin}",  "-q", "-i", f"\"{script_path}\""])
 
 def build_procedure():
-    with fdb.connect("employee", user="SYSDBA", password="masterkey") as con:
+    import firebird.driver as fdb
+    if is_rdb26():
+        import fdb
+        load_api()
+    with fdb.connect("localhost:employee.fdb", user="SYSDBA", password="masterkey") as con:
         with con.cursor() as cur:
             results = cur.execute("SELECT RDB$KEYWORD_NAME FROM RDB$KEYWORDS WHERE RDB$KEYWORD_RESERVED='false'")
             res = results.fetchall()
@@ -440,7 +448,7 @@ def add_rows():
         con.commit()
 
 def is_rdb26():
-    DBMS = os.environ.get('DBMS', "rdb26")
+    DBMS = os.environ.get('DBMS')
     return True if DBMS == "rdb26" else False
 
 def load_api():
