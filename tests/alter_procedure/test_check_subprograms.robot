@@ -15,8 +15,8 @@ test_1
     ${sub_proc}=    Get Text Field Value    0
     Click On Table Cell    0    ${row_func}    Name
     ${sub_func}=    Get Text Field Value    0
-    Should Be Equal As Strings    ${sub_proc}    DECLARE PROCEDURE TEST_SUB ( PAR1 INTEGER ) RETURNS ( PAR2 INTEGER ) AS DECLARE PAR3 TYPE OF CUSTNO; BEGIN PAR2 = 2; END;    strip_spaces=${True}    collapse_spaces=${True}
-    Should Be Equal As Strings    ${sub_func}    DECLARE FUNCTION TEST_FUNC RETURNS INTEGER AS DECLARE PAR3 TYPE OF CUSTNO; BEGIN RETURN 123; END;    strip_spaces=${True}    collapse_spaces=${True}
+    Should Be Equal As Strings    ${sub_proc}    DECLARE PROCEDURE TEST_SUB ( PAR1 INTEGER ) RETURNS ( PAR2 INTEGER ) AS DECLARE PAR3 TYPE OF CUSTNO; BEGIN PAR2 = 2; END    strip_spaces=${True}    collapse_spaces=${True}
+    Should Be Equal As Strings    ${sub_func}    DECLARE FUNCTION TEST_FUNC RETURNS INTEGER AS DECLARE PAR3 TYPE OF CUSTNO; BEGIN RETURN 123; END    strip_spaces=${True}    collapse_spaces=${True}
 
 test_alter
     Init proc
@@ -43,7 +43,7 @@ test_remove
     ${row_func}=    Find Table Row    0    FUNCTION    Datatype
     Click On Table Cell    0    ${row_func}    Name
     Push Button    deleteRowButton
-    Check ddl    CREATE OR ALTER PROCEDURE TEST AS BEGIN END
+    Check ddl    CREATE OR ALTER PROCEDURE TEST AS BEGIN END;
 
 test_empty_remove
     Lock Employee
