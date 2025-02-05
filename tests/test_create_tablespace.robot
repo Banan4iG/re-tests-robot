@@ -23,4 +23,5 @@ test_check_cursor
 Check Skip
     ${info}=    Get Server Info
     ${ver}=     Set Variable    ${info}[1]
-    Skip If    ${{$ver != '5.0'}}
+    ${srv_ver}=    Set Variable    ${info}[2]
+    Skip If    ${{($ver != '5.0' and $srv_ver != 'RedDatabase') }}

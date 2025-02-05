@@ -3,12 +3,12 @@ Library    RemoteSwingLibrary
 Library    Process
 Library    Collections
 Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
+Resource    keys.resource
+Test Setup       Setup
 Test Teardown    Teardown after every tests
 
 *** Test Cases ***
 test_cron_false
-    Check Skip
     Open connection
     Select From Tree Node Popup Menu    0    New Connection|Jobs (0)    Create job
     Select Dialog    Create job
@@ -43,9 +43,3 @@ test_cron_false
     ${script}=    Get Text Field Value    0
     Should Not Be Equal As Integers    ${row}    -1
     Should Be Equal As Strings    ${script}    CREATE JOB NEWJOB0 '59 23 11 2 3' ACTIVE START DATE '06.07.2024 13:00' END DATE '06.07.2023 01:00' COMMAND ''    collapse_spaces=${True}
-
-*** Keywords ***
-Check Skip
-    ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
-    Skip If    ${{$ver != '5.0'}}

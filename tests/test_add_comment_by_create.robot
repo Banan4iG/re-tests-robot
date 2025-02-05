@@ -152,7 +152,8 @@ test_create_job
 Check Skip
     ${info}=    Get Server Info
     ${ver}=     Set Variable    ${info}[1]
-    Skip If    ${{$ver != '5.0'}}
+    ${srv_ver}=    Set Variable    ${info}[2]
+    Skip If    ${{($ver == '5.0' and $srv_ver == 'Firebird') or $ver == '3.0'}}
 
 Check Skip 2.6
     ${info}=    Get Server Info

@@ -9,6 +9,7 @@ test_1
     Lock Employee
     ${info}=    Get Server Info
     ${ver}=     Set Variable    ${info}[1]
+    ${srv_ver} =    Set Variable    ${info}[2]
     IF    $ver != '2.6'
         Execute Immediate    CREATE OR ALTER FUNCTION NEW_FUNC RETURNS VARCHAR(5) AS begin RETURN 'five'; end
         Execute Immediate    CREATE PACKAGE NEW_PACK AS BEGIN END
@@ -23,10 +24,12 @@ test_1
     
     Select From Combo Box    1    Roles
     @{privileges_for_list}=    Get List Values    0
-    IF    $ver != '2.6'
-        @{expected_privileges_for_list}=    Create List    RDB$ADMIN    RDB$DBADMIN    RDB$SYSADMIN    RDB$USER    PUBLIC
-    ELSE
+    IF    $ver == '2.6'
         @{expected_privileges_for_list}=    Create List    RDB$ADMIN    SECADMIN    PUBLIC
+    ELSE IF    $srv_ver == 'Firebird'
+        @{expected_privileges_for_list}=    Create List    RDB$ADMIN    PUBLIC
+    ELSE
+        @{expected_privileges_for_list}=    Create List    RDB$ADMIN    RDB$DBADMIN    RDB$SYSADMIN    RDB$USER    PUBLIC
     END
     Should Be Equal As Strings    ${privileges_for_list}    ${expected_privileges_for_list}
     
