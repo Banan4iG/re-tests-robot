@@ -29,6 +29,6 @@ Create New Conn
     END
     Type Into Text Field    fileField    employee.fdb
     Type Into Text Field    userField    sysdba
-    Type Into Text Field    userPasswordField    masterkey
+    Type Into Text Field    passwordField    masterkey
     Check Check Box    Store Password
     Push Button    saveButton

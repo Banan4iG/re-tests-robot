@@ -42,7 +42,15 @@ test_execute_to_file
     Select Dialog    Export Data
     ${export_path}=    Init XLSX
     Check Check Box    addColumnHeadersCheck
-    ${expected_content}=    Catenate    SEPARATOR=\n    COUNTRY\tCURRENCY\t    USA\tDollar\t    England\tPound\t    Canada\tCdnDlr\t    Switzerland\tSFranc\t    Japan\tYen\t    Italy\tEuro\t    France\tEuro\t    Germany\tEuro\t    Australia\tADollar\t    Hong Kong\tHKDollar\t    Netherlands\tEuro\t    Belgium\tEuro\t    Austria\tEuro\t    Fiji\tFDollar\t    Russia\tRuble\t    Romania\tRLeu\t    ${EMPTY}
+
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    IF    ${{$ver == '2.6'}}
+        ${expected_content}=    Catenate    SEPARATOR=\n    COUNTRY\tCURRENCY\t    USA\tDollar\t    England\tPound\t    Canada\tCdnDlr\t    Switzerland\tSFranc\t    Japan\tYen\t    Italy\tLira\t    France\tFFranc\t    Germany\tD-Mark\t    Australia\tADollar\t    Hong Kong\tHKDollar\t    Netherlands\tGuilder\t    Belgium\tBFranc\t    Austria\tSchilling\t    Fiji\tFDollar\t    ${EMPTY}
+    ELSE
+        ${expected_content}=    Catenate    SEPARATOR=\n    COUNTRY\tCURRENCY\t    USA\tDollar\t    England\tPound\t    Canada\tCdnDlr\t    Switzerland\tSFranc\t    Japan\tYen\t    Italy\tEuro\t    France\tEuro\t    Germany\tEuro\t    Australia\tADollar\t    Hong Kong\tHKDollar\t    Netherlands\tEuro\t    Belgium\tEuro\t    Austria\tEuro\t    Fiji\tFDollar\t    Russia\tRuble\t    Romania\tRLeu\t    ${EMPTY}
+    END
+
     Check content    ${export_path}    ${expected_content}
 
 test_max_row

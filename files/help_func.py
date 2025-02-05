@@ -440,8 +440,11 @@ def check_xlsx(xlsx_path: str):
 
 def add_rows():
     execute_immediate("CREATE TABLE TEST_TABLE (ID BIGINT)")
-    with fdb.connect("employee") as con:
-        
+    import firebird.driver as fdb
+    if is_rdb26():
+        import fdb
+        load_api()
+    with fdb.connect("localhost:employee.fdb", user="SYSDBA", password="masterkey") as con:
         for i in range(1048576):
             con.execute_immediate(f"INSERT INTO TEST_TABLE VALUES ({i})")
     

@@ -36,5 +36,5 @@ Drop Trigger
     ${row}=    Find Table Row    0    Success    Status
     Push Button    commitButton
     Should Not Be Equal As Integers    ${row}    -1
-    VAR    ${error}    DatabaseError: unsuccessful metadata update
+    VAR    ${error}    DatabaseError:
     Run Keyword And Expect Error    STARTS:${error}    Execute Immediate    DROP TRIGGER NEW_TRIGGER

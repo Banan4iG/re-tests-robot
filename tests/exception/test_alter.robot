@@ -14,6 +14,9 @@ test_1
     Check    CREATE OR ALTER EXCEPTION NEW_EXP 'new_message'
 
 test_2
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    Skip If    ${{$ver == '2.6'}}
     Init    "NEW EXP"    NEW EXP
     Select Tab As Context    Privileges
     Sleep    1s

@@ -56,7 +56,7 @@ Create Connect
     END
     Type Into Text Field    fileField    ${test_base_path}
     Type Into Text Field    userField    sysdba
-    Type Into Text Field    userPasswordField    masterkey
+    Type Into Text Field    passwordField    masterkey
     Check Check Box    Store Password
     Push Button    saveButton
 

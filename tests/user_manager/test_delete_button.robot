@@ -19,8 +19,12 @@ test_1
     Type Into Text Field    middleNameField    test
     Type Into Text Field    lastNameField      test
     Push Button      submitButton
-    Select Dialog    dialog1
-    Push Button      commitButton
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    IF    ${{$ver != '2.6'}}
+        Select Dialog    dialog1
+        Push Button      commitButton
+    END
     Sleep    1s
     Select Window    regexp=^Red.*
     ${row}=    Find Table Row    usersTable    TEST    User name
@@ -28,5 +32,7 @@ test_1
     Should Be Equal  TEST    ${cellValue}
     Select Table Cell    usersTable    ${row}    User name
     Push Button    deleteUserButton
-    Select Dialog    Dropping object
-    Push Button      commitButton
+    IF    ${{$ver != '2.6'}}
+        Select Dialog    Dropping object
+        Push Button      commitButton
+    END

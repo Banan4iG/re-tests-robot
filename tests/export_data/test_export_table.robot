@@ -22,7 +22,13 @@ test_1
     Clear Text Field    filePathField
     Type Into Text Field    filePathField    ${export_path}
     Uncheck All Checkboxes
-    ${expected_content}=    Catenate    SEPARATOR=\n    USA;Dollar    England;Pound    Canada;CdnDlr    Switzerland;SFranc    Japan;Yen    Italy;Euro    France;Euro    Germany;Euro    Australia;ADollar    Hong Kong;HKDollar    Netherlands;Euro    Belgium;Euro    Austria;Euro    Fiji;FDollar    Russia;Ruble    Romania;RLeu    ${EMPTY}
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    IF    ${{$ver == '2.6'}}
+        ${expected_content}=    Catenate    SEPARATOR=\n    COUNTRY;CURRENCY    USA;Dollar    England;Pound    Canada;CdnDlr    Switzerland;SFranc    Japan;Yen    Italy;Lira    France;FFranc    Germany;D-Mark    Australia;ADollar    Hong Kong;HKDollar    Netherlands;Guilder    Belgium;BFranc    Austria;Schilling    Fiji;FDollar    ${EMPTY}
+    ELSE
+        ${expected_content}=    Catenate    SEPARATOR=\n    COUNTRY;CURRENCY    USA;Dollar    England;Pound    Canada;CdnDlr    Switzerland;SFranc    Japan;Yen    Italy;Euro    France;Euro    Germany;Euro    Australia;ADollar    Hong Kong;HKDollar    Netherlands;Euro    Belgium;Euro    Austria;Euro    Fiji;FDollar    Russia;Ruble    Romania;RLeu    ${EMPTY}
+    END
     Push Button    exportButton
     Sleep    5s
     Close Dialog    Message
