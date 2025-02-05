@@ -58,7 +58,7 @@ Create Connect
     Select Window    regexp=^Red.*
     Push Button    new-connection-command
     Sleep    1s
-    IF    $ver == '2.6'
+    IF    ${{$ver == '2.6'}}
         Select From Combo Box    serverCombo    Red Database (Firebird) 2.X
         Select From Combo Box    authCombo    Basic
     END
