@@ -136,7 +136,7 @@ def get_server_info():
     global srv_version
 
     if is_rdb26():
-        home_directory = "/opt/RedDatabase/" if platform.system() == "Linux" else os.environ.get('INSTALL_PATH', 'D:\\Program Files\\RedDatabase(x64)\\')
+        home_directory = "/opt/RedDatabase/" if platform.system() == "Linux" else "C:\\RedDatabase(x64)\\"
         version = "2.6"
         srv_version = "RedDatabase"
     else:        
