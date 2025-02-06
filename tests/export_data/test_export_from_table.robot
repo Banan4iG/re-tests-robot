@@ -53,6 +53,7 @@ Check
     ${export_path}=     Catenate    SEPARATOR=    ${TEMPDIR}    /export.csv
     Remove Files    ${export_path}
     Select Tab  Options
+    Check Check Box    addColumnHeadersCheck
     Select From Combo Box    columnDelimiterCombo    ;
     Clear Text Field    filePathField
     Type Into Text Field    filePathField    ${export_path}

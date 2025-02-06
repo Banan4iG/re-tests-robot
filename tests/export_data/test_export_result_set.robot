@@ -18,6 +18,7 @@ test_CSV
     Select From Combo Box    typeCombo    CSV
     ${export_path}=     Catenate    SEPARATOR=    ${TEMPDIR}    /export.csv
     Remove Files    ${export_path}
+    Check Check Box    addColumnHeadersCheck
     Select From Combo Box    columnDelimiterCombo    ;
     Clear Text Field    filePathField
     Type Into Text Field    filePathField    ${export_path}
