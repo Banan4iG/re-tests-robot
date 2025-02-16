@@ -182,6 +182,11 @@ test_domain_to_type
     ${domain}=    Get Table Cell Value    0    ${row}    Domain
     Should Be Empty    ${domain}
 
+test_check_ddl_to_create
+    Init Edit Column    CREATE TABLE TEST_TABLE (TEST_COLUMN VARCHAR(30) DEFAULT 'test' NOT NULL)
+    Select Tab As Context    DDL to create
+    ${ddl}=    Get Text Field Value    0
+    Should Be Equal As Strings    ${ddl}    ALTER TABLE TEST_TABLE ADD TEST_COLUMN VARCHAR(30) DEFAULT 'test' NOT NULL;    strip_spaces=${True}    collapse_spaces=${True}
 
 *** Keywords ***
 Init Edit Column
