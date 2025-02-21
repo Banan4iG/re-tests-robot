@@ -29,7 +29,7 @@ test_check_types
     IF    ${{$ver == '5.0'}}
         Check type    TIME WITH TIME ZONE
         Check type    TIMESTAMP WITH TIME ZONE
-        Check type    INT128    expected_size=1    expected_scale=1
+        Check type    INT128
     END
 
 test_check_domain
@@ -123,7 +123,7 @@ test_check_auto_name
     Select Dialog    Create table column
     ${name}=    Get Text Field Value    nameField
     Should Be Equal As Strings    ${name}    NEW_TABLE_COLUMN_2
-    Check commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_2 BIGINT
+    Check commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_2 BIGINT    dialog=dialog3
     Check in table    column_name=NEW_TABLE_COLUMN_2
 
 test_computed
@@ -334,6 +334,7 @@ Check in table
 Check SQL Statements
     [Arguments]    ${check_sequence}    ${gen_name}
     Push Button    submitButton
+    Sleep    0.5s
     Select Dialog    dialog2
     # Check ALTER TABLE statement
     ${alter_row}=    Find Table Row    0    ALTER TABLE    Name operation

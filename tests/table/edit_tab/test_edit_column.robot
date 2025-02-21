@@ -158,7 +158,7 @@ test_add_use_gen_without_identity
     Run Keyword And Expect Error    org.netbeans.jemmy.TimeoutExpiredException: Component enabled: class javax.swing.JRadioButton    Push Radio Button    identityRadio
     Push Radio Button    existingSequenceRadio
     Select From Combo Box    sequencesCombo    EMP_NO_GEN
-    Check SQL Statements    ${False}    EMP_NO_GEN    dialog1    ALTER TABLE TEST_TABLE ALTER COLUMN TEST_COLUMN SET NOT NULL
+    Check SQL Statements    ${False}    gen_name=EMP_NO_GEN    dialog=dialog1    alter_table=ALTER TABLE TEST_TABLE ALTER COLUMN TEST_COLUMN SET NOT NULL
     Check Column In Table
     Execute Immediate    INSERT INTO TEST_TABLE DEFAULT VALUES
     Execute Immediate    INSERT INTO TEST_TABLE DEFAULT VALUES
@@ -174,6 +174,8 @@ test_identity_to_new_gen
     Select Dialog    Edit table column
     Clear Text Field    sequenceNameField
     Type Into Text Field    sequenceNameField    AUTO_GEN
+    Clear Text Field    startValueField
+    Type Into Text Field    startValueField    0
     Check SQL Statements    ${True}    AUTO_GEN
     Check Column In Table
     Execute Immediate    INSERT INTO TEST_TABLE DEFAULT VALUES
@@ -285,6 +287,7 @@ Check Column In Table
 Check SQL Statements
     [Arguments]    ${check_sequence}    ${gen_name}    ${dialog}=dialog2    ${alter_table}=ALTER TABLE TEST_TABLE ALTER COLUMN TEST_COLUMN DROP IDENTITY
     Push Button    submitButton
+    Sleep    0.5s
     Select Dialog    ${dialog}
     # Check ALTER TABLE statement
     ${alter_row}=    Find Table Row    0    ALTER TABLE    Name operation
