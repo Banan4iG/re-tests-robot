@@ -236,6 +236,24 @@ test_autoincrement_use_generator
     ${res}=    Execute    SELECT * FROM TEST_TABLE
     Should Be Equal As Strings    ${res}    [(2, 146), (6, 147), (6, 25)]
 
+test_check_autoupdate_object_tree
+    Init autoincrement    newSequenceRadio
+    Select Dialog    Warning
+    Label Text Should Be    0    Using IDENTITY is preferred when creating an auto-incremented column
+    Push Button    OK
+    Select Dialog    Create table column
+    Clear Text Field    sequenceNameField
+    Type Into Text Field    sequenceNameField    AUTO_GEN
+    Clear Text Field    startValueField
+    Type Into Text Field    startValueField    10
+    Clear Text Field    incrementField
+    Type Into Text Field    incrementField    5
+    Check SQL Statements    ${True}    AUTO_GEN
+    Select Main Window
+    Expand Tree Node    0    New Connection|Table Triggers (5)
+    Tree Node Should Exist    0   New Connection|Table Triggers (5)|TRIGGER_BI_TEST_TABLE_NEW_TABLE_COLUMN_1
+    Expand Tree Node    0    New Connection|Sequences (3)
+    Tree Node Should Exist    0   New Connection|Sequences (3)|AUTO_GEN
 
 *** Keywords ***
 Init
