@@ -17,8 +17,9 @@ test_2
     ${bk_path}=    Init
     Push Button    Yes
 
-    # Temporary handling of dialog Error message. See RS-201698    
-    Close Dialog    Error message
+    Select Dialog    Message
+    Label Text Should Be    0    Backup completed successfully!
+    Push Button    OK
 
     # delete files
     Remove File    ${bk_path}
