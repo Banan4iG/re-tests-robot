@@ -52,7 +52,7 @@ new_api
     System Exit    0
     Sleep       10s
     Start Red Expert    ${path_to_exe}
-    Select Window    regexp=^Red Expert - 2023\.10.*
+    Select Window    regexp=^RDB Expert - 2025\.02.*
 
 *** Keywords ***
 Start Red Expert

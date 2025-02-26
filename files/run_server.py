@@ -18,7 +18,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         if "version" in url_path:
             data = [{
                 "url": "http://localhost:443/file_link/",
-                "filename": "bin/RedExpert-9999.99.zip",
+                "filename": "bin/RDBExpert-9999.99.zip",
             }]
             init_response(data)
         elif "genlink" in url_path:
@@ -36,8 +36,8 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 },
                 "files": [
                     {
-                        "FILE_NAME": "RedExpert-9999.99.zip",
-                        "FILE_PATH": "/release_hub/red_expert/2023.10/download/red_expert:bin:2023.10:zip"
+                        "FILE_NAME": "RDBExpert-9999.99.zip",
+                        "FILE_PATH": "/release_hub/red_expert/2025.02-SNAPSHOT.135/download/rdb_expert:bin:2025.02-SNAPSHOT.135:zip"
                     },]
 
             }
