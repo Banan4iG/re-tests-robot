@@ -25,7 +25,7 @@ test_export_selection
     Click On Table Cell    0    ${row_phone}    1
     Click On Table Cell    0    ${row_phone}    0
     
-    ${expected_content}=    Catenate    SEPARATOR=\n    Nordstrom;1991-10-02T00:00    Leung;1992-02-18T00:00    O''Brien;1992-03-23T00:00    Burbank;1992-04-15T00:00    Sutherland;1992-04-20T00:00    Bishop;1992-06-01T00:00    ${EMPTY}
+    ${expected_content}=    Catenate    SEPARATOR=\n    LAST_NAME;HIRE_DATE    Nordstrom;1991-10-02T00:00    Leung;1992-02-18T00:00    O''Brien;1992-03-23T00:00    Burbank;1992-04-15T00:00    Sutherland;1992-04-20T00:00    Bishop;1992-06-01T00:00    ${EMPTY}
     Check    ${expected_content}
 
 test_export_table
@@ -53,11 +53,11 @@ Check
     ${export_path}=     Catenate    SEPARATOR=    ${TEMPDIR}    /export.csv
     Remove Files    ${export_path}
     Select Tab  Options
+    Uncheck All Checkboxes
     Check Check Box    addColumnHeadersCheck
     Select From Combo Box    columnDelimiterCombo    ;
     Clear Text Field    filePathField
     Type Into Text Field    filePathField    ${export_path}
-    Uncheck All Checkboxes
     Push Button    exportButton
     Sleep    5s
     Close Dialog    Message

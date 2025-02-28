@@ -18,11 +18,11 @@ test_CSV
     Select From Combo Box    typeCombo    CSV
     ${export_path}=     Catenate    SEPARATOR=    ${TEMPDIR}    /export.csv
     Remove Files    ${export_path}
+    Uncheck All Checkboxes
     Check Check Box    addColumnHeadersCheck
     Select From Combo Box    columnDelimiterCombo    ;
     Clear Text Field    filePathField
     Type Into Text Field    filePathField    ${export_path}
-    Uncheck All Checkboxes
     ${info}=    Get Server Info
     ${ver}=     Set Variable    ${info}[1]
     IF    ${{$ver == '2.6'}}
