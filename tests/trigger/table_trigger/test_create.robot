@@ -49,6 +49,9 @@ test_sql
     Check    CREATE OR ALTER TRIGGER TEST_TRIGGER FOR COUNTRY ACTIVE BEFORE INSERT POSITION 0 AS BEGIN POST_EVENT 'cool!'; END
 
 test_sql_security_definer
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    Skip If    ${{$ver == '2.6'}}
     Init
     Select From Combo Box    securityCombo    DEFINER
     Check Check Box    insertCheck
@@ -56,6 +59,9 @@ test_sql_security_definer
     Check    CREATE OR ALTER TRIGGER TEST_TRIGGER FOR COUNTRY ACTIVE BEFORE INSERT OR UPDATE POSITION 0 SQL SECURITY DEFINER AS BEGIN /* Trigger impl */ END
 
 test_sql_security_invoker
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    Skip If    ${{$ver == '2.6'}}
     Init
     Select From Combo Box    securityCombo    INVOKER
     Check Check Box    insertCheck
@@ -68,6 +74,9 @@ test_list_tables
     Should Be Equal As Strings    ${tables}    ['COUNTRY', 'CUSTOMER', 'DEPARTMENT', 'EMPLOYEE', 'EMPLOYEE_PROJECT', 'JOB', 'PROJECT', 'PROJ_DEPT_BUDGET', 'SALARY_HISTORY', 'SALES', 'PHONE_LIST']
 
 test_external_module
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    Skip If    ${{$ver == '2.6'}}
     Init
     Check Check Box    useExternalCheck
     Check Check Box    insertCheck

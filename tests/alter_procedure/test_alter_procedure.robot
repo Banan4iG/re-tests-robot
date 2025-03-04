@@ -35,6 +35,8 @@ alter_add_var
 
 alter_add_cursor
     Lock Employee
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
     Execute Immediate    CREATE OR ALTER PROCEDURE TEST RETURNS ( PAR0 INTEGER ) AS BEGIN PAR0 = 55; END
     Open connection
     Click On Tree Node   0    New Connection|Procedures (11)|TEST   2
@@ -46,7 +48,9 @@ alter_add_cursor
     
     Push Button    addRowButton
     Type Into Table Cell    0    1    Name    PAR2
-    Click On Table Cell     0    1    Scroll
+    IF   ${{$ver != '2.6'}}
+        Click On Table Cell     0    1    Scroll
+    END
     Click On Table Cell     0    1    Select operator
     Type Into Text Field    0    SELECT * FROM COUNTRY
 
@@ -56,10 +60,15 @@ alter_add_cursor
     Push Button    submitButton
     Select Dialog    Edit procedure
     Push Button    commitButton
-    Should Be Equal As Strings    ${new_ddl1}    CREATE OR ALTER PROCEDURE TEST RETURNS ( PAR0 INTEGER ) AS DECLARE PAR1 CURSOR FOR (SELECT * FROM EMPLOYEE); DECLARE PAR2 SCROLL CURSOR FOR (SELECT * FROM COUNTRY); BEGIN PAR0 = 55; END;    strip_spaces=${True}    collapse_spaces=${True}
+    IF   ${{$ver != '2.6'}}
+        VAR    ${expected_ddl}    CREATE OR ALTER PROCEDURE TEST RETURNS ( PAR0 INTEGER ) AS DECLARE PAR1 CURSOR FOR (SELECT * FROM EMPLOYEE); DECLARE PAR2 SCROLL CURSOR FOR (SELECT * FROM COUNTRY); BEGIN PAR0 = 55; END;
+    ELSE
+        VAR    ${expected_ddl}    CREATE OR ALTER PROCEDURE TEST RETURNS ( PAR0 INTEGER ) AS DECLARE PAR1 CURSOR FOR (SELECT * FROM EMPLOYEE); DECLARE PAR2 CURSOR FOR (SELECT * FROM COUNTRY); BEGIN PAR0 = 55; END;
+    END
+    Should Be Equal As Strings    ${new_ddl1}    ${expected_ddl}    strip_spaces=${True}    collapse_spaces=${True}
     Select Main Window
     ${new_ddl2}=    Get Text Field Value    2
-    Should Be Equal As Strings    ${new_ddl2}    CREATE OR ALTER PROCEDURE TEST RETURNS ( PAR0 INTEGER ) AS DECLARE PAR1 CURSOR FOR (SELECT * FROM EMPLOYEE); DECLARE PAR2 SCROLL CURSOR FOR (SELECT * FROM COUNTRY); BEGIN PAR0 = 55; END;   strip_spaces=${True}    collapse_spaces=${True}
+    Should Be Equal As Strings    ${new_ddl2}    ${expected_ddl}   strip_spaces=${True}    collapse_spaces=${True}
 
 alter_remove_input_par
     Remove par    CREATE OR ALTER PROCEDURE TEST ( PAR0 INTEGER, PAR1 VARCHAR(10) CHARACTER SET UTF8 NOT NULL, PAR2 EMPNO, PAR3 TYPE OF CUSTNO, PAR4 TYPE OF COLUMN COUNTRY.COUNTRY ) RETURNS ( TOT INTEGER ) AS BEGIN tot = 55; END    Input Parameters    CREATE OR ALTER PROCEDURE TEST ( PAR0 INTEGER ) RETURNS ( TOT INTEGER ) AS BEGIN tot = 55; END;    

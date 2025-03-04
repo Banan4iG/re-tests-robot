@@ -6,6 +6,9 @@ Test Teardown    Teardown after every tests
 
 *** Test Cases ***
 test_1
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    Skip if   ${{$ver == '2.6'}}
     Init    NEW_SEQ    NEW_SEQ
     Clear Text Field    1
     Type Into Text Field    1    100
@@ -20,8 +23,6 @@ test_1
     ${increment}=    Get Text Field Value    2
     ${current_value}=    Get Text Field Value    3
     Should Be Equal As Strings    ${start_value}    100
-    ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
     IF  ${{$ver == '5.0'}}
         Should Be Equal As Strings    ${current_value}    90
     ELSE
@@ -35,13 +36,15 @@ test_1
 
 
 test_2
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    Skip if   ${{$ver == '2.6'}}
     Init    NEW_SEQ    NEW_SEQ
     ${start_value}=    Get Text Field Value    1
     ${increment}=    Get Text Field Value    2
     ${current_value}=    Get Text Field Value    3
     Should Be Equal As Strings    ${start_value}    10
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
     IF  ${{$ver == '5.0'}}
         Should Be Equal As Strings    ${current_value}    9
     ELSE
@@ -50,6 +53,9 @@ test_2
     Should Be Equal As Strings    ${increment}    1
 
 test_3
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    Skip if   ${{$ver == '2.6'}}
     Init    "NEW SEQ"    NEW SEQ
     Select Tab As Context    Privileges
     @{values}=    Get Table Column Values    0    User
@@ -80,17 +86,31 @@ test_4
     END
 
 test_5
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
     Init    """NEW SEQ"""    "NEW SEQ"
     Select Tab As Context    DDL to create
     ${res}=    Get Text Field Value    0
-    Should Be Equal As Strings    ${res}    CREATE OR ALTER SEQUENCE """NEW SEQ""" START WITH 10 INCREMENT BY 1;    strip_spaces=${True}    collapse_spaces=${True}
+    IF   ${{$ver != '2.6'}}
+        Should Be Equal As Strings    ${res}    CREATE OR ALTER SEQUENCE """NEW SEQ""" START WITH 10 INCREMENT BY 1;    strip_spaces=${True}    collapse_spaces=${True}
+    ELSE
+        Should Be Equal As Strings    ${res}    CREATE SEQUENCE """NEW SEQ"""; ALTER SEQUENCE """NEW SEQ""" RESTART WITH 0;    strip_spaces=${True}    collapse_spaces=${True}
+    END
 
 *** Keywords ***
 Init
     [Arguments]    ${create_name}    ${tree_name}
     Lock Employee
-    Execute Immediate  CREATE OR ALTER SEQUENCE ${create_name} START WITH 10 INCREMENT BY 1
-    Run Keyword If    '${TEST_NAME}' == 'test_4'    Execute Immediate    CREATE OR ALTER PROCEDURE NEW_PROC RETURNS ( NEW_GEN INTEGER ) AS BEGIN :NEW_GEN = gen_id(NEW_SEQ, 1); END    
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    IF    ${{$ver == '2.6'}}
+        Execute Immediate  CREATE SEQUENCE ${create_name}
+        VAR    ${create_proc}     CREATE OR ALTER PROCEDURE NEW_PROC RETURNS ( NEW_GEN INTEGER ) AS BEGIN NEW_GEN = gen_id(NEW_SEQ, 1); END   
+    ELSE
+        Execute Immediate  CREATE OR ALTER SEQUENCE ${create_name} START WITH 10 INCREMENT BY 1
+        VAR    ${create_proc}     CREATE OR ALTER PROCEDURE NEW_PROC RETURNS ( NEW_GEN INTEGER ) AS BEGIN :NEW_GEN = gen_id(NEW_SEQ, 1); END
+    END
+    Run Keyword If    '${TEST_NAME}' == 'test_4'    Execute Immediate    ${create_proc}
     Open connection
     Click On Tree Node    0    New Connection|Sequences (3)|${tree_name}    2
     ${name}=    Get Text Field Value    nameField

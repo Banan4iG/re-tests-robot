@@ -29,6 +29,9 @@ test_event_transaction_rollback
     Check    CREATE OR ALTER TRIGGER NEW_TRIGGER ACTIVE ON TRANSACTION ROLLBACK POSITION 0 AS BEGIN /* Trigger impl */ END
 
 test_use_external_module
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    Skip If    ${{$ver == '2.6'}}
     Init
     Check Check Box    useExternalCheck
     Type Into Text Field    externalField    external_point
@@ -36,11 +39,17 @@ test_use_external_module
     Check    CREATE OR ALTER TRIGGER NEW_TRIGGER ACTIVE ON CONNECT POSITION 0 EXTERNAL NAME 'external_point' ENGINE external_engine
 
 test_sql_security_definer
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    Skip If    ${{$ver == '2.6'}}
     Init
     Select From Combo Box    securityCombo    DEFINER
     Check    CREATE OR ALTER TRIGGER NEW_TRIGGER ACTIVE ON CONNECT POSITION 0 SQL SECURITY DEFINER AS BEGIN /* Trigger impl */ END
 
 test_sql_security_invoker
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    Skip If    ${{$ver == '2.6'}}
     Init
     Select From Combo Box    securityCombo    INVOKER
     Check    CREATE OR ALTER TRIGGER NEW_TRIGGER ACTIVE ON CONNECT POSITION 0 SQL SECURITY INVOKER AS BEGIN /* Trigger impl */ END
