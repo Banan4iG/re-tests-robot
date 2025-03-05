@@ -18,12 +18,16 @@ test_execute
         Init    test_script3.sql
     END
     Sleep    5s
+    Push Button    editor-stop-on-error-command
+
 
 test_cancel
     Init    test_script26.sql
     Sleep    0.5s
     Push Button    stop-execution-command
     Sleep    5s
+    Push Button    editor-stop-on-error-command
+
 
 *** Keywords ***
 Init
@@ -38,4 +42,5 @@ Init
     Type Into Text Field    0    ${script_path}
     Push Button    Open
     Select Main Window
+    Push Button    editor-stop-on-error-command
     Run Keyword In Separate Thread    Push Button    execute-script-command
