@@ -52,9 +52,10 @@ def restore_user_properties():
     home_dir = os.path.expanduser("~")
     build_no = get_build_no()
     user_properties_file = os.path.join(home_dir, f'.redexpert/{build_no}/eq.user.properties')
-    if os.path.exists(user_properties_file):
-        os.remove(user_properties_file)
-    shutil.move(user_properties_file + ".bak", user_properties_file)
+    if os.path.exists(user_properties_file + ".bak"):
+        if os.path.exists(user_properties_file):
+            os.remove(user_properties_file)
+        shutil.move(user_properties_file + ".bak", user_properties_file)
 
 def set_urls(urls: str):
     home_dir = os.path.expanduser("~")
@@ -86,7 +87,7 @@ def get_path():
         else:
             path_to_exe += f"/RedExpert{bin}"
     else:
-        path_to_exe = '"C:\\Program Files\\RedExpert\\bin\\RedExpert64.exe"'
+        path_to_exe = '"D:\\projects\\RedExpert\\bin\\RedExpert64.exe"'
     return path_to_exe
 
 def clear_history_files():
@@ -114,7 +115,7 @@ def clear_history_files():
             os.remove(file)
 
 def copy_dist_path():
-    DIST = os.environ.get('DIST', "C:/Program Files/RedExpert")
+    DIST = os.environ.get('DIST', "D:\\projects\\RedExpert")
     tmp_dir = tempfile.gettempdir()
 
     if os.path.exists(tmp_dir + '/RedExpert'):
