@@ -143,7 +143,7 @@ def get_server_info():
         with connect_server(server='localhost', user='SYSDBA', password='masterkey') as srv:
             home_directory = srv.info.home_directory
             for ver in ["3.0", "5.0"]:
-                index = srv.info.version.find(ver)
+                index = srv.info.version.find(ver, 0, 3)
                 if index > -1:
                     version = ver
                     break
