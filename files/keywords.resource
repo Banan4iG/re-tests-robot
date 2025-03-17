@@ -5,6 +5,7 @@ Library    help_func.py
 
 *** Keywords ***
 Setup before every tests
+    Backup Savedconnections File
     ${path_to_exe}=    Get Path
     Log    ${path_to_exe}    console=True
     TRY
@@ -19,7 +20,8 @@ Setup before every tests
 Teardown after every tests
     System Exit    0
     Unlock Employee
-    Clear History Files        
+    Clear History Files
+    Restore Savedconnections File        
 
 Open connection
     Click On Tree Node    0    New Connection    2
