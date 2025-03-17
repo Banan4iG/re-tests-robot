@@ -14,17 +14,16 @@ test_1
     ${row}=    Find Table Row    0    Date Pattern Format
 
     Clear Table Cell    0    ${row}    2
-    Type Into Table Cell    0    ${row}    2    mm.yy
-
+    Type Into Table Cell    0    ${row}    2    MM.yy
     Push Button    OK
-
+    Close Dialog    Message
     Select Main Window
     Select From Main Menu    System|Preferences
     Select Dialog    Preferences
     Click On Tree Node    0    Result Set Table
     Sleep    2s
     ${value}=    Get Table Cell Value    0    ${row}    2
-    Should Be Equal As Strings   ${value}    mm.yy
+    Should Be Equal As Strings   ${value}    MM.yy
 
     Push Button    restoreButton
     ${value}=    Get Table Cell Value    0    ${row}    2
