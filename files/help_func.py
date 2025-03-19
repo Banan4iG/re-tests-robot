@@ -13,9 +13,8 @@ from firebird.driver import driver_config, connect_server, SrvInfoCode
 
 def kill_redexpert():
     time.sleep(10)
-    bin = "" if platform.system() == "Linux" else ".exe"
     for proc in psutil.process_iter():
-        if proc.name() == f'RedExpert64{bin}':
+        if proc.name() == f'RedExpert64{get_exe()}':
             proc.terminate()
 
 def run_server():
@@ -30,31 +29,31 @@ def get_build_no():
     return os.environ.get('BUILD', "202501")
 
 def backup_savedconnections_file():
-    home_dir = os.path.expanduser("~")
-    build_no = get_build_no()
-    saved_conn_file = os.path.join(home_dir, f'.redexpert/{build_no}/savedconnections.xml')
-    shutil.move(saved_conn_file, saved_conn_file + ".bak")
+    backup_file("savedconnections.xml")
 
 def restore_savedconnections_file():
-    home_dir = os.path.expanduser("~")
-    build_no = get_build_no()
-    saved_conn_file = os.path.join(home_dir, f'.redexpert/{build_no}/savedconnections.xml')
-    if os.path.exists(saved_conn_file + ".bak"):
-        shutil.move(saved_conn_file + ".bak", saved_conn_file)
+    restore_file("savedconnections.xml")
 
 def backup_user_properties():
-    home_dir = os.path.expanduser("~")
-    build_no = get_build_no()
-    user_properties_file = os.path.join(home_dir, f'.redexpert/{build_no}/eq.user.properties')
-    shutil.copy(user_properties_file, user_properties_file + ".bak")
+    backup_file("eq.user.properties")
 
 def restore_user_properties():
+    restore_file("eq.user.properties")
+
+def backup_file(file_name: str):
     home_dir = os.path.expanduser("~")
     build_no = get_build_no()
-    user_properties_file = os.path.join(home_dir, f'.redexpert/{build_no}/eq.user.properties')
-    if os.path.exists(user_properties_file):
-        os.remove(user_properties_file)
-    shutil.move(user_properties_file + ".bak", user_properties_file)
+    file_path = os.path.join(home_dir, f'.redexpert/{build_no}/{file_name}')
+    shutil.copy(file_path, file_path + ".bak")
+
+def restore_file(file_name: str):
+    home_dir = os.path.expanduser("~")
+    build_no = get_build_no()
+    file_path = os.path.join(home_dir, f'.redexpert/{build_no}/{file_name}')
+    if os.path.exists(file_path + ".bak"):
+        if os.path.exists(file_path):
+            os.remove(file_path)
+        shutil.move(file_path + ".bak", file_path)
 
 def set_urls(urls: str):
     home_dir = os.path.expanduser("~")
@@ -72,43 +71,24 @@ def get_path_to_lib():
     return os.environ.get('DIST', 'C:\\Program Files\\RedExpert') + "/lib"
 
 def get_path():
-    DIST = os.environ.get('DIST')
-    ARCH = os.environ.get('ARCH')
+    DIST = os.environ.get('DIST', 'C:\\Program Files\\RedExpert')
     COVERAGE = os.environ.get('COVERAGE')
-    bin = "" if platform.system() == "Linux" else ".exe"
+    bin = get_exe()
     if COVERAGE:
-        path_to_exe = f"java -javaagent:./lib/jacocoagent.jar=destfile=./results/jacoco.exec,output=file -jar {DIST}/RedExpert.jar -exe_path={DIST}/bin/RedExpert64"
-        return path_to_exe
-    if DIST:
-        path_to_exe = DIST + "/bin"
-        if ARCH == "x86_64":
-            path_to_exe += f"/RedExpert64{bin}" 
-        else:
-            path_to_exe += f"/RedExpert{bin}"
+        path_to_exe = f"java -javaagent:./lib/jacocoagent.jar=destfile=./results/jacoco.exec,output=file -jar {DIST}/RedExpert.jar -exe_path={DIST}/bin/RedExpert64{bin}"
     else:
-        path_to_exe = '"C:\\Program Files\\RedExpert\\bin\\RedExpert64.exe"'
+        path_to_exe = f"{DIST}/bin/RedExpert64{bin}"
     return path_to_exe
 
 def clear_history_files():
     home_dir = os.path.expanduser("~")
     build_no = get_build_no()
     history_file = os.path.join(home_dir, f'.redexpert/{build_no}/ConnectionHistory.xml')
-    saved_conn_file = os.path.join(home_dir, f'.redexpert/{build_no}/savedconnections.xml')
     shortcuts_file = os.path.join(home_dir, f'.redexpert/{build_no}/eq.shortcuts.properties')
     user_panel_state_file = os.path.join(home_dir, f'.redexpert/{build_no}/re.user.panels.state')
     query_dir = os.path.join(home_dir, f'.redexpert/{build_no}/QueryEditor')
     if os.path.exists(query_dir):
         shutil.rmtree(query_dir)
-    if os.path.exists(saved_conn_file):
-        with open(saved_conn_file, 'r') as f:
-            context = f.read()
-        
-        if "</connection>" in context:
-            context = context[:context.find("</connection>")] + "</connection>\n\n</savedconnections>"
-        
-            with open(saved_conn_file, 'w') as f:
-                f.write(context)
-
     for file in [history_file, shortcuts_file, user_panel_state_file]:
         if os.path.exists(file):
             os.remove(file)
@@ -120,27 +100,16 @@ def get_hosts_history_file():
     return hosts_history_file
 
 def copy_dist_path():
-    DIST = os.environ.get('DIST', "C:/Program Files/RedExpert")
+    DIST = os.environ.get('DIST', "D:\\projects\\RedExpert")
     tmp_dir = tempfile.gettempdir()
 
     if os.path.exists(tmp_dir + '/RedExpert'):
         shutil.rmtree(tmp_dir + '/RedExpert')
     return_path = shutil.copytree(DIST, tmp_dir + '/RedExpert')
-    bin = "" if platform.system() == "Linux" else ".exe"
-    path_to_exe = return_path + f"/bin/RedExpert64{bin}" 
+    path_to_exe = return_path + f"/bin/RedExpert64{get_exe()}" 
     return path_to_exe
 
-# def set_config():
-#     driver_config.server_defaults.host.value = 'localhost'
-#     driver_config.server_defaults.user.value = 'SYSDBA'
-#     driver_config.server_defaults.password.value = 'masterkey'
-
-
 def get_server_info():    
-    global home_directory
-    global version
-    global srv_version
-
     if is_rdb26():
         home_directory = "/opt/RedDatabase/" if platform.system() == "Linux" else "C:\\RedDatabase(x64)\\"
         version = "2.6"
@@ -148,36 +117,25 @@ def get_server_info():
     else:        
         with connect_server(server='localhost', user='SYSDBA', password='masterkey') as srv:
             home_directory = srv.info.home_directory
-            for ver in ["3.0", "5.0"]:
-                index = srv.info.version.find(ver, 0, 3)
-                if index > -1:
-                    version = ver
-                    break
-
-            for srv_ver in ["Firebird", "RedDatabase"]:
-                index = srv.info.get_info(SrvInfoCode.SERVER_VERSION).find(srv_ver)
-                if index > -1:
-                    srv_version = srv_ver
-                    break
+            version = srv._engine_version()
+            srv_version = next(ver for ver in ["Firebird", "RedDatabase"] if srv.info.get_info(SrvInfoCode.SERVER_VERSION).find(ver) > -1)
     
     return home_directory, version, srv_version
 
 def lock_employee():
     home_directory, version, srv_version = get_server_info()
-    bin = "" if platform.system() == "Linux" else ".exe"
     bin_dir = "bin/" if platform.system() == "Linux" or is_rdb26() else ""
-    subprocess.run([f"{home_directory}{bin_dir}nbackup{bin}", "-L", f"{home_directory}examples/empbuild/employee.fdb", "-u", "SYSDBA", "-p", "masterkey"])
+    subprocess.run([f"{home_directory}{bin_dir}nbackup{get_exe()}", "-L", f"{home_directory}examples/empbuild/employee.fdb", "-u", "SYSDBA", "-p", "masterkey"])
     time.sleep(1)
 
 def unlock_employee():
     home_directory, version, srv_version = get_server_info()
-    bin = "" if platform.system() == "Linux" else ".exe"
     bin_dir = "bin/" if platform.system() == "Linux" or is_rdb26() else ""
     delta_file = home_directory + "examples/empbuild/employee.fdb.delta"
     if os.path.exists(delta_file):
         time.sleep(2) 
         os.remove(delta_file)
-        subprocess.run([f"{home_directory}{bin_dir}nbackup{bin}", "-F", f"{home_directory}examples/empbuild/employee.fdb"])
+        subprocess.run([f"{home_directory}{bin_dir}nbackup{get_exe()}", "-F", f"{home_directory}examples/empbuild/employee.fdb"])
 
 def execute(query: str):
     """
@@ -407,8 +365,7 @@ def create_database(script_path: str, base_path: str):
     con = fdb.create_database(database=base_path, user='SYSDBA', password='masterkey')
     con.close()
     bin_dir = "bin/" if platform.system() == "Linux" or is_rdb26() else ""
-    bin = "" if platform.system() == "Linux" else ".exe"
-    subprocess.call([f"{home_directory}{bin_dir}isql{bin}",  "-q", "-i", f"\"{script_path}\""])
+    subprocess.call([f"{home_directory}{bin_dir}isql{get_exe()}",  "-q", "-i", f"\"{script_path}\""])
 
 def build_procedure():
     import firebird.driver as fdb
@@ -465,3 +422,6 @@ def load_api():
     home_directory, _, _ = get_server_info()
     fd_lib = "lib/libfbclient.so" if platform.system() == "Linux" else "bin/fbclient.dll"
     fdb.load_api(home_directory + fd_lib)
+
+def get_exe():
+    return "" if platform.system() == "Linux" else ".exe"
