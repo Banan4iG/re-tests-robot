@@ -6,6 +6,7 @@ import time
 import tempfile
 import psutil
 import openpyxl
+import threading
 from pathlib import Path
 import firebird.driver as fdb
 from firebird.driver import driver_config, connect_server, SrvInfoCode   
@@ -22,8 +23,21 @@ def run_server():
     p = subprocess.Popen([os.environ.get('PYTHON', 'python'), "./files/run_server.py"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     time.sleep(5)
 
+def run_isql():
+    def target():
+        global p
+        home_directory, _, _ = get_server_info()
+        p = subprocess.Popen([f"{home_directory}/isql{get_exe()}","localhost:employee.fdb", "-q", "-u", "TEST_USER", "-p", "123", "-r", "TEST_ROLE"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)        
+        p.wait()
+
+    thread = threading.Thread(target=target)  
+    thread.daemon = True
+    thread.start()
+
 def stop_server():
+    global p
     p.terminate()
+    p = None
 
 def get_build_no():
     return os.environ.get('BUILD', "202501")
