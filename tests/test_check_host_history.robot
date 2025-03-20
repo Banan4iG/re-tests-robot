@@ -21,9 +21,9 @@ test_2
     
 test_3
     ${path}=    Setup
-    Add Hosts
     ${selected}=    Get Selected Item From Combo Box    hostCombo
     Should Be Equal As Strings    ${selected}    localhost
+    Add Hosts
     @{value}=    Get Combobox Values    hostCombo
     Should Be Equal As Strings    ${value}    ['127.0.0.1', 'host', 'localhost']
     Select From Combo Box    hostCombo    127.0.0.1
