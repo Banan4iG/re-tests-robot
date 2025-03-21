@@ -95,8 +95,7 @@ def clear_history_files():
 
 def get_hosts_history_file():
     home_dir = os.path.expanduser("~")
-    build_no = get_build_no()
-    hosts_history_file = os.path.join(home_dir, f'.redexpert/{build_no}/hosts.history')
+    hosts_history_file = os.path.join(home_dir, '.redexpert/hosts.history')
     return hosts_history_file
 
 def copy_dist_path():
