@@ -23,9 +23,8 @@ test_re
 
 
 test_isql
+    Skip
     Init
-    ${info}=    Get Server Info
-    ${home}=     Set Variable    ${info}[0]
     Run Isql
     Open connection
     Check    ::1

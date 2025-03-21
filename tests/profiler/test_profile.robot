@@ -168,7 +168,7 @@ test_round
     Click On Table Cell    sessionsTable    ${row}    ID
     Push Button    OK
     Select Main Window
-    
+    Sleep    2s
     ${row}=    Find Table Row    0    select * from ALL_LANGS
     Should Not Be Equal As Integers    ${row}    -1
        
@@ -176,7 +176,7 @@ test_round
     Should Not Be Equal As Integers    ${{$value.find('ms')}}    -1
     
     Uncheck Check Box    roundValuesCheck
-    Sleep    1s
+    Sleep    2s
     ${value}=    Get Table Cell Value    0    ${row}    AVERAGE TIME
     Should Be Equal As Integers    ${{$value.find('ms')}}    -1
     Should Not Be Equal As Integers    ${{$value.find('ns')}}    -1
@@ -325,7 +325,7 @@ Load
 Check
     Push Button    OK
     Select Main Window
-    Sleep    1s
+    Sleep    2s
     Uncheck Check Box    compactViewCheck
     ${row}=    Find Table Row    0    select * from employee    PROCESS NAME
     Should Not Be Equal As Integers    ${row}    -1
