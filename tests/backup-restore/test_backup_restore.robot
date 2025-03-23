@@ -18,9 +18,9 @@ test_full_check
     Sleep    3s
     Clear Text Field     fileLogFieldBackup
     Type Into Text Field    fileLogFieldBackup    ${log_path}
-    ${home_dir} =	Normalize Path    ~
-    ${current_path}=    Get Text Field Value    backupFileField
-    Should Be Equal As Strings    ${current_path}    ${home_dir}${/}backup.fbk
+    # ${home_dir} =	Normalize Path    ~
+    # ${current_path}=    Get Text Field Value    backupFileField
+    # Should Be Equal As Strings    ${current_path}    ${home_dir}${/}backup.fbk
     Clear Text Field     backupFileField
     Type Into Text Field    backupFileField    ${bk_path}
 

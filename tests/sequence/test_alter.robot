@@ -58,6 +58,7 @@ test_3
     Skip if   ${{$ver == '2.6'}}
     Init    "NEW SEQ"    NEW SEQ
     Select Tab As Context    Privileges
+    Sleep    1s
     @{values}=    Get Table Column Values    0    User
     Should Be Equal As Strings    ${values}    ['SYSDBA', 'PUBLIC', 'PHONE_LIST', 'POST_NEW_ORDER', 'SAVE_SALARY_CHANGE', 'SET_CUST_NO', 'SET_EMP_NO', 'ADD_EMP_PROJ', 'ALL_LANGS', 'DELETE_EMPLOYEE', 'DEPT_BUDGET', 'GET_EMP_PROJ', 'MAIL_LABEL', 'ORG_CHART', 'SHIP_ORDER', 'SHOW_LANGS', 'SUB_TOT_BUDGET']
 

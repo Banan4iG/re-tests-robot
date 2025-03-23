@@ -6,6 +6,9 @@ Test Teardown    Teardown after every tests
 
 *** Test Cases ***
 test_1
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    Skip if   ${{$ver != '2.6'}}
     Lock Employee
     Open connection
     Select From Tree Node Popup Menu   0    New Connection|Sequences (2)    Create sequence

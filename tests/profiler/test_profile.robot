@@ -89,8 +89,7 @@ test_discard_yes
     Sleep    1s
     Push Button    discardButton
     Select Dialog    Confirmation
-    Label Text Should Be    0   You are trying to remove all sessions from memory
-    Label Text Should Be    1   without flushing them. Continue?
+    Label Text Should Be    0   You are trying to cancel all profiler sessions. Continue?
     Push Button    Yes
     Load
     @{values}=    Get Table Values    sessionsTable
@@ -100,8 +99,7 @@ test_discard_no
     Start Profile    select * from employee
     Push Button    discardButton
     Select Dialog    Confirmation
-    Label Text Should Be    0   You are trying to remove all sessions from memory
-    Label Text Should Be    1   without flushing them. Continue?
+    Label Text Should Be    0   You are trying to cancel all profiler sessions. Continue?
     Push Button    No
     Select Main Window
     Push Button    finishButton
@@ -161,7 +159,7 @@ test_display_no_data
     Label Text Should Be    0    ${SPACE}Active Data Sources: 1
 
 test_round
-    Start Profile    select * from ALL_LANGS
+    Start Profile    EXECUTE BLOCK AS DECLARE I INTEGER; BEGIN I = 0; WHILE ( I <> 100000) DO BEGIN I = I + 1; END end
     Push Button    finishButton
     Load
     ${row}=    Find Table Row    sessionsTable    1    ID
@@ -169,7 +167,7 @@ test_round
     Push Button    OK
     Select Main Window
     Sleep    2s
-    ${row}=    Find Table Row    0    select * from ALL_LANGS
+    ${row}=    Find Table Row    0    EXECUTE BLOCK AS DECLARE I INTEGER; BEGIN I = 0; WHILE ( I <> 100000) DO BEGIN I = I + 1; END end
     Should Not Be Equal As Integers    ${row}    -1
        
     ${value}=    Get Table Cell Value    0    ${row}    AVERAGE TIME

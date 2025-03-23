@@ -169,6 +169,9 @@ Init Create
 Check Procedure
     [Arguments]    ${tab}
     Select Tab As Context    ${tab}
+    IF    '${tab}' == 'Variables'
+        Push Button    addRowButton    
+    END
     Type Into Table Cell    0    0    Name    TEST
     Set Table Cell Value    0    0    Datatype    BIGINT
     Type Into Table Cell    0    0    Comment    test_comment
