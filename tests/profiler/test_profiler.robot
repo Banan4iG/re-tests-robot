@@ -9,12 +9,12 @@ Test Teardown    Teardown after every tests
 
 *** Test Cases ***
 test_start_finish
-    Start Profile    select * from employee
+    Start Profiler    select * from employee
     Push Button    finishButton
     Start App And Load
 
 test_pause_resume
-    Start Profile    select * from employee
+    Start Profiler    select * from employee
     Push Button    pauseButton
     Clear Text Field    0
     Type Into Text Field    0    select * from country
@@ -41,14 +41,14 @@ test_empty_pause
     Check Warning    pauseButton
 
 test_cancel
-    Start Profile    select * from employee
+    Start Profiler    select * from employee
     Push Button    cancelButton
     Run Keyword And Expect Error    org.robotframework.swing.table.InvalidCellException: The specified table cell (row: -1, column: ID) is invalid.    Start App And Load
 
 test_save_load_file
     VAR    ${path}    ${TEMPDIR}${/}profile_session.replg
     Remove File    ${path}
-    Start Profile    select * from employee
+    Start Profiler    select * from employee
     Push Button    finishButton
     Push Button    saveButton
     Select Dialog    Save
@@ -96,7 +96,7 @@ test_discard_yes
     Should Be Equal As Strings    ${values}    []
 
 test_discard_no
-    Start Profile    select * from employee
+    Start Profiler    select * from employee
     Push Button    discardButton
     Select Dialog    Confirmation
     Label Text Should Be    0   You are trying to cancel all profiler sessions. Continue?
@@ -106,7 +106,7 @@ test_discard_no
     Start App And Load
 
 test_compact_view
-    Start Profile    execute procedure SUB_TOT_BUDGET(600)
+    Start Profiler    execute procedure SUB_TOT_BUDGET(600)
     Push Button    finishButton
     Load
     ${row}=    Find Table Row    sessionsTable    1    ID
@@ -130,7 +130,7 @@ test_compact_view
     Should Be Equal As Strings    ${values}    ['Profiler Session [ID: 1]', 'execute procedure SUB_TOT_BUDGET(600)', 'SUB_TOT_BUDGET', '2: SELECT SUM(budget), AVG(budget), MIN(budget), MAX(budget)']
 
 test_display_with_data
-    Start Profile    execute procedure SUB_TOT_BUDGET(600)
+    Start Profiler    execute procedure SUB_TOT_BUDGET(600)
     Push Button    finishButton
     Load
     ${row}=    Find Table Row    sessionsTable    1    ID
@@ -159,7 +159,7 @@ test_display_no_data
     Label Text Should Be    0    ${SPACE}Active Data Sources: 1
 
 test_round
-    Start Profile    EXECUTE BLOCK AS DECLARE I INTEGER; BEGIN I = 0; WHILE ( I <> 100000) DO BEGIN I = I + 1; END end
+    Start Profiler    EXECUTE BLOCK AS DECLARE I INTEGER; BEGIN I = 0; WHILE ( I <> 100000) DO BEGIN I = I + 1; END end
     Push Button    finishButton
     Load
     ${row}=    Find Table Row    sessionsTable    1    ID
@@ -180,7 +180,7 @@ test_round
     Should Not Be Equal As Integers    ${{$value.find('ns')}}    -1
 
 test_popup_copy
-    Start Profile    select * from employee
+    Start Profiler    select * from employee
     Push Button    finishButton
     ${row}=    Start App And Load
     Click On Table Cell    0    ${row}    PROCESS NAME
@@ -192,7 +192,7 @@ test_popup_copy
     Select From Table Cell Popup Menu On Selected Cells    1    Copy
 
 test_popup_show
-    Start Profile    select * from employee
+    Start Profiler    select * from employee
     Push Button    finishButton
     ${row}=    Start App And Load
     Click On Table Cell    0    ${row}    PROCESS NAME
@@ -212,7 +212,7 @@ test_popup_show
     Should Be Equal As Strings    ${value}    Table "EMPLOYEE" Full Scan    strip_spaces=${True}    collapse_spaces=${False}
 
 test_show_double_click
-    Start Profile    select * from employee
+    Start Profiler    select * from employee
     Push Button    finishButton
     ${row}=    Start App And Load
     Click On Table Cell    0    ${row}    PROCESS NAME
@@ -263,7 +263,7 @@ test_stop_after_lose_connect
     Check Warning After Lose Connect
 
 test_auto-reload_tree
-    Start Profile    select * from employee
+    Start Profiler    select * from employee
     Push Button    finishButton
     Push Button    reload-connection-tree-selection-command    # temp
     Expand All Tree Nodes    0
@@ -291,7 +291,7 @@ test_auto-reload_tree
     Should Be Equal As Strings    ${filtered_values}    ['PLG$PROF_CURSORS_PROFILE', 'PLG$PROF_CURSORS_PROFILE_STATEMENT', 'PLG$PROF_CURSORS_PROFILE_STATEMENT_CURSOR', 'PLG$PROF_PSQL_STATS_PROFILE', 'PLG$PROF_PSQL_STATS_PROFILE_REQUEST', 'PLG$PROF_PSQL_STATS_PROFILE_STATEMENT', 'PLG$PROF_PSQL_STATS_PROFILE_STATEMENT_REQUEST_LINE_COLUMN', 'PLG$PROF_RECORD_SOURCES_PROFILE', 'PLG$PROF_RECORD_SOURCES_PROFILE_STATEMENT', 'PLG$PROF_RECORD_SOURCES_PROFILE_STATEMENT_CURSOR', 'PLG$PROF_RECORD_SOURCES_PROFILE_STATEMENT_CURSOR_PARENT_REC_SRC', 'PLG$PROF_RECORD_SOURCES_PROFILE_STATEMENT_CURSOR_RECSOURCE', 'PLG$PROF_RECORD_SOURCE_STATS_PROFILE_ID', 'PLG$PROF_RECORD_SOURCE_STATS_PROFILE_REQUEST', 'PLG$PROF_RECORD_SOURCE_STATS_PROFILE_STATEMENT', 'PLG$PROF_RECORD_SOURCE_STATS_PROFILE_STAT_REQ_CUR_RECSOURCE', 'PLG$PROF_RECORD_SOURCE_STATS_STATEMENT_CURSOR', 'PLG$PROF_RECORD_SOURCE_STATS_STATEMENT_CURSOR_RECORD_SOURCE', 'PLG$PROF_REQUESTS_PROFILE', 'PLG$PROF_REQUESTS_PROFILE_CALLER_STATEMENT', 'PLG$PROF_REQUESTS_PROFILE_CALLER_STATEMENT_CALLER_REQUEST', 'PLG$PROF_REQUESTS_PROFILE_REQUEST_STATEMENT', 'PLG$PROF_REQUESTS_PROFILE_STATEMENT', 'PLG$PROF_SESSIONS_PROFILE', 'PLG$PROF_STATEMENTS_PARENT_STATEMENT', 'PLG$PROF_STATEMENTS_PROFILE', 'PLG$PROF_STATEMENTS_PROFILE_STATEMENT']
 
 *** Keywords ***
-Start Profile
+Start Profiler
     [Arguments]    ${script}
     Lock Employee
     Open connection

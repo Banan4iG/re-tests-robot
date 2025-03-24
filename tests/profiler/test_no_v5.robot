@@ -14,7 +14,7 @@ test_1
     Select From Main Menu    Tools|Profiler
     Push Button    startButton
     Select Dialog    Warning
-    Label Text Should Be    0    Unable to start profile session
+    Label Text Should Be    0    Unable to start profiler session
     Label Text Should Be    1    DB version below 5.0
     Push Button    OK
     
