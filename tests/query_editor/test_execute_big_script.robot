@@ -2,7 +2,7 @@
 Library    RemoteSwingLibrary
 Resource    ../../files/keywords.resource
 Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Teardown    Teardown
 
 
 *** Test Cases ***
@@ -44,3 +44,7 @@ Init
     Select Main Window
     Push Button    editor-stop-on-error-command
     Run Keyword In Separate Thread    Push Button    execute-script-command
+
+Teardown
+    Teardown after every tests
+    Run Keyword And Ignore Error    Execute Immediate    DROP USER TEST_USER

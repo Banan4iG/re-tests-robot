@@ -4,7 +4,7 @@ Library    Process
 Library    Collections
 Resource   ../../files/keywords.resource 
 Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Teardown    Teardown
 
 *** Test Cases ***
 test_1
@@ -28,5 +28,9 @@ test_1
     Select Dialog    dialog1
     Push Button      commitButton
     ${result}=    Execute    select cast(sec$user_name as VARCHAR(9)), sec$first_name, sec$middle_name, sec$last_name, sec$active, sec$admin, sec$description, cast(sec$plugin as VARCHAR(3)) from sec$users where sec$user_name='TEST_USER'
-    Execute Immediate    DROP USER TEST_USER
     Should Be Equal    ${result}    [('TEST_USER', 'first', 'middle', 'last', True, False, None, 'Srp')]
+
+*** Keywords ***
+Teardown
+    Teardown after every tests
+    Run Keyword And Ignore Error    Execute Immediate    DROP USER TEST_USER

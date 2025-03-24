@@ -119,4 +119,5 @@ Restore Hosts Count
     ${value}=   Get Table Cell Value    0    ${row}    2
     Should Be Equal As Integers    ${value}    4
     Push Button    OK
-    Close Dialog    Message
+    Select Dialog    Confirmation
+    Push Button    No
