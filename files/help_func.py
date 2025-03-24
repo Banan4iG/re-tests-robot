@@ -107,6 +107,11 @@ def clear_history_files():
         if os.path.exists(file):
             os.remove(file)
 
+def get_hosts_history_file():
+    home_dir = os.path.expanduser("~")
+    hosts_history_file = os.path.join(home_dir, '.redexpert/hosts.history')
+    return hosts_history_file
+
 def copy_dist_path():
     DIST = os.environ.get('DIST', "D:\\projects\\RedExpert")
     tmp_dir = tempfile.gettempdir()
