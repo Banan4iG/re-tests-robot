@@ -94,7 +94,7 @@ test_check_scale
     # Clear Text Field    scaleField
     Insert Into Text Field    scaleField    15
     
-    Check commit    ALTER TABLE TEST_TABLE ADD "NEW COLUMN" DECIMAL(20,15)
+    Check commit    ALTER TABLE TEST_TABLE ADD "NEW COLUMN" DECIMAL(18,15)
     ${row}=    Check in table    NEW COLUMN    DECIMAL
     ${size}=    Get Table Cell Value    0    ${row}    Size or precision
     Should Be Equal As Strings    ${size}    18
@@ -210,9 +210,16 @@ test_autoincrement_default_identity
 
 test_autoincrement_create_generator
     Init autoincrement    newSequenceRadio
-    Select Dialog    Warning
-    Label Text Should Be    0    Using IDENTITY is preferred when creating an auto-incremented column
-    Push Button    OK
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    IF    ${{$ver != '2.6'}}
+        Select Dialog    Warning
+        Label Text Should Be    0    Using IDENTITY is preferred when creating an auto-incremented column
+        Push Button    OK
+        VAR    ${dialog}    dialog2
+    ELSE
+        VAR    ${dialog}    dialog1
+    END
     Select Dialog    Create table column
     Clear Text Field    nameField
     Type Into Text Field    nameField    COL
@@ -223,7 +230,7 @@ test_autoincrement_create_generator
     Clear Text Field    incrementField
     Type Into Text Field    incrementField    5
     
-    Check SQL Statements    ${True}    AUTO_GEN    COL
+    Check SQL Statements    ${True}    AUTO_GEN    COL    ${dialog}
 
     ${row}=    Check in table    column_name=COL
     ${required}=    Get Table Cell Value    0    ${row}    Required
@@ -232,25 +239,32 @@ test_autoincrement_create_generator
     Execute Immediate    INSERT INTO TEST_TABLE (ID) VALUES (2)
     Execute Immediate    INSERT INTO TEST_TABLE VALUES (3, 20)
     ${res}=    Execute    SELECT * FROM TEST_TABLE
-    ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
     IF    ${{$ver == '5.0'}}
         Should Be Equal As Strings    ${res}    [(1, 10), (2, 15), (3, 20)]
-    ELSE
+    ELSE IF     ${{$ver == '3.0'}}
         Should Be Equal As Strings    ${res}    [(1, 15), (2, 20), (3, 20)]
+    ELSE
+        Should Be Equal As Strings    ${res}    [(1, 16), (2, 17), (3, 20)]
     END
 
 test_autoincrement_use_generator
     Init autoincrement    existingSequenceRadio
-    Select Dialog    Warning
-    Label Text Should Be    0    Using IDENTITY is preferred when creating an auto-incremented column
-    Push Button    OK
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    IF    ${{$ver != '2.6'}}
+        Select Dialog    Warning
+        Label Text Should Be    0    Using IDENTITY is preferred when creating an auto-incremented column
+        Push Button    OK
+        VAR    ${dialog}    dialog2
+    ELSE
+        VAR    ${dialog}    dialog1
+    END
     Select Dialog    Create table column
     Clear Text Field    nameField
     Type Into Text Field    nameField    COL   
     Select From Combo Box    sequencesCombo    EMP_NO_GEN
 
-    Check SQL Statements    ${False}    EMP_NO_GEN    COL
+    Check SQL Statements    ${False}    EMP_NO_GEN    COL    ${dialog}
 
     ${row}=    Check in table    COL
     ${required}=    Get Table Cell Value    0    ${row}    Required
@@ -264,9 +278,16 @@ test_autoincrement_use_generator
 
 test_check_autoupdate_object_tree
     Init autoincrement    newSequenceRadio
-    Select Dialog    Warning
-    Label Text Should Be    0    Using IDENTITY is preferred when creating an auto-incremented column
-    Push Button    OK
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    IF    ${{$ver != '2.6'}}
+        Select Dialog    Warning
+        Label Text Should Be    0    Using IDENTITY is preferred when creating an auto-incremented column
+        Push Button    OK
+        VAR    ${dialog}    dialog2
+    ELSE
+        VAR    ${dialog}    dialog1
+    END
     Select Dialog    Create table column
     Clear Text Field    nameField
     Type Into Text Field    nameField    COL
@@ -276,7 +297,7 @@ test_check_autoupdate_object_tree
     Type Into Text Field    startValueField    10
     Clear Text Field    incrementField
     Type Into Text Field    incrementField    5
-    Check SQL Statements    ${True}    AUTO_GEN    COL
+    Check SQL Statements    ${True}    AUTO_GEN    COL    ${dialog}
     Select Main Window
     Expand Tree Node    0    New Connection|Table Triggers (5)
     Tree Node Should Exist    0   New Connection|Table Triggers (5)|TRIGGER_BI_TEST_TABLE_COL
@@ -340,6 +361,7 @@ Check type
 Check commit
     [Arguments]    ${text}    ${dialog}=dialog1
     Push Button    submitButton
+    Sleep    0.5s
     Select Dialog    ${dialog}
     ${res}=    Get Text Field Value    0
     Should Be Equal As Strings    ${res}    ${text}    strip_spaces=${True}    collapse_spaces=${True}
@@ -360,10 +382,11 @@ Check in table
     RETURN    ${row}
 
 Check SQL Statements
-    [Arguments]    ${check_sequence}    ${gen_name}    ${column_name}=NEW_TABLE_COLUMN_1
+    [Arguments]    ${check_sequence}    ${gen_name}    ${column_name}=NEW_TABLE_COLUMN_1    ${dialog}=dialog1
     Push Button    submitButton
     Sleep    0.5s
-    Select Dialog    dialog2
+    List Dialogs
+    Select Dialog    ${dialog}
     # Check ALTER TABLE statement
     ${alter_row}=    Find Table Row    0    ALTER TABLE    Name operation
     Click On Table Cell    0    ${alter_row}    Name operation
@@ -372,10 +395,26 @@ Check SQL Statements
     
     # Check CREATE OR ALTER SEQUENCE statement (only if check_sequence is TRUE)
     IF    ${check_sequence}
-        ${sequence_row}=    Find Table Row    0    CREATE OR ALTER SEQUENCE    Name operation
-        Click On Table Cell    0    ${sequence_row}    Name operation
-        ${create_sequence}=    Get Text Field Value    0
-        Should Be Equal As Strings    ${create_sequence}    CREATE OR ALTER SEQUENCE AUTO_GEN START WITH 10 INCREMENT BY 5    strip_spaces=${True}    collapse_spaces=${True}
+        ${info}=    Get Server Info
+        ${ver}=     Set Variable    ${info}[1]
+        IF    ${{$ver != '2.6'}}
+            ${sequence_row}=    Find Table Row    0    CREATE OR ALTER SEQUENCE    Name operation
+            Click On Table Cell    0    ${sequence_row}    Name operation
+            ${create_sequence}=    Get Text Field Value    0
+            Should Be Equal As Strings    ${create_sequence}    CREATE OR ALTER SEQUENCE AUTO_GEN START WITH 10 INCREMENT BY 5    strip_spaces=${True}    collapse_spaces=${True}
+        ELSE
+            # Check CREATE SEQUENCE statement
+            ${create_sequence_row}=    Find Table Row    0    CREATE SEQUENCE    Name operation
+            Click On Table Cell    0    ${create_sequence_row}    Name operation
+            ${create_sequence}=    Get Text Field Value    0
+            Should Be Equal As Strings    ${create_sequence}    CREATE SEQUENCE ${gen_name}    strip_spaces=${True}    collapse_spaces=${True}
+            
+            # Check ALTER SEQUENCE statement
+            ${alter_sequence_row}=    Find Table Row    0    ALTER SEQUENCE    Name operation
+            Click On Table Cell    0    ${alter_sequence_row}    Name operation
+            ${alter_sequence}=    Get Text Field Value    0
+            Should Be Equal As Strings    ${alter_sequence}    ALTER SEQUENCE ${gen_name} RESTART WITH 15    strip_spaces=${True}    collapse_spaces=${True}
+        END
     END
     
     # Check CREATE TRIGGER statement

@@ -315,10 +315,26 @@ Check SQL Statements
     
     # Check CREATE OR ALTER SEQUENCE statement (only if check_sequence is TRUE)
     IF    ${check_sequence}
-        ${sequence_row}=    Find Table Row    0    CREATE OR ALTER SEQUENCE    Name operation
-        Click On Table Cell    0    ${sequence_row}    Name operation
-        ${create_sequence}=    Get Text Field Value    0
-        Should Be Equal As Strings    ${create_sequence}    CREATE OR ALTER SEQUENCE AUTO_GEN START WITH 0 INCREMENT BY 1    strip_spaces=${True}    collapse_spaces=${True}
+        ${info}=    Get Server Info
+        ${ver}=     Set Variable    ${info}[1]
+        IF    ${{$ver != '2.6'}}
+            ${sequence_row}=    Find Table Row    0    CREATE OR ALTER SEQUENCE    Name operation
+            Click On Table Cell    0    ${sequence_row}    Name operation
+            ${create_sequence}=    Get Text Field Value    0
+            Should Be Equal As Strings    ${create_sequence}    CREATE OR ALTER SEQUENCE AUTO_GEN START WITH 0 INCREMENT BY 1    strip_spaces=${True}    collapse_spaces=${True}
+        ELSE
+            # Check CREATE SEQUENCE statement
+            ${create_sequence_row}=    Find Table Row    0    CREATE SEQUENCE    Name operation
+            Click On Table Cell    0    ${create_sequence_row}    Name operation
+            ${create_sequence}=    Get Text Field Value    0
+            Should Be Equal As Strings    ${create_sequence}    CREATE SEQUENCE ${gen_name}    strip_spaces=${True}    collapse_spaces=${True}
+            
+            # Check ALTER SEQUENCE statement
+            ${alter_sequence_row}=    Find Table Row    0    ALTER SEQUENCE    Name operation
+            Click On Table Cell    0    ${alter_sequence_row}    Name operation
+            ${alter_sequence}=    Get Text Field Value    0
+            Should Be Equal As Strings    ${alter_sequence}    ALTER SEQUENCE ${gen_name} RESTART WITH 1    strip_spaces=${True}    collapse_spaces=${True}
+        END
     END
     
     # Check CREATE TRIGGER statement
