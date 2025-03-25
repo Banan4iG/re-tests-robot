@@ -16,7 +16,8 @@ test_1
 test_2
     ${bk_path}=    Init
     Push Button    Yes
-
+    @{dialogs}=    List Dialogs
+    Get Pom File
     Select Dialog    Message
     Label Text Should Be    0    Backup completed successfully!
     Push Button    OK

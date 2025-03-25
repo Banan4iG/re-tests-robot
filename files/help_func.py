@@ -12,6 +12,16 @@ import firebird.driver as fdb
 from firebird.driver import connect_server, SrvInfoCode   
 
 
+def get_pom_file():
+    if platform.system() == "Windows":
+        TEST_DIR = os.environ.get('TEST_DIR')
+        VERSION = os.environ.get('VERSION')
+        if VERSION and TEST_DIR:
+            file = os.path.join(TEST_DIR, f"RedExpert-{VERSION}/pom.xml")
+            with open(file, 'r') as f:
+                context = f.read()
+                print(context)
+
 def kill_redexpert():
     time.sleep(10)
     for proc in psutil.process_iter():
