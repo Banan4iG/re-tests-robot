@@ -20,7 +20,6 @@ new_api_no_reload
     No Reload    ${path_to_exe}
 
 new_api_auto_reload
-    Skip    Not working yet
     ${path_to_exe}=    Test Api    \nupdate.use.https=false\nupdate.check.url=http\://localhost/?project=redexpert\nupdate.check.rc.url=http\://localhost/?project=redexpert&showrc=true    ${True}
     Auto Reload
 
@@ -79,6 +78,6 @@ No Reload
 
 Auto Reload
     Push Button      Yes
-    Sleep       10s
+    Sleep    8s
     Application Started    red_expert    timeout=20    remote_port=60900
-    Select Window    regexp=^Red Expert - 2025\.03.*
+    Select Window    regexp=^Red Expert - 2025\.03
