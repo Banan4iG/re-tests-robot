@@ -96,10 +96,10 @@ test_alter_role
 
 test_alter_ts
     Check Skip
-    Execute Immediate    CREATE TABLESPACE NEW_TS FILE 'test1.ts'
+    Lock Employee
+    Execute Immediate    CREATE TABLESPACE NEW_TS FILE 'test_alter.ts'
     Init Alter    Tablespaces (1)|NEW_TS
     Check Comment
-    Execute Immediate    DROP TABLESPACE NEW_TS
 
 test_alter_job
     Check Skip
