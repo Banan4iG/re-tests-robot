@@ -23,7 +23,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             init_response(data)
         elif "genlink" in url_path:
             data = {
-                "link": "http://builds.red-soft.biz/release_hub/red_expert/2025.03-SNAPSHOT.43/download/red_expert:bin:2025.03-SNAPSHOT.43:zip"
+                "link": "http://builds.red-soft.biz/release_hub/red_expert/2025.03/download/red_expert:bin:2025.03:zip"
             }
             init_response(data)
         elif "project" in url_path:
@@ -37,7 +37,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 "files": [
                     {
                         "FILE_NAME": "RedExpert-9999.99.zip",
-                        "FILE_PATH": "2025.03-SNAPSHOT.43/download/red_expert:bin:2025.03-SNAPSHOT.43:zip"
+                        "FILE_PATH": "2025.03/download/red_expert:bin:2025.03:zip"
                     },]
 
             }
