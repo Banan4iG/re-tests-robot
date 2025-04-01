@@ -15,18 +15,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
         url_path = self.path
         print(url_path)
-        if "version" in url_path:
-            data = [{
-                "url": "http://localhost:443/file_link/",
-                "filename": "bin/RedExpert-9999.99.zip",
-            }]
-            init_response(data)
-        elif "genlink" in url_path:
-            data = {
-                "link": "http://builds.red-soft.biz/release_hub/red_expert/2025.03/download/red_expert:bin:2025.03:zip"
-            }
-            init_response(data)
-        elif "project" in url_path:
+        if "project" in url_path:
             data = {
                 "base_url": "http://builds.red-soft.biz/release_hub/red_expert/",
                 "version": "9999.99",
@@ -44,7 +33,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             init_response(data)       
         else:
             data = {
-                "version": "9999.99",
+                "": "",
             } 
             init_response(data)
 

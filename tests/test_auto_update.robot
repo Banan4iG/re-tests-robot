@@ -6,21 +6,12 @@ Resource    ../files/keywords.resource
 Test Teardown    Teardown
 
 *** Test Cases ***
-old_api_no_reload
-    Skip    No support
-    ${path_to_exe}=    Test Api    \nupdate.use.https=false\nreddatabase.check.rc.url=http\://localhost\nreddatabase.check.url=http\://localhost\nreddatabase.get-files.url=http\://localhost/?project\=redexpert&version\=    ${False}
-    No Reload    ${path_to_exe}
-
-old_api_auto_reload
-    Skip    No support
-    ${path_to_exe}=    Test Api    \nupdate.use.https=false\nreddatabase.check.rc.url=http\://localhost\nreddatabase.check.url=http\://localhost\nreddatabase.get-files.url=http\://localhost/?project\=redexpert&version\=    ${False}
-
 new_api_no_reload
-    ${path_to_exe}=    Test Api    \nupdate.use.https=false\nupdate.check.url=http\://localhost/?project=redexpert\nupdate.check.rc.url=http\://localhost/?project=redexpert&showrc=true    ${True}
+    ${path_to_exe}=    Test Api    \nupdate.use.https=false\nupdate.check.url=http\://localhost/?project=redexpert\nupdate.check.rc.url=http\://localhost/?project=redexpert&showrc=true
     No Reload    ${path_to_exe}
 
 new_api_auto_reload
-    ${path_to_exe}=    Test Api    \nupdate.use.https=false\nupdate.check.url=http\://localhost/?project=redexpert\nupdate.check.rc.url=http\://localhost/?project=redexpert&showrc=true    ${True}
+    ${path_to_exe}=    Test Api    \nupdate.use.https=false\nupdate.check.url=http\://localhost/?project=redexpert\nupdate.check.rc.url=http\://localhost/?project=redexpert&showrc=true
     Auto Reload
 
 *** Keywords ***
@@ -38,7 +29,7 @@ Teardown
     Restore User Properties
 
 Test Api
-    [Arguments]    ${urls}    ${new}
+    [Arguments]    ${urls}
     Run Server
     Backup User Properties
     Set Urls   urls=${urls}
@@ -48,12 +39,8 @@ Test Api
     Select From Menu    Help|Check for Update
     Sleep       5s
     Select Dialog    RedExpert Update
-    IF    ${new}
-        Push Button      Yes
-        Close Dialog    Latest Version Info
-    ELSE
-        Push Button      No
-    END
+    Push Button      Yes
+    Close Dialog    Latest Version Info
     Sleep    1s
     Select Dialog    RedExpert Update
     Push Button      Yes
