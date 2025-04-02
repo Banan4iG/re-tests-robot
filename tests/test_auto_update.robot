@@ -65,6 +65,11 @@ No Reload
 
 Auto Reload
     Push Button      Yes
-    Sleep    8s
-    Application Started    red_expert    timeout=20    remote_port=60900
-    Select Window    regexp=^Red Expert - 2025\.03
+    Sleep    10s
+    TRY
+        Application Started    red_expert    timeout=20    remote_port=60900
+        Select Window    regexp=^Red Expert - 2025\.03
+    EXCEPT  
+        Kill Redexpert
+        Fail    Red Expert run without JAVA_TOOL_OPTIONS
+    END
