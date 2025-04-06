@@ -3,8 +3,8 @@ Library    RemoteSwingLibrary
 Library    Process
 Library    Collections
 Resource    ../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Local Test Teardown
 
 *** Test Cases ***
 test_drop_trigger_for_ddl
@@ -38,3 +38,7 @@ Drop Trigger
     Should Not Be Equal As Integers    ${row}    -1
     VAR    ${error}    DatabaseError:
     Run Keyword And Expect Error    STARTS:${error}    Execute Immediate    DROP TRIGGER NEW_TRIGGER
+
+Local Test Teardown
+    System Exit    0
+    Clear History Files

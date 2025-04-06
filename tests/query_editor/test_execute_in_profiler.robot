@@ -1,8 +1,8 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_1
@@ -14,6 +14,9 @@ test_1
     Push Button    execute-in-profiler-command
     Sleep    3s
     Push Button    discardButton
+    Select Dialog    Confirmation
+    Push Button    Yes
+    Select Main Window
 
 test_2
     Check Skip

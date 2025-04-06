@@ -2,7 +2,7 @@
 Library    RemoteSwingLibrary
 Library    OperatingSystem
 Resource    ../files/keywords.resource
-Test Teardown    Teardown after every tests
+Test Teardown    Local Test Teardown
 
 *** Test Cases ***
 test_1
@@ -49,7 +49,7 @@ test_count_hosts_min
 Setup
     ${path}=    Get Hosts History File
     Remove File    ${path}
-    Setup before every tests
+    Test Setup
     Select From Tree Node Popup Menu    0    New Connection    Duplicate connection
     Sleep   2s
     Select From Tree Node Popup Menu    0    New Connection (Copy)    Connection information
@@ -83,7 +83,7 @@ Set Count Hosts
     [Arguments]    ${count}
     ${path}=    Get Hosts History File
     Remove File    ${path}
-    Setup before every tests
+    Test Setup
     Select From Main Menu    System|Preferences
     Select Dialog    Preferences
     Click On Tree Node    0    General
@@ -121,3 +121,10 @@ Restore Hosts Count
     Push Button    OK
     Select Dialog    Confirmation
     Push Button    No
+
+Local Test Teardown
+    Select Main Window
+    Select From Tree Node Popup Menu In Separate Thread    0    New Connection (Copy)    Delete connection
+    Select Dialog    Delete connection
+    Push Button    Yes
+    Test Teardown

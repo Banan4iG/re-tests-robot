@@ -4,7 +4,7 @@ Library    Process
 Library    Collections
 Resource    ../../files/keywords.resource
 Test Setup       Setup
-Test Teardown    Teardown after every tests
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_1
@@ -97,4 +97,4 @@ Setup
     ${info}=    Get Server Info
     ${ver}=     Set Variable    ${info}[1]
     Skip If    ${{$ver == '2.6'}}
-    Setup before every tests
+    Test Setup

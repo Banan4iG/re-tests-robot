@@ -4,7 +4,7 @@ Library    random
 Resource    ../../files/keywords.resource
 Resource    keys.resource
 Test Setup       Setup
-Test Teardown    Teardown after every tests
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_1

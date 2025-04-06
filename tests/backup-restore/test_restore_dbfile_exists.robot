@@ -2,8 +2,8 @@
 Library    RemoteSwingLibrary
 Library    OperatingSystem
 Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_1
@@ -11,7 +11,9 @@ test_1
 
     Push Button    restoreButton
     Close Dialog    Error message
-
+    
+    Select Main Window
+    Select Tab    Backup
     Remove File    ${bk_path}
 
 test_2
@@ -22,6 +24,9 @@ test_2
     
     Select Dialog    Message
     Label Text Should Be    0    Restore completed successfully!
+    Push Button    OK
+    Select Main Window
+    Select Tab    Backup
     Remove File    ${bk_path}
 
 test_3
@@ -36,6 +41,8 @@ test_3
     Label Text Should Be    0    The selected file exists.
     Label Text Should Be    1    Overwrite existing file?
     Push Button    No
+    Select Main Window
+    Select Tab    Backup
     Remove File    ${bk_path}
 
 *** Keywords ***

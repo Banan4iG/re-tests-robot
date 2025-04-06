@@ -3,13 +3,14 @@ Library    RemoteSwingLibrary
 Library    OperatingSystem
 Resource    ../../files/keywords.resource
 Resource    key.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_CSV_export_to_folder
     Init    
     Select From Combo Box    typeCombo    CSV
+    Uncheck All Checkboxes
     ${export_path}=     Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.csv
     ${export_blob}=     Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export_blob
     Remove Files    ${export_path}
@@ -33,6 +34,7 @@ test_CSV_export_to_folder
 test_XML_export_to_folder
     Init
     Select From Combo Box    typeCombo    XML
+    Uncheck All Checkboxes
     ${export_path}=     Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.xml
     ${export_blob}=     Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export_blob
     Remove Files    ${export_path}
@@ -54,6 +56,7 @@ test_XML_export_to_folder
 test_XLSX_export_to_folder
     Init
     Select From Combo Box    typeCombo    XLSX
+    Uncheck All Checkboxes
     ${export_path}=     Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.xlsx
     ${export_blob}=     Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export_blob
     Remove Files    ${export_path}
@@ -76,6 +79,7 @@ test_XLSX_export_to_folder
 test_SQL_export_to_folder
     Init
     Select From Combo Box    typeCombo    SQL
+    Uncheck All Checkboxes
     ${export_path}=     Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.sql
     ${export_blob}=     Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export_blob
     Remove Files    ${export_path}
@@ -102,6 +106,7 @@ test_SQL_export_to_folder
 test_CSV_export_to_file
     Init
     Select From Combo Box    typeCombo    CSV
+    Uncheck All Checkboxes
     ${export_path}=     Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.csv
     ${export_blob}=     Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export_blob.txt
     Remove Files    ${export_path}    ${export_blob}
@@ -123,6 +128,7 @@ test_CSV_export_to_file
 test_XML_export_to_file
     Init
     Select From Combo Box    typeCombo    XML
+    Uncheck All Checkboxes
     ${export_path}=     Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.xml
     ${export_blob}=     Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export_blob.txt
     Remove Files    ${export_path}    ${export_blob}
@@ -144,6 +150,7 @@ test_XML_export_to_file
 test_XLSX_export_to_file
     Init
     Select From Combo Box    typeCombo    XLSX
+    Uncheck All Checkboxes
     ${export_path}=     Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.xlsx
     ${export_blob}=     Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export_blob.txt
     Remove Files    ${export_path}    ${export_blob}
@@ -166,6 +173,7 @@ test_XLSX_export_to_file
 test_SQL_export_to_file
     Init
     Select From Combo Box    typeCombo    SQL
+    Uncheck All Checkboxes
     ${export_path}=     Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.sql
     ${export_blob}=     Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export_blob.txt
     Remove Files    ${export_path}    ${export_blob}
@@ -205,6 +213,7 @@ Init
     Select Table Cell Area    0    1    2    0    2    
     Select From Table Cell Popup Menu On Selected Cells    0    Export|Selection
     Select Dialog    Export Data
+    Uncheck All Checkboxes
     RETURN    ${ver}
 
 

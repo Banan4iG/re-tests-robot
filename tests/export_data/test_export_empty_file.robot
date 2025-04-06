@@ -3,8 +3,8 @@ Library    RemoteSwingLibrary
 Library    OperatingSystem
 Resource    ../../files/keywords.resource
 Resource    key.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_1
@@ -23,3 +23,5 @@ test_1
     Select Dialog    Warning
     Label Text Should Be    0    You must specify a file to export to.
     Push Button    OK
+    Select Main Window
+    Close Dialog    Export Data

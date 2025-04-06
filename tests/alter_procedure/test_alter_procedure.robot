@@ -1,8 +1,8 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 alter_ddl
@@ -22,6 +22,7 @@ alter_ddl
     Select Dialog    Execute Procedure
     Push Button    executeButton
     @{value}=    Get Table Values    1
+    Close Dialog    Execute Procedure
     Should Be Equal As Strings    ${value}    [['66']]
 
 alter_add_input_par

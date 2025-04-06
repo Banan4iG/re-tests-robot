@@ -1,8 +1,11 @@
 *** Settings ***
 Library    RemoteSwingLibrary
+Library    Collections
 Resource    ../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+# Suite Setup    Local Suite Setup
+Suite Teardown    Test Teardown
+Test Teardown    Local Test Teardown
 
 *** Test Cases ***
 test_create_domain
@@ -184,7 +187,6 @@ Check Procedure
     ${res}=    Get Text Field Value    0
     Should Not Be Equal As Integers    ${{$res.find('test_comment')}}    -1
 
-
 Init Column
     Type Into Table Cell    0    0    Name    TEST
     Set Table Cell Value    0    0    Datatype    BIGINT
@@ -210,3 +212,27 @@ Check Comment
     Sleep    1s
     ${res}=    Get Text Field Value    0
     Should Not Be Equal As Integers    ${{$res.find('\'test_comment\'')}}    -1
+
+
+Local Test Teardown
+    System Exit    0
+    Unlock Employee
+    Clear History Files
+
+CLose Dialogs
+    Push Button    Rollback
+    @{dialogs}=    List Dialogs
+    ${length} =    Get Length    ${dialogs}
+    Select Dialog    dialog${length-2}
+    Push Button    Cancel
+    Select Dialog    Confirmation
+    Push Button    Yes
+    # Close All Dialogs
+    Sleep    1s
+    Select Main Window
+    Sleep    1s
+
+Select Last Dialog
+    @{dialogs}=    List Dialogs
+    ${length} =    Get Length    ${dialogs}
+    Select Dialog    dialog${length-1}

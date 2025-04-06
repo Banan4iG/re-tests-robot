@@ -1,8 +1,8 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_1
@@ -32,3 +32,5 @@ test_1
 
     Should Be Equal As Strings    ${tree12}    ['ALL_LANGS']
     Should Be Equal As Strings    ${tree22}    ['JOB']
+    Select Main Window
+    Select Tab As Context    Input Parameters

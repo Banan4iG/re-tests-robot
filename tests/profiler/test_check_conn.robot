@@ -20,7 +20,12 @@ test_re
     Push Button    connectButton
     Open connection
     Check    127.0.0.1
-
+    
+    Select Main Window
+    Click On Tree Node    0    New Connection (Copy)    2
+    Select From Tree Node Popup Menu In Separate Thread    0    New Connection (Copy)    Delete connection
+    Select Dialog    Delete connection
+    Push Button    Yes
 
 test_isql
     Skip
@@ -37,7 +42,7 @@ Init
     Execute Immediate    GRANT TEST_ROLE TO TEST_USER;
 
 Teardown
-    Teardown after every tests
+    Test Teardown
     Execute Immediate    REVOKE TEST_ROLE FROM TEST_USER;
     Execute Immediate    DROP USER TEST_USER;
     Execute Immediate    DROP ROLE TEST_ROLE;
@@ -63,3 +68,5 @@ Check
 
     Should Not Be Equal As Integers    ${{$values[1][1].find('127.0.0.1')}}    -1
     Should Be Equal As Strings    ${values}[1][2:]    ['SYSDBA', 'NONE', '${host}', '${name}']
+
+    Close Dialog    Select Attachment

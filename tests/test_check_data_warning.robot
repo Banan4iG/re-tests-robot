@@ -1,10 +1,8 @@
 *** Settings ***
 Library    RemoteSwingLibrary
-Library    Process
-Library    Collections
 Resource    ../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_1
@@ -22,6 +20,5 @@ test_1
     Push Button    1
     Select Window    regexp=^Red.*
     Run Keyword In Separate Thread     Select Tab    Constraints    ${EMPTY}
-    List Dialogs
     Select Dialog    Confirmation
     Push Button    Yes

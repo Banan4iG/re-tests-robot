@@ -3,8 +3,8 @@ Library    RemoteSwingLibrary
 Library    Process
 Library    Collections
 Resource    ../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Local Test Teardown
 
 *** Test Cases ***
 test_1
@@ -32,3 +32,10 @@ Create New Conn
     Type Into Text Field    passwordField    masterkey
     Check Check Box    Store Password
     Push Button    saveButton
+
+Local Test Teardown
+    Select Main Window
+    Select From Tree Node Popup Menu In Separate Thread    0    New Connection 1    Delete connection
+    Select Dialog    Delete connection
+    Push Button    Yes
+    Test Teardown

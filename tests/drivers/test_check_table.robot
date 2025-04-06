@@ -2,12 +2,11 @@
 Library    RemoteSwingLibrary
 Library    Collections
 Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_1
-    Select From Main Menu    System|Drivers
     Sleep    1s
     ${tableValues}=    Get Table Values    driversTable
     Sort List    ${tableValues}

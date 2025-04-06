@@ -3,7 +3,7 @@ Library    RemoteSwingLibrary
 Resource    ../../files/keywords.resource
 Resource    keys.resource
 Test Setup       Setup
-Test Teardown    Teardown after every tests
+Test Teardown    Local Test Teardown
 
 *** Test Cases ***
 test_1
@@ -101,3 +101,8 @@ Check error
     Tree Node Should Exist    0     New Connection|Packages (0)
     Set Jemmy Timeouts    0
     Tree Node Should Not Exist    0     New Connection|Packages (1)
+
+Local Test Teardown
+    System Exit    0
+    Unlock Employee
+    Clear History Files

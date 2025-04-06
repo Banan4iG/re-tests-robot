@@ -3,7 +3,7 @@ Library    RemoteSwingLibrary
 Library    Process
 Library    Collections
 Resource    ../files/keywords.resource
-Test Setup       Setup before every tests
+Test Setup       Test Setup
 Test Teardown    Teardown
 
 *** Test Cases ***
@@ -30,6 +30,6 @@ Check user
     RETURN    ${res}
 
 Teardown
-    Teardown after every tests
+    Test Teardown
     Run Keyword And Ignore Error    Execute Immediate    DROP USER "DEMO"
     Run Keyword And Ignore Error    Execute Immediate    DROP USER "dEmO"

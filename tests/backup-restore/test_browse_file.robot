@@ -2,8 +2,8 @@
 Library    RemoteSwingLibrary
 Library    OperatingSystem
 Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_empty_file
@@ -23,6 +23,8 @@ test_empty_file
     Select Dialog    Warning
     Label Text Should Be    0    The file name must not be empty
     Push Button    OK
+    Select Main Window
+    Select Tab    Backup
 
 test_browse_withot_fbk
     ${bk_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /employee_backup
@@ -52,6 +54,8 @@ test_browse_withot_fbk
     Select Tab As Context   Restore
     ${bk_path_from_text_field}=    Get Text Field Value    backupFileField
     Should Not Be Equal As Integers    ${{$bk_path_from_text_field.find('.fbk')}}    -1
+    Select Main Window
+    Select Tab    Backup
 
 
 test_not_fbk
@@ -64,7 +68,6 @@ test_not_fbk
     Label Text Should Be    0    The file must have the .fbk extension
     Push Button    OK
     
-
     Select Main Window
     Select Tab As Context    Restore
     Clear Text Field     backupFileField
@@ -73,3 +76,5 @@ test_not_fbk
     Select Dialog    Warning
     Label Text Should Be    0    The file must have the .fbk extension
     Push Button    OK
+    Select Main Window
+    Select Tab    Backup

@@ -1,7 +1,7 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
+Test Setup       Test Setup
 Test Teardown    Teardown
 
 
@@ -46,5 +46,5 @@ Init
     Run Keyword In Separate Thread    Push Button    execute-script-command
 
 Teardown
-    Teardown after every tests
+    Test Teardown
     Run Keyword And Ignore Error    Execute Immediate    DROP USER TEST_USER

@@ -5,7 +5,7 @@ Library    Collections
 Resource    ../../files/keywords.resource
 Resource    keys.resource
 Test Setup       Setup
-Test Teardown    Teardown after every tests
+Test Teardown    Local Teardown
 
 *** Test Cases ***
 test_start_finish
@@ -61,6 +61,7 @@ test_save_load_file
     Label Text Should Be    1    ${path}
     Push Button    OK
     System Exit
+    Clear History Files
     File Should Exist    ${path}
     Load
     Check Check Box    fromFileCheck
@@ -312,8 +313,9 @@ Start App And Load
 
 Load
     System Exit
+    Clear History Files
     ${path_to_exe}=    Get Path
-    Start Application    red_expert    ${path_to_exe}    timeout=20   
+    Start Application    red_expert    ${path_to_exe}    timeout=20    remote_port=60900
     Select Main Window
     Open connection
     Select From Main Menu    Tools|Profiler
@@ -358,3 +360,8 @@ Check Warning After Lose Connect
     Label Text Should Be    0   Selected connection is unavailable.
     Label Text Should Be    1   Profiler session discarded.
     Push Button    OK
+
+Local Teardown
+    System Exit    0
+    Unlock Employee
+    Clear History Files

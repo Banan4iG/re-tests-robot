@@ -4,8 +4,8 @@ Library    RemoteSwingLibrary
 Library    OperatingSystem
 Resource    ../../files/keywords.resource
 Resource    key.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_couldnot_create_folder
@@ -26,6 +26,10 @@ test_couldnot_create_folder
     Select Dialog    Warning
     Label Text Should Be    0    Could not create directory for exported BLOBs
     Push Button    OK
+    Select Main Window
+    Select Dialog    Export Data
+    Uncheck All Checkboxes
+    Close Dialog    Export Data
     Remove File    ${blob_path}
 
 test_export_in_existing_folder

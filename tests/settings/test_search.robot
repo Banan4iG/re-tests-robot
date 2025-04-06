@@ -2,7 +2,7 @@
 Library    RemoteSwingLibrary
 Resource    ../../files/keywords.resource
 Test Setup       Setup
-Test Teardown    Teardown after every tests
+Test Teardown    Teardown
 
 *** Test Cases ***
 test_search
@@ -39,7 +39,6 @@ test_inside_search
     @{values}=    Get Table Column Values    0    2
     Should Be Equal As Strings   ${values}    ['Rollback all changes']
 
-
 test_clear
     Type Into Text Field    textField    Tools
     Push Button    clearButton
@@ -56,8 +55,11 @@ test_no_find
 
 *** Keywords ***
 Setup
-    Setup before every tests
+    Test Setup
     Select From Main Menu    System|Preferences
     Select Dialog    Preferences
     Clear Text Field    textField
     
+Teardown
+    Close Dialog    Preferences
+    Test Teardown

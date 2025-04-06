@@ -3,8 +3,8 @@ Library    RemoteSwingLibrary
 Library    OperatingSystem
 Resource    ../../files/keywords.resource
 Resource    key.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_without
@@ -13,6 +13,7 @@ test_without
     Clear Text Field    exportTableNameField
     VAR    ${expected_content}    INSERT INTO  ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Carol', 'Nordstrom', '420', '1991-10-02 00:00' ); INSERT INTO  ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Luke', 'Leung', '3', '1992-02-18 00:00' ); INSERT INTO  ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Sue Anne', 'O''Brien', '877', '1992-03-23 00:00' ); INSERT INTO  ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Jennifer M.', 'Burbank', '289', '1992-04-15 00:00' ); INSERT INTO  ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Claudia', 'Sutherland', NULL, '1992-04-20 00:00' ); INSERT INTO  ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Dana', 'Bishop', '290', '1992-06-01 00:00' );
     Check content    ${export_path}    ${expected_content}
+    Close Dialog    Message
 
 test_table_name
     Setup before export data
@@ -21,6 +22,7 @@ test_table_name
     Type Into Text Field    exportTableNameField    TEST_TABLE
     VAR    ${expected_content}    INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Carol', 'Nordstrom', '420', '1991-10-02 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Luke', 'Leung', '3', '1992-02-18 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Sue Anne', 'O''Brien', '877', '1992-03-23 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Jennifer M.', 'Burbank', '289', '1992-04-15 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Claudia', 'Sutherland', NULL, '1992-04-20 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Dana', 'Bishop', '290', '1992-06-01 00:00' );
     Check content    ${export_path}    ${expected_content}
+    Close Dialog    Message
 
 test_open_query_editor_yes
     Setup before export data
@@ -32,10 +34,11 @@ test_open_query_editor_yes
     Check content    ${export_path}    ${expected_content}
     Select Dialog    ${EMPTY}
     Push Button    Yes
-    
+
     Select Main Window
     ${content_query_editor}=    Get Text Field Value    0
     Should Be Equal As Strings    ${content_query_editor}    ${expected_content}    strip_spaces=${True}    collapse_spaces=${True}
+    Close Dialog    Message
 
 test_open_query_editor_no
     Setup before export data
@@ -52,6 +55,7 @@ test_open_query_editor_no
     VAR    ${expected_content}    SELECT * FROM EMPLOYEE
     ${content_query_editor}=    Get Text Field Value    0
     Should Be Equal As Strings    ${content_query_editor}    ${expected_content}    strip_spaces=${True}    collapse_spaces=${True}
+    Close Dialog    Message
 
 test_open_empty_query_editor
     Open connection
@@ -70,10 +74,11 @@ test_open_empty_query_editor
     Type Into Text Field    exportTableNameField    TEST_TABLE
     VAR    ${expected_content}    INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Carol', 'Nordstrom', '420', '1991-10-02 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Luke', 'Leung', '3', '1992-02-18 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Sue Anne', 'O''Brien', '877', '1992-03-23 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Jennifer M.', 'Burbank', '289', '1992-04-15 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Claudia', 'Sutherland', NULL, '1992-04-20 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Dana', 'Bishop', '290', '1992-06-01 00:00' );
     Check content    ${export_path}    ${expected_content}
-
+    
     Select Main Window
     ${content_query_editor}=    Get Text Field Value    0
     Should Be Equal As Strings    ${content_query_editor}    ${expected_content}    strip_spaces=${True}    collapse_spaces=${True}
+    Close Dialog    Message
 
 test_add_create_table_statement
     Setup before export data
@@ -83,6 +88,7 @@ test_add_create_table_statement
     Type Into Text Field    exportTableNameField    TEST_TABLE
     VAR    ${expected_content}    -- table creating -- CREATE TABLE TEST_TABLE ( FIRST_NAME BLOB SUB_TYPE TEXT, LAST_NAME BLOB SUB_TYPE TEXT, PHONE_EXT BLOB SUB_TYPE TEXT, HIRE_DATE BLOB SUB_TYPE TEXT ); -- inserting data -- INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Carol', 'Nordstrom', '420', '1991-10-02 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Luke', 'Leung', '3', '1992-02-18 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Sue Anne', 'O''Brien', '877', '1992-03-23 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Jennifer M.', 'Burbank', '289', '1992-04-15 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Claudia', 'Sutherland', NULL, '1992-04-20 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Dana', 'Bishop', '290', '1992-06-01 00:00' );
     Check content    ${export_path}    ${expected_content}
+    Close Dialog    Message
 
 test_execute_to_file
     Open connection
@@ -109,7 +115,7 @@ test_execute_to_file
     END
 
     Check content    ${export_path}    ${expected_content}
-
+    Close Dialog    Message
 
 *** Keywords ***
 Init SQL
@@ -125,7 +131,6 @@ Check content
     [Arguments]   ${export_path}    ${expected_content}
     Push Button    exportButton
     Sleep    5s
-    # Close Dialog    Message
     File Should Exist    ${export_path}
     ${content}=    Get File    ${export_path}
     Should Be Equal As Strings    ${content}    ${expected_content}    strip_spaces=${True}    collapse_spaces=${True}

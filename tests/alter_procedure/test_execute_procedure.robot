@@ -1,8 +1,8 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_exexute
@@ -25,3 +25,4 @@ Init Procedure
     Push Button    executeButton
     @{value2}=    Get Table Values    1
     Should Be Equal As Strings    ${value2}    [['55']]
+    Close Dialog    Execute Procedure

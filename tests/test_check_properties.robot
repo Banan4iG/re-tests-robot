@@ -3,8 +3,8 @@ Library    RemoteSwingLibrary
 Library    Process
 Library    Collections
 Resource    ../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_1
@@ -12,3 +12,8 @@ test_1
     Click On Tree Node    0    New Connection    1
     Select From Table Cell Popup Menu    0    0    0    Properties    
     Button Should Exist    Connect
+
+    Select Main Window
+    Select From Tree Node Popup Menu In Separate Thread    0    New Connection (Copy)    Delete connection
+    Select Dialog    Delete connection
+    Push Button    Yes

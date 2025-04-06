@@ -1,8 +1,9 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource   ../../files/keywords.resource 
-Test Setup       Local Setup
-Test Teardown    Teardown after every tests
+Resource    keys.resource
+Test Setup       Local Test Setup
+Test Teardown    Local Test Teardown
 
 *** Test Cases ***
 test_extract
@@ -25,7 +26,7 @@ test_compare
 
 *** Keywords ***
 Local Setup
-    Setup before every tests
+    Test Setup
     Select From Tree Node Popup Menu In Separate Thread    0    New Connection    Delete connection
     Select Dialog    Delete connection
     Push Button    Yes

@@ -2,8 +2,8 @@
 Library    RemoteSwingLibrary
 Library    OperatingSystem
 Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_full_check
@@ -45,6 +45,8 @@ test_full_check
     Label Text Should Be    0    Restore completed successfully!
     Label Text Should Be    1    Register restored database?
     Push Button    No
-
+    Select Main Window
+    Select From Combo Box    connectionCombo    New Connection
+    Select Tab    Backup
     #delete files
     Remove Files    ${log_path}    ${bk_path}    ${mew_db_path}

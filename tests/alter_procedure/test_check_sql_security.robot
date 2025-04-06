@@ -3,7 +3,7 @@ Library    RemoteSwingLibrary
 Resource    ../../files/keywords.resource
 Resource    keys.resource
 Test Setup       Setup
-Test Teardown    Teardown after every tests
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_1
@@ -11,6 +11,7 @@ test_1
     Execute Immediate    CREATE OR ALTER PROCEDURE TEST AS BEGIN END
     Open connection
     Click On Tree Node   0    New Connection|Procedures (11)|TEST    2
+    Sleep    0.5s
     Check SQL    DEFINER    CREATE OR ALTER PROCEDURE TEST SQL SECURITY DEFINER AS BEGIN END;
     Check SQL    INVOKER    CREATE OR ALTER PROCEDURE TEST SQL SECURITY INVOKER AS BEGIN END;
 

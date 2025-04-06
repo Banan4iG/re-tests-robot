@@ -3,8 +3,8 @@ Library    RemoteSwingLibrary
 Library    Process
 Library    Collections
 Resource    ../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Local Test Teardown
 
 *** Test Cases ***
 test_create_table
@@ -30,3 +30,7 @@ Create Table
     Select Dialog    dialog1
     ${textFieldValue}=    Get Textfield Value    0
     Should Not Be Equal As Integers    ${{$textFieldValue.find('"TEST TABLE"')}}    -1
+
+Local Test Teardown
+    System Exit    0
+    Clear History Files 

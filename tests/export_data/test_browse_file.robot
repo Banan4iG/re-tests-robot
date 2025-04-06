@@ -3,8 +3,8 @@ Library    RemoteSwingLibrary
 Library    OperatingSystem
 Resource    ../../files/keywords.resource
 Resource    key.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_1
@@ -33,6 +33,7 @@ test_1
     Select Export File Path
     ${current_export_path}=    Get Text Field Value    filePathField
     Should Be Equal As Strings    ${current_export_path}    ${export_path_sql}    collapse_spaces=${True}    strip_spaces=${True}
+    Close Dialog    Export Data
 
 test_blob
     Open connection
@@ -58,6 +59,7 @@ test_blob
     ${export_path_blob}=     Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.lob
     ${current_export_path}=    Get Text Field Value    folderPathField
     Should Be Equal As Strings    ${current_export_path}    ${export_path_blob}    collapse_spaces=${True}    strip_spaces=${True}
+    Close Dialog    Export Data
 
 
 *** Keywords ***

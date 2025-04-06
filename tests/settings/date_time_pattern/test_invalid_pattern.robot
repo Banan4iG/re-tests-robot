@@ -2,8 +2,8 @@
 Library    RemoteSwingLibrary
 Resource   ../../../files/keywords.resource
 Resource    keys.resource 
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_1

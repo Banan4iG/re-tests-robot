@@ -1,12 +1,13 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Library    firebird.driver
-Library    fdb
+# Library    fdb
 Library    platform
 Library    OperatingSystem
-Resource   ../../files/keywords.resource 
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Resource   ../../files/keywords.resource
+Resource    keys.resource
+Test Setup       Local Test Setup
+Test Teardown    Local Test Teardown
 
 *** Test Cases ***
 test_same_compare
@@ -15,6 +16,7 @@ test_same_compare
     Select Dialog    Warning
     Run Keyword And Continue On Failure    Label Text Should Be    0    Unable to compare.
     Run Keyword And Continue On Failure    Label Text Should Be    1    The same connections selected.
+    Close Dialog    Warning
 
 test_check_warning
     Push Button    new-connection-command
@@ -26,7 +28,7 @@ test_check_warning
     Select Dialog    Warning
     Run Keyword And Continue On Failure    Label Text Should Be    0    Unable to compare.
     Run Keyword And Continue On Failure    Label Text Should Be    1    No properties for comparing selected.
-
+    Close Dialog    Warning
 
 test_switch_database
     ${test_base_path}=     Catenate    SEPARATOR=    ${TEMPDIR}    /test.fdb
@@ -39,8 +41,8 @@ test_switch_database
         ${home}=     Set Variable    ${info}[0]
         ${system}    platform.System
         ${fd_lib}    Set Variable If    '${system}' == 'Linux'    lib/libfbclient.so    bin/fbclient.dll
-        fdb.Load Api    ${home}${fd_lib}
-        fdb.Create Database    database=${test_base_path}    user=SYSDBA    password=masterkey
+        # fdb.Load Api    ${home}${fd_lib}
+        # fdb.Create Database    database=${test_base_path}    user=SYSDBA    password=masterkey
     END
     Create Connect    ${test_base_path}    ${ver}
     Select Window    regexp=^Red.*

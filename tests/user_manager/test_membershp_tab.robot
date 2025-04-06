@@ -1,17 +1,16 @@
 *** Settings ***
 Library    RemoteSwingLibrary
-Library    Process
-Library    Collections
 Resource   ../../files/keywords.resource 
-Test Setup       Setup before every tests
+Resource    key.resource
+Test Setup       Test Setup
 Test Teardown    Teardown
+
 *** Test Cases ***
 test_check_membership_role_to_user
     Action    USER    0
 
 test_check_membership_role_to_role
     Action    ROLE    1
-
 
 *** Keywords ***
 Action
@@ -54,5 +53,5 @@ Check membership
     RETURN     ${result}
 
 Teardown
-    Teardown after every tests
+    Local Test Teardown
     Run Keyword And Ignore Error    Execute Immediate    DROP USER ATEST_MEMBERSHIP

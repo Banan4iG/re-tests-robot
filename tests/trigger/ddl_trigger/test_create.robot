@@ -3,7 +3,7 @@ Library    RemoteSwingLibrary
 Resource    ../../../files/keywords.resource
 Resource    key.resource
 Test Setup       Setup
-Test Teardown    Teardown after every tests
+Test Teardown    Local Test Teardown
 
 *** Variables ***
 @{list_create_check_boxes}

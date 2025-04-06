@@ -2,12 +2,11 @@
 Library    RemoteSwingLibrary
 Library    Collections
 Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_1
-    Select From Main Menu    System|Drivers
     ${row}=    Find Table Row    driversTable    Jaybird 4 Driver    Driver Name
     Run Keyword In Separate Thread    Click On Table Cell    driversTable     ${row}    Driver Name    2    BUTTON1_MASK
     Select Dialog    Edit Driver
@@ -24,3 +23,5 @@ test_1
     Should Be Equal As Strings    ${paths_list}    ['../lib/fbclient-4.jar', '../lib/jaybird-4.jar', '../lib/jaybird-cryptoapi-4.jar', './lib/fbclient-4.jar', './lib/jaybird-4.jar', './lib/jaybird-cryptoapi-4.jar']
     ${classes}=    Get Selected Item From Combo Box   classField
     Should Be Equal As Strings    ${classes}    org.firebirdsql.jdbc.FBDriver
+    Close Dialog    Edit Driver
+    Select Main Window

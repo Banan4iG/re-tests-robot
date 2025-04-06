@@ -3,8 +3,8 @@ Library    RemoteSwingLibrary
 Library    Process
 Library    Collections
 Resource    ../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Local Test Teardown
 
 *** Test Cases ***
 test_check_cursor
@@ -25,3 +25,7 @@ Check Skip
     ${ver}=     Set Variable    ${info}[1]
     ${srv_ver}=    Set Variable    ${info}[2]
     Skip If    ${{not($ver == '5.0' and $srv_ver == 'RedDatabase')}}
+
+Local Test Teardown
+    System Exit    0
+    Clear History Files 

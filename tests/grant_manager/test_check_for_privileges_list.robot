@@ -1,8 +1,8 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource   ../../files/keywords.resource 
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_1
@@ -60,3 +60,5 @@ test_1
         @{expected_privileges_for_list}=    Create List    NEW_PACK
         Should Be Equal As Strings    ${privileges_for_list}    ${expected_privileges_for_list}
     END
+
+    Select From Combo Box    1    Users

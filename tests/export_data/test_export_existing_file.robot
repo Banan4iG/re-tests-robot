@@ -3,8 +3,8 @@ Library    RemoteSwingLibrary
 Library    OperatingSystem
 Resource    ../../files/keywords.resource
 Resource    key.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_overwrite_yes
@@ -15,6 +15,7 @@ test_overwrite_yes
     Init double
     Push Button    Yes
     Sleep    5s
+    Close Dialog    Message
     File Should Exist    ${export_path}
     ${content2}=    Get File    ${export_path}
     Should Not Be Equal As Strings    ${content1}    ${content2}
@@ -26,7 +27,8 @@ test_overwrite_no
     
     Init double
     Push Button    No
-    
+
+    Close Dialog    Export Data
     File Should Exist    ${export_path}
     ${content2}=    Get File    ${export_path}
     Should Be Equal As Strings    ${content1}    ${content2}
@@ -39,6 +41,7 @@ test_overwrite_close
     Init double
     Close Dialog    Confirmation
     
+    Close Dialog    Export Data
     File Should Exist    ${export_path}
     ${content2}=    Get File    ${export_path}
     Should Be Equal As Strings    ${content1}    ${content2}

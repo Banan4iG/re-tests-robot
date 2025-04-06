@@ -12,7 +12,7 @@ test_no_reload
     Push Button    No
     System Exit    0
     Sleep    5s
-    Setup before every tests
+    Test Setup
     Check
 
 test_auto_reload
@@ -24,10 +24,10 @@ test_auto_reload
 *** Keywords ***
 Setup
     Backup User Properties
-    Setup before every tests
+    Test Setup
 
 Teardown
-    Teardown after every tests
+    System Exit    0
     Restore User Properties
 
 Init

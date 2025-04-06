@@ -38,6 +38,7 @@ Test
 Check Query Editor
     Open connection
     Sleep    2s
+    Push Button    editor-command
     Clear Text Field    0
     Type Into Text Field    0    Select * from TEST_TABLE
     Push Button    execute-script-command
@@ -49,8 +50,8 @@ Setup
     ${info}=    Get Server Info
     ${ver}=     Set Variable    ${info}[1]
     Skip If    ${{$ver != '5.0'}}
-    Setup before every tests
+    Test Setup
 
 Teardown
-    Teardown after every tests
+    Test Teardown
     Restore User Properties

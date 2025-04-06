@@ -1,8 +1,8 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource    ../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Local Test Teardown
 
 *** Test Cases ***
 test_alter_domain
@@ -158,3 +158,8 @@ Check Proc Tab Comment
     Type Into Table Cell    0   ${row}    Comment     test_comment
     Send Keyboard Event    VK_ENTER
     Init Commit Window
+
+Local Test Teardown
+    System Exit    0
+    Unlock Employee
+    Clear History Files

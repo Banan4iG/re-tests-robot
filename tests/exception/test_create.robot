@@ -1,8 +1,8 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Local Test Teardown
 
 *** Test Cases ***
 test_1
@@ -50,6 +50,7 @@ Init
 
 Check
     [Arguments]    ${text}    ${name}
+    List Dialogs
     Select Dialog    dialog1
     Sleep    1s
     ${res}=    Get Text Field Value    0
@@ -62,3 +63,8 @@ Check
 
     Select Main Window
     Tree Node Should Exist    0     New Connection|Exceptions (6)|${name}
+
+Local Test Teardown
+    System Exit    0
+    Unlock Employee
+    Clear History Files

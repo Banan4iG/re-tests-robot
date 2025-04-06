@@ -15,7 +15,7 @@ new_api_auto_reload
     Auto Reload
 
 *** Keywords ***
-Start Red Expert
+Run Red Expert For Update
     [Arguments]    ${path_to_exe}
     Log    ${path_to_exe}    console=True
     Start Application    red_expert    ${path_to_exe}    timeout=20    remote_port=60900    
@@ -25,16 +25,18 @@ Stop Red Expert
 
 Teardown
     Stop Server
-    Teardown after every tests
+    System Exit    0
+    Clear History Files
     Restore User Properties
 
 Test Api
     [Arguments]    ${urls}
+    Kill Redexpert
     Run Server
     Backup User Properties
     Set Urls   urls=${urls}
     ${path_to_exe}=    Copy Dist Path
-    Start Red Expert    ${path_to_exe}
+    Run Red Expert For Update    ${path_to_exe}
     Select Window    regexp=^Red.*
     Select From Menu    Help|Check for Update
     Sleep       5s
@@ -60,7 +62,7 @@ No Reload
     Push Button      OK
     System Exit    0
     Sleep       10s
-    Start Red Expert    ${path_to_exe}
+    Run Red Expert For Update    ${path_to_exe}
     Select Window    regexp=^Red Expert - 2025\.03.*
 
 Auto Reload

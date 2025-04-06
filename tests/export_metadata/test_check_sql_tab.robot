@@ -1,8 +1,9 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource   ../../files/keywords.resource 
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Resource    keys.resource
+Test Setup       Local Test Setup
+Test Teardown    Local Test Teardown
 
 *** Test Cases ***
 test_save_script

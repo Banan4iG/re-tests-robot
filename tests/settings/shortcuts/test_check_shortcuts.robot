@@ -1,15 +1,15 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource    ../../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_open_About
     Set Shortcut    About
     Send Keyboard Event    VK_Q    	CTRL_MASK
-    # Select Context    About
-    # List Components In Context
+    Dialog Should Be Open    About
+    Close Dialog    About
 
 test_open_update
     Set Shortcut    Check for Update
@@ -74,6 +74,7 @@ test_open_memory_status
     Send Keyboard Event    VK_Q    	CTRL_MASK
     Sleep    2s
     Dialog Should Be Open    Java Heap Memory
+    Close Dialog    Java Heap Memory
 
 test_open_new_conn
     Set Shortcut    New Connection
@@ -86,12 +87,14 @@ test_open_file
     Send Keyboard Event    VK_O    	CTRL_MASK
     Sleep    2s
     Dialog Should Be Open    Open
+    Close Dialog    Open
 
 test_open_preferences
     Set Shortcut    Preferences
     Send Keyboard Event    VK_Q    	CTRL_MASK
     Sleep    2s
     Dialog Should Be Open    Preferences
+    Close Dialog    Preferences
 
 test_open_print
     Click On Tree Node    0    New Connection    1

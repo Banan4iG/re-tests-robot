@@ -3,8 +3,8 @@ Library    RemoteSwingLibrary
 Library    OperatingSystem
 Resource    ../../files/keywords.resource
 Resource    key.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_without
@@ -73,6 +73,7 @@ test_max_row
     Label Text Should Be    0    The maximum number of rows that can be exported is 1048575
     Push Button    OK
     Sleep    5s
+    Close Dialog    Message
     File Should Exist    ${export_path}
     File Should Not Be Empty    ${export_path}
 

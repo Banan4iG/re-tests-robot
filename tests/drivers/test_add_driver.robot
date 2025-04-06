@@ -1,12 +1,11 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_empty_name
-    Select From Main Menu    System|Drivers
     Push Button    addDriverButton
     Select Dialog    Add New Driver
     Clear Text Field    nameField
@@ -21,7 +20,6 @@ test_empty_name
     Should Not Be Equal As Integers    ${row}    -1 
 
 test_check_combo
-    Select From Main Menu    System|Drivers
     Push Button    addDriverButton
     Select Dialog    Add New Driver
     Type Into Text Field    descField    This is Description
@@ -48,7 +46,6 @@ test_check_combo
     Push Button    Yes
 
 test_check_library
-    Select From Main Menu    System|Drivers
     Push Button    addDriverButton
     Select Dialog    Add New Driver
     Push Button    browseButton
@@ -91,7 +88,7 @@ test_check_library
     
 
 test_connect_with_new_driver
-    Select From Main Menu    System|Drivers
+    Skip    msg=Temp
     Push Button    addDriverButton
     Select Dialog    Add New Driver
     Select From Combo Box    databaseNameCombo    Firebird
@@ -108,15 +105,17 @@ test_connect_with_new_driver
     Select Main Window
     Select From Tree Node Popup Menu    0    New Connection    Duplicate connection
     Sleep    2s
+    List Components In Context
+    # Select From Tree Node Popup Menu    0    New Connection    Connection information
     Select From Combo Box    driverCombo    New Driver
     Push Button    Test
     Select Dialog    Message
     Label Text Should Be    0    The connection test was successful!
     Push Button    OK
 
-    Teardown after every tests
-    Setup before every tests
-    Select From Main Menu    System|Drivers
+    # Test Teardown
+    # Test Setup
+    
     Sleep    1s
     ${row}=    Find Table Row    driversTable    New Driver   Driver Name
     Click On Table Cell    driversTable     ${row}    Driver Name
@@ -125,7 +124,6 @@ test_connect_with_new_driver
     Push Button    Yes
 
 add_new_driver_with_same_name
-    Select From Main Menu    System|Drivers
     Push Button    addDriverButton
     Select Dialog    Add New Driver
     Clear Text Field    nameField

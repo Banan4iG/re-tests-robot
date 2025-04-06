@@ -2,8 +2,8 @@
 Library    RemoteSwingLibrary
 Library    OperatingSystem
 Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Test Teardown
 Test Timeout    60s
 
 *** Test Cases ***
@@ -36,12 +36,21 @@ test_1
     Restore    ${mew_db_path1}
     Select Main Window
     Tree Node Should Exist    0    employee_restore (Copy)
+    
+    Select From Tree Node Popup Menu In Separate Thread    0    employee_restore    Delete connection
+    Select Dialog    Delete connection
+    Push Button    Yes
+    Select Main Window
+    Select From Tree Node Popup Menu In Separate Thread    0    employee_restore (Copy)    Delete connection
+    Select Dialog    Delete connection
+    Push Button    Yes
 
     Remove Files    ${mew_db_path}    ${mew_db_path1}    ${bk_path} 
 
 *** Keywords ***
 Restore
     [Arguments]    ${mew_db_path}
+    Remove File    ${mew_db_path}
     Clear Text Field    databaseFileField
     Type Into Text Field    databaseFileField    ${mew_db_path}
 

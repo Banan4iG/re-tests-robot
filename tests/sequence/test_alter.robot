@@ -1,8 +1,8 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_1
@@ -85,6 +85,8 @@ test_4
         Should Be Equal As Strings    ${tree1}    ['Domains (0)', 'Tables (0)', 'Global Temporary Tables (0)', 'Views (0)', 'Procedures (1)', 'Functions (0)', 'Packages (0)', 'Table Triggers (0)', 'DDL Triggers (0)', 'DB Triggers (0)', 'Sequences (0)', 'Exceptions (0)', 'UDFs (0)', 'Users (0)', 'Roles (0)', 'Indices (0)']
         Should Be Equal As Strings    ${tree2}    ['Domains (0)', 'Tables (0)', 'Global Temporary Tables (0)', 'Views (0)', 'Procedures (0)', 'Functions (0)', 'Packages (0)', 'Table Triggers (0)', 'DDL Triggers (0)', 'DB Triggers (0)', 'Sequences (0)', 'Exceptions (0)', 'UDFs (0)', 'Users (0)', 'Roles (0)', 'Indices (0)']
     END
+    Select Main Window
+    Select Tab As Context    Comment
 
 test_5
     ${info}=    Get Server Info

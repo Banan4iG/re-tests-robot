@@ -3,8 +3,8 @@ Library    RemoteSwingLibrary
 Library    Process
 Library    Collections
 Resource    ../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Setup       Test Setup
+Test Teardown    Local Test Teardown
 
 *** Test Cases ***
 test_check_default_active
@@ -33,3 +33,7 @@ Create Index
     Expand Tree Node    0    New Connection    
     Select From Tree Node Popup Menu    0    New Connection|Indices (38)    Create index
     Select Dialog    Create index   
+
+Local Test Teardown
+    System Exit    0
+    Clear History Files 
