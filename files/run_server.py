@@ -5,7 +5,7 @@ import json
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
 
-        def init_response(data = None):
+        def init_response(data: dict):
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
             self.end_headers()
@@ -13,24 +13,32 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             response_data = data
             self.wfile.write(json.dumps(response_data).encode())
 
-        url_path = self.path
-        print(url_path)
-        if "project" in url_path:
+        def init_data(version: str):
             data = {
                 "base_url": "http://builds.red-soft.biz/release_hub/red_expert/",
-                "version": "9999.99",
+                "version": f"{version}",
                 "changelog": {
                 "ru": "Добавлено:",
                 "en": "Added:"
                 },
                 "files": [
                     {
-                        "FILE_NAME": "RedExpert-9999.99.zip",
+                        "FILE_NAME": f"RedExpert-{version}.zip",
                         "FILE_PATH": "2025.03/download/red_expert:bin:2025.03:zip"
                     },]
 
             }
-            init_response(data)       
+            return data
+
+        url_path = self.path
+        print(url_path)
+        if "version=9999.98" in url_path:
+            data = init_data("9999.98")
+            init_response(data)
+
+        elif "version=9999.99" in url_path:
+            data = init_data("9999.99")
+            init_response(data)        
         else:
             data = {
                 "": "",
