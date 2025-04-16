@@ -53,16 +53,16 @@ def get_build_no():
     return os.environ.get('BUILD', "202501")
 
 def backup_savedconnections_file():
-    backup_file("savedconnections.xml")
+    backup_file("connection-saved.xml")
 
 def restore_savedconnections_file():
-    restore_file("savedconnections.xml")
+    restore_file("connection-saved.xml")
 
 def backup_user_properties():
-    backup_file("eq.user.properties")
+    backup_file("user.properties")
 
 def restore_user_properties():
-    restore_file("eq.user.properties")
+    restore_file("user.properties")
 
 def backup_file(file_name: str):
     home_dir = os.path.expanduser("~")
@@ -82,7 +82,7 @@ def restore_file(file_name: str):
 def set_urls(urls: str):
     home_dir = os.path.expanduser("~")
     build_no = get_build_no()
-    user_properties_file = os.path.join(home_dir, f'.redexpert/{build_no}/eq.user.properties')
+    user_properties_file = os.path.join(home_dir, f'.redexpert/{build_no}/user.properties')
     with open(user_properties_file, 'r') as f:
         context = f.read()
 
@@ -107,7 +107,7 @@ def get_path():
 def clear_history_files():
     home_dir = os.path.expanduser("~")
     build_no = get_build_no()
-    history_file = os.path.join(home_dir, f'.redexpert/{build_no}/ConnectionHistory.xml')
+    history_file = os.path.join(home_dir, f'.redexpert/{build_no}/connection-history.xml')
     shortcuts_file = os.path.join(home_dir, f'.redexpert/{build_no}/eq.shortcuts.properties')
     user_panel_state_file = os.path.join(home_dir, f'.redexpert/{build_no}/re.user.panels.state')
     query_dir = os.path.join(home_dir, f'.redexpert/{build_no}/QueryEditor')
