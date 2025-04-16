@@ -136,7 +136,7 @@ Init
     Lock Employee
     Open connection
     Select From Tree Node Popup Menu   0    New Connection|DDL Triggers (0)    Create DDL trigger
-    Select Dialog    Create table trigger
+    Select Dialog    Create DDL trigger
     Clear Text Field    nameField
     Type Into Text Field    nameField    ${name}
 
@@ -163,7 +163,7 @@ Check
     Push Button    commitButton
     Sleep    0.1s
     ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
-    Run Keyword And Expect Error    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Create table trigger'    Select Dialog    Create table trigger
+    Run Keyword And Expect Error    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Create DDL trigger'    Select Dialog    Create DDL trigger
 
     Select Main Window
     Tree Node Should Exist    0     New Connection|DDL Triggers (1)|${name}

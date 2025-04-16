@@ -60,7 +60,7 @@ Init
     Lock Employee
     Open connection
     Select From Tree Node Popup Menu   0    New Connection|DB Triggers (0)    Create DB trigger
-    Select Dialog    Create table trigger
+    Select Dialog    Create DB trigger
     Clear Text Field    nameField
     Type Into Text Field    nameField    ${name}
 
@@ -75,7 +75,7 @@ Check
     Push Button    commitButton
     Sleep    0.1s
     ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
-    Run Keyword And Expect Error    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Create table trigger'    Select Dialog    Create table trigger
+    Run Keyword And Expect Error    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Create DB trigger'    Select Dialog    Create DB trigger
 
     Select Main Window
     Tree Node Should Exist    0     New Connection|DB Triggers (1)|${name}
