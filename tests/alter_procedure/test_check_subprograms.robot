@@ -74,7 +74,7 @@ Check ddl
     ${new_ddl}=    Get Text Field Value    2
     Should Be Equal As Strings    ${new_ddl}    ${ddl}    strip_spaces=${True}    collapse_spaces=${True}
     Push Button    submitButton
-    Select Dialog    Edit procedure
+    Select Dialog    Commiting changes
     Push Button    commitButton
     Select Main Window
     ${new_ddl}=    Get Text Field Value    2
