@@ -6,6 +6,7 @@ Resource    ../../files/keywords.resource
 Resource    keys.resource
 Test Setup       Setup
 Test Teardown    Teardown after every tests
+Test Timeout    60s
 
 *** Test Cases ***
 test_start_finish
