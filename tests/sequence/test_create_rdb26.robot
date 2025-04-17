@@ -18,7 +18,7 @@ test_1
     Type Into Text Field    nameField    ${name}
     
     Push Button    submitButton
-    Select Dialog    dialog1
+    Select Dialog    Commiting changes
     Sleep    1s
     ${row_create}=    Find Table Row    0    CREATE SEQUENCE    Name Operation
     ${row_alter}=    Find Table Row    0    ALTER SEQUENCE    Name Operation

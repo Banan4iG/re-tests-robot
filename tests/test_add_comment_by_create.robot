@@ -66,7 +66,7 @@ test_create_procedure_cursors
     Send Keyboard Event    VK_ENTER
     Select Dialog    dialog0
     Push Button    submitButton
-    Select Dialog    dialog1
+    Select Dialog    Commiting changes
     ${res}=    Get Text Field Value    0
     Sleep    1s
     Should Not Be Equal As Integers    ${{$res.find('test_comment')}}    -1
@@ -179,7 +179,7 @@ Check Procedure
     Send Keyboard Event    VK_ENTER
     Select Dialog    dialog0
     Push Button    submitButton
-    Select Dialog    dialog1
+    Select Dialog    Commiting changes
     Sleep    1s
     ${res}=    Get Text Field Value    0
     Should Not Be Equal As Integers    ${{$res.find('test_comment')}}    -1
@@ -195,7 +195,7 @@ Check Column Comment
     Type Into Table Cell    0    0    Comment    test_comment
     Send Keyboard Event    VK_ENTER
     Push Button    submitButton
-    Select Dialog    dialog1
+    Select Dialog    Commiting changes
     Sleep    1s
     ${res}=    Get Text Field Value    0
     Should Not Be Equal As Integers    ${{$res.find('\'test_comment\'')}}    -1
@@ -206,7 +206,7 @@ Check Comment
     Type Into Text Field    0    test_comment
     Select Dialog    dialog0
     Push Button    submitButton
-    Select Dialog    dialog1
+    Select Dialog    Commiting changes
     Sleep    1s
     ${res}=    Get Text Field Value    0
     Should Not Be Equal As Integers    ${{$res.find('\'test_comment\'')}}    -1

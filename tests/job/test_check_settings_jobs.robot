@@ -38,7 +38,7 @@ test_cron_false
 
     Select Dialog    Create job
     Push Button    submitButton
-    Select Dialog    dialog1
+    Select Dialog    Commiting changes
     ${row}=    Find Table Row    0    Success    Status
     ${script}=    Get Text Field Value    0
     Should Not Be Equal As Integers    ${row}    -1

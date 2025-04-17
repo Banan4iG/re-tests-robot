@@ -18,7 +18,7 @@ test_1
     Select From Combo Box    typesCombo    UNIQUE
     Click On List Item    0    TEST COMMENT    2
     Push Button    submitButton
-    Select Dialog    dialog1
+    Select Dialog    Commiting changes
     Push Button    commitButton
     Select Window    regexp=^Red.*
     Select Tab As Context    Constraints 

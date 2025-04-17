@@ -96,7 +96,7 @@ Init
 Check
     [Arguments]    ${create_header}    ${create_body}
     Push Button    submitButton
-    Select Dialog    Edit package    
+    Select Dialog    Commiting changes    
     ${row_header}=     Find Table Row    0    CREATE OR ALTER PACKAGE
     ${value}=    Get Table Cell Value    0    ${row_header}    Status
     Should Be Equal As Strings    ${value}    Success
@@ -119,4 +119,4 @@ Check
     Push Button    commitButton
     Sleep    0.1s
     ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout	0
-    Run Keyword And Expect Error    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Edit package'    Select Dialog    Edit package
+    Run Keyword And Expect Error    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Commiting changes'    Select Dialog    Commiting changes

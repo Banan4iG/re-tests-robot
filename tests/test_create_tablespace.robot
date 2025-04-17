@@ -15,7 +15,7 @@ test_check_cursor
     Select Dialog    Create tablespace
     Type Into Text Field    1    test_file.ts
     Push Button    submitButton
-    Select Dialog    dialog1
+    Select Dialog    Commiting changes
     ${textFieldValue}=    Get Textfield Value    0
     Should Be Equal   ${textFieldValue}     CREATE TABLESPACE NEW_TABLESPACE_1 FILE 'test_file.ts'    collapse_spaces=True
 

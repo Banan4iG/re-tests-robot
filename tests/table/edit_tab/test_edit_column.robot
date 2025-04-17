@@ -279,7 +279,7 @@ Check Edit Commit
     [Arguments]    ${expected_sql}
     Push Button    submitButton
     Sleep    0.5s
-    Select Dialog    dialog1
+    Select Dialog    Commiting changes
     ${res}=    Get Text Field Value    0
     Should Be Equal As Strings    ${res}    ${expected_sql}    strip_spaces=${True}    collapse_spaces=${True}
 
@@ -303,7 +303,7 @@ Check Column In Table
     RETURN    ${row}
 
 Check SQL Statements
-    [Arguments]    ${check_sequence}    ${gen_name}    ${dialog}=dialog2    ${alter_table}=ALTER TABLE TEST_TABLE ALTER COLUMN TEST_COLUMN DROP IDENTITY    ${column_name}=TEST_COLUMN
+    [Arguments]    ${check_sequence}    ${gen_name}    ${dialog}=Commiting changes    ${alter_table}=ALTER TABLE TEST_TABLE ALTER COLUMN TEST_COLUMN DROP IDENTITY    ${column_name}=TEST_COLUMN
     Push Button    submitButton
     Sleep    0.5s
     Select Dialog    ${dialog}

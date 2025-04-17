@@ -359,7 +359,7 @@ Check type
     Should Be Equal As Strings    ${subtype}    ${expected_subtype}
 
 Check commit
-    [Arguments]    ${text}    ${dialog}=dialog1
+    [Arguments]    ${text}    ${dialog}=Commiting changes
     Push Button    submitButton
     Sleep    0.5s
     Select Dialog    ${dialog}
@@ -382,7 +382,7 @@ Check in table
     RETURN    ${row}
 
 Check SQL Statements
-    [Arguments]    ${check_sequence}    ${gen_name}    ${column_name}=NEW_TABLE_COLUMN_1    ${dialog}=dialog1
+    [Arguments]    ${check_sequence}    ${gen_name}    ${column_name}=NEW_TABLE_COLUMN_1    ${dialog}=Commiting changes
     Push Button    submitButton
     Sleep    0.5s
     List Dialogs

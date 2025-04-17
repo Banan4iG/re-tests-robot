@@ -13,7 +13,7 @@ alter_ddl
     Clear Text Field    1
     Type Into Text Field    1    CREATE OR ALTER PROCEDURE TEST RETURNS ( TOT INTEGER ) AS BEGIN tot = 66; END
     Push Button    submitButton
-    Select Dialog    Edit procedure
+    Select Dialog    Commiting changes
     Push Button    commitButton
     Select Main Window
     ${ddl}=    Get Text Field Value    1
@@ -58,7 +58,7 @@ alter_add_cursor
     ${new_ddl1}=    Get Text Field Value    2
     Sleep    1s
     Push Button    submitButton
-    Select Dialog    Edit procedure
+    Select Dialog    Commiting changes
     Push Button    commitButton
     IF   ${{$ver != '2.6'}}
         VAR    ${expected_ddl}    CREATE OR ALTER PROCEDURE TEST RETURNS ( PAR0 INTEGER ) AS DECLARE PAR1 CURSOR FOR (SELECT * FROM EMPLOYEE); DECLARE PAR2 SCROLL CURSOR FOR (SELECT * FROM COUNTRY); BEGIN PAR0 = 55; END;
@@ -95,7 +95,7 @@ alter_remove_cursor
     ${new_ddl1}=    Get Text Field Value    2
     Sleep    1s
     Push Button    submitButton
-    Select Dialog    Edit procedure
+    Select Dialog    Commiting changes
     Push Button    commitButton
     Should Be Equal As Strings    ${new_ddl1}    CREATE OR ALTER PROCEDURE TEST RETURNS ( TOT INTEGER ) AS DECLARE PAR0 INTEGER; BEGIN tot = 55; END;    strip_spaces=${True}    collapse_spaces=${True}
     Select Main Window
@@ -143,7 +143,7 @@ Add par
     ${new_ddl1}=    Get Text Field Value    1
     Sleep    1s
     Push Button    submitButton
-    Select Dialog    Edit procedure
+    Select Dialog    Commiting changes
     Push Button    commitButton
     Should Be Equal As Strings    ${new_ddl1}    ${ddl}    strip_spaces=${True}    collapse_spaces=${True}
     Select Main Window
@@ -166,7 +166,7 @@ Remove par
     ${new_ddl1}=    Get Text Field Value    1
     Sleep    1s
     Push Button    submitButton
-    Select Dialog    Edit procedure
+    Select Dialog    Commiting changes
     Push Button    commitButton
     Should Be Equal As Strings    ${new_ddl1}    ${ddl}    strip_spaces=${True}    collapse_spaces=${True}
     Select Main Window
@@ -190,7 +190,7 @@ Move par
     ${new_ddl1}=    Get Text Field Value    1
     Sleep    1s
     Push Button    submitButton
-    Select Dialog    Edit procedure
+    Select Dialog    Commiting changes
     Push Button    commitButton
     Should Be Equal As Strings    ${new_ddl1}    ${ddl}    strip_spaces=${True}    collapse_spaces=${True}
     Select Main Window

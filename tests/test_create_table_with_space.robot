@@ -27,6 +27,6 @@ Create Table
     Click On Table Cell    0    0    Name    2      
     Send Keyboard Event    VK_ENTER                
     Push Button    submitButton
-    Select Dialog    dialog1
+    Select Dialog    Commiting changes
     ${textFieldValue}=    Get Textfield Value    0
     Should Not Be Equal As Integers    ${{$textFieldValue.find('"TEST TABLE"')}}    -1

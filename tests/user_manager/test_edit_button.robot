@@ -25,7 +25,7 @@ test_1
     Select Tab    Comment
     Type Into Text Field    0    description
     Push Button      submitButton
-    Select Dialog    dialog1
+    Select Dialog    Commiting changes
     Push Button      commitButton
     ${result}=    Execute    select cast(sec$user_name as VARCHAR(9)), sec$first_name, sec$middle_name, sec$last_name, sec$active, sec$admin, sec$description, cast(sec$plugin as VARCHAR(3)) from sec$users where sec$user_name='TEST_USER'
     Should Be Equal    ${result}    [('TEST_USER', 'first', 'middle', 'last', True, False, None, 'Srp')]

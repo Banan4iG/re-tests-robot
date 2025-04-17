@@ -197,7 +197,7 @@ Init
     Select Dialog    Create constraint
     
 Check commit
-    [Arguments]    ${text}    ${ts}=PRIMARY    ${dialog}=dialog1
+    [Arguments]    ${text}    ${ts}=PRIMARY    ${dialog}=Commiting changes
     ${info}=    Get Server Info
     ${ver}=     Set Variable    ${info}[1]
     ${srv_ver}=    Set Variable    ${info}[2]

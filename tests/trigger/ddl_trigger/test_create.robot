@@ -155,7 +155,7 @@ Check Boxes Should Not Be Checked
 Check
     [Arguments]    ${text}    ${name}=NEW_TRIGGER
     Push Button    submitButton
-    Select Dialog    dialog1
+    Select Dialog    Commiting changes
     Sleep    1s
     ${res}=    Get Text Field Value    0
     Should Be Equal As Strings    ${res}    ${text}    strip_spaces=${True}    collapse_spaces=${True}

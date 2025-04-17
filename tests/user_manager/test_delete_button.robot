@@ -22,7 +22,7 @@ test_1
     ${info}=    Get Server Info
     ${ver}=     Set Variable    ${info}[1]
     IF    ${{$ver != '2.6'}}
-        Select Dialog    dialog1
+        Select Dialog    Commiting changes
         Push Button      commitButton
     END
     Sleep    1s
