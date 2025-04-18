@@ -19,7 +19,7 @@ Create Table
     Open connection
     Expand Tree Node    0    New Connection    
     Select From Tree Node Popup Menu    0    New Connection|${type}    ${create}
-    Select Dialog    Create Table
+    Select Dialog    Create table
     Clear Text Field    nameField
     Type Into Text Field    nameField    TEST TABLE
     Type Into Table Cell    0    0    Name    TEST
