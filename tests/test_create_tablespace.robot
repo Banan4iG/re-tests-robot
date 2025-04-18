@@ -1,10 +1,8 @@
 *** Settings ***
 Library    RemoteSwingLibrary
-Library    Process
-Library    Collections
 Resource    ../files/keywords.resource
 Test Setup       Test Setup
-Test Teardown    Local Test Teardown
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_check_cursor
@@ -18,6 +16,11 @@ test_check_cursor
     Select Dialog    Commiting changes
     ${textFieldValue}=    Get Textfield Value    0
     Should Be Equal   ${textFieldValue}     CREATE TABLESPACE NEW_TABLESPACE_1 FILE 'test_file.ts'    collapse_spaces=True
+    Push Button    rollbackButton
+    Select Dialog    Create job
+    Push Button    cancelButton
+    Select Dialog    Confirmation
+    Push Button    Yes
 
 *** Keywords ***
 Check Skip
@@ -25,7 +28,3 @@ Check Skip
     ${ver}=     Set Variable    ${info}[1]
     ${srv_ver}=    Set Variable    ${info}[2]
     Skip If    ${{not($ver == '5.0' and $srv_ver == 'RedDatabase')}}
-
-Local Test Teardown
-    System Exit    0
-    Clear History Files 

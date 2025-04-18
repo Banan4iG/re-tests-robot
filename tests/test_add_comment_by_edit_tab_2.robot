@@ -2,7 +2,7 @@
 Library    RemoteSwingLibrary
 Resource    ../files/keywords.resource
 Test Setup       Test Setup
-Test Teardown    Local Test Teardown
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_alter_domain
@@ -134,10 +134,11 @@ Check Comment
 Init Commit Window
     Select Window    regexp=^Red.*
     Push Button    submitButton
-    Select Dialog    dialog0
+    Select Dialog    Commiting changes
     Sleep    1s
     ${res}=    Get Text Field Value    0
     Should Not Be Equal As Integers    ${{$res.find('test_comment')}}    -1
+    Push Button    rollbackButton
 
 Check Table Comment
     Select Tab As Context    Properties
@@ -158,8 +159,3 @@ Check Proc Tab Comment
     Type Into Table Cell    0   ${row}    Comment     test_comment
     Send Keyboard Event    VK_ENTER
     Init Commit Window
-
-Local Test Teardown
-    System Exit    0
-    Unlock Employee
-    Clear History Files

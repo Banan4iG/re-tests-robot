@@ -3,7 +3,7 @@ Library    RemoteSwingLibrary
 Resource    ../../../files/keywords.resource
 Resource    key.resource
 Test Setup       Setup
-Test Teardown    Local Test Teardown
+Test Teardown    Test Teardown
 
 *** Variables ***
 @{list_create_check_boxes}
@@ -129,6 +129,15 @@ test_sql_security_invoker
     Select From Combo Box    securityCombo    INVOKER
     Check Check Box    anyStatementCheck
     Check    CREATE OR ALTER TRIGGER NEW_TRIGGER ACTIVE BEFORE ANY DDL STATEMENT POSITION 0 SQL SECURITY INVOKER AS BEGIN /* Trigger impl */ END
+
+test_add_comment
+    Init
+    Check Check Box    anyStatementCheck
+    Select Tab As Context    Comment
+    Clear Text Field    0
+    Type Into Text Field    0    test_comment
+    Select Dialog    Create DDL trigger
+    Check    COMMENT ON TRIGGER NEW_TRIGGER IS 'test_comment'
 
 *** Keywords ***
 Init

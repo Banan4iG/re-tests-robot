@@ -1,10 +1,8 @@
 *** Settings ***
 Library    RemoteSwingLibrary
-Library    Process
-Library    Collections
 Resource    ../files/keywords.resource
 Test Setup       Test Setup
-Test Teardown    Local Test Teardown
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_drop_trigger_for_ddl
@@ -32,13 +30,9 @@ Drop Trigger
     Execute Immediate    ${script}
     Open connection
     Run Keyword In Separate Thread    Select From Tree Node Popup Menu    0    New Connection|${path}    Delete ${type} trigger
-    Select Dialog    dialog0
+    Select Dialog    Commiting changes
     ${row}=    Find Table Row    0    Success    Status
     Push Button    commitButton
     Should Not Be Equal As Integers    ${row}    -1
     VAR    ${error}    DatabaseError:
     Run Keyword And Expect Error    STARTS:${error}    Execute Immediate    DROP TRIGGER NEW_TRIGGER
-
-Local Test Teardown
-    System Exit    0
-    Clear History Files

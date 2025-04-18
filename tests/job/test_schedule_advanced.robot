@@ -47,9 +47,6 @@ test_cron_false
     Should Not Be Equal As Integers    ${row}    -1
     Should Be Equal As Strings    ${script}    CREATE JOB NEW_JOB_1 '59 23 11 2 3' ACTIVE START DATE NULL END DATE NULL AS begin /*job is here*/ end    collapse_spaces=${True}
 
-    Close Dialog    Create job
-    Close Dialog    Create job
-
 test_cron_true
     Init Create
     #minutes
@@ -204,9 +201,6 @@ test_cron_true
     ${script}=    Get Text Field Value    0
     Should Not Be Equal As Integers    ${row}    -1
     Should Be Equal As Strings    ${script}    CREATE JOB NEW_JOB_1 '12-58 12-23 13-31 3-10 2-6' ACTIVE START DATE NULL END DATE NULL AS begin /*job is here*/ end    collapse_spaces=${True}
-
-    Close Dialog    Create job
-    Close Dialog    Create job
 
 *** Keywords ***    
 Init Create

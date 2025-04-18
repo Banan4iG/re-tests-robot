@@ -1,16 +1,15 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource   ../../files/keywords.resource 
-Resource    key.resource
 Test Setup       Test Setup
-Test Teardown    Local Test Teardown
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_1
     Open connection
     Select From Menu        Tools|User Manager
     Push Button             addUserButton
-    Select Dialog           Create user               #id: dialog0
+    Select Dialog           Create user               
     Clear Text Field        nameField
     Type Into Text Field    nameField          test
     Type Into Text Field    passTextField      test

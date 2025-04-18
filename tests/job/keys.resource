@@ -11,6 +11,14 @@ Setup
     Test Setup
 
 Local Test Teardown
-    System Exit    0
-    Unlock Employee
-    Clear History Files
+    Select Dialog    Commiting changes
+    Push Button    rollbackButton
+
+    Select Dialog    Create job
+    Push Button    cancelButton
+
+    Select Dialog    Confirmation
+    Push Button    Yes
+    
+    Select Main Window
+    Test Teardown

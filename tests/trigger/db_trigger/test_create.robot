@@ -1,9 +1,8 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource    ../../../files/keywords.resource
-Resource    key.resource
 Test Setup       Test Setup
-Test Teardown    Local Test Teardown
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_event_disconnect
@@ -54,6 +53,14 @@ test_sql_security_invoker
     Init
     Select From Combo Box    securityCombo    INVOKER
     Check    CREATE OR ALTER TRIGGER NEW_TRIGGER ACTIVE ON CONNECT POSITION 0 SQL SECURITY INVOKER AS BEGIN /* Trigger impl */ END
+
+test_add_comment
+    Init
+    Select Tab As Context    Comment
+    Clear Text Field    0
+    Type Into Text Field    0    test_comment
+    Select Dialog    Create DB trigger
+    Check    COMMENT ON TRIGGER NEW_TRIGGER IS 'test_comment'
 
 *** Keywords ***
 Init

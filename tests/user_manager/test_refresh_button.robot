@@ -1,7 +1,6 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource   ../../files/keywords.resource
-Resource    key.resource
 Test Setup       Test Setup
 Test Teardown    Teardown
 
@@ -20,5 +19,5 @@ test_1
 
 *** Keywords ***
 Teardown
-    Local Test Teardown
+    Test Teardown
     Run Keyword And Ignore Error    Execute Immediate    DROP USER TEST_REFRESH_USER

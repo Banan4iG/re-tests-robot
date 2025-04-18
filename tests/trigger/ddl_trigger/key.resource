@@ -8,8 +8,3 @@ Setup
     ${ver}=     Set Variable    ${info}[1]
     Skip If    ${{$ver == '2.6'}}
     Test Setup
-
-Local Test Teardown
-    System Exit    0
-    Unlock Employee
-    Clear History Files

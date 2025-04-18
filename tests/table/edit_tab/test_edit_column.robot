@@ -1,9 +1,8 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource    ../../../files/keywords.resource
-Resource    keys.resource
 Test Setup       Test Setup
-Test Teardown    Local Test Teardown
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_name
@@ -152,7 +151,7 @@ test_add_new_gen_without_identity
     Push Radio Button    newSequenceRadio
     Clear Text Field    sequenceNameField
     Type Into Text Field    sequenceNameField    AUTO_GEN
-    Check SQL Statements    ${True}    AUTO_GEN    dialog1    ALTER TABLE TEST_TABLE ALTER COLUMN COL SET NOT NULL    COL
+    Check SQL Statements    ${True}    AUTO_GEN    ALTER TABLE TEST_TABLE ALTER COLUMN COL SET NOT NULL    COL
     Check Column In Table    COL
     Execute Immediate    INSERT INTO TEST_TABLE DEFAULT VALUES
     Execute Immediate    INSERT INTO TEST_TABLE DEFAULT VALUES
@@ -174,7 +173,7 @@ test_add_use_gen_without_identity
     Run Keyword And Expect Error    org.netbeans.jemmy.TimeoutExpiredException: Component enabled: class javax.swing.JRadioButton    Push Radio Button    identityRadio
     Push Radio Button    existingSequenceRadio
     Select From Combo Box    sequencesCombo    EMP_NO_GEN
-    Check SQL Statements    ${False}    gen_name=EMP_NO_GEN    dialog=dialog1    alter_table=ALTER TABLE TEST_TABLE ALTER COLUMN COL SET NOT NULL    column_name=COL
+    Check SQL Statements    ${False}    gen_name=EMP_NO_GEN    alter_table=ALTER TABLE TEST_TABLE ALTER COLUMN COL SET NOT NULL    column_name=COL
     Check Column In Table    column_name=COL
     Execute Immediate    INSERT INTO TEST_TABLE DEFAULT VALUES
     Execute Immediate    INSERT INTO TEST_TABLE DEFAULT VALUES
@@ -257,7 +256,7 @@ test_check_autoupdate_object_tree
     Push Radio Button    newSequenceRadio
     Clear Text Field    sequenceNameField
     Type Into Text Field    sequenceNameField    AUTO_GEN
-    Check SQL Statements    ${True}    AUTO_GEN    dialog1    ALTER TABLE TEST_TABLE ALTER COLUMN COL SET NOT NULL    COL
+    Check SQL Statements    ${True}    AUTO_GEN    ALTER TABLE TEST_TABLE ALTER COLUMN COL SET NOT NULL    COL
     Select Main Window
     Expand Tree Node    0    New Connection|Table Triggers (5)
     Tree Node Should Exist    0   New Connection|Table Triggers (5)|TRIGGER_BI_TEST_TABLE_COL
@@ -304,10 +303,10 @@ Check Column In Table
     RETURN    ${row}
 
 Check SQL Statements
-    [Arguments]    ${check_sequence}    ${gen_name}    ${dialog}=Commiting changes    ${alter_table}=ALTER TABLE TEST_TABLE ALTER COLUMN TEST_COLUMN DROP IDENTITY    ${column_name}=TEST_COLUMN
+    [Arguments]    ${check_sequence}    ${gen_name}    ${alter_table}=ALTER TABLE TEST_TABLE ALTER COLUMN TEST_COLUMN DROP IDENTITY    ${column_name}=TEST_COLUMN
     Push Button    submitButton
     Sleep    0.5s
-    Select Dialog    ${dialog}
+    Select Dialog    Commiting changes 
     # Check ALTER TABLE statement
     ${alter_row}=    Find Table Row    0    ALTER TABLE    Name operation
     Click On Table Cell    0    ${alter_row}    Name operation
@@ -357,7 +356,6 @@ Check SQL Statements
     ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
     Run Keyword And Expect Error    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Edit table column'    Select Dialog    Edit table column
    
-
 Check Skip
     ${info}=    Get Server Info
     ${ver}=     Set Variable    ${info}[1]

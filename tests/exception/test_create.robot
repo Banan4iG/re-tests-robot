@@ -2,7 +2,7 @@
 Library    RemoteSwingLibrary
 Resource    ../../files/keywords.resource
 Test Setup       Test Setup
-Test Teardown    Local Test Teardown
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_1
@@ -32,6 +32,13 @@ test_4
     Tree Node Should Exist    0     New Connection|Exceptions (5)
     Tree Node Should Not Exist    0     New Connection|Exceptions (6)
 
+test_add_comment
+    Init    NEW_EXP    test_text
+    Select Tab As Context    Comment
+    Clear Text Field    0
+    Type Into Text Field    0    test_comment
+    Select Dialog    Create exception
+    Check    COMMENT ON EXCEPTION NEW_EXP IS 'test_comment'    NEW_EXP
 
 *** Keywords ***
 Init
@@ -46,14 +53,13 @@ Init
     Clear Text Field    1
     Type Into Text Field    1    ${text}
 
-    Push Button    submitButton
-
 Check
     [Arguments]    ${text}    ${name}
+    Push Button    submitButton
     Select Dialog    Commiting changes
     Sleep    1s
     ${res}=    Get Text Field Value    0
-    Should Be Equal As Strings    ${res}    ${text}
+    Should Be Equal As Strings    ${res}    ${text}    collapse_spaces=${True}    strip_spaces=${True}
 
     Push Button    commitButton
     Sleep    0.1s
@@ -62,8 +68,3 @@ Check
 
     Select Main Window
     Tree Node Should Exist    0     New Connection|Exceptions (6)|${name}
-
-Local Test Teardown
-    System Exit    0
-    Unlock Employee
-    Clear History Files

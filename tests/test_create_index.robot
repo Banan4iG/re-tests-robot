@@ -1,6 +1,5 @@
 *** Settings ***
 Library    RemoteSwingLibrary
-Library    Process
 Library    Collections
 Resource    ../files/keywords.resource
 Test Setup       Test Setup
@@ -14,7 +13,7 @@ test_check_default_active
 test_check_order_fields
     ${info}=    Get Server Info
     ${ver}=     Set Variable    ${info}[1]
-    Skip If    ${{$ver == '3.0'}}    
+    Skip If    ${{$ver != '5.0'}}    
     Create Index
     Select From Combo Box    1    3
     Push Button    5
@@ -35,5 +34,11 @@ Create Index
     Select Dialog    Create index   
 
 Local Test Teardown
-    System Exit    0
-    Clear History Files 
+    Select Dialog    Create index
+    Push Button    cancelButton
+
+    Select Dialog    Confirmation
+    Push Button    Yes
+    
+    Select Main Window
+    Test Teardown

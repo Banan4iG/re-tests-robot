@@ -1,9 +1,9 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource    ../../../files/keywords.resource
-Resource    keys.resource
 Test Setup       Test Setup
-Test Teardown    Local Test Teardown
+Test Teardown    Test Teardown
+
 
 *** Test Cases ***
 test_check_types
@@ -55,7 +55,7 @@ test_check_domain
     Select Dialog    Create table column
         
     Switch domain    DEPTNO    CHAR    expected_size=3
-    Check commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_1 DEPTNO    dialog3
+    Check commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_1 DEPTNO
     ${row}=    Check in table    data_type=CHAR
     ${size}=    Get Table Cell Value    0    ${row}    Size or precision
     Should Be Equal As Strings    ${size}    3
@@ -126,7 +126,7 @@ test_check_auto_name
     Select Dialog    Create table column
     ${name}=    Get Text Field Value    nameField
     Should Be Equal As Strings    ${name}    NEW_TABLE_COLUMN_2
-    Check commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_2 BIGINT    dialog=dialog3
+    Check commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_2 BIGINT
     Check in table    column_name=NEW_TABLE_COLUMN_2
 
 test_computed
@@ -217,9 +217,6 @@ test_autoincrement_create_generator
         Select Dialog    Warning
         Label Text Should Be    0    Using IDENTITY is preferred when creating an auto-incremented column
         Push Button    OK
-        VAR    ${dialog}    dialog2
-    ELSE
-        VAR    ${dialog}    dialog1
     END
     Select Dialog    Create table column
     Clear Text Field    nameField
@@ -231,7 +228,7 @@ test_autoincrement_create_generator
     Clear Text Field    incrementField
     Type Into Text Field    incrementField    5
     
-    Check SQL Statements    ${True}    AUTO_GEN    COL    ${dialog}
+    Check SQL Statements    ${True}    AUTO_GEN    COL
 
     ${row}=    Check in table    column_name=COL
     ${required}=    Get Table Cell Value    0    ${row}    Required
@@ -256,16 +253,13 @@ test_autoincrement_use_generator
         Select Dialog    Warning
         Label Text Should Be    0    Using IDENTITY is preferred when creating an auto-incremented column
         Push Button    OK
-        VAR    ${dialog}    dialog2
-    ELSE
-        VAR    ${dialog}    dialog1
     END
     Select Dialog    Create table column
     Clear Text Field    nameField
     Type Into Text Field    nameField    COL   
     Select From Combo Box    sequencesCombo    EMP_NO_GEN
 
-    Check SQL Statements    ${False}    EMP_NO_GEN    COL    ${dialog}
+    Check SQL Statements    ${False}    EMP_NO_GEN    COL
 
     ${row}=    Check in table    COL
     ${required}=    Get Table Cell Value    0    ${row}    Required
@@ -285,9 +279,6 @@ test_check_autoupdate_object_tree
         Select Dialog    Warning
         Label Text Should Be    0    Using IDENTITY is preferred when creating an auto-incremented column
         Push Button    OK
-        VAR    ${dialog}    dialog2
-    ELSE
-        VAR    ${dialog}    dialog1
     END
     Select Dialog    Create table column
     Clear Text Field    nameField
@@ -298,7 +289,7 @@ test_check_autoupdate_object_tree
     Type Into Text Field    startValueField    10
     Clear Text Field    incrementField
     Type Into Text Field    incrementField    5
-    Check SQL Statements    ${True}    AUTO_GEN    COL    ${dialog}
+    Check SQL Statements    ${True}    AUTO_GEN    COL
     Select Main Window
     Expand Tree Node    0    New Connection|Table Triggers (5)
     Tree Node Should Exist    0   New Connection|Table Triggers (5)|TRIGGER_BI_TEST_TABLE_COL
@@ -360,10 +351,10 @@ Check type
     Should Be Equal As Strings    ${subtype}    ${expected_subtype}
 
 Check commit
-    [Arguments]    ${text}    ${dialog}=Commiting changes
+    [Arguments]    ${text}
     Push Button    submitButton
     Sleep    0.5s
-    Select Dialog    ${dialog}
+    Select Dialog    Commiting changes
     ${res}=    Get Text Field Value    0
     Should Be Equal As Strings    ${res}    ${text}    strip_spaces=${True}    collapse_spaces=${True}
 
@@ -383,11 +374,11 @@ Check in table
     RETURN    ${row}
 
 Check SQL Statements
-    [Arguments]    ${check_sequence}    ${gen_name}    ${column_name}=NEW_TABLE_COLUMN_1    ${dialog}=Commiting changes
+    [Arguments]    ${check_sequence}    ${gen_name}    ${column_name}=NEW_TABLE_COLUMN_1
     Push Button    submitButton
     Sleep    0.5s
     List Dialogs
-    Select Dialog    ${dialog}
+    Select Dialog    Commiting changes
     # Check ALTER TABLE statement
     ${alter_row}=    Find Table Row    0    ALTER TABLE    Name operation
     Click On Table Cell    0    ${alter_row}    Name operation

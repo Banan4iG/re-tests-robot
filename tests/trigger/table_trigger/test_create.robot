@@ -1,9 +1,8 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource    ../../../files/keywords.resource
-Resource    key.resource
 Test Setup       Test Setup
-Test Teardown    Local Test Teardown
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_basic
@@ -86,6 +85,15 @@ test_external_module
     Clear Text Field    engineField
     Type Into Text Field    engineField    external_engine
     Check    CREATE OR ALTER TRIGGER TEST_TRIGGER FOR COUNTRY ACTIVE BEFORE INSERT POSITION 0 EXTERNAL NAME 'external_code' ENGINE external_engine 
+
+test_add_comment
+    Init
+    Check Check Box    insertCheck
+    Select Tab As Context    Comment
+    Clear Text Field    0
+    Type Into Text Field    0    test_comment
+    Select Dialog    Create table trigger
+    Check    COMMENT ON TRIGGER TEST_TRIGGER IS 'test_comment'
 
 *** Keywords ***
 Init

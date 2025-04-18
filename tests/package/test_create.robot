@@ -3,7 +3,7 @@ Library    RemoteSwingLibrary
 Resource    ../../files/keywords.resource
 Resource    keys.resource
 Test Setup       Setup
-Test Teardown    Local Test Teardown
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_1
@@ -30,6 +30,13 @@ test_6
     Init    NEW_PACK    ${EMPTY}    BEGIN\n\nEND
     Check error
 
+test_add_comment
+    Init    NEW_PACK    BEGIN\n\nEND    BEGIN\n\nEND
+    Select Dialog    Create package
+    Select Tab As Context   Comment
+    Clear Text Field    0
+    Type Into Text Field    0    test_comment
+    Check    CREATE OR ALTER PACKAGE NEW_PACK AS BEGIN END    RECREATE PACKAGE BODY NEW_PACK AS BEGIN END    NEW_PACK    COMMENT ON PACKAGE NEW_PACK IS 'test_comment'
 
 *** Keywords ***
 Init
@@ -50,11 +57,10 @@ Init
     Clear Text Field    0
     Type Into Text Field    0    ${body}
 
+Check
+    [Arguments]    ${create_header}    ${create_body}    ${name}    ${comment}=${None}
     Select Dialog    Create package
     Push Button    submitButton
-
-Check
-    [Arguments]    ${create_header}    ${create_body}    ${name}
     Select Dialog    Commiting changes
     Sleep    1s
     
@@ -76,7 +82,18 @@ Check
     ELSE
         Should Be Equal As Integers    ${row_body}    -1
     END
-
+    
+    ${row_comment}=     Find Table Row    0    ADD COMMENT
+    IF    $comment != None
+        ${value}=    Get Table Cell Value    0    ${row_comment}    Status
+        Should Be Equal As Strings    ${value}    Success
+        Click On Table Cell    0    ${row_comment}    Name operation 
+        ${res}=    Get Text Field Value    0
+        Should Be Equal As Strings    ${res}    ${comment}    strip_spaces=${True}    collapse_spaces=${True}
+    ELSE
+        Should Be Equal As Integers    ${row_comment}    -1            
+    END
+    
     Push Button    commitButton
     Sleep    0.1s
     ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout	0
@@ -85,8 +102,9 @@ Check
     Select Main Window
     Tree Node Should Exist    0     New Connection|Packages (1)|${name}
 
-
 Check error
+    Select Dialog    Create package
+    Push Button    submitButton
     Select Dialog    Commiting changes
     Sleep    1s
     ${value}=    Get Table Cell Value    0    0    Status
@@ -101,8 +119,3 @@ Check error
     Tree Node Should Exist    0     New Connection|Packages (0)
     Set Jemmy Timeouts    0
     Tree Node Should Not Exist    0     New Connection|Packages (1)
-
-Local Test Teardown
-    System Exit    0
-    Unlock Employee
-    Clear History Files

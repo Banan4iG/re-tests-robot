@@ -3,7 +3,7 @@ Library    RemoteSwingLibrary
 Resource    ../../files/keywords.resource
 Resource    keys.resource
 Test Setup       Test Setup
-Test Teardown    Local Test Teardown
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_1

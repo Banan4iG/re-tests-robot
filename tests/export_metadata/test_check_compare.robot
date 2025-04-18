@@ -1,7 +1,7 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Library    firebird.driver
-# Library    fdb
+Library    fdb
 Library    platform
 Library    OperatingSystem
 Resource   ../../files/keywords.resource
@@ -41,8 +41,8 @@ test_switch_database
         ${home}=     Set Variable    ${info}[0]
         ${system}    platform.System
         ${fd_lib}    Set Variable If    '${system}' == 'Linux'    lib/libfbclient.so    bin/fbclient.dll
-        # fdb.Load Api    ${home}${fd_lib}
-        # fdb.Create Database    database=${test_base_path}    user=SYSDBA    password=masterkey
+        fdb.Load Api    ${home}${fd_lib}
+        fdb.Create Database    database=${test_base_path}    user=SYSDBA    password=masterkey
     END
     Create Connect    ${test_base_path}    ${ver}
     Select Window    regexp=^Red.*

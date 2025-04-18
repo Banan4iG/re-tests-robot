@@ -1,10 +1,8 @@
 *** Settings ***
 Library    RemoteSwingLibrary
-Library    Process
-Library    Collections
 Resource    ../files/keywords.resource
 Test Setup       Test Setup
-Test Teardown    Local Test Teardown
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_create_table
@@ -16,10 +14,11 @@ test_create_gtt
 *** Keywords ***
 Create Table
     [Arguments]    ${type}    ${create}
+    Lock Employee
     Open connection
     Expand Tree Node    0    New Connection    
     Select From Tree Node Popup Menu    0    New Connection|${type}    ${create}
-    Select Dialog    Create Table
+    Select Dialog    Create table
     Clear Text Field    nameField
     Type Into Text Field    nameField    TEST TABLE
     Type Into Table Cell    0    0    Name    TEST
@@ -30,7 +29,5 @@ Create Table
     Select Dialog    Commiting changes
     ${textFieldValue}=    Get Textfield Value    0
     Should Not Be Equal As Integers    ${{$textFieldValue.find('"TEST TABLE"')}}    -1
-
-Local Test Teardown
-    System Exit    0
-    Clear History Files 
+    Push Button    commitButton
+    Select Main Window

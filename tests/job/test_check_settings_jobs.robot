@@ -43,6 +43,3 @@ test_cron_false
     ${script}=    Get Text Field Value    0
     Should Not Be Equal As Integers    ${row}    -1
     Should Be Equal As Strings    ${script}    CREATE JOB NEWJOB0 '59 23 11 2 3' ACTIVE START DATE '06.07.2024 13:00' END DATE '06.07.2023 01:00' COMMAND ''    collapse_spaces=${True}
-
-    Close Dialog    Create job
-    Close Dialog    Create job

@@ -3,7 +3,7 @@ Library    RemoteSwingLibrary
 Resource    ../../files/keywords.resource
 Resource    keys.resource
 Test Setup       Setup
-Test Teardown    Local Test Teardown
+Test Teardown    Test Teardown
 
 *** Test Cases ***
 test_1
@@ -32,6 +32,13 @@ test_6
     Label Text Should Be    0    Name can not be empty
     Push Button    OK
 
+test_add_comment
+    Init    NEW_SEQ    0    1
+    Select Tab As Context    Comment
+    Clear Text Field    0
+    Type Into Text Field    0    test_comment
+    Select Dialog    Create sequence
+    Check    COMMENT ON SEQUENCE NEW_SEQ IS 'test_comment'    NEW_SEQ
 
 *** Keywords ***
 Init
@@ -49,10 +56,9 @@ Init
     Clear Text Field    2
     Type Into Text Field    2    ${increment}
 
-    Push Button    submitButton
-
 Check
     [Arguments]    ${text}    ${name}
+    Push Button    submitButton
     Select Dialog    Commiting changes
     Sleep    1s
     ${res}=    Get Text Field Value    0
@@ -67,6 +73,7 @@ Check
     Tree Node Should Exist    0     New Connection|Sequences (3)|${name}
 
 Error check
+    Push Button    submitButton
     Select Dialog    Commiting changes
     Sleep    1s
     ${value}=    Get Table Cell Value    0    0    Status

@@ -1,7 +1,6 @@
 *** Settings ***
 Library    RemoteSwingLibrary
-Resource   ../../files/keywords.resource 
-Resource    key.resource
+Resource   ../../files/keywords.resource
 Test Setup       Test Setup
 Test Teardown    Teardown
 
@@ -53,5 +52,5 @@ Check membership
     RETURN     ${result}
 
 Teardown
-    Local Test Teardown
+    Test Teardown
     Run Keyword And Ignore Error    Execute Immediate    DROP USER ATEST_MEMBERSHIP

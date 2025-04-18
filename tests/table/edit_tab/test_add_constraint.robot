@@ -1,9 +1,8 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource    ../../../files/keywords.resource
-Resource    keys.resource
 Test Setup       Test Setup
-Test Teardown    Local Test Teardown
+Test Teardown    Test Teardown
 
 
 *** Test Cases ***
@@ -198,7 +197,7 @@ Init
     Select Dialog    Create constraint
     
 Check commit
-    [Arguments]    ${text}    ${ts}=PRIMARY    ${dialog}=Commiting changes
+    [Arguments]    ${text}    ${ts}=PRIMARY
     ${info}=    Get Server Info
     ${ver}=     Set Variable    ${info}[1]
     ${srv_ver}=    Set Variable    ${info}[2]
@@ -212,7 +211,7 @@ Check commit
         VAR    ${check_ts}    ${EMPTY}
     END
     Push Button    submitButton
-    Select Dialog    ${dialog}
+    Select Dialog    Commiting changes
     ${res}=    Get Text Field Value    0
     Should Be Equal As Strings    ${res}    ${text}${check_ts}    strip_spaces=${True}    collapse_spaces=${True}
 
