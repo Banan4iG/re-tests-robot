@@ -108,9 +108,9 @@ def clear_history_files():
     home_dir = os.path.expanduser("~")
     build_no = get_build_no()
     history_file = os.path.join(home_dir, f'.redexpert/{build_no}/connection-history.xml')
-    shortcuts_file = os.path.join(home_dir, f'.redexpert/{build_no}/eq.shortcuts.properties')
-    user_panel_state_file = os.path.join(home_dir, f'.redexpert/{build_no}/re.user.panels.state')
-    query_dir = os.path.join(home_dir, f'.redexpert/{build_no}/QueryEditor')
+    shortcuts_file = os.path.join(home_dir, f'.redexpert/{build_no}/shortcuts.properties')
+    user_panel_state_file = os.path.join(home_dir, f'.redexpert/{build_no}/saved-values.xml')
+    query_dir = os.path.join(home_dir, f'.redexpert/editor')
     if os.path.exists(query_dir):
         shutil.rmtree(query_dir)
     for file in [history_file, shortcuts_file, user_panel_state_file]:
@@ -188,9 +188,8 @@ def execute_immediate(query: str):
         con.commit()
 
 def delete_query_files():
-    build_no = get_build_no()
     home_dir = os.path.expanduser("~")
-    for path in Path(os.path.join(home_dir, f'.redexpert/{build_no}/QueryEditor')).glob("script*.sql"):
+    for path in Path(os.path.join(home_dir, f'.redexpert/editor')).glob("script*.sql"):
         os.remove(path)
 
 def check_build_config(conf_path: str, number: int):
