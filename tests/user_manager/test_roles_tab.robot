@@ -21,5 +21,5 @@ test_1
     Should Be Equal    ${result}    [('TEST_ROLE ',)]
     Click On Table Cell    rolesTable    ${row}    Role name  
     Push Button    deleteRoleButton
-    Select Dialog    Dropping object
+    Select Dialog    Commiting changes
     Push Button      commitButton

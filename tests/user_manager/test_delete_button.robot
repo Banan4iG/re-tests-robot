@@ -31,6 +31,6 @@ test_1
     Select Table Cell    usersTable    ${row}    User name
     Push Button    deleteUserButton
     IF    ${{$ver != '2.6'}}
-        Select Dialog    Dropping object
+        Select Dialog    Commiting changes
         Push Button      commitButton
     END
