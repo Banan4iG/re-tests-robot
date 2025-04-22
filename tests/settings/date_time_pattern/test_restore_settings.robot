@@ -15,8 +15,9 @@ test_1
 
     Clear Table Cell    0    ${row}    2
     Type Into Table Cell    0    ${row}    2    MM.yy
-    Push Button    OK
+    Push Button    applyButton
     Close Dialog    Message
+    Close Dialog    Preferences
     Select Main Window
     Select From Main Menu    System|Preferences
     Select Dialog    Preferences
