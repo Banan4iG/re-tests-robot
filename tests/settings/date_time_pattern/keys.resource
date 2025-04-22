@@ -14,9 +14,11 @@ Set Pattern
 
     Clear Table Cell    0    ${row}    2
     Type Into Table Cell    0    ${row}    2    ${pattern}
-
-    Push Button    OK
+    Click On Tree Node    0    Result Set Table
+    Push Button    applyButton
+    Sleep    5s
     Close Dialog    Message
+    Close Dialog    Preferences
     Select Main Window
     Focus To Component    0
 
