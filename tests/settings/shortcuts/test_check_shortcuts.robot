@@ -138,8 +138,8 @@ Set Shortcut
     Send Keyboard Event    VK_Q    	CTRL_MASK
     Push Button    OK
     Select Dialog    Preferences
-    Push Button    OK
+    Push Button    applyButton
     Close Dialog    Message
+    Close Dialog    Preferences
     Select Main Window
     Focus To Component    0
-    # Click On Tree Node    0    New Connection    1

@@ -92,7 +92,7 @@ Set Count Hosts
     Clear Table Cell    0    ${row}    2
     Type Into Table Cell    0    ${row}    2    ${count}
     Push Button    applyButton
-    Push Button    OK
+    Close Dialog    Message
     Close Dialog    Preferences
     Select Main Window
     Select From Tree Node Popup Menu    0    New Connection    Duplicate connection
