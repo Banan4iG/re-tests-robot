@@ -31,7 +31,7 @@ test_not_null
     Check Check Box    requiredCheck
     Check Edit Commit    ALTER TABLE TEST_TABLE ALTER COLUMN TEST_COLUMN SET NOT NULL
     ${row}=    Check Column In Table
-    ${required}=    Get Table Cell Value    0    ${row}    Required
+    ${required}=    Get Table Cell Value    0    ${row}    Required    model
     Should Be Equal As Strings    ${required}    true
 
 test_remove_not_null
@@ -39,7 +39,7 @@ test_remove_not_null
     Uncheck Check Box    requiredCheck
     Check Edit Commit    ALTER TABLE TEST_TABLE ALTER COLUMN TEST_COLUMN DROP NOT NULL
     ${row}=    Check Column In Table
-    ${required}=    Get Table Cell Value    0    ${row}    Required
+    ${required}=    Get Table Cell Value    0    ${row}    Required    model
     Should Be Equal As Strings    ${required}    false
 
 test_add_default
