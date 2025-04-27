@@ -265,9 +265,10 @@ Init
         Set blobs
     END
     Open connection
+    Push Button    editor-command
     Clear Text Field    0
     Type Into Text Field    0    select * from PROJECT
-    Push Button    editor-execute-to-file-command
+    Run Keyword In Separate Thread    Push Button    editor-execute-to-file-command
     Push Button    execute-script-command
     Sleep    1s
     Select Dialog    Export Data    

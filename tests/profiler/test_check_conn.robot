@@ -37,6 +37,7 @@ test_isql
 
 *** Keywords ***
 Init
+    Lock Employee
     Execute Immediate    CREATE ROLE TEST_ROLE;
     Execute Immediate    CREATE USER TEST_USER PASSWORD '123';
     Execute Immediate    GRANT TEST_ROLE TO TEST_USER;

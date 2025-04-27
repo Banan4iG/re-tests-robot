@@ -206,6 +206,7 @@ Init
         Set blobs
     END
     Open connection
+    Push Button    editor-command
     Clear Text Field    0
     Type Into Text Field    0    select * from PROJECT
     Push Button    execute-script-command

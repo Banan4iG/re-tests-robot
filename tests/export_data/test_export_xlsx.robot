@@ -34,6 +34,7 @@ test_replace_null
 
 test_execute_to_file
     Open connection
+    Push Button    editor-command
     Clear Text Field    0
     Type Into Text Field    0    SELECT * FROM COUNTRY
     Push Button    editor-execute-to-file-command
@@ -57,9 +58,11 @@ test_execute_to_file
     Check content    ${export_path}    ${expected_content}
 
 test_max_row
+    [Timeout]
     Lock Employee
     Add Rows
     Open connection
+    Push Button    editor-command
     Clear Text Field    0
     Type Into Text Field    0    SELECT * FROM TEST_TABLE
     Push Button    editor-execute-to-file-command

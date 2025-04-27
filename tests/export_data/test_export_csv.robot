@@ -81,6 +81,7 @@ test_type_delimiter
 
 test_execute_to_file
     Open connection
+    Push Button    editor-command
     Clear Text Field    0
     Type Into Text Field    0    SELECT * FROM COUNTRY
     Push Button    editor-execute-to-file-command

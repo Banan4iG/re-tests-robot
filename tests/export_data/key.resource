@@ -6,6 +6,7 @@ Resource    ../../files/keywords.resource
 *** Keywords ***
 Setup before export data
     Open connection
+    Push Button    editor-command
     Clear Text Field    0
     Type Into Text Field    0    SELECT * FROM EMPLOYEE
     Push Button    execute-script-command

@@ -37,6 +37,7 @@ Init
     Execute Immediate  CREATE OR ALTER EXCEPTION ${create_name} 'message'
     Open connection
     Click On Tree Node    0    New Connection|Exceptions (6)|${tree_name}    2
+    Sleep    0.5s
     ${name}=    Get Text Field Value    nameField
     Should Be Equal As Strings    ${tree_name}    ${name}
 

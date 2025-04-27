@@ -69,6 +69,13 @@ test_export_in_existing_folder
     Select From Table Cell Popup Menu On Selected Cells    0    Export|Selection
     
     Select Dialog    Export Data
+    Clear Text Field    filePathField
+    Type Into Text Field    filePathField    ${export_path}
+
+    Clear Text Field    folderPathField
+    Type Into Text Field    folderPathField    ${blob_path}
+
+    Check Check Box    saveBlobsIndividuallyCheck
     Push Button    exportButton
     Select Dialog    Confirmation
     Push Button    Yes
@@ -98,6 +105,7 @@ Init
         Set blobs
     END
     Open connection
+    Push Button    editor-command
     Clear Text Field    0
     Type Into Text Field    0    select * from PROJECT
     Push Button    execute-script-command

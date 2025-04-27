@@ -15,6 +15,7 @@ test_select
 *** Keywords ***
 Test
     [Arguments]    ${button}
+    Lock Employee
     Select From Main Menu    Tools|Profiler
     Push Button    ${button}
     Select Dialog    Warning

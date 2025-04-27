@@ -14,6 +14,7 @@ Test Setup
     EXCEPT
         Start Red Expert
     END
+    Focus To Component    0
     
 Start Red Expert
     ${path_to_exe}=    Get Path
@@ -27,11 +28,13 @@ Start Red Expert
 
 Suite Teardown
     System Exit    0
+    Kill Redexpert
 
 Test Teardown
+    Close All Dialogs
     Close connection
     Unlock Employee
-    # Clear History Files
+    Clear History Files
     # Restore Savedconnections File    
 
 Open connection

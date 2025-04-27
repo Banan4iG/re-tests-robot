@@ -28,9 +28,17 @@ test_5
 
 test_6
     Init    ${EMPTY}    2    2
+    Push Button    submitButton
     Select Dialog    Error message
     Label Text Should Be    0    Name can not be empty
     Push Button    OK
+    Select Dialog    Create sequence
+    Push Button    cancelButton
+
+    Select Dialog    Confirmation
+    Push Button    Yes
+    
+    Select Main Window
 
 test_add_comment
     Init    NEW_SEQ    0    1

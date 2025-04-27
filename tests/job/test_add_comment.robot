@@ -19,4 +19,4 @@ test_1
     Select Dialog    Commiting changes
     Sleep    1s
     ${res}=    Get Text Field Value    0
-    Should Be Equal As Strings    ${res}    COMMENT ON JOB NEW_JOB_1 IS 'test_comment'
+    Should Be Equal As Strings    ${res}    COMMENT ON JOB NEW_JOB_1 IS 'test_comment'    strip_spaces=${True}    collapse_spaces=${True}

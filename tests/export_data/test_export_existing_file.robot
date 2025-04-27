@@ -12,7 +12,7 @@ test_overwrite_yes
     File Should Exist    ${export_path}
     ${content1}=    Get File    ${export_path}
     
-    Init double
+    Init double    ${export_path}
     Push Button    Yes
     Sleep    5s
     Close Dialog    Message
@@ -25,7 +25,7 @@ test_overwrite_no
     File Should Exist    ${export_path}
     ${content1}=    Get File    ${export_path}
     
-    Init double
+    Init double    ${export_path}
     Push Button    No
 
     Close Dialog    Export Data
@@ -38,7 +38,7 @@ test_overwrite_close
     File Should Exist    ${export_path}
     ${content1}=    Get File    ${export_path}
     
-    Init double
+    Init double    ${export_path}
     Close Dialog    Confirmation
     
     Close Dialog    Export Data
@@ -54,15 +54,17 @@ Init
     Remove Files    ${export_path}
     Clear Text Field    filePathField
     Type Into Text Field    filePathField    ${export_path}
-    Push Button    exportButton 
+    Push Button    exportButton
     Sleep    5s
     Close Dialog    Message
-
     RETURN    ${export_path}
 
 Init double
+    [Arguments]    ${export_path}
     Select Main Window
     Select From Table Cell Popup Menu    0    0    0   Export|Table
     Select Dialog    Export Data
+    Clear Text Field    filePathField
+    Type Into Text Field    filePathField    ${export_path}
     Push Button    exportButton
     Select Dialog    Confirmation

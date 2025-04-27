@@ -9,6 +9,7 @@ Test Teardown    Test Teardown
 *** Test Cases ***
 test_CSV
     Open connection
+    Push Button    editor-command
     Clear Text Field    0
     Type Into Text Field    0    SELECT * FROM COUNTRY
     Push Button    execute-script-command
