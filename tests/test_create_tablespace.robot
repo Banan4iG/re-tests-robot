@@ -17,7 +17,7 @@ test_check_cursor
     ${textFieldValue}=    Get Textfield Value    0
     Should Be Equal   ${textFieldValue}     CREATE TABLESPACE NEW_TABLESPACE_1 FILE 'test_file.ts'    collapse_spaces=True
     Push Button    rollbackButton
-    Select Dialog    Create job
+    Select Dialog    Create tablespace
     Push Button    cancelButton
     Select Dialog    Confirmation
     Push Button    Yes

@@ -7,7 +7,7 @@ Test Teardown    Test Teardown
 *** Test Cases ***
 test_1
     Open connection
-    Click On Tree Node   0    New Connection|Procedures (10)|DELETE_EMPLOYEE   2
+    Click On Tree Node   0    New Connection|Procedures (10)|SHOW_LANGS   2
     Sleep    1s
     Uncheck Check Box    showHelpersCheck
     Run Keyword And Expect Error    Can't select tab: Variables because it doesn't contain any container.    Select Tab As Context    Variables
@@ -15,7 +15,7 @@ test_1
 
 test_2
     Open connection
-    Click On Tree Node   0    New Connection|Procedures (10)|DELETE_EMPLOYEE   2
+    Click On Tree Node   0    New Connection|Procedures (10)|SHOW_LANGS   2
     Sleep    1s
     Push Button    2
     Run Keyword And Expect Error    Can't select tab: Variables because it doesn't contain any container.    Select Tab As Context    Variables
@@ -23,7 +23,7 @@ test_2
 
 test_3
     Open connection
-    Click On Tree Node   0    New Connection|Procedures (10)|DELETE_EMPLOYEE   2
+    Click On Tree Node   0    New Connection|Procedures (10)|SHOW_LANGS   2
     Sleep    1s
     Push Button    3
     Sleep    2s
