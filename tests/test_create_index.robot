@@ -24,7 +24,7 @@ test_check_order_fields
         Push Button    10
     END
     ${list}=    Get List Values    1
-    ${result}=    Create List    FIRST_NAME    LAST_NAME    PHONE_EXT    HIRE_DATE    JOB_CODE    EMP_NO    JOB_GRADE    JOB_COUNTRY    SALARY
+    ${result}=    Create List    FIRST_NAME    LAST_NAME    PHONE_EXT    HIRE_DATE    JOB_CODE    EMP_NO    JOB_GRADE    JOB_COUNTRY    SALARY    FULL_NAME
     Lists Should Be Equal    ${list}    ${result}
 
 *** Keywords ***

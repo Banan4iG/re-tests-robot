@@ -89,7 +89,6 @@ Set Count Hosts
     Click On Tree Node    0    General
     Sleep    1s
     ${row}=    Find Table Row    0    Recent hosts to store
-    Clear Table Cell    0    ${row}    2
     Type Into Table Cell    0    ${row}    2    ${count}
     Push Button    applyButton
     Close Dialog    Message
