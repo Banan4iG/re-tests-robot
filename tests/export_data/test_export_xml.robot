@@ -26,7 +26,7 @@ test_replace_null
 test_execute_to_file
     Open connection
     Clear Text Field    0
-    Type Into Text Field    0    SELECT * FROM COUNTRY
+    Insert Into Text Field    0    SELECT * FROM COUNTRY
     Push Button    editor-execute-to-file-command
     Push Button    execute-script-command
     Sleep    1s  

@@ -258,7 +258,7 @@ Init
     END
     Open connection
     Clear Text Field    0
-    Type Into Text Field    0    select * from PROJECT
+    Insert Into Text Field    0    select * from PROJECT
     Push Button    editor-execute-to-file-command
     Push Button    execute-script-command
     Sleep    1s
