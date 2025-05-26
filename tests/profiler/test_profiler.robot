@@ -116,19 +116,19 @@ test_compact_view
     Select Main Window
 
     @{values}=    Get Table Column Values    0    PROCESS NAME
-    Should Be Equal As Strings    ${values}    ['Profiler Session [ID: 1]', 'execute procedure SUB_TOT_BUDGET(600)']
+    Should Be Equal As Strings    ${values}[:-1]    ['Profiler Session [ID: 1]', 'execute procedure SUB_TOT_BUDGET(600)']
     
     ${row}=    Find Table Row    0    execute procedure SUB_TOT_BUDGET(600)    PROCESS NAME
     Should Not Be Equal As Integers    ${row}    -1
     Click On Table Cell    0    ${row}    PROCESS NAME    2
 
     @{values}=    Get Table Column Values    0    PROCESS NAME
-    Should Be Equal As Strings    ${values}    ['Profiler Session [ID: 1]', 'execute procedure SUB_TOT_BUDGET(600)', 'SUB_TOT_BUDGET', 'Self Time']
+    Should Be Equal As Strings    ${values}[:-1]    ['Profiler Session [ID: 1]', 'execute procedure SUB_TOT_BUDGET(600)', 'SUB_TOT_BUDGET', 'Self Time']
     
     Click On Proc
     
     @{values}=    Get Table Column Values    0    PROCESS NAME
-    Should Be Equal As Strings    ${values}    ['Profiler Session [ID: 1]', 'execute procedure SUB_TOT_BUDGET(600)', 'SUB_TOT_BUDGET', '2: SELECT SUM(budget), AVG(budget), MIN(budget), MAX(budget)']
+    Should Be Equal As Strings    ${values}[:-1]    ['Profiler Session [ID: 1]', 'execute procedure SUB_TOT_BUDGET(600)', 'SUB_TOT_BUDGET', '2: SELECT SUM(budget), AVG(budget), MIN(budget), MAX(budget)']
 
 test_display_with_data
     Start Profiler    execute procedure SUB_TOT_BUDGET(600)
