@@ -125,7 +125,7 @@ test_create_udf
 test_create_user
     Check Skip 2.6
     Init Create    Users (1)    Create user
-    Type Into Text Field    passTextField    123
+    Type Into Text Field    passwordField    123
     Check Comment
 
 test_create_role

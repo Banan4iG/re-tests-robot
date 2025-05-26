@@ -14,7 +14,7 @@ test_1
     Select Dialog           Create user               #id: dialog0
     Clear Text Field        nameField
     Type Into Text Field    nameField          test
-    Type Into Text Field    passTextField      test
+    Type Into Text Field    passwordField      test
     Type Into Text Field    firstNameField      test
     Type Into Text Field    middleNameField    test
     Type Into Text Field    lastNameField      test
