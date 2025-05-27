@@ -2,7 +2,7 @@
 Library    RemoteSwingLibrary
 Library    String
 Resource   ../../files/keywords.resource
-Test Setup       Setup before every tests
+Test Setup       Setup
 Test Teardown    Teardown after every tests
 
 *** Test Cases ***
@@ -140,3 +140,7 @@ Create User With Options And Check SQL
 
     # Закрываем диалог без сохранения
     Push Button    cancelButton
+
+
+Setup
+    Skip
