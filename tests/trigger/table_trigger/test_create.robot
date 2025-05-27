@@ -1,6 +1,7 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource    ../../../files/keywords.resource
+Resource    ../keys.resource
 Test Setup       Setup before every tests
 Test Teardown    Teardown after every tests
 
@@ -49,9 +50,7 @@ test_sql
     Check    CREATE OR ALTER TRIGGER TEST_TRIGGER FOR COUNTRY ACTIVE BEFORE INSERT POSITION 0 AS BEGIN POST_EVENT 'cool!'; END
 
 test_sql_security_definer
-    ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
-    Skip If    ${{$ver == '2.6'}}
+    Check Skip
     Init
     Select From Combo Box    securityCombo    DEFINER
     Check Check Box    insertCheck
@@ -59,9 +58,7 @@ test_sql_security_definer
     Check    CREATE OR ALTER TRIGGER TEST_TRIGGER FOR COUNTRY ACTIVE BEFORE INSERT OR UPDATE POSITION 0 SQL SECURITY DEFINER AS BEGIN /* Trigger impl */ END
 
 test_sql_security_invoker
-    ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
-    Skip If    ${{$ver == '2.6'}}
+    Check Skip
     Init
     Select From Combo Box    securityCombo    INVOKER
     Check Check Box    insertCheck

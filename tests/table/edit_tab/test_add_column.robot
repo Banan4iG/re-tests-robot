@@ -361,7 +361,7 @@ Check type
 Check commit
     [Arguments]    ${text}    ${dialog}=Commiting changes
     Push Button    submitButton
-    Sleep    0.5s
+    Sleep    1s
     Select Dialog    ${dialog}
     ${res}=    Get Text Field Value    0
     Should Be Equal As Strings    ${res}    ${text}    strip_spaces=${True}    collapse_spaces=${True}
@@ -384,7 +384,7 @@ Check in table
 Check SQL Statements
     [Arguments]    ${check_sequence}    ${gen_name}    ${column_name}=NEW_TABLE_COLUMN_1    ${dialog}=Commiting changes
     Push Button    submitButton
-    Sleep    0.5s
+    Sleep    1s
     List Dialogs
     Select Dialog    ${dialog}
     # Check ALTER TABLE statement

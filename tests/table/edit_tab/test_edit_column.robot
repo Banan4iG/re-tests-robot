@@ -27,6 +27,7 @@ test_size
     Check Column In Table    data_type=VARCHAR    size=50
 
 test_not_null
+    Check Skip 26
     Init Edit Column
     Check Check Box    requiredCheck
     Check Edit Commit    ALTER TABLE TEST_TABLE ALTER COLUMN TEST_COLUMN SET NOT NULL
@@ -35,6 +36,7 @@ test_not_null
     Should Be Equal As Strings    ${required}    true
 
 test_remove_not_null
+    Check Skip 26
     Init Edit Column    CREATE TABLE TEST_TABLE (TEST_COLUMN INT NOT NULL)
     Uncheck Check Box    requiredCheck
     Check Edit Commit    ALTER TABLE TEST_TABLE ALTER COLUMN TEST_COLUMN DROP NOT NULL
@@ -305,7 +307,7 @@ Check Column In Table
 Check SQL Statements
     [Arguments]    ${check_sequence}    ${gen_name}    ${dialog}=Commiting changes    ${alter_table}=ALTER TABLE TEST_TABLE ALTER COLUMN TEST_COLUMN DROP IDENTITY    ${column_name}=TEST_COLUMN
     Push Button    submitButton
-    Sleep    0.5s
+    Sleep    1s
     Select Dialog    ${dialog}
     # Check ALTER TABLE statement
     ${alter_row}=    Find Table Row    0    ALTER TABLE    Name operation
@@ -365,5 +367,5 @@ Check Skip
 Check Skip 26
     ${info}=    Get Server Info
     ${ver}=     Set Variable    ${info}[1]
-    RETURN    ${ver}
     Skip If    ${{$ver == '2.6'}}
+    RETURN    ${ver}

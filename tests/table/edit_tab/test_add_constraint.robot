@@ -211,6 +211,7 @@ Check commit
         VAR    ${check_ts}    ${EMPTY}
     END
     Push Button    submitButton
+    Sleep    1s
     Select Dialog    ${dialog}
     ${res}=    Get Text Field Value    0
     Should Be Equal As Strings    ${res}    ${text}${check_ts}    strip_spaces=${True}    collapse_spaces=${True}

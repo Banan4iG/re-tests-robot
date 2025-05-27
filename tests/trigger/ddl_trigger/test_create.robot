@@ -1,6 +1,7 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource    ../../../files/keywords.resource
+Resource    ../keys.resource
 Resource    key.resource
 Test Setup       Setup
 Test Teardown    Teardown after every tests
@@ -119,12 +120,14 @@ test_use_external_module
     Check    CREATE OR ALTER TRIGGER NEW_TRIGGER ACTIVE BEFORE ANY DDL STATEMENT POSITION 0 EXTERNAL NAME 'external_point' ENGINE external_engine
 
 test_sql_security_definer
+    Check Skip
     Init
     Select From Combo Box    securityCombo    DEFINER
     Check Check Box    anyStatementCheck
     Check    CREATE OR ALTER TRIGGER NEW_TRIGGER ACTIVE BEFORE ANY DDL STATEMENT POSITION 0 SQL SECURITY DEFINER AS BEGIN /* Trigger impl */ END
 
 test_sql_security_invoker
+    Check Skip
     Init
     Select From Combo Box    securityCombo    INVOKER
     Check Check Box    anyStatementCheck
