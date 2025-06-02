@@ -1,7 +1,7 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Library    OperatingSystem
-Resource    ../files/keywords.resource
+Resource    ../../files/keywords.resource
 Test Setup       Setup
 Test Teardown    Teardown after every tests
 
@@ -46,13 +46,29 @@ test_ssh_conn
     Sleep    5s
     Close Dialog    Message
     
-    # # database statistics
-    # Select From Main Menu    Tools|Database Statistics
-    # Push Button    getStatButton
+    # database statistics
+    Select From Main Menu    Tools|Database Statistics
+    Push Button    getStatButton
+    ${text}=    Get Text Field Value    0
+    Should Not Be Empty    ${text}
     
-    # # trace manager 
-    # Select From Main Menu    Tools|Trace Manager
-    # Sleep    2s
+    # trace manager 
+    Select From Main Menu    Tools|Trace Manager
+    Sleep    2s
+    ${conf_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /test_conf.conf
+    Push Button    newConfigButton
+    Select Dialog    Build configuration file
+    Select From Combo Box    0    RedDatabase 3.0
+    Type Into Text Field    15    ${conf_path}
+    Push Button    Save
+    Select Dialog    Message
+    Push Button    OK
+    Close Dialog    Build configuration file
+    Select Main Window
+    Push Button    Start
+    Select Tab    Session Manager
+
+    Select Main Window
 
     # user manager
     Select From Main Menu    Tools|User Manager
@@ -126,3 +142,5 @@ Setup
     
     Clear Text Field    sshPasswordField
     Type Into Text Field    sshPasswordField    ${password}
+
+    Select From Combo Box    charsetsCombo    UTF8
