@@ -1,146 +1,114 @@
 *** Settings ***
 Library    RemoteSwingLibrary
-Library    String
 Resource   ../../files/keywords.resource
-Test Setup       Setup
+Test Setup       Setup before every tests
 Test Teardown    Teardown after every tests
 
 *** Test Cases ***
+test_create_admin
+    Create User    TEST_USER   123
+    Check Check Box    isAdminCheck
+    Check    CREATE USER TEST_USER PASSWORD '123' ACTIVE GRANT ADMIN ROLE USING PLUGIN Srp    TEST_USER
+    [Teardown]    Drop User    TEST_USER
 
-test_create_active_user_with_default_plugin
-    Create User With Options    TEST_USER_1    John    M    Doe    password=123    plugin=Srp    role=ACTIVE
+test_create_with_empty_password
+    Create User    TEST_USER    ${EMPTY}
+    Push Button    submitButton
+    Select Dialog    Error message
+    Label Text Should Be    0    Password can not be empty
 
-test_create_admin_user_with_custom_plugin
-    Create User With Options    TEST_USER_2    Jane    A    Smith    password=456    plugin=Legacy_UserManager    role=ADMINISTRATOR
+test_create_inactive_with_info
+    Create User    TEST USER   12 3
+    Uncheck Check Box    isActiveCheck
+    Clear Text Field    firstNameField
+    Type Into Text Field    firstNameField    first
+    Clear Text Field    middleNameField
+    Type Into Text Field    middleNameField    mid dle
+    Clear Text Field    lastNameField
+    Type Into Text Field    lastNameField    last_name
+    
+    Select Tab As Context    SQL
+    ${sql}=    Get Text Field Value    0
+    Should Be Equal As Strings    ${sql}    CREATE USER "TEST USER" FIRSTNAME 'first' MIDDLENAME 'mid dle' LASTNAME 'last_name' PASSWORD '123' INACTIVE USING PLUGIN Srp;    strip_spaces=${True}    collapse_spaces=${True}
+    Select Dialog    Create user
+    Check    CREATE USER "TEST USER" FIRSTNAME 'first' MIDDLENAME 'mid dle' LASTNAME 'last_name' PASSWORD '123' INACTIVE USING PLUGIN Srp    TEST USER
+    [Teardown]    Drop User    "TEST USER"
 
-test_create_user_with_comment
-    Create User With Options    TEST_COMMENT    Alice    R    Johnson    password=789    comment=This is a test user
+test_create_with_tags_and_comment
+    Create User    "TEST USER"    123
+    Push Button    addTagButton
+    Type Into Table Cell    tagTable    0    Tag    gh
+    Type Into Table Cell    tagTable    0    Value    123456
+    
+    Push Button    addTagButton
+    Type Into Table Cell    tagTable    1    Tag    gl
+    
+    Push Button    addTagButton
+    Type Into Table Cell    tagTable    2    Value    123456
 
-test_check_sql_before_apply
-    Create User With Options And Check SQL    TEST_SQL_PREVIEW    FirstName    Mid    LastName    password=123    plugin=Srp    role=ACTIVE
+    Push Button    addTagButton
+    Type Into Table Cell    tagTable    3    Tag    delete
+    Type Into Table Cell    tagTable    3    Value    654321
+    
+    @{values}=    Get Table Values    tagTable
+    Should Be Equal As Strings    ${values}    [['gh', '123456'], ['gl', ''], ['', '123456'], ['delete', '654321']]
+    Click On Table Cell    tagTable    3    Tag
 
+    Push Button    deleteTagButton
+    @{values}=    Get Table Values    tagTable
+    Should Be Equal As Strings    ${values}    [['gh', '123456'], ['gl', ''], ['', '123456']]
+    
+    Select Tab As Context    Comment
+    Clear Text Field    0
+    Type Into Text Field    0    test_comment
+    Select Dialog    Create user
+    Check    CREATE USER """TEST USER""" PASSWORD '123' ACTIVE USING PLUGIN Srp TAGS (gh = '123456' )    "TEST USER"   ${True}
+    [Teardown]    Drop User    """TEST USER"""
 
 *** Keywords ***
-
-Create User With Options
-    [Arguments]    ${user_name}    ${first_name}=    ${middle_name}=    ${last_name}=    ${password}=123    ${plugin}=Srp    ${role}=ACTIVE    ${comment}=
+Create User
+    [Arguments]    ${user_name}    ${password}=123
     Lock Employee
     Open connection
     Expand Tree Node    0    New Connection
     Select From Tree Node Popup Menu    0    New Connection|Users (1)    Create user
     Sleep    2s
     Select Dialog    Create user
-
-    # Переключаемся на вкладку "Properties"
-    Select Tab    0
-
-    # Основные поля
     Clear Text Field    nameField
     Type Into Text Field    nameField    ${user_name}
-    Clear Text Field    1
-    Type Into Text Field    1    ${password}
+    IF    '${password}' != ''
+        Clear Text Field    passwordField
+        Type Into Text Field    passwordField    ${password}
+    END    
 
-    # First/Middle/Last Name
-    Clear Text Field    2
-    Type Into Text Field    2    ${first_name}
-    Clear Text Field    3
-    Type Into Text Field    3    ${middle_name}
-    Clear Text Field    4
-    Type Into Text Field    4    ${last_name}
-
-    # Выбор плагина
-    Select From Combo Box   pluginCombo    ${plugin}
-
-    # Роль: Active или Administrator
-    Run Keyword If    "${role}" == "ADMINISTRATOR"
-    ...    Set Role To Admin
-    ...    ELSE
-    ...    Set Role To Active
-
-    # Переходим на вкладку "Comment"
-    Select Tab    1
-
-    # Комментарий (если указан)
-    Run Keyword If    '${comment}' != ''
-    ...    Type Into Text Field    0    ${comment}
-
-    # Возвращаемся на вкладку "Properties"
-    Select Tab     0
-
-    # Добавляем метки (Tags)
-    # Add Tags    MyTag    MyValue
-
-    # Отправляем форму
+Check
+    [Arguments]    ${expected_sql}    ${user_name}    ${comment}=${False}
     Push Button    submitButton
-
-
-Check User Creation Command
-    [Arguments]    ${expected_sql}    ${user_name}
     Select Dialog    Commiting changes
     Sleep    1s
-    ${res}=    Get Text Field Value    0
-    Should Be Equal As Strings    ${res}    ${expected_sql}
+    IF    ${comment}
+        ${row}=   Find Table Row    0    CREATE USER
+        Click On Table Cell    0    ${row}    Name operation
+        ${res}=    Get Text Field Value    0
+        Should Be Equal As Strings    ${res}    ${expected_sql}    strip_spaces=${True}    collapse_spaces=${True}
+        
+        ${row}=   Find Table Row    0    ADD COMMENT
+        Click On Table Cell    0    ${row}    Name operation
+        ${res}=    Get Text Field Value    0
+        Should Be Equal As Strings    ${res}    COMMENT ON USER """TEST USER""" USING PLUGIN Srp IS 'test_comment'    
+    ELSE
+        ${res}=    Get Text Field Value    0
+        Should Be Equal As Strings    ${res}    ${expected_sql}    strip_spaces=${True}    collapse_spaces=${True}
+    END
+    
     Push Button    commitButton
     Sleep    0.1s
+    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout	0
     Run Keyword And Expect Error    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Create user'    Select Dialog    Create user
     Select Main Window
     Tree Node Should Exist    0     New Connection|Users (2)|${user_name}
-
-
-Set Role To Active
-    Uncheck CheckBox    1
-    Uncheck CheckBox    2
-    Check CheckBox    1
-
-
-Set Role To Admin
-    Uncheck CheckBox    1
-    Uncheck CheckBox    2
-    Check CheckBox    2
-
-
-Create User With Options And Check SQL
-    [Arguments]    ${user_name}    ${first_name}=    ${middle_name}=    ${last_name}=    ${password}=123    ${plugin}=Srp    ${role}=ACTIVE
-    Lock Employee
-    Open connection
-    Expand Tree Node    0    New Connection
-    Select From Tree Node Popup Menu    0    New Connection|Users (1)    Create user
-    Sleep    2s
-    Select Dialog    Create user
-
-    # Заполняем основные поля
-    Clear Text Field    nameField
-    Type Into Text Field    nameField    ${user_name}
-    Clear Text Field    1
-    Type Into Text Field    1    ${password}
-
-    Clear Text Field    2
-    Type Into Text Field    2    ${first_name}
-    Clear Text Field    3
-    Type Into Text Field    3    ${middle_name}
-    Clear Text Field    4
-    Type Into Text Field    4    ${last_name}
-
-    # Плагин
-    Select From Combo Box   pluginCombo    ${plugin}
-
-    # Роль
-    Run Keyword If    "${role}" == "ADMINISTRATOR"
-    ...    Set Role To Admin
-    ...    ELSE
-    ...    Set Role To Active
-
-    # Переключаемся на вкладку SQL
-    Select Tab     2
-
-    # Получаем SQL команду
-    ${sql}=    Get Text Field Value    0
-
     
-
-    # Закрываем диалог без сохранения
-    Push Button    cancelButton
-
-
-Setup
-    Skip
+Drop User
+    [Arguments]    ${user_name}
+    Teardown after every tests
+    Run Keyword And Ignore Error    Execute Immediate    DROP USER ${user_name}

@@ -5,21 +5,19 @@ Test Setup      Setup before every tests
 Test Teardown   Teardown after every tests
 
 *** Test Cases ***
-Test Create Role Simple
-    Init Role    NEW_ROLE_1    ${EMPTY}
-    Check Role    CREATE ROLE NEW_ROLE_1    NEW_ROLE_1
+test_create_role
+    Init Role    NEW_ROLE    ${EMPTY}
+    Check Role    CREATE ROLE NEW_ROLE    NEW_ROLE
 
-Test Create Role With Space
+test_create_role_with_space
     Init Role    "Role With Spaces"    ${EMPTY}
     Check Role    CREATE ROLE """ROLE WITH SPACES"""    "ROLE WITH SPACES"
 
-Test Create Role With Description
-    Init Role    NEW_ROLE_2    test_description
-    Check Role    COMMENT ON ROLE NEW_ROLE_2 IS 'test_description'    NEW_ROLE_2
-
+test_create_role_with_commit
+    Init Role    NEW ROLE    test_commit
+    Check Role    COMMENT ON ROLE "NEW ROLE" IS 'test_commit'    NEW ROLE
 
 *** Keywords ***
-
 Init Role
     [Arguments]    ${name}    ${description}
     Lock Employee
