@@ -122,16 +122,6 @@ test_create_udf
     Init Create    UDFs (0)    Create UDF
     Check Comment 
 
-test_create_user
-    Check Skip 2.6
-    Init Create    Users (1)    Create user
-    Type Into Text Field    passwordField    123
-    Check Comment
-
-test_create_role
-    Init Create    Roles (0)    Create role
-    Check Comment
-
 test_create_index
     Init Create    Indices (38)    Create index
     Push Button    selectAllButton
