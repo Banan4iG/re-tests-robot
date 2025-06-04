@@ -42,13 +42,13 @@ test_use_external_module
 test_sql_security_definer
     Check Skip
     Init
-    Select From Combo Box    securityCombo    DEFINER
+    Select From Combo Box    userContextComboBox    DEFINER
     Check    CREATE OR ALTER TRIGGER NEW_TRIGGER ACTIVE ON CONNECT POSITION 0 SQL SECURITY DEFINER AS BEGIN /* Trigger impl */ END
 
 test_sql_security_invoker
     Check Skip
     Init
-    Select From Combo Box    securityCombo    INVOKER
+    Select From Combo Box    userContextComboBox    INVOKER
     Check    CREATE OR ALTER TRIGGER NEW_TRIGGER ACTIVE ON CONNECT POSITION 0 SQL SECURITY INVOKER AS BEGIN /* Trigger impl */ END
 
 *** Keywords ***

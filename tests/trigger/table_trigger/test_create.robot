@@ -52,7 +52,7 @@ test_sql
 test_sql_security_definer
     Check Skip
     Init
-    Select From Combo Box    securityCombo    DEFINER
+    Select From Combo Box    userContextComboBox    DEFINER
     Check Check Box    insertCheck
     Check Check Box    updateCheck
     Check    CREATE OR ALTER TRIGGER TEST_TRIGGER FOR COUNTRY ACTIVE BEFORE INSERT OR UPDATE POSITION 0 SQL SECURITY DEFINER AS BEGIN /* Trigger impl */ END
@@ -60,7 +60,7 @@ test_sql_security_definer
 test_sql_security_invoker
     Check Skip
     Init
-    Select From Combo Box    securityCombo    INVOKER
+    Select From Combo Box    userContextComboBox    INVOKER
     Check Check Box    insertCheck
     Check Check Box    updateCheck
     Check    CREATE OR ALTER TRIGGER TEST_TRIGGER FOR COUNTRY ACTIVE BEFORE INSERT OR UPDATE POSITION 0 SQL SECURITY INVOKER AS BEGIN /* Trigger impl */ END
