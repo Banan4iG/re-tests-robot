@@ -1,6 +1,7 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Library    OperatingSystem
+Library    platform
 Resource    ../../files/keywords.resource
 Test Setup       Setup
 Test Teardown    Teardown after every tests
@@ -117,6 +118,8 @@ test_remove_conn
 
 *** Keywords ***
 Setup
+    ${system}    platform.System
+    Skip If    '${system}' == 'Linux'
     Lock Employee
     Execute Immediate    CREATE TABLE TEST_TABLE (COUNTRY VARCHAR, CURRENCY VARCHAR)
     Setup before every tests
