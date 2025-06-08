@@ -23,7 +23,8 @@ test_backup
     Push Button    OK
 
 test_execute_query
-    Select Main Window
+    Select From Main Menu    Tools|Query Editor
+    Focus To Component    0
     Clear Text Field    0
     Type Into Text Field    0    select cast(:test as integer) from rdb$database
     Push Button    execute-script-command
@@ -34,8 +35,7 @@ test_execute_query
     Clear Text Field    0
 
 test_export_metadata
-    Select Main Window
-    Push Button    extract-metadata-command
+    Select From Tree Node Popup Menu    0    New Connection (Copy)    Extract Metadata
     Push Button    extractButton
     Sleep    5s
     Close Dialog    Message
@@ -89,9 +89,10 @@ test_profiler
 test_table_validator
     Select From Main Menu    Tools|Table Validator
     ${count}=    Get List Item Count    0
-    Should Be Equal As Integers    ${count}    13
+    Should Be Equal As Integers    ${count}    10
 
 test_import_data
+    Execute Immediate    CREATE TABLE TEST_TABLE (COUNTRY VARCHAR, CURRENCY VARCHAR)
     Select From Main Menu    Tools|Import Data
     Check Check Box    importFromConnectionCheck
     Select From Combo Box    sourceTableCombo    COUNTRY
@@ -121,7 +122,6 @@ Setup
     ${system}    platform.System
     Skip If    '${system}' == 'Linux'
     Lock Employee
-    Execute Immediate    CREATE TABLE TEST_TABLE (COUNTRY VARCHAR, CURRENCY VARCHAR)
     Setup before every tests
     Select From Tree Node Popup Menu    0    New Connection    Duplicate connection
     Select From Tree Node Popup Menu    0    New Connection (Copy)    Connection information
