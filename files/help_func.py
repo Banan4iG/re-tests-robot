@@ -447,3 +447,8 @@ def load_api():
 
 def get_exe():
     return "" if platform.system() == "Linux" else ".exe"
+
+def get_user_for_ssh():
+    user = "reduser" if platform.system() == "Linux" else "jenkins"
+    password = "1" if platform.system() == "Linux" else "jenkins"
+    return  user, password
