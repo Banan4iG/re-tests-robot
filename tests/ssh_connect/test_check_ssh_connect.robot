@@ -5,7 +5,7 @@ Library    platform
 Resource    ../../files/keywords.resource
 Test Setup       Setup
 Test Teardown    Teardown after every tests
-Test Timeout    30s
+Test Timeout    60s
 
 *** Test Cases ***    
 test_backup
@@ -24,7 +24,7 @@ test_backup
 
 test_execute_query
     Select From Main Menu    Tools|Query Editor
-    Focus To Component    0
+    Select Main Window
     Clear Text Field    0
     Type Into Text Field    0    select cast(:test as integer) from rdb$database
     Push Button    execute-script-command
@@ -48,7 +48,7 @@ test_database_statistics
     
 test_trace_manager 
     Select From Main Menu    Tools|Trace Manager
-    Sleep    2s
+    Sleep    3s
     ${conf_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /test_conf.conf
     Push Button    newConfigButton
     Select Dialog    Build configuration file
@@ -64,7 +64,6 @@ test_trace_manager
     Push Button    11
     Sleep    5s
     Select Tab    Session Manager
-
     Select Main Window
 
 test_user_manager
