@@ -25,7 +25,7 @@ def get_pom_file():
 def kill_redexpert():
     time.sleep(10)
     for proc in psutil.process_iter():
-        if proc.name() == f'RedExpert64{get_exe()}':
+        if proc.name() == f'RedExpert64{get_exe()}' or proc.name() == f'java{get_exe()}':
             proc.terminate()
 
 def run_server():
