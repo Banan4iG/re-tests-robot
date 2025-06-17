@@ -5,6 +5,10 @@ Resource    ../files/keywords.resource
 Test Teardown    Teardown
 
 *** Test Cases ***
+temp_first_run_re
+    Setup before every tests
+    Teardown after every tests
+
 no_reload
     ${path_to_exe}=    Test Api    \nupdate.use.https=false\nupdate.check.url=http\://localhost/?project=redexpert&version=9999.98\nupdate.check.rc.url=http\://localhost/?project=redexpert&version=9999.98&showrc=true
     No Reload    ${path_to_exe}
