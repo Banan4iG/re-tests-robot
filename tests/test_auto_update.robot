@@ -40,6 +40,9 @@ remind_later
     Sleep    0.5s
     Select Dialog    Red Expert Update
 
+test_for_sleep
+    Sleep    20m
+
 *** Keywords ***
 Start Red Expert
     [Arguments]    ${urls}
