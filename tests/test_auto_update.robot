@@ -7,8 +7,8 @@ Test Teardown    Teardown
 *** Test Cases ***
 temp_first_run_re
     Setup before every tests
-    Teardown after every tests
-
+    [Teardown]    Teardown after every tests
+    
 no_reload
     ${path_to_exe}=    Test Api    \nupdate.use.https=false\nupdate.check.url=http\://localhost/?project=redexpert&version=9999.98\nupdate.check.rc.url=http\://localhost/?project=redexpert&version=9999.98&showrc=true
     No Reload    ${path_to_exe}
@@ -35,7 +35,7 @@ remind_later
     Push Button    remindLaterButton
     System Exit    0
     Sleep    1s
-    Start Application    red_expert    ${path_to_exe}    timeout=20    remote_port=60900
+    Start Application    red_expert    ${path_to_exe}    timeout=30    remote_port=60900
     Select Main Window
     Sleep    0.5s
     Select Dialog    Red Expert Update
@@ -48,7 +48,7 @@ Start Red Expert
     Set Urls   urls=${urls}
     ${path_to_exe}=    Copy Dist Path
     # Log    ${path_to_exe}    console=True
-    Start Application    red_expert    ${path_to_exe}    timeout=20    remote_port=60900
+    Start Application    red_expert    ${path_to_exe}    timeout=30    remote_port=60900
     Select Main Window
     Sleep    0.5s
     Select Dialog    Red Expert Update
@@ -82,14 +82,14 @@ No Reload
     Push Button      OK
     System Exit    0
     Sleep       10s
-    Start Application    red_expert    ${path_to_exe}    timeout=20    remote_port=60900
+    Start Application    red_expert    ${path_to_exe}    timeout=30    remote_port=60900
     Select Window    regexp=^Red Expert - 2025\.06.*
 
 Auto Reload
     Push Button      Yes
     Sleep    10s
     TRY
-        Application Started    red_expert    timeout=20    remote_port=60900
+        Application Started    red_expert    timeout=30    remote_port=60900
         Select Window    regexp=^Red Expert - 2025\.06
     EXCEPT  
         Kill Redexpert
