@@ -24,7 +24,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 "files": [
                     {
                         "FILE_NAME": f"RedExpert-{version}.zip",
-                        "FILE_PATH": "2025.06-SNAPSHOT.46/download/red_expert:bin:2025.06-SNAPSHOT.46:zip"
+                        "FILE_PATH": "2025.06-SNAPSHOT.64/download/red_expert:bin:2025.06-SNAPSHOT.64:zip"
                     },]
             }
             return data

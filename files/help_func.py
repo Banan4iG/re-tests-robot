@@ -123,7 +123,7 @@ def get_hosts_history_file():
     return hosts_history_file
 
 def copy_dist_path():
-    DIST = os.environ.get('DIST', "D:\\projects\\RedExpert")
+    DIST = os.environ.get('DIST', "C:\\Program Files\\RedExpert")
     tmp_dir = tempfile.gettempdir()
 
     if os.path.exists(tmp_dir + '/RedExpert'):

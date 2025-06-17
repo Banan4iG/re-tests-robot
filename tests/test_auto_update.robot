@@ -43,7 +43,7 @@ Start Red Expert
     Backup User Properties
     Set Urls   urls=${urls}
     ${path_to_exe}=    Copy Dist Path
-    Log    ${path_to_exe}    console=True
+    # Log    ${path_to_exe}    console=True
     Start Application    red_expert    ${path_to_exe}    timeout=20    remote_port=60900
     Select Main Window
     Sleep    0.5s
@@ -79,14 +79,14 @@ No Reload
     System Exit    0
     Sleep       10s
     Start Application    red_expert    ${path_to_exe}    timeout=20    remote_port=60900
-    Select Window    regexp=^Red Expert - 2025\.03.*
+    Select Window    regexp=^Red Expert - 2025\.06.*
 
 Auto Reload
     Push Button      Yes
     Sleep    10s
     TRY
         Application Started    red_expert    timeout=20    remote_port=60900
-        Select Window    regexp=^Red Expert - 2025\.03
+        Select Window    regexp=^Red Expert - 2025\.06
     EXCEPT  
         Kill Redexpert
         Fail    Red Expert run without JAVA_TOOL_OPTIONS
