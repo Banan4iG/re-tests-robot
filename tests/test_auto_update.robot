@@ -4,11 +4,7 @@ Library    OperatingSystem
 Resource    ../files/keywords.resource
 Test Teardown    Teardown
 
-*** Test Cases ***
-temp_first_run_re
-    Setup before every tests
-    [Teardown]    Teardown after every tests
-    
+*** Test Cases ***    
 no_reload
     ${path_to_exe}=    Test Api    \nupdate.use.https=false\nupdate.check.url=http\://localhost/?project=redexpert&version=9999.98\nupdate.check.rc.url=http\://localhost/?project=redexpert&version=9999.98&showrc=true
     No Reload    ${path_to_exe}
@@ -39,9 +35,6 @@ remind_later
     Select Main Window
     Sleep    0.5s
     Select Dialog    Red Expert Update
-
-test_for_sleep
-    Sleep    20m
 
 *** Keywords ***
 Start Red Expert
