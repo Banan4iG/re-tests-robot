@@ -7,6 +7,7 @@ import tempfile
 import psutil
 import openpyxl
 import threading
+import stat
 from pathlib import Path
 import firebird.driver as fdb
 from firebird.driver import connect_server, SrvInfoCode   
@@ -123,13 +124,17 @@ def get_hosts_history_file():
     return hosts_history_file
 
 def copy_dist_path():
+    def _on_rm_error(func, path, exc_info):
+        os.chmod(path, stat.S_IWRITE)
+        func(path)
+
     DIST = os.environ.get('DIST', "C:\\Program Files\\RedExpert")
     tmp_dir = tempfile.gettempdir()
 
     if os.path.exists(tmp_dir + '/RedExpert'):
-        shutil.rmtree(tmp_dir + '/RedExpert')
+        shutil.rmtree(tmp_dir + '/RedExpert', onerror=_on_rm_error)
     return_path = shutil.copytree(DIST, tmp_dir + '/RedExpert')
-    path_to_exe = return_path + f"/bin/RedExpert64{get_exe()}" 
+    path_to_exe = return_path + f"/bin/RedExpert64{get_exe()}"
     return path_to_exe
 
 def get_server_info():    
