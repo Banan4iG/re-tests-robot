@@ -77,7 +77,7 @@ test_5
     Init    """NEW PACK"""    "NEW PACK"    Body
     Select Tab As Context    DDL to create
     ${res}=    Get Text Field Value    0
-    Should Be Equal As Strings    ${res}    SET TERM ^ ; CREATE OR ALTER PACKAGE """NEW PACK""" AS BEGIN END^ RECREATE PACKAGE BODY """NEW PACK""" AS BEGIN END^ SET TERM ; ^    strip_spaces=${True}    collapse_spaces=${True}
+    Should Be Equal As Strings    ${res}    CREATE OR ALTER PACKAGE """NEW PACK""" AS BEGIN END; RECREATE PACKAGE BODY """NEW PACK""" AS BEGIN END;    strip_spaces=${True}    collapse_spaces=${True}
 
 *** Keywords ***
 Init
