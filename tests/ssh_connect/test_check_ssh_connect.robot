@@ -82,6 +82,7 @@ test_grant_manager
 test_profiler
     Select From Main Menu    Tools|Profiler
     Push Button    startButton
+    Sleep    2s
     Push Button    finishButton
     Close Dialog    Warning
     
@@ -91,7 +92,7 @@ test_table_validator
     Should Be Equal As Integers    ${count}    10
 
 test_import_data
-    Execute Immediate    CREATE TABLE TEST_TABLE (COUNTRY VARCHAR, CURRENCY VARCHAR)
+    Execute Immediate    CREATE TABLE TEST_TABLE (COUNTRY VARCHAR(1024), CURRENCY VARCHAR(1024))
     Select From Main Menu    Tools|Import Data
     Check Check Box    importFromConnectionCheck
     Select From Combo Box    sourceTableCombo    COUNTRY

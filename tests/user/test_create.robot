@@ -1,7 +1,7 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource   ../../files/keywords.resource
-Test Setup       Setup before every tests
+Test Setup       Setup
 Test Teardown    Teardown after every tests
 
 *** Test Cases ***
@@ -112,3 +112,9 @@ Drop User
     [Arguments]    ${user_name}
     Teardown after every tests
     Run Keyword And Ignore Error    Execute Immediate    DROP USER ${user_name}
+
+Setup
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    Skip if   ${{$ver == '2.6'}}
+    Setup before every tests
