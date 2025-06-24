@@ -102,7 +102,7 @@ test_import_data
     Close Dialog    Message  
 
 test_data_generator
-    Execute Immediate    CREATE TABLE TEST_TABLE (COUNTRY VARCHAR, CURRENCY VARCHAR)
+    Execute Immediate    CREATE TABLE TEST_TABLE (COUNTRY VARCHAR(1024), CURRENCY VARCHAR(1024))
     Select From Main Menu    Tools|Data Generator
     Select From Combo Box    tablesCombo    TEST_TABLE
     Click On Table Cell    0    0    0
