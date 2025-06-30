@@ -11,7 +11,7 @@ test_CSV
     Open connection
     Push Button    editor-command
     Clear Text Field    0
-    Type Into Text Field    0    SELECT * FROM COUNTRY
+    Insert Into Text Field    0    SELECT * FROM COUNTRY
     Push Button    execute-script-command
     Sleep    1s  
     Push Button    editor-export-command

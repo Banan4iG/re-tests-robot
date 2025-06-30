@@ -18,6 +18,7 @@ Test Setup
     
 Start Red Expert
     ${path_to_exe}=    Get Path
+        # Log    ${path_to_exe}    console=True
     TRY
         Start Application    red_expert    ${path_to_exe}    timeout=20    remote_port=60900
     EXCEPT    RemoteSwingLibraryTimeoutError: Agent port not received before timeout

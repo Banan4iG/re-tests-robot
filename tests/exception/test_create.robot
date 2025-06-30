@@ -19,7 +19,6 @@ test_3
 
 test_4
     Init    ${EMPTY}    test text
-    Push Button    submitButton
     Select Dialog    Commiting changes
     Sleep    1s
     ${value}=    Get Table Cell Value    0    0    Status
@@ -56,7 +55,6 @@ Init
 
 Check
     [Arguments]    ${text}    ${name}
-    Push Button    submitButton
     Select Dialog    Commiting changes
     Sleep    1s
     ${res}=    Get Text Field Value    0

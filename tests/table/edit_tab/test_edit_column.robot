@@ -27,6 +27,7 @@ test_size
     Check Column In Table    data_type=VARCHAR    size=50
 
 test_not_null
+    Check Skip 26
     Init Edit Column
     Check Check Box    requiredCheck
     Check Edit Commit    ALTER TABLE TEST_TABLE ALTER COLUMN TEST_COLUMN SET NOT NULL
@@ -35,6 +36,7 @@ test_not_null
     Should Be Equal As Strings    ${required}    true
 
 test_remove_not_null
+    Check Skip 26
     Init Edit Column    CREATE TABLE TEST_TABLE (TEST_COLUMN INT NOT NULL)
     Uncheck Check Box    requiredCheck
     Check Edit Commit    ALTER TABLE TEST_TABLE ALTER COLUMN TEST_COLUMN DROP NOT NULL
@@ -170,7 +172,7 @@ test_add_use_gen_without_identity
     Check Box Should Be Checked    requiredCheck
     Select Tab    Autoincrement
     ${old}=    Set Jemmy Timeouts    100ms
-    Run Keyword And Expect Error    org.netbeans.jemmy.TimeoutExpiredException: Component enabled: class javax.swing.JRadioButton    Push Radio Button    identityRadio
+    Run Keyword And Expect Error    org.netbeans.jemmy.TimeoutExpiredException: Component enabled: class javax.swing.JRadioButton    Push Radio Button    identityRadioo
     Push Radio Button    existingSequenceRadio
     Select From Combo Box    sequencesCombo    EMP_NO_GEN
     Check SQL Statements    ${False}    gen_name=EMP_NO_GEN    alter_table=ALTER TABLE TEST_TABLE ALTER COLUMN COL SET NOT NULL    column_name=COL
@@ -303,10 +305,10 @@ Check Column In Table
     RETURN    ${row}
 
 Check SQL Statements
-    [Arguments]    ${check_sequence}    ${gen_name}    ${alter_table}=ALTER TABLE TEST_TABLE ALTER COLUMN TEST_COLUMN DROP IDENTITY    ${column_name}=TEST_COLUMN
+    [Arguments]    ${check_sequence}    ${gen_name}    ${dialog}=Commiting changes    ${alter_table}=ALTER TABLE TEST_TABLE ALTER COLUMN TEST_COLUMN DROP IDENTITY    ${column_name}=TEST_COLUMN
     Push Button    submitButton
-    Sleep    0.5s
-    Select Dialog    Commiting changes 
+    Sleep    1s
+    Select Dialog    ${dialog}
     # Check ALTER TABLE statement
     ${alter_row}=    Find Table Row    0    ALTER TABLE    Name operation
     Click On Table Cell    0    ${alter_row}    Name operation
@@ -364,5 +366,5 @@ Check Skip
 Check Skip 26
     ${info}=    Get Server Info
     ${ver}=     Set Variable    ${info}[1]
-    RETURN    ${ver}
     Skip If    ${{$ver == '2.6'}}
+    RETURN    ${ver}

@@ -351,10 +351,10 @@ Check type
     Should Be Equal As Strings    ${subtype}    ${expected_subtype}
 
 Check commit
-    [Arguments]    ${text}
+    [Arguments]    ${text}    ${dialog}=Commiting changes
     Push Button    submitButton
-    Sleep    0.5s
-    Select Dialog    Commiting changes
+    Sleep    1s
+    Select Dialog    ${dialog}
     ${res}=    Get Text Field Value    0
     Should Be Equal As Strings    ${res}    ${text}    strip_spaces=${True}    collapse_spaces=${True}
 
@@ -374,9 +374,9 @@ Check in table
     RETURN    ${row}
 
 Check SQL Statements
-    [Arguments]    ${check_sequence}    ${gen_name}    ${column_name}=NEW_TABLE_COLUMN_1
+    [Arguments]    ${check_sequence}    ${gen_name}    ${column_name}=NEW_TABLE_COLUMN_1    ${dialog}=Commiting changes
     Push Button    submitButton
-    Sleep    0.5s
+    Sleep    1s
     List Dialogs
     Select Dialog    Commiting changes
     # Check ALTER TABLE statement

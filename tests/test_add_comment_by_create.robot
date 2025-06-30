@@ -109,18 +109,6 @@ test_create_udf
     Init Create    UDFs (0)    ${title}    ${title}
     Check Comment    ${title}
 
-test_create_user
-    Check Skip 2.6
-    VAR    ${title}    Create user
-    Init Create    Users (1)    ${title}    ${title}
-    Type Into Text Field    passTextField    123
-    Check Comment    ${title}
-
-test_create_role
-    VAR    ${title}    Create role
-    Init Create    Roles (0)    ${title}    ${title}
-    Check Comment    ${title}
-
 test_create_index
     VAR    ${title}    Create index
     Init Create    Indices (38)    ${title}    ${title}

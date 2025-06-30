@@ -36,7 +36,7 @@ test_execute_to_file
     Open connection
     Push Button    editor-command
     Clear Text Field    0
-    Type Into Text Field    0    SELECT * FROM COUNTRY
+    Insert Into Text Field    0    SELECT * FROM COUNTRY
     Push Button    editor-execute-to-file-command
     Push Button    execute-script-command
     Sleep    1s  
@@ -64,7 +64,7 @@ test_max_row
     Open connection
     Push Button    editor-command
     Clear Text Field    0
-    Type Into Text Field    0    SELECT * FROM TEST_TABLE
+    Insert Into Text Field    0    SELECT * FROM TEST_TABLE
     Push Button    editor-execute-to-file-command
     Push Button    execute-script-command
     Sleep    1s  

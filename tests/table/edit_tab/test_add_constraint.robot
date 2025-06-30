@@ -197,7 +197,7 @@ Init
     Select Dialog    Create constraint
     
 Check commit
-    [Arguments]    ${text}    ${ts}=PRIMARY
+    [Arguments]    ${text}    ${ts}=PRIMARY    ${dialog}=Commiting changes
     ${info}=    Get Server Info
     ${ver}=     Set Variable    ${info}[1]
     ${srv_ver}=    Set Variable    ${info}[2]
@@ -211,7 +211,8 @@ Check commit
         VAR    ${check_ts}    ${EMPTY}
     END
     Push Button    submitButton
-    Select Dialog    Commiting changes
+    Sleep    1s
+    Select Dialog    ${dialog}
     ${res}=    Get Text Field Value    0
     Should Be Equal As Strings    ${res}    ${text}${check_ts}    strip_spaces=${True}    collapse_spaces=${True}
 

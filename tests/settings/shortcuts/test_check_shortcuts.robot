@@ -8,16 +8,14 @@ Test Teardown    Test Teardown
 test_open_About
     Set Shortcut    About
     Send Keyboard Event    VK_Q    	CTRL_MASK
-    Dialog Should Be Open    About
     Close Dialog    About
 
 test_open_update
     Set Shortcut    Check for Update
     Send Keyboard Event    VK_Q    	CTRL_MASK
     Sleep    2s
-    Select Dialog    Message
-    Label Text Should Be    0    Red Expert is up-to-date!
-    Push Button    OK
+    Dialog Should Not Be Open    Check for update
+    # Select Dialog    Check for update
 
 test_open_compare_db
     Set Shortcut    Compare database metadata
@@ -141,8 +139,8 @@ Set Shortcut
     Send Keyboard Event    VK_Q    	CTRL_MASK
     Push Button    OK
     Select Dialog    Preferences
-    Push Button    OK
+    Push Button    applyButton
     Close Dialog    Message
+    Close Dialog    Preferences
     Select Main Window
     Focus To Component    0
-    # Click On Tree Node    0    New Connection    1

@@ -60,7 +60,7 @@ test_open_query_editor_no
 test_open_empty_query_editor
     Open connection
     Clear Text Field    0
-    Type Into Text Field    0    SELECT * FROM EMPLOYEE
+    Insert Into Text Field    0    SELECT * FROM EMPLOYEE
     Push Button    execute-script-command
     Sleep    1s
     Clear Text Field    0
@@ -94,7 +94,7 @@ test_execute_to_file
     Open connection
     Push Button    editor-command
     Clear Text Field    0
-    Type Into Text Field    0    SELECT * FROM COUNTRY
+    Insert Into Text Field    0    SELECT * FROM COUNTRY
     Push Button    editor-execute-to-file-command
     Push Button    execute-script-command
     Sleep    1s  

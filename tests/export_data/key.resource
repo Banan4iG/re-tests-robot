@@ -8,7 +8,7 @@ Setup before export data
     Open connection
     Push Button    editor-command
     Clear Text Field    0
-    Type Into Text Field    0    SELECT * FROM EMPLOYEE
+    Insert Into Text Field    0    SELECT * FROM EMPLOYEE
     Push Button    execute-script-command
     Sleep    1s
     Select Table Cell Area    0    1    4    19    24    

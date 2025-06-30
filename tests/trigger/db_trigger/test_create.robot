@@ -1,6 +1,7 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource    ../../../files/keywords.resource
+Resource    ../keys.resource
 Test Setup       Test Setup
 Test Teardown    Test Teardown
 
@@ -39,19 +40,15 @@ test_use_external_module
     Check    CREATE OR ALTER TRIGGER NEW_TRIGGER ACTIVE ON CONNECT POSITION 0 EXTERNAL NAME 'external_point' ENGINE external_engine
 
 test_sql_security_definer
-    ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
-    Skip If    ${{$ver == '2.6'}}
+    Check Skip
     Init
-    Select From Combo Box    securityCombo    DEFINER
+    Select From Combo Box    userContextComboBox    DEFINER
     Check    CREATE OR ALTER TRIGGER NEW_TRIGGER ACTIVE ON CONNECT POSITION 0 SQL SECURITY DEFINER AS BEGIN /* Trigger impl */ END
 
 test_sql_security_invoker
-    ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
-    Skip If    ${{$ver == '2.6'}}
+    Check Skip
     Init
-    Select From Combo Box    securityCombo    INVOKER
+    Select From Combo Box    userContextComboBox    INVOKER
     Check    CREATE OR ALTER TRIGGER NEW_TRIGGER ACTIVE ON CONNECT POSITION 0 SQL SECURITY INVOKER AS BEGIN /* Trigger impl */ END
 
 test_add_comment

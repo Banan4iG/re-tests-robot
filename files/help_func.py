@@ -7,6 +7,7 @@ import tempfile
 import psutil
 import openpyxl
 import threading
+import stat
 from pathlib import Path
 import firebird.driver as fdb
 from firebird.driver import connect_server, SrvInfoCode   
@@ -25,7 +26,7 @@ def get_pom_file():
 def kill_redexpert():
     time.sleep(10)
     for proc in psutil.process_iter():
-        if proc.name() == f'RedExpert64{get_exe()}':
+        if proc.name() == f'RedExpert64{get_exe()}' or proc.name() == f'java{get_exe()}':
             proc.terminate()
 
 def run_server():
@@ -123,13 +124,17 @@ def get_hosts_history_file():
     return hosts_history_file
 
 def copy_dist_path():
-    DIST = os.environ.get('DIST', "D:\\projects\\RedExpert")
+    def _on_rm_error(func, path, exc_info):
+        os.chmod(path, stat.S_IWRITE)
+        func(path)
+
+    DIST = os.environ.get('DIST', "C:\\Program Files\\RedExpert")
     tmp_dir = tempfile.gettempdir()
 
     if os.path.exists(tmp_dir + '/RedExpert'):
-        shutil.rmtree(tmp_dir + '/RedExpert')
+        shutil.rmtree(tmp_dir + '/RedExpert', onerror=_on_rm_error)
     return_path = shutil.copytree(DIST, tmp_dir + '/RedExpert')
-    path_to_exe = return_path + f"/bin/RedExpert64{get_exe()}" 
+    path_to_exe = return_path + f"/bin/RedExpert64{get_exe()}"
     return path_to_exe
 
 def get_server_info():    
@@ -447,3 +452,8 @@ def load_api():
 
 def get_exe():
     return "" if platform.system() == "Linux" else ".exe"
+
+def get_user_for_ssh():
+    user = "reduser" if platform.system() == "Linux" else "jenkins"
+    password = "1" if platform.system() == "Linux" else "jenkins"
+    return  user, password
