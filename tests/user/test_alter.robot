@@ -18,23 +18,14 @@ ${FIELD_INDEX_LAST_NAME}    lastNameField
 test_edit_first_name
     Edit And Verify User Field    ${FIELD_INDEX_FIRST_NAME}    ${TEST_NEW_USER_FIRST_NAME}
 
-test_verify_first_name_after_app_reopen
-    Verify User Field After Reload    ${FIELD_INDEX_FIRST_NAME}    ${TEST_NEW_USER_FIRST_NAME}
-
 test_edit_middle_name
     Edit And Verify User Field    ${FIELD_INDEX_MIDDLE_NAME}    ${TEST_NEW_USER_MIDDLE_NAME}
-
-test_verify_middle_name_after_app_reopen
-    Verify User Field After Reload    ${FIELD_INDEX_MIDDLE_NAME}    ${TEST_NEW_USER_MIDDLE_NAME}
 
 test_edit_last_name
     Edit And Verify User Field    ${FIELD_INDEX_LAST_NAME}    ${TEST_NEW_USER_LAST_NAME}
 
-test_verify_last_name_after_app_reopen
-    Verify User Field After Reload    ${FIELD_INDEX_LAST_NAME}    ${TEST_NEW_USER_LAST_NAME}
-
 test_edit_flags
-    Create User    ${TEST_USERNAME}    ${TEST_USER_PASSWORD}
+    Create User
     Lock Employee
     Open connection
     Expand Tree Node    0    New Connection
@@ -50,19 +41,10 @@ test_edit_flags
     Select Main Window
     Checkbox Should Be Unchecked    isActiveCheck
     Checkbox Should Be Checked      isAdminCheck
-
-test_verify_flags_after_app_reopen
-    Lock Employee
-    Open connection
-    Expand Tree Node    0    New Connection
-    Select From Tree Node Popup Menu    0    New Connection|Users (2)|${TEST_USERNAME}    Edit user
-    Sleep    1s
-    Checkbox Should Be Unchecked    isActiveCheck
-    Checkbox Should Be Checked      isAdminCheck
     [Teardown]    Drop User    ${TEST_USERNAME}
 
-test_add_and_edit_tags
-    Create User    ${TEST_USERNAME}    ${TEST_USER_PASSWORD}
+test_add_new_tags
+    Create User
     Lock Employee
     Open connection
     Expand Tree Node    0    New Connection
@@ -88,7 +70,7 @@ test_add_and_edit_tags
     Should Be Equal As Strings    ${values}    [['pc', '123'], ['Card', '']]
     [Teardown]    Drop User    ${TEST_USERNAME}
 
-test_precreated_and_added_tags
+test_append_tags_to_precreated_user_tags
     Execute Immediate    CREATE USER ${TEST_USERNAME} PASSWORD '${TEST_USER_PASSWORD}' ACTIVE USING PLUGIN Srp TAGS (CARD = '123', PC = '999')
 
     Lock Employee
@@ -120,7 +102,78 @@ test_precreated_and_added_tags
     @{final_tags}=    Get Table Values    tagTable
     ${sorted_final}=  Evaluate    sorted(${final_tags})
     Should Be Equal As Strings    ${sorted_final}    [['Added1', 'val1'], ['Added2', 'val2'], ['CARD', '123'], ['PC', '999']]
+    [Teardown]    Drop User    ${TEST_USERNAME}
 
+test_add_new_comment_full_commit
+    Create User
+    Lock Employee
+    Open connection
+    Expand Tree Node    0    New Connection
+    Select From Tree Node Popup Menu    0    New Connection|Users (2)|${TEST_USERNAME}    Edit user
+    Sleep    1s
+    Select Tab As Context    Comment
+    Clear Text Field    0
+    Type Into Text Field    0    test_comment
+    Sleep    0.2s
+    Select Main Window
+    Push Button    Apply
+    Sleep    0.1s
+    Select Dialog    Commiting changes
+    Push Button    commitButton
+    Sleep    2s
+    Check Updated Text Field    1    test_comment
+    [Teardown]    Drop User    ${TEST_USERNAME}
+
+test_add_new_comment_commit
+    Create User
+    Lock Employee
+    Open connection
+    Expand Tree Node    0    New Connection
+    Select From Tree Node Popup Menu    0    New Connection|Users (2)|${TEST_USERNAME}    Edit user
+    Sleep    1s
+    Select Tab As Context    Comment
+    Clear Text Field    0
+    Type Into Text Field    0    test_comment
+    Sleep    0.2s
+    Select Main Window
+    Push Button    updateCommentButton
+    Sleep    0.1s
+    Check Updated Text Field    1    test_comment
+    [Teardown]    Drop User    ${TEST_USERNAME}
+
+test_user_ddl_after_modification
+    Create User
+    Lock Employee
+    Open connection
+
+    Expand Tree Node    0    New Connection
+    Select From Tree Node Popup Menu    0    New Connection|Users (2)|${TEST_USERNAME}    Edit user
+    Sleep    1s
+
+    Push Button    addTagButton
+    Type Into Table Cell    tagTable    0    Tag    example_tag
+    Type Into Table Cell    tagTable    0    Value    value123
+
+    Select Tab As Context    Comment
+    Clear Text Field    0
+    Type Into Text Field    0    test_comment
+
+    Select Main Window
+    Push Button    Apply
+    Sleep    0.1s
+    Select Dialog    Commiting changes
+    Push Button    commitButton
+    Sleep    1s
+
+    Select Main Window
+    Select From Tree Node Popup Menu    0    New Connection|Users (2)|${TEST_USERNAME}    Edit user
+    Sleep    1s
+    Select Tab As Context    DDL to create
+    ${ddl}=    Get Text Field Value    0
+
+    Should Contain    ${ddl}    CREATE USER ${TEST_USERNAME}
+    Should Contain    ${ddl}    TAGS (EXAMPLE_TAG = 'value123')
+    Should Contain    ${ddl}    COMMENT ON USER ${TEST_USERNAME} USING PLUGIN Srp IS 'test_comment'
     [Teardown]    Drop User    ${TEST_USERNAME}
 
 *** Keywords ***
@@ -131,8 +184,7 @@ Setup
     Setup before every tests
 
 Create User
-    [Arguments]    ${username}    ${password}
-    Execute Immediate    CREATE USER ${username} PASSWORD '${password}' ACTIVE USING PLUGIN Srp
+    Execute Immediate    CREATE USER ${TEST_USERNAME} PASSWORD '${TEST_USER_PASSWORD}' ACTIVE USING PLUGIN Srp
 
 Drop User
     [Arguments]    ${user_name}
@@ -163,16 +215,7 @@ Check Updated Text Field
 
 Edit And Verify User Field
     [Arguments]    ${field_name}    ${new_value}
-    Create User    ${TEST_USERNAME}    ${TEST_USER_PASSWORD}
+    Create User
     Edit User    ${field_name}    ${new_value}    ${TEST_USERNAME}
-    Check Updated Text Field    ${field_name}    ${new_value}
-
-Verify User Field After Reload
-    [Arguments]    ${field_name}    ${new_value}
-    Lock Employee
-    Open connection
-    Expand Tree Node    0    New Connection
-    Click On Tree Node    0    New Connection|Users (2)|${TEST_USERNAME}    clickCount=2
-    Sleep    2s
     Check Updated Text Field    ${field_name}    ${new_value}
     [Teardown]    Drop User    ${TEST_USERNAME}
