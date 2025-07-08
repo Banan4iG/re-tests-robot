@@ -17,6 +17,10 @@ test_save_script
     Type Into Text Field    0    ${script_path}
     Push Button    Save Script
     Sleep    2s
+    Close Dialog    Message
+    Select Main Window
+    Open connection
+    Execute Immediate    ALTER TABLE COUNTRY ADD NEW_COLUMN BIGINT
     Create Database   ${script_path}    ${test_base_path}
     Create Connect    ${test_base_path}
     Compare DB
@@ -69,6 +73,6 @@ Compare DB
     Sleep    2s
     Select Dialog    Message
     Run Keyword And Continue On Failure    Label Text Should Be    1    Objects to create - 0
-    Run Keyword And Continue On Failure    Label Text Should Be    2    Objects to drop - 0
-    Run Keyword And Continue On Failure    Label Text Should Be    3    Objects to alter - 10
+    Run Keyword And Continue On Failure    Label Text Should Be    3    Objects to drop - 0
+    Run Keyword And Continue On Failure    Label Text Should Be    2    Objects to alter - 1
     Sleep    2s

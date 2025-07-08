@@ -25,7 +25,7 @@ test_check_warning
     Push Button    compareButton
     Select Dialog    Warning
     Run Keyword And Continue On Failure    Label Text Should Be    0    Unable to compare.
-    Run Keyword And Continue On Failure    Label Text Should Be    1    No properties for comparing selected.
+    Run Keyword And Continue On Failure    Label Text Should Be    1    At least one of the connections is inactive.
 
 
 test_switch_database
@@ -73,7 +73,7 @@ Check Compare DB
     Sleep    2s
     Select Dialog    Message
     Run Keyword And Continue On Failure    Label Text Should Be    1    ${label_create}
-    Run Keyword And Continue On Failure    Label Text Should Be    2    ${label_drop}
-    Run Keyword And Continue On Failure    Label Text Should Be    3    Objects to alter - 0
+    Run Keyword And Continue On Failure    Label Text Should Be    2    Objects to alter - 0
+    Run Keyword And Continue On Failure    Label Text Should Be    3    ${label_drop}
     Sleep    2s
     Close Dialog    Message

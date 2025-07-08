@@ -21,7 +21,7 @@ test_compare
     Push Button    compareButton
     Select Dialog    Warning
     Run Keyword And Continue On Failure    Label Text Should Be    0    Unable to compare.
-    Run Keyword And Continue On Failure    Label Text Should Be    1    The same connections selected.
+    Run Keyword And Continue On Failure    Label Text Should Be    1    At least one of the connections is inactive.
 
 *** Keywords ***
 Local Setup
