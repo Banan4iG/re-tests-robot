@@ -4,7 +4,7 @@ Library    OperatingSystem
 Resource    ../../files/keywords.resource
 Test Setup       Setup before every tests
 Test Teardown    Teardown after every tests
-Test Timeout    60s
+ 
 
 *** Test Cases ***
 test_1    

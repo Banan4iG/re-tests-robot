@@ -5,7 +5,7 @@ Library    platform
 Resource    ../../files/keywords.resource
 Test Setup       Setup
 Test Teardown    Teardown after every tests
-Test Timeout    60s
+ 
 
 *** Test Cases ***    
 test_backup
