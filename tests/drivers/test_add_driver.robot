@@ -129,10 +129,10 @@ add_new_driver_with_same_name
     Push Button    addDriverButton
     Select Dialog    Add New Driver
     Clear Text Field    nameField
-    Type Into Text Field    nameField    Jaybird 3 Driver
+    Type Into Text Field    nameField    Jaybird 6 Driver
     Push Button    Save
     Select Dialog    Error message
-    Label Text Should Be    0    The driver name Jaybird 3 Driver already exists
+    Label Text Should Be    0    The driver name Jaybird 6 Driver already exists
     Push Button    OK
     Select Dialog    Add New Driver
     Push Button    Cancel

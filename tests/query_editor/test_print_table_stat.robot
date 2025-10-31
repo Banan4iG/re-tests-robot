@@ -38,10 +38,10 @@ Check Tool
 
 Run Script
     [Arguments]    ${button}
-    Select Driver    Jaybird 5 Driver
+    Select Driver    Jaybird 6 Driver
     Open connection
     Clear Text Field    0
     Type Into Text Field    0    SELECT * FROM EMPLOYEE;
     Push Button    ${button}
     Sleep    1s
-    Select Driver    Jaybird 4 Driver
+    Select Driver    Jaybird 6 Driver
