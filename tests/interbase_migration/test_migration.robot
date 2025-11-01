@@ -113,7 +113,7 @@ test_check_error_and_remove_migrated_db
     Push Button    OK
     
     Select Dialog    Database Conversion
-    Select From Combo Box    0    Jaybird 6 Driver
+    Select From Combo Box    0    RedDatabase JDBC Driver 6
 
     Check Check Box    registerCheck
     

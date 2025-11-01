@@ -129,10 +129,10 @@ add_new_driver_with_same_name
     Push Button    addDriverButton
     Select Dialog    Add New Driver
     Clear Text Field    nameField
-    Type Into Text Field    nameField    Jaybird 6 Driver
+    Type Into Text Field    nameField    RedDatabase JDBC Driver 6
     Push Button    Save
     Select Dialog    Error message
-    Label Text Should Be    0    The driver name Jaybird 6 Driver already exists
+    Label Text Should Be    0    The driver name RedDatabase JDBC Driver 6 already exists
     Push Button    OK
     Select Dialog    Add New Driver
     Push Button    Cancel

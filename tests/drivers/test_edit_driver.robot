@@ -8,13 +8,13 @@ Test Teardown    Teardown after every tests
 *** Test Cases ***
 test_1
     Select From Main Menu    System|Drivers
-    ${row}=    Find Table Row    driversTable    Jaybird 6 Driver    Driver Name
+    ${row}=    Find Table Row    driversTable    RedDatabase JDBC Driver 6    Driver Name
     Run Keyword In Separate Thread    Click On Table Cell    driversTable     ${row}    Driver Name    2    BUTTON1_MASK
     Select Dialog    Edit Driver
     ${name}=    Get Text Field Value    nameField
-    Should Be Equal As Strings    ${name}    Jaybird 6 Driver
+    Should Be Equal As Strings    ${name}    RedDatabase JDBC Driver 6
     ${desc}=    Get Text Field Value    descField
-    Should Be Equal As Strings    ${desc}    Latest Jaybird 6 Driver
+    Should Be Equal As Strings    ${desc}    Latest RedDatabase JDBC Driver 6
     ${dbname}=    Get Selected Item From Combo Box    databaseNameCombo
     Should Be Equal As Strings    ${dbname}    Red Database
     ${url}=    Get Selected Item From Combo Box   driverUrlCombo

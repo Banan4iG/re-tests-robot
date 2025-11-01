@@ -18,7 +18,7 @@ Remove Driver
     END
     Select Main Window
     Select From Main Menu    System|Drivers
-    ${row}=    Find Table Row    driversTable    Jaybird 5 Driver   Driver Name
+    ${row}=    Find Table Row    driversTable    RedDatabase JDBC Driver 5   Driver Name
     Click On Table Cell    driversTable     ${row}    Driver Name
     Push Button    removeDriverButton
     Select Dialog    Confirmation
