@@ -21,6 +21,6 @@ test_1
     Should Be Equal As Strings    ${url}    jdbc:firebirdsql://[host]:[port]/[source]
     ${paths_list}=    Get List Values    0
     Sort List    ${paths_list} 
-    Should Be Equal As Strings    ${paths_list}    ['../lib/fbclient-5.jar', '../lib/jaybird-6.jar', '../lib/jaybird-cryptoapi-6.jar', '../lib/jaybird-native-6.jar', './lib/fbclient-5.jar', './lib/jaybird-6.jar', './lib/jaybird-cryptoapi-6.jar', '../lib/jaybird-native-6.jar']
+    Should Be Equal As Strings    ${paths_list}    ['../lib/fbclient-5.jar', '../lib/jaybird-6.jar', '../lib/jaybird-cryptoapi-6.jar', '../lib/jaybird-native-6.jar', './lib/fbclient-5.jar', './lib/jaybird-6.jar', './lib/jaybird-cryptoapi-6.jar', './lib/jaybird-native-6.jar']
     ${classes}=    Get Selected Item From Combo Box   classField
     Should Be Equal As Strings    ${classes}    org.firebirdsql.jdbc.FBDriver

@@ -11,4 +11,4 @@ test_1
     Sleep    1s
     ${tableValues}=    Get Table Values    driversTable
     Sort List    ${tableValues}
-    Should Be Equal As Strings    ${tableValues}    [['RedDatabase JDBC Driver 6', 'Latest RedDatabase JDBC Driver 6', 'Red Database', 'org.firebirdsql.jdbc.FBDriver']]
+    Should Be Equal As Strings    ${tableValues}    [['RedDatabase JDBC Driver 5', 'Latest RedDatabase JDBC Driver 5 (Recommended)', 'Red Database', 'org.firebirdsql.jdbc.FBDriver'], ['RedDatabase JDBC Driver 6', 'Latest RedDatabase JDBC Driver 6', 'Red Database', 'org.firebirdsql.jdbc.FBDriver']]
