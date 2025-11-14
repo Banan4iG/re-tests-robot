@@ -31,7 +31,7 @@ test_recreate
     Sleep    1s
     File Should Not Exist    ${db_path}
 
-    Select Dialog    Database parameters
+    Select Dialog    Message
 
     Label Text Should Be    0    The database will be created with the following parameters:
     Label Text Should Be    1    Server:
