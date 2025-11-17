@@ -66,6 +66,12 @@ Create DB
     Type Into Text Field    fileField    ${db_path}
     Type Into Text Field    userField    SYSDBA
     Type Into Text Field    passwordField    masterkey
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    IF    ${{$ver == '2.6'}}
+        Select From Combo Box    serverCombo    Red Database (Firebird) 2.X
+        Select From Combo Box    authCombo    Basic
+    END
     Push Button    createButton
     Select Dialog    Database Registration
     Push Button    Yes
