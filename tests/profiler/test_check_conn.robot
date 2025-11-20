@@ -4,8 +4,7 @@ Library    os
 Library    platform
 Library    Collections
 Resource    ../../files/keywords.resource
-Resource    keys.resource
-Test Setup       Setup
+Test Setup       Setup before every tests
 Test Teardown    Teardown
 *** Test Cases ***
 test_re
