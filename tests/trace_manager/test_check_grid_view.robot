@@ -1,6 +1,5 @@
 *** Settings ***
 Library    RemoteSwingLibrary
-Library    OperatingSystem
 Resource    ../../files/keywords.resource
 Resource    keys.resource
 Test Setup       Setup before every tests

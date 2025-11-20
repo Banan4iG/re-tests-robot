@@ -1,7 +1,6 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Library    Process
-Library    OperatingSystem
 Resource    ../../files/keywords.resource
 Test Setup    Setup
 Test Teardown    Teardown

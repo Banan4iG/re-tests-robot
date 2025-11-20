@@ -1,6 +1,5 @@
 *** Settings ***
 Library    RemoteSwingLibrary
-Library    OperatingSystem
 Library    Collections
 Resource    ../../files/keywords.resource
 Resource    keys.resource

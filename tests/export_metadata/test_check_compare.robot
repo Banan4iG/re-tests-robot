@@ -3,7 +3,6 @@ Library    RemoteSwingLibrary
 Library    firebird.driver
 Library    fdb
 Library    platform
-Library    OperatingSystem
 Resource   ../../files/keywords.resource 
 Test Setup       Setup before every tests
 Test Teardown    Teardown after every tests

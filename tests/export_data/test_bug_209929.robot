@@ -1,7 +1,6 @@
 *** Settings ***
 # See https://tracker.red-soft.ru/issues/209929
 Library    RemoteSwingLibrary
-Library    OperatingSystem
 Resource    ../../files/keywords.resource
 Resource    key.resource
 Test Setup       Setup before every tests

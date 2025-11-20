@@ -1,6 +1,5 @@
 *** Settings ***
 Library    RemoteSwingLibrary
-Library    OperatingSystem
 Library    firebird.driver
 Library    fdb
 Library    platform

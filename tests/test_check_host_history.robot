@@ -1,6 +1,5 @@
 *** Settings ***
 Library    RemoteSwingLibrary
-Library    OperatingSystem
 Resource    ../files/keywords.resource
 Test Teardown    Teardown after every tests
 
