@@ -1,8 +1,8 @@
 *** Settings ***
 Library    RemoteSwingLibrary
-Library    OperatingSystem
 Resource    ../files/keywords.resource
-Test Teardown    Teardown   
+Test Teardown    Teardown
+Suite Setup    Skip If Embedded
 
 *** Test Cases ***    
 no_reload

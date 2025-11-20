@@ -1,7 +1,7 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Library    help_func.py
-
+Library    OperatingSystem
 
 *** Keywords ***
 Setup before every tests
@@ -30,3 +30,7 @@ Open connection
 Connect To RDBExpert
     Application Started    rdb_expert    timeout=20    remote_port=60900
     Select Main Window
+
+Skip If Embedded
+    ${connect_type}=    Get Environment Variable    CONNECT_TYPE    server
+    Skip If    ${{$connect_type == 'embedded'}}

@@ -4,6 +4,7 @@ Library    OperatingSystem
 Resource    ../files/keywords.resource
 Test Setup       Setup before every tests
 Test Teardown    Teardown
+Suite Setup    Skip If Embedded
 
 *** Variables ***
 ${db_path}

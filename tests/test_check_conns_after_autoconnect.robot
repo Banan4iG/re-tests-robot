@@ -7,6 +7,7 @@ Test Teardown    Teardown after every tests
 
 *** Test Cases ***
 test_1
+    Skip If Embedded
     Select From Tree Node Popup Menu    0    New Connection    Duplicate connection
     Open connection
     Select From Menu    Tools|User Manager

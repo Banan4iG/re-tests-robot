@@ -8,6 +8,7 @@ Test Teardown    Teardown after every tests
 
 *** Test Cases ***
 test_1
+    Skip If Embedded
     Open connection
     Check text tooltip    Disconnect
     Open connection
