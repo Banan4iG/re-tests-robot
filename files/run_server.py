@@ -14,7 +14,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             self.wfile.write(json.dumps(response_data).encode())
 
         def init_data(new_version: str):
-            true_version = "2025.09"
+            true_version = "2025.10"
             data = {
                 "base_url": "http://builds.red-soft.biz/release_hub/red_expert/",
                 "version": f"{new_version}",
@@ -42,7 +42,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
         elif "version=9999.99" in url_path:
             data = init_data("9999.99")
-            init_response(data)        
+            init_response(data)
         else:
             data = {
                 "": "",
