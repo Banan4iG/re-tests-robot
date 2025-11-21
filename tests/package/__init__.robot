@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../files/keywords.resource
+Resource    ../../files/keywords.resource
 Suite Setup    Suite Setup
 
 *** Keywords ***
