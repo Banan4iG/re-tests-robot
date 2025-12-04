@@ -5,7 +5,7 @@ Library    platform
 Library    Collections
 Resource    ../../files/keywords.resource
 Resource    keys.resource
-Test Setup       Setup
+Test Setup       Test Setup
 Test Teardown    Teardown
 *** Test Cases ***
 test_re
@@ -63,3 +63,7 @@ Check
 
     Should Not Be Equal As Integers    ${{$values[1][1].find('127.0.0.1')}}    -1
     Should Be Equal As Strings    ${values}[1][2:]    ['SYSDBA', 'NONE', '${host}', '${name}']
+
+Test Setup
+    Skip If Embedded
+    Setup
