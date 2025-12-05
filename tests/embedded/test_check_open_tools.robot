@@ -13,7 +13,6 @@ test_open
 
     Select From Main Menu    Database|Convert Database
     Check Warning
-    Close Dialog    Database Conversion    #temp
 
     Select From Main Menu    Tools|Database Statistic
     Check Warning
