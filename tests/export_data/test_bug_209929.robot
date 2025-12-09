@@ -59,9 +59,9 @@ test_export_in_existing_folder
     
 
     Select Main Window
-    Clear Table Selection    0
+    Clear Table Selected data    0
     Select Table Cell Area    0    1    2    3    4    
-    Select From Table Cell Popup Menu On Selected Cells    0    Export|Selection
+    Select From Table Cell Popup Menu On Selected Cells    0    Export|Selected data
     
     Select Dialog    Export Data
     Push Button    exportButton
@@ -98,5 +98,5 @@ Init
     Push Button    execute-script-command
     Sleep    1s
     Select Table Cell Area    0    1    2    0    2    
-    Select From Table Cell Popup Menu On Selected Cells    0    Export|Selection
+    Select From Table Cell Popup Menu On Selected Cells    0    Export|Selected data
     Select Dialog    Export Data

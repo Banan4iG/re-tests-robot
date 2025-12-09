@@ -58,7 +58,7 @@ Init
 
 Init double
     Select Main Window
-    Select From Table Cell Popup Menu    0    0    0   Export|Table
+    Select From Table Cell Popup Menu    0    0    0   Export|All data
     Select Dialog    Export Data
     Push Button    exportButton
     Select Dialog    Confirmation

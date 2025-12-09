@@ -18,11 +18,27 @@ test_data_with_space
     Type Into Table Cell    0    0    TEST COL    PUBLIC
     Send Keyboard Event    VK_ENTER
     Push Button    2
+    ${connect_type}=    Get Environment Variable    CONNECT_TYPE    server
+    IF    ${{$connect_type == 'embedded'}}
+        Select Main Window
+        Open connection
+    END    
     ${res1}=    Execute    SELECT * FROM NEW_TABLE_1
+    IF    ${{$connect_type == 'embedded'}}
+        Select Main Window
+        Open connection
+        Click On Tree Node    0    New Connection|Tables (11)|NEW_TABLE_1    2
+        Select Tab As Context    Data
+        Sleep    2s
+    END  
     Click On Table Cell    0    0    TEST COL
     Push Button    1
     Push Button    2
     Sleep    2s
+    IF    ${{$connect_type == 'embedded'}}
+        Select Main Window
+        Open connection
+    END 
     ${res2}=    Execute    SELECT * FROM NEW_TABLE_1
     Should Be Equal    ${res1}    [('PUBLIC',)]
     Should Be Equal    ${res2}    []

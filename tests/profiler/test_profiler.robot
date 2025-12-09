@@ -265,7 +265,7 @@ test_stop_after_lose_connect
 test_auto-reload_tree
     Start Profiler    select * from employee
     Push Button    finishButton
-    Push Button    reload-connection-tree-selection-command    # temp
+    Push Button    reload-connection-tree-Selected data-command    # temp
     Expand All Tree Nodes    0
     Sleep   1s
     @{values}=    Get Tree Node Child Names    0    New Connection|Tables (17)

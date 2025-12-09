@@ -20,8 +20,14 @@ test_1
     ${ver}=     Set Variable    ${info}[1]
     ${srv_ver} =    Set Variable    ${info}[2]
     IF  ${{$ver == '5' and $srv_ver == 'RedDatabase'}}
-        Should Be Equal As Strings    ${tree1}     ['Domains', 'Tables', 'Global Temporary Tables', 'Views', 'Procedures (1)', 'Functions', 'Packages', 'Table Triggers', 'DDL Triggers', 'DB Triggers', 'Sequences', 'Exceptions', 'UDFs', 'Users', 'Roles', 'Indices', 'Tablespaces', 'Jobs']
-        Should Be Equal As Strings    ${tree2}     ['Domains', 'Tables (1)', 'Global Temporary Tables', 'Views', 'Procedures', 'Functions', 'Packages', 'Table Triggers', 'DDL Triggers', 'DB Triggers', 'Sequences', 'Exceptions', 'UDFs', 'Users', 'Roles', 'Indices', 'Tablespaces', 'Jobs']
+        ${connect_type}=    Get Environment Variable    CONNECT_TYPE    server
+        IF    ${{$connect_type == 'embedded'}}
+            Should Be Equal As Strings    ${tree1}     ['Domains', 'Tables', 'Global Temporary Tables', 'Views', 'Procedures (1)', 'Functions', 'Packages', 'Table Triggers', 'DDL Triggers', 'DB Triggers', 'Sequences', 'Exceptions', 'UDFs', 'Roles', 'Indices', 'Tablespaces']
+            Should Be Equal As Strings    ${tree2}     ['Domains', 'Tables (1)', 'Global Temporary Tables', 'Views', 'Procedures', 'Functions', 'Packages', 'Table Triggers', 'DDL Triggers', 'DB Triggers', 'Sequences', 'Exceptions', 'UDFs', 'Roles', 'Indices', 'Tablespaces']
+        ELSE
+            Should Be Equal As Strings    ${tree1}     ['Domains', 'Tables', 'Global Temporary Tables', 'Views', 'Procedures (1)', 'Functions', 'Packages', 'Table Triggers', 'DDL Triggers', 'DB Triggers', 'Sequences', 'Exceptions', 'UDFs', 'Users', 'Roles', 'Indices', 'Tablespaces', 'Jobs']
+            Should Be Equal As Strings    ${tree2}     ['Domains', 'Tables (1)', 'Global Temporary Tables', 'Views', 'Procedures', 'Functions', 'Packages', 'Table Triggers', 'DDL Triggers', 'DB Triggers', 'Sequences', 'Exceptions', 'UDFs', 'Users', 'Roles', 'Indices', 'Tablespaces', 'Jobs']
+        END
     ELSE IF    ${{$ver == '2.6'}}
         Should Be Equal As Strings    ${tree1}     ['Domains', 'Tables', 'Global Temporary Tables', 'Views', 'Procedures (1)', 'Table Triggers', 'DB Triggers', 'Sequences', 'Exceptions', 'UDFs', 'Roles', 'Indices']
         Should Be Equal As Strings    ${tree2}     ['Domains', 'Tables (1)', 'Global Temporary Tables', 'Views', 'Procedures', 'Table Triggers', 'DB Triggers', 'Sequences', 'Exceptions', 'UDFs', 'Roles', 'Indices']

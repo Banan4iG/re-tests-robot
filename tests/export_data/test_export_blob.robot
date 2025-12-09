@@ -202,7 +202,7 @@ Init
     Push Button    execute-script-command
     Sleep    1s
     Select Table Cell Area    0    1    2    0    2    
-    Select From Table Cell Popup Menu On Selected Cells    0    Export|Selection
+    Select From Table Cell Popup Menu On Selected Cells    0    Export|Selected data
     Select Dialog    Export Data
     RETURN    ${ver}
 

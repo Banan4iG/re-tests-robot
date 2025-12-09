@@ -28,8 +28,20 @@ Create New Conn
         Select From Combo Box    serverCombo    Red Database (Firebird) 2.X
         Select From Combo Box    authCombo    Basic
     END
-    Type Into Text Field    fileField    employee.fdb
+    ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
+    IF    ${{$connect_type == 'embedded'}}
+        ${info}=    Get Server Info
+        ${home_dir}=     Set Variable    ${info}[0]
+        VAR    ${db_path}    ${home_dir}examples/empbuild/employee.fdb
+        Type Into Text Field    fileField    ${db_path}
+    ELSE
+        Type Into Text Field    fileField    employee.fdb
+    END
     Type Into Text Field    userField    sysdba
     Type Into Text Field    passwordField    masterkey
     Check Check Box    Store Password
+    List Components In Context
+    IF    ${{$connect_type == 'embedded'}}
+        Check Check Box    useEmbeddedCheck
+    END
     Push Button    saveButton

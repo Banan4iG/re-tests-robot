@@ -26,8 +26,8 @@ test_open_compare_db
 test_open_create_db
     Set Shortcut    Create Database
     Send Keyboard Event    VK_Q    	CTRL_MASK
-    Sleep    5s
-    Component Should Exist    nameField
+    Sleep    2s
+    Close Dialog    Create Database
 
 test_open_data_generator
     Set Shortcut    Data Generator
@@ -37,6 +37,7 @@ test_open_data_generator
     Component Should Exist    startButton
 
 test_open_db_stat
+    Skip If Embedded
     Set Shortcut    Database Statistic
     Send Keyboard Event    VK_Q    	CTRL_MASK
     Sleep    2s
@@ -61,6 +62,7 @@ test_open_extract_md
     Component Should Exist    extractButton
 
 test_open_grant_manager
+    Skip If Embedded
     Set Shortcut    Grant Manager
     Open connection
     Send Keyboard Event    VK_Q    	CTRL_MASK
@@ -111,12 +113,14 @@ test_open_editor
     Component Should Exist    execute-script-command
 
 test_open_trace_manager
+    Skip If Embedded
     Set Shortcut    Trace Manager
     Send Keyboard Event    VK_Q    	CTRL_MASK
     Sleep    5s
     Component Should Exist    databaseBox
 
 test_open_user_manager
+    Skip If Embedded
     Set Shortcut    User Manager
     Open connection
     Send Keyboard Event    VK_Q    	CTRL_MASK

@@ -10,10 +10,12 @@ test_alter_domain
     Check Comment
 
 test_alter_table
+    Skip If Embedded
     Init Alter    Tables (10)|EMPLOYEE
     Check Table Comment
     
 test_alter_gtt
+    Skip If Embedded
     Lock Employee
     Execute Immediate    CREATE GLOBAL TEMPORARY TABLE NEW_GTT (TESTS BIGINT) ON COMMIT DELETE ROWS
     Init Alter    Global Temporary Tables (1)|NEW_GTT
@@ -84,6 +86,7 @@ test_alter_udf
     Check Comment
 
 test_alter_user
+    Skip If Embedded
     Check Skip 2.6
     Init Alter    Users (1)|SYSDBA
     Check Comment
@@ -102,6 +105,7 @@ test_alter_ts
     Check Comment
 
 test_alter_job
+    Skip If Embedded
     Check Skip
     Execute Immediate    CREATE JOB NEW_JOB '* * * * *' COMMAND ''
     Init Alter    Jobs (1)|NEW_JOB
@@ -134,7 +138,7 @@ Check Comment
 Init Commit Window
     Select Main Window
     Push Button    submitButton
-    Select Dialog    dialog0
+    Select Dialog    Commiting changes
     Sleep    1s
     ${res}=    Get Text Field Value    0
     Should Not Be Equal As Integers    ${{$res.find('test_comment')}}    -1

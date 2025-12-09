@@ -6,13 +6,13 @@ Test Setup       Setup before every tests
 Test Teardown    Teardown after every tests
 
 *** Test Cases ***
-test_export_selection
+test_export_Selected data
     Open connection
     Click On Tree Node    0    New Connection|Tables (10)|EMPLOYEE    2
     Sleep    1s
     Select Tab As Context    Data
     Select Table Cell Area    0    1    4    19    24    
-    Select From Table Cell Popup Menu On Selected Cells    0    Export|Selection
+    Select From Table Cell Popup Menu On Selected Cells    0    Export|Selected data
     Select Dialog    Export Data
 
     ${row_name}=    Find Table Row    0    FIRST_NAME
@@ -32,7 +32,7 @@ test_export_table
     Click On Tree Node    0    New Connection|Tables (10)|COUNTRY    2
     Sleep    1s
     Select Tab As Context    Data
-    Select From Table Cell Popup Menu    0    0    0   Export|Table
+    Select From Table Cell Popup Menu    0    0    0   Export|All data
 
     Select Dialog    Export Data
     

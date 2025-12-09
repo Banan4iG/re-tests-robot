@@ -3,6 +3,7 @@ Library    RemoteSwingLibrary
 Resource    ../files/keywords.resource
 Test Setup       Setup before every tests
 Test Teardown    Teardown after every tests
+Suite Setup    Skip If Embedded
 
 *** Test Cases ***
 test_alter_domain

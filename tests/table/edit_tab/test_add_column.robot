@@ -129,6 +129,7 @@ test_check_auto_name
     Check in table    column_name=NEW_TABLE_COLUMN_2
 
 test_computed
+    Skip If Embedded
     Init
     Check Check Box    computedCheck
     Select Tab As Context    Computed by
@@ -145,6 +146,7 @@ test_computed
     Should Be Equal As Strings    ${res}    [(2, 4)]
 
 test_check
+    Skip If Embedded
     Init
     Check Check Box    verifyCheck
     Select Tab As Context    Check
@@ -165,6 +167,7 @@ test_check
     Should Be Equal As Strings    ${res}    [(1, 2)]
 
 test_autoincrement_always_identity
+    Skip If Embedded
     ${info}=    Get Server Info
     ${ver}=     Set Variable    ${info}[1]
     Skip If    ${{$ver != '5'}}
@@ -181,6 +184,7 @@ test_autoincrement_always_identity
     Should Be Equal As Strings    ${res}    [(2, 1), (6, 2)]
 
 test_autoincrement_default_identity
+    Skip If Embedded
     ${info}=    Get Server Info
     ${ver}=     Set Variable    ${info}[1]
     Skip If    ${{$ver == '2.6'}}
@@ -209,6 +213,7 @@ test_autoincrement_default_identity
     Should Be Equal As Strings    ${res}    [(${expected_res}), (6, 7), (6, 10)]
 
 test_autoincrement_create_generator
+    Skip If Embedded
     Init autoincrement    newSequenceRadio
     ${info}=    Get Server Info
     ${ver}=     Set Variable    ${info}[1]
@@ -248,6 +253,7 @@ test_autoincrement_create_generator
     END
 
 test_autoincrement_use_generator
+    Skip If Embedded
     Init autoincrement    existingSequenceRadio
     ${info}=    Get Server Info
     ${ver}=     Set Variable    ${info}[1]

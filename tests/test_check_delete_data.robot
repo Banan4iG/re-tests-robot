@@ -4,7 +4,7 @@ Library    Process
 Library    Collections
 Resource    ../files/keywords.resource
 Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Test Teardown    Teardown
 
 *** Test Cases ***
 test_1
@@ -21,6 +21,13 @@ test_1
     Push Button    2
     Sleep    2s
     ${row}=    Find Table Row    0    PUBLIC    TEST_COL
-    ${result}=    Execute    SELECT * from NEW_TABLE_1
     Should Be Equal As Integers    ${row}    -1
+    
+*** Keywords ***
+Teardown
+    System Exit    0
+    ${result}=    Execute    SELECT * from NEW_TABLE_1
     Should Be Equal    ${result}    []
+    Unlock Employee
+    Clear History Files
+    Restore Savedconnections File  

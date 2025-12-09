@@ -12,7 +12,7 @@ test_1
     Insert Into Text Field    0    SELECT * FROM PROJECT
     Push Button    execute-script-command
     Sleep    1s  
-    Select From Table Cell Popup Menu    0    0    0   Export|Table
+    Select From Table Cell Popup Menu    0    0    0   Export|All data
     Select Dialog    Export Data
     Select From Combo Box    typeCombo    CSV
     Select From Combo Box    columnDelimiterCombo    ;

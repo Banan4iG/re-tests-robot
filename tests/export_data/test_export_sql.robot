@@ -60,7 +60,7 @@ test_open_empty_query_editor
     Sleep    1s
     Clear Text Field    0
     Select Table Cell Area    0    1    4    19    24    
-    Select From Table Cell Popup Menu On Selected Cells    0    Export|Selection
+    Select From Table Cell Popup Menu On Selected Cells    0    Export|Selected data
     Select Dialog    Export Data
 
     ${export_path}=    Init SQL
