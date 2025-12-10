@@ -10,9 +10,9 @@ test_save_script
     Select Tab As Context    SQL
     Push Button    saveScriptButton
     ${script_path}=     Catenate    SEPARATOR=    ${TEMPDIR}    /script.sql
-    ${test_base_path}=     Catenate    SEPARATOR=    ${TEMPDIR}    /test.fdb
-    @{files}=    Create List   ${script_path}     ${test_base_path}
-    Delete Files    ${files}
+    ${test_base_path}=     Catenate    SEPARATOR=    ${TEMPDIR}    /test.fdb 
+    # @{files}=    Create List   ${script_path}     ${test_base_path}
+    Remove Files    ${script_path}     ${test_base_path}
     Select Dialog    Save Script
     Type Into Text Field    0    ${script_path}
     Push Button    Save Script
@@ -58,10 +58,16 @@ Create Connect
         Select From Combo Box    serverCombo    Red Database (Firebird) 2.X
         Select From Combo Box    authCombo    Basic
     END
+    Type Into Combobox    hostCombo    localhost
+    Type Into Text Field    portField    3050
     Type Into Text Field    fileField    ${test_base_path}
     Type Into Text Field    userField    sysdba
     Type Into Text Field    passwordField    masterkey
     Check Check Box    Store Password
+    ${connect_type}=    Get Environment Variable    CONNECT_TYPE    server
+    IF    ${{$connect_type == 'embedded'}}
+        Check Check Box    useEmbeddedCheck
+    END
     Push Button    saveButton
 
 Compare DB

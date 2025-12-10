@@ -27,7 +27,6 @@ test_compare
 Init
     Setup before every tests
     Push Button    new-connection-command
-    Clear Text Field    portField
     Type Into Text Field    fileField    employee.fdb
     Type Into Text Field    userField    sysdba
     Type Into Text Field    passwordField    masterkey

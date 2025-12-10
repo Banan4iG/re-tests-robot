@@ -42,6 +42,8 @@ Create DB
     Select Dialog    Create Database
     Set Test Variable    ${db_path}    ${TEMPDIR}${/}test_database.fdb
     Remove File    ${db_path}
+    Type Into Combobox    hostCombo    localhost
+    Type Into Text Field    portField    3050
     Type Into Text Field    pathField    ${db_path}
     Type Into Text Field    userField    SYSDBA
     Type Into Text Field    passwordField    masterkey

@@ -8,6 +8,7 @@ import psutil
 import openpyxl
 import threading
 import stat
+import re
 import firebird.driver as fdb
 from pathlib import Path
 from firebird.driver import connect_server, SrvInfoCode   
@@ -402,10 +403,10 @@ def create_database(script_path: str, base_path: str):
     with open(script_path, "r") as file:
         context = file.read()
     
-    context = context.replace("employee.fdb", base_path)
-    
+    base_path = base_path.replace("\\", "\\\\")
+    new_context = re.sub(r"(CONNECT\s+)(.*?)(\s+USER)", fr"\1{base_path}\3", context)
     with open(script_path, "w") as file:
-        file.write(context)
+        file.write(new_context)
     
     import firebird.driver as fdb
     if is_rdb26():

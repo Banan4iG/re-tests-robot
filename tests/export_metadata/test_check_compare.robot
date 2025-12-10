@@ -57,10 +57,16 @@ Create Connect
         Select From Combo Box    serverCombo    Red Database (Firebird) 2.X
         Select From Combo Box    authCombo    Basic
     END
+    Type Into Combobox    hostCombo    localhost
+    Type Into Text Field    portField    3050
     Type Into Text Field    fileField    ${test_base_path}
     Type Into Text Field    userField    sysdba
     Type Into Text Field    passwordField    masterkey
     Check Check Box    Store Password
+    ${connect_type}=    Get Environment Variable    CONNECT_TYPE    server
+    IF    ${{$connect_type == 'embedded'}}
+        Check Check Box    useEmbeddedCheck
+    END
     Push Button    saveButton
 
 Check Compare DB
