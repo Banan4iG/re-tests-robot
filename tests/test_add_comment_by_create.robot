@@ -133,6 +133,7 @@ test_create_ts
     Check Comment
 
 test_create_job
+    Skip If Embedded
     Check Skip
     Init Create    Jobs    Create job
     Select From Combo Box    jobTypeCombo    BASH

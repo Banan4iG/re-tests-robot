@@ -91,6 +91,7 @@ test_check_library
     
 
 test_connect_with_new_driver
+    [Teardown]    Local Teardown
     Select From Main Menu    System|Drivers
     Push Button    addDriverButton
     Select Dialog    Add New Driver
@@ -110,19 +111,10 @@ test_connect_with_new_driver
     Sleep    2s
     Select From Combo Box    driverCombo    New Driver
     Push Button    Test
+    Sleep    2s
     Select Dialog    Message
     Label Text Should Be    0    The connection test was successful!
     Push Button    OK
-
-    Teardown after every tests
-    Setup before every tests
-    Select From Main Menu    System|Drivers
-    Sleep    1s
-    ${row}=    Find Table Row    driversTable    New Driver   Driver Name
-    Click On Table Cell    driversTable     ${row}    Driver Name
-    Push Button    removeDriverButton
-    Select Dialog    Confirmation
-    Push Button    Yes
 
 add_new_driver_with_same_name
     Select From Main Menu    System|Drivers
@@ -136,3 +128,16 @@ add_new_driver_with_same_name
     Push Button    OK
     Select Dialog    Add New Driver
     Push Button    Cancel
+
+*** Keywords ***
+Local Teardown
+    Teardown after every tests
+    Setup before every tests
+    Select From Main Menu    System|Drivers
+    Sleep    1s
+    ${row}=    Find Table Row    driversTable    New Driver   Driver Name
+    Click On Table Cell    driversTable     ${row}    Driver Name
+    Push Button    removeDriverButton
+    Select Dialog    Confirmation
+    Push Button    Yes
+    Teardown after every tests
