@@ -144,7 +144,7 @@ test_display_with_data
     Click On Table Cell    0    ${row}    PROCESS NAME
 
     @{values}=    Get Table Column Values    1    ACCESS PATH
-    Should Be Equal As Strings    ${values}    ['Select Expression (line 6, column 2)', 'Singularity Check', 'Aggregate', 'Filter', 'Table "DEPARTMENT" Access By ID\\n Bitmap\\n Index "RDB$FOREIGN6" Range Scan (full match)']    strip_spaces=${True}    collapse_spaces=${True}
+    Should Be Equal As Strings    ${values}    ['Select Expression (line 12, column 2)', 'Singularity Check', 'Aggregate', 'Filter', 'Table "DEPARTMENT" Access By ID\\n Bitmap\\n Index "RDB$FOREIGN6" Range Scan (full match)']    strip_spaces=${True}    collapse_spaces=${True}
 
     Uncheck Check Box    accessPathCheck
     Run Keyword And Expect Error    org.robotframework.swing.table.InvalidCellException: The specified table cell (row: 0, column: ACCESS PATH) is invalid.    Get Table Column Values    1    ACCESS PATH
