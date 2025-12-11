@@ -59,7 +59,7 @@ test_export_in_existing_folder
     
 
     Select Main Window
-    Clear Table Selected data    0
+    Clear Table Selection    0
     Select Table Cell Area    0    1    2    3    4    
     Select From Table Cell Popup Menu On Selected Cells    0    Export|Selected data
     

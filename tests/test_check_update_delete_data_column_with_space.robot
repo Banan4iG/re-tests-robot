@@ -27,6 +27,7 @@ test_data_with_space
     IF    ${{$connect_type == 'embedded'}}
         Select Main Window
         Open connection
+        Sleep    2s
         Click On Tree Node    0    New Connection|Tables (11)|NEW_TABLE_1    2
         Select Tab As Context    Data
         Sleep    2s

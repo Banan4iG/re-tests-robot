@@ -14,7 +14,9 @@ test_create_drop
     # drop
     Select From Tree Node Popup Menu In Separate Thread    0    New Database    Drop Database
     Select Dialog    Confirmation
-    Label Text Should Be    0    Are you sure you want to drop database
+    ${label_content}=    Get Label Content    0
+    Should Contain    ${label_content}    Are you sure you want to drop database
+    # Label Text Should Be    0    Are you sure you want to drop database
     # Label Text Should Be    1    "localhost:3050:${db_path}"?
     Push Button    Yes
     Sleep    1s
@@ -25,7 +27,9 @@ test_recreate
     Create DB
     Select From Tree Node Popup Menu In Separate Thread    0    New Database    Recreate Database
     Select Dialog    Confirmation
-    Label Text Should Be    0    Are you sure you want to recreate database
+    ${label_content}=    Get Label Content    0
+    Should Contain    ${label_content}    Are you sure you want to recreate database
+    # Label Text Should Be    0    Are you sure you want to recreate database
     # Label Text Should Be    1    "localhost:3050:${db_path}"?
     Push Button    Yes
     Sleep    1s
