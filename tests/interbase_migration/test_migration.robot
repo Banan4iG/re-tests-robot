@@ -252,6 +252,7 @@ Test
     
 Init connect
     [Arguments]    ${driver}    ${port}    ${db}
+    Type Into Combobox    hostCombo    localhost  
     Clear Text Field    portField
     Type Into Text Field    portField    ${port}
     Clear Text Field    fileField
