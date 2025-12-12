@@ -55,7 +55,7 @@ test_check_library
     Select Dialog    Select JDBC Drivers...
     ${path_to_lib}=    Get Path To Lib 
     Clear Text Field    0
-    Type Into Text Field    0    ${path_to_lib}/jaybird-5.jar
+    Type Into Text Field    0    ${path_to_lib}/reddatabase.driver.5.jar
     Push Button    Select
     Select Dialog    Add New Driver
     Sleep    2s
@@ -100,7 +100,7 @@ test_connect_with_new_driver
     Select Dialog    Select JDBC Drivers...
     ${path_to_lib}=    Get Path To Lib 
     Clear Text Field    0
-    Type Into Text Field    0    ${path_to_lib}/jaybird-5.jar
+    Type Into Text Field    0    ${path_to_lib}/reddatabase.driver.5.jar
     Push Button    Select
     Sleep    10s
     Select Dialog    Add New Driver
