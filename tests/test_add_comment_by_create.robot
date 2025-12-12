@@ -128,6 +128,7 @@ test_create_index
     Check Comment
 
 test_create_ts
+    Skip If Embedded
     Check Skip
     Init Create    Tablespaces    Create tablespace
     Check Comment
