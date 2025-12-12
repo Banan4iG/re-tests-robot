@@ -79,8 +79,8 @@ test_check_encoding
     Type Into Text Field    nameField    NEW_COLUMN
     Select From Combo Box    typesCombo    VARCHAR
     Select From Combo Box    encodingsCombo    UTF8
-    Select From Combo Box    collatesCombo    UTF8
-    Check commit    ALTER TABLE TEST_TABLE ADD NEW_COLUMN VARCHAR(1) CHARACTER SET UTF8 COLLATE UTF8
+    Select From Combo Box    collatesCombo    UNICODE
+    Check commit    ALTER TABLE TEST_TABLE ADD NEW_COLUMN VARCHAR(1) CHARACTER SET UTF8 COLLATE UNICODE
     Check in table    NEW_COLUMN    VARCHAR
 
 test_check_scale
