@@ -21,7 +21,7 @@ test_data_with_space
     ${connect_type}=    Get Environment Variable    CONNECT_TYPE    server
     IF    ${{$connect_type == 'embedded'}}
         Select Main Window
-        Open connection
+        Close connection
     END    
     ${res1}=    Execute    SELECT * FROM NEW_TABLE_1
     IF    ${{$connect_type == 'embedded'}}
@@ -38,7 +38,7 @@ test_data_with_space
     Sleep    2s
     IF    ${{$connect_type == 'embedded'}}
         Select Main Window
-        Open connection
+        Close connection
     END 
     ${res2}=    Execute    SELECT * FROM NEW_TABLE_1
     Should Be Equal    ${res1}    [('PUBLIC',)]

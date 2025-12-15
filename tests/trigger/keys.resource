@@ -25,7 +25,7 @@ Check
     [Arguments]    ${expected_result}
     ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
     IF    ${{$connect_type == 'embedded'}}
-        Open connection
+        Close connection
     END
     ${result}=    Execute    SELECT RDB$TRIGGER_INACTIVE FROM RDB$TRIGGERS WHERE RDB$TRIGGER_NAME='NEW_TRIGGER'
     Should Be Equal As Strings    ${result}    ${expected_result}

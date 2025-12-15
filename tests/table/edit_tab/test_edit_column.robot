@@ -81,8 +81,7 @@ test_computed_by
     ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
     IF    ${{$connect_type == 'embedded'}}
         Select Main Window
-        Open connection
-        Sleep    1s
+        Close connection
     END
     Execute Immediate    INSERT INTO TEST_TABLE (TEST_COLUMN_2) VALUES (2)
     ${res}=    Execute    SELECT * FROM TEST_TABLE
@@ -98,8 +97,7 @@ test_identity_to_always
     ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
     IF    ${{$connect_type == 'embedded'}}
         Select Main Window
-        Open connection
-        Sleep    1s
+        Close connection
     END
     Execute Immediate    INSERT INTO TEST_TABLE DEFAULT VALUES
     Execute Immediate    INSERT INTO TEST_TABLE DEFAULT VALUES
@@ -117,8 +115,7 @@ test_identity_to_by_default
     ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
     IF    ${{$connect_type == 'embedded'}}
         Select Main Window
-        Open connection
-        Sleep    1s
+        Close connection
     END
     Execute Immediate    INSERT INTO TEST_TABLE DEFAULT VALUES
     Execute Immediate    INSERT INTO TEST_TABLE (TEST_COLUMN) VALUES (10)
@@ -136,8 +133,7 @@ test_identity_start_with
     ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
     IF    ${{$connect_type == 'embedded'}}
         Select Main Window
-        Open connection
-        Sleep    1s
+        Close connection
     END
     Execute Immediate    INSERT INTO TEST_TABLE DEFAULT VALUES
     Execute Immediate    INSERT INTO TEST_TABLE DEFAULT VALUES
@@ -158,8 +154,7 @@ test_identity_increment
     ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
     IF    ${{$connect_type == 'embedded'}}
         Select Main Window
-        Open connection
-        Sleep    1s
+        Close connection
     END
     Execute Immediate    INSERT INTO TEST_TABLE DEFAULT VALUES
     Execute Immediate    INSERT INTO TEST_TABLE DEFAULT VALUES
@@ -188,8 +183,7 @@ test_add_new_gen_without_identity
     ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
     IF    ${{$connect_type == 'embedded'}}
         Select Main Window
-        Open connection
-        Sleep    1s
+        Close connection
     END
     Execute Immediate    INSERT INTO TEST_TABLE DEFAULT VALUES
     Execute Immediate    INSERT INTO TEST_TABLE DEFAULT VALUES
@@ -216,8 +210,7 @@ test_add_use_gen_without_identity
     ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
     IF    ${{$connect_type == 'embedded'}}
         Select Main Window
-        Open connection
-        Sleep    1s
+        Close connection
     END
     Execute Immediate    INSERT INTO TEST_TABLE DEFAULT VALUES
     Execute Immediate    INSERT INTO TEST_TABLE DEFAULT VALUES
@@ -241,8 +234,7 @@ test_identity_to_new_gen
     ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
     IF    ${{$connect_type == 'embedded'}}
         Select Main Window
-        Open connection
-        Sleep    1s
+        Close connection
     END
     Execute Immediate    INSERT INTO TEST_TABLE DEFAULT VALUES
     Execute Immediate    INSERT INTO TEST_TABLE DEFAULT VALUES
@@ -263,8 +255,7 @@ test_identity_to_use_gen
     ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
     IF    ${{$connect_type == 'embedded'}}
         Select Main Window
-        Open connection
-        Sleep    1s
+        Close connection
     END
     Execute Immediate    INSERT INTO TEST_TABLE DEFAULT VALUES
     Execute Immediate    INSERT INTO TEST_TABLE DEFAULT VALUES

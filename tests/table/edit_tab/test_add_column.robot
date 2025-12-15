@@ -143,8 +143,7 @@ test_computed
     ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
     IF    ${{$connect_type == 'embedded'}}
         Select Main Window
-        Open connection
-        Sleep    7s
+        Close connection
     END
     Execute Immediate    INSERT INTO TEST_TABLE VALUES (2)
     ${res}=    Execute    SELECT * FROM TEST_TABLE
@@ -167,8 +166,7 @@ test_check
     ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
     IF    ${{$connect_type == 'embedded'}}
         Select Main Window
-        Open connection
-        Sleep    7s
+        Close connection
     END
     Execute Immediate    INSERT INTO TEST_TABLE VALUES (1,2)
     Run Keyword And Expect Error    STARTS:DatabaseError:    Execute Immediate    INSERT INTO TEST_TABLE VALUES (1,6)
@@ -188,8 +186,7 @@ test_autoincrement_always_identity
     ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
     IF    ${{$connect_type == 'embedded'}}
         Select Main Window
-        Open connection
-        Sleep    7s
+        Close connection
     END
     Execute Immediate    INSERT INTO TEST_TABLE (ID) VALUES (2)
     Execute Immediate    INSERT INTO TEST_TABLE (ID) VALUES (6)
@@ -222,8 +219,7 @@ test_autoincrement_default_identity
     ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
     IF    ${{$connect_type == 'embedded'}}
         Select Main Window
-        Open connection
-        Sleep    7s
+        Close connection
     END   
     Execute Immediate    INSERT INTO TEST_TABLE (ID) VALUES (2)
     Execute Immediate    INSERT INTO TEST_TABLE (ID) VALUES (6)
@@ -261,8 +257,7 @@ test_autoincrement_create_generator
     ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
     IF    ${{$connect_type == 'embedded'}}
         Select Main Window
-        Open connection
-        Sleep    7s
+        Close connection
     END  
     Execute Immediate    INSERT INTO TEST_TABLE (ID) VALUES (1)
     Execute Immediate    INSERT INTO TEST_TABLE (ID) VALUES (2)
@@ -301,8 +296,7 @@ test_autoincrement_use_generator
     ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
     IF    ${{$connect_type == 'embedded'}}
         Select Main Window
-        Open connection
-        Sleep    7s
+        Close connection
     END
     Execute Immediate    INSERT INTO TEST_TABLE (ID) VALUES (2)
     Execute Immediate    INSERT INTO TEST_TABLE (ID) VALUES (6)
