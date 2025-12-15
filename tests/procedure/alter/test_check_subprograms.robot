@@ -1,7 +1,6 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource    ../../../files/keywords.resource
-Resource    keys.resource
 Test Setup       Setup
 Test Teardown    Teardown after every tests
 
@@ -61,6 +60,12 @@ test_empty_remove
     Sleep    2s
 
 *** Keywords ***
+Setup
+    ${info}=    Get Server Info
+    ${ver}=     Set Variable    ${info}[1]
+    Skip If    ${{$ver == '2.6'}}
+    Setup before every tests
+
 Init proc
     Lock Employee
     Execute Immediate    CREATE OR ALTER PROCEDURE TEST AS DECLARE PROCEDURE TEST_SUB ( PAR1 INTEGER ) RETURNS ( PAR2 INTEGER ) AS DECLARE PAR3 TYPE OF CUSTNO; BEGIN PAR2 = 2; END DECLARE FUNCTION TEST_FUNC RETURNS INTEGER AS DECLARE PAR3 TYPE OF CUSTNO; BEGIN RETURN 123; END BEGIN END

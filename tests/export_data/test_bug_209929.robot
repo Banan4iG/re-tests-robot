@@ -1,5 +1,6 @@
-*** Settings ***
 # See https://tracker.red-soft.ru/issues/209929
+
+*** Settings ***
 Library    RemoteSwingLibrary
 Resource    ../../files/keywords.resource
 Resource    key.resource
