@@ -15,11 +15,6 @@ test_single_statement
     [Teardown]    Teardown
 
 *** Keywords ***
-Select Driver
-    [Arguments]    ${driver}
-    Select From Tree Node Popup Menu    0    New Connection    Connection properties
-    Select From Combo Box    driverCombo    ${driver}
-
 Teardown
     Check Tool
     Teardown after every tests
@@ -38,10 +33,8 @@ Check Tool
 
 Run Script
     [Arguments]    ${button}
-    Select Driver    RedDatabase JDBC Driver 6
     Open connection
     Clear Text Field    0
     Type Into Text Field    0    SELECT * FROM EMPLOYEE;
     Push Button    ${button}
     Sleep    1s
-    Select Driver    RedDatabase JDBC Driver 6
