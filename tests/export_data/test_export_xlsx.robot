@@ -56,7 +56,7 @@ test_execute_to_file
 test_max_row
     [Timeout]    5m
     Lock Employee
-    Add Rows
+    Add Rows    1048576
     Open connection
     Clear Text Field    0
     Insert Into Text Field    0    SELECT * FROM TEST_TABLE
