@@ -107,10 +107,10 @@ def set_urls(urls: str):
         f.write(context)
 
 def get_path_to_lib():
-    return os.environ.get('DIST', 'C:\\Program Files\\RDBExpert') + "/lib"
+    return os.environ.get('DIST', 'D:\\projects\\RDBExpert') + "/lib"
 
 def get_path():
-    DIST = os.environ.get('DIST', 'C:\\Program Files\\RDBExpert')
+    DIST = os.environ.get('DIST', 'D:\\projects\\RDBExpert')
     COVERAGE = os.environ.get('COVERAGE')
     bin = get_exe()
     if COVERAGE:
@@ -142,7 +142,7 @@ def copy_dist_path():
         os.chmod(path, stat.S_IWRITE)
         func(path)
 
-    DIST = os.environ.get('DIST', "C:\\Program Files\\RDBExpert")
+    DIST = os.environ.get('DIST', "D:\\projects\\RDBExpert")
     tmp_dir = tempfile.gettempdir()
 
     if os.path.exists(tmp_dir + '/RDBExpert'):
