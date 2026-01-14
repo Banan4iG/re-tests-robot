@@ -1,8 +1,10 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../files/keywords.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
 test_alter_domain
@@ -13,7 +15,7 @@ test_alter_table
     Skip If Embedded
     Init Alter    Tables (10)|EMPLOYEE
     Check Table Comment
-    
+
 test_alter_gtt
     Skip If Embedded
     Lock Employee
@@ -29,15 +31,16 @@ test_alter_procedure_input_p
     Check Proc Tab Comment    Procedures (10)|ADD_EMP_PROJ    Input Parameters    EMP_NO
 
 test_alter_procedure_output_p
-    Check Proc Tab Comment    Procedures (10)|ALL_LANGS    Output Parameters    CODE    
+    Check Proc Tab Comment    Procedures (10)|ALL_LANGS    Output Parameters    CODE
 
 test_alter_procedure_variables
-    Check Proc Tab Comment    Procedures (10)|DELETE_EMPLOYEE    Variables    any_sales 
+    Check Proc Tab Comment    Procedures (10)|DELETE_EMPLOYEE    Variables    any_sales
 
 test_alter_procedure_cursor
     Lock Employee
-    Execute Immediate    CREATE OR ALTER PROCEDURE NEW_PROC AS DECLARE test CURSOR FOR (select * from employee); BEGIN END
-    Check Proc Tab Comment     Procedures (11)|NEW_PROC    Cursors    test
+    Execute Immediate
+    ...    CREATE OR ALTER PROCEDURE NEW_PROC AS DECLARE test CURSOR FOR (select * from employee); BEGIN END
+    Check Proc Tab Comment    Procedures (11)|NEW_PROC    Cursors    test
 
 test_alter_function
     Check Skip 2.6
@@ -112,22 +115,23 @@ test_alter_job
     Check Comment
     Execute Immediate    DROP JOB NEW_JOB
 
+
 *** Keywords ***
 Check Skip
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
+    ${ver}=    Set Variable    ${info}[1]
     ${srv_ver}=    Set Variable    ${info}[2]
     Skip If    ${{not($ver == '5' and $srv_ver == 'RedDatabase')}}
 
 Check Skip 2.6
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
+    ${ver}=    Set Variable    ${info}[1]
     Skip If    ${{$ver == '2.6'}}
 
 Init Alter
     [Arguments]    ${object}
-    Open connection
-    Click On Tree Node   0    New Connection|${object}    2
+    Open Connection
+    Click On Tree Node    0    New Connection|${object}    2
 
 Check Comment
     Select Tab As Context    Comment
@@ -159,6 +163,6 @@ Check Proc Tab Comment
     Init Alter    ${proc_name}
     Select Tab As Context    ${tab}
     ${row}=    Find Table Row    0    ${name}    Name
-    Type Into Table Cell    0   ${row}    Comment     test_comment
+    Type Into Table Cell    0    ${row}    Comment    test_comment
     Send Keyboard Event    VK_ENTER
     Init Commit Window

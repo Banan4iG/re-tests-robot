@@ -1,8 +1,10 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
 test_1
@@ -16,6 +18,7 @@ test_1
     Push Button    execute-statement-command
     Clear Text Field    0
     Check Tool
+
 
 *** Keywords ***
 Check Tool

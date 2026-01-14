@@ -1,8 +1,10 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
 test_1
@@ -29,16 +31,16 @@ test_4
     Select Dialog    Confirmation
     Push Button    Yes
     Select Main Window
-    Tree Node Should Exist    0     New Connection|Exceptions (5)
-    Tree Node Should Not Exist    0     New Connection|Exceptions (6)
+    Tree Node Should Exist    0    New Connection|Exceptions (5)
+    Tree Node Should Not Exist    0    New Connection|Exceptions (6)
 
 
 *** Keywords ***
 Init
     [Arguments]    ${name}    ${text}
     Lock Employee
-    Open connection
-    Select From Tree Node Popup Menu   0    New Connection|Exceptions (5)    Create exception
+    Open Connection
+    Select From Tree Node Popup Menu    0    New Connection|Exceptions (5)    Create exception
     Select Dialog    Create exception
     Clear Text Field    nameField
     Type Into Text Field    nameField    ${name}
@@ -57,8 +59,11 @@ Check
 
     Push Button    commitButton
     Sleep    0.1s
-    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout	0
-    Run Keyword And Expect Error    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Create exception'    Select Dialog    Create exception
+    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
+    Run Keyword And Expect Error
+    ...    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Create exception'
+    ...    Select Dialog
+    ...    Create exception
 
     Select Main Window
-    Tree Node Should Exist    0     New Connection|Exceptions (6)|${name}
+    Tree Node Should Exist    0    New Connection|Exceptions (6)|${name}

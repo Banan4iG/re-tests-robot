@@ -1,19 +1,25 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
 test_1
-    Open connection
+    Open Connection
     Recompile
     Recompile
-    
+
 
 *** Keywords ***
 Recompile
-    Run Keyword In Separate Thread    Select From Tree Node Popup Menu    0    New Connection|Procedures (10)    Recompile all procedures
+    Run Keyword In Separate Thread
+    ...    Select From Tree Node Popup Menu
+    ...    0
+    ...    New Connection|Procedures (10)
+    ...    Recompile all procedures
     Select Dialog    Confirmation
     Label Text Should Be    0    All Procedures will be recompiled. Continue?
     Push Button    Yes

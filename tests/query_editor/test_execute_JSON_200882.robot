@@ -1,20 +1,23 @@
+*** Comments ***
 # See RS-200882
 
+
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
 
 
 *** Test Cases ***
 test_execute
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
+    ${ver}=    Set Variable    ${info}[1]
     ${srv_ver}=    Set Variable    ${info}[2]
     Skip If    ${{not($ver == '5' and $srv_ver == 'RedDatabase')}}
     Lock Employee
-    Open connection
+    Open Connection
     Sleep    2s
     Clear Text Field    0
     Select From Main Menu    Edit|Open file
@@ -25,5 +28,5 @@ test_execute
     Select Main Window
     Run Keyword In Separate Thread    Push Button    execute-script-command
     Sleep    5s
-    ${value}=     Get Table Cell Value    0    0    0
+    ${value}=    Get Table Cell Value    0    0    0
     Should Be Equal As Strings    ${value}    83a40513-ecd3-1f52-b2eb-3c8bb9de94e5-7

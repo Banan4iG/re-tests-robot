@@ -1,14 +1,15 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown
 
 
 *** Test Cases ***
 test_execute
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
+    ${ver}=    Set Variable    ${info}[1]
     ${srv_ver}=    Set Variable    ${info}[2]
     IF    ${{$ver == '5' and $srv_ver == 'RedDatabase'}}
         Init    test_script5.sql
@@ -19,7 +20,6 @@ test_execute
     END
     Sleep    5s
     Push Button    editor-stop-on-error-command
-
 
 test_cancel
     Init    test_script26.sql
@@ -33,7 +33,7 @@ test_cancel
 Init
     [Arguments]    ${file}
     Lock Employee
-    Open connection
+    Open Connection
     Sleep    2s
     Clear Text Field    0
     Select From Main Menu    Edit|Open file
@@ -46,5 +46,5 @@ Init
     Run Keyword In Separate Thread    Push Button    execute-script-command
 
 Teardown
-    Teardown after every tests
+    Teardown After Every Tests
     Run Keyword And Ignore Error    Execute Immediate    DROP USER TEST_USER

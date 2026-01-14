@@ -1,12 +1,15 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Library    os
-Library    platform
-Library    Collections
-Resource    ../../files/keywords.resource
-Resource    keys.resource
-Test Setup       Test Setup
-Test Teardown    Teardown
+Library             RemoteSwingLibrary
+Library             os
+Library             platform
+Library             Collections
+Resource            ../../files/keywords.resource
+Resource            keys.resource
+
+Test Setup          Test Setup
+Test Teardown       Teardown
+
+
 *** Test Cases ***
 test_re
     Init
@@ -18,17 +21,17 @@ test_re
     Type Into Text Field    passwordField    123
     Push Button    saveButton
     Push Button    connectButton
-    Open connection
+    Open Connection
     Check    127.0.0.1
-
 
 test_isql
     Skip
     Init
     Run Isql
-    Open connection
+    Open Connection
     Check    ::1
     Stop Server
+
 
 *** Keywords ***
 Init
@@ -37,7 +40,7 @@ Init
     Execute Immediate    GRANT TEST_ROLE TO TEST_USER;
 
 Teardown
-    Teardown after every tests
+    Teardown After Every Tests
     Execute Immediate    REVOKE TEST_ROLE FROM TEST_USER;
     Execute Immediate    DROP USER TEST_USER;
     Execute Immediate    DROP ROLE TEST_ROLE;
@@ -52,14 +55,17 @@ Check
     Sleep    2s
     Select Dialog    Select Attachment
     @{values}=    Get Table Values    attachmentsTable
-    
-    VAR    ${count}    ${{len($values)}}
+
+    VAR    ${count}=    ${{len($values)}}
     Should Be Equal As Integers    ${count}    2    msg=В списке недостоточно коннектов
 
     Sort List    ${values}
 
     Should Not Be Equal As Integers    ${{$values[0][1].find('${ip}')}}    -1
-    Should Be Equal As Strings    ${values}[0][2:]    ['TEST_USER', 'TEST_ROLE', '${host}', '${name}']    ignore_case=${True}
+    Should Be Equal As Strings
+    ...    ${values}[0][2:]
+    ...    ['TEST_USER', 'TEST_ROLE', '${host}', '${name}']
+    ...    ignore_case=${True}
 
     Should Not Be Equal As Integers    ${{$values[1][1].find('127.0.0.1')}}    -1
     Should Be Equal As Strings    ${values}[1][2:]    ['SYSDBA', 'NONE', '${host}', '${name}']

@@ -1,8 +1,10 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
 test_1
@@ -11,11 +13,17 @@ test_1
 
 test_2
     Init    NEW PACK    BEGIN\n\nEND    BEGIN\n\nEND
-    Check    CREATE OR ALTER PACKAGE "NEW PACK" AS BEGIN END    RECREATE PACKAGE BODY "NEW PACK" AS BEGIN END    NEW PACK
+    Check
+    ...    CREATE OR ALTER PACKAGE "NEW PACK" AS BEGIN END
+    ...    RECREATE PACKAGE BODY "NEW PACK" AS BEGIN END
+    ...    NEW PACK
 
 test_3
     Init    "NEW PACK"    BEGIN\n\nEND    BEGIN\n\nEND
-    Check    CREATE OR ALTER PACKAGE """NEW PACK""" AS BEGIN END    RECREATE PACKAGE BODY """NEW PACK""" AS BEGIN END    "NEW PACK"
+    Check
+    ...    CREATE OR ALTER PACKAGE """NEW PACK""" AS BEGIN END
+    ...    RECREATE PACKAGE BODY """NEW PACK""" AS BEGIN END
+    ...    "NEW PACK"
 
 test_4
     Init    NEW_PACK    BEGIN\n\nEND    ${EMPTY}
@@ -34,18 +42,18 @@ test_6
 Init
     [Arguments]    ${name}    ${header}    ${body}
     Lock Employee
-    Open connection
-    Select From Tree Node Popup Menu   0    New Connection|Packages    Create package
+    Open Connection
+    Select From Tree Node Popup Menu    0    New Connection|Packages    Create package
     Select Dialog    Create package
     Clear Text Field    nameField
     Type Into Text Field    nameField    ${name}
-    
-    Select Tab As Context   Header
+
+    Select Tab As Context    Header
     Clear Text Field    0
     Type Into Text Field    0    ${header}
-    
+
     Select Dialog    Create package
-    Select Tab As Context   Body    
+    Select Tab As Context    Body
     Clear Text Field    0
     Type Into Text Field    0    ${body}
 
@@ -56,20 +64,20 @@ Check
     [Arguments]    ${create_header}    ${create_body}    ${name}
     Select Dialog    Commiting changes
     Sleep    1s
-    
-    ${row_header}=     Find Table Row    0    CREATE OR ALTER PACKAGE
+
+    ${row_header}=    Find Table Row    0    CREATE OR ALTER PACKAGE
     ${value}=    Get Table Cell Value    0    ${row_header}    Status
     Should Be Equal As Strings    ${value}    Success
     Click On Table Cell    0    ${row_header}    Name operation
     ${res}=    Get Text Field Value    0
     Should Be Equal As Strings    ${res}    ${create_header}    strip_spaces=${True}    collapse_spaces=${True}
     Log Variables
-    ${row_body}=     Find Table Row    0    OPERATION
-    
+    ${row_body}=    Find Table Row    0    OPERATION
+
     IF    $create_body != None
         ${value}=    Get Table Cell Value    0    ${row_body}    Status
         Should Be Equal As Strings    ${value}    Success
-        Click On Table Cell    0    ${row_body}    Name operation 
+        Click On Table Cell    0    ${row_body}    Name operation
         ${res}=    Get Text Field Value    0
         Should Be Equal As Strings    ${res}    ${create_body}    strip_spaces=${True}    collapse_spaces=${True}
     ELSE
@@ -78,12 +86,14 @@ Check
 
     Push Button    commitButton
     Sleep    0.1s
-    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout	0
-    Run Keyword And Expect Error    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Create package'    Select Dialog    Create package
+    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
+    Run Keyword And Expect Error
+    ...    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Create package'
+    ...    Select Dialog
+    ...    Create package
 
     Select Main Window
-    Tree Node Should Exist    0     New Connection|Packages (1)|${name}
-
+    Tree Node Should Exist    0    New Connection|Packages (1)|${name}
 
 Check error
     Select Dialog    Commiting changes
@@ -97,6 +107,6 @@ Check error
     Push Button    Yes
     Sleep    0.1s
     Select Main Window
-    Tree Node Should Exist    0     New Connection|Packages
+    Tree Node Should Exist    0    New Connection|Packages
     Set Jemmy Timeouts    0
-    Tree Node Should Not Exist    0     New Connection|Packages (1)
+    Tree Node Should Not Exist    0    New Connection|Packages (1)

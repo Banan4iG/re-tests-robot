@@ -1,8 +1,10 @@
 *** Settings ***
-Library         RemoteSwingLibrary
-Resource        ../../files/keywords.resource
-Test Setup      Setup before every tests
-Test Teardown   Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
 test_create_role
@@ -17,11 +19,12 @@ test_create_role_with_commit
     Init Role    NEW ROLE    test_commit
     Check Role    COMMENT ON ROLE "NEW ROLE" IS 'test_commit'    NEW ROLE
 
+
 *** Keywords ***
 Init Role
     [Arguments]    ${name}    ${description}
     Lock Employee
-    Open connection
+    Open Connection
     Expand Tree Node    0    New Connection
     Sleep    1s
     Select From Tree Node Popup Menu    0    New Connection|Roles    Create role
@@ -29,7 +32,9 @@ Init Role
     Clear Text Field    nameField
     Type Into Text Field    nameField    ${name}
 
-    Run Keyword If    """${description}""" != """${EMPTY}"""    Fill Description Field    ${description}
+    IF    """${description}""" != """${EMPTY}"""
+        Fill Description Field    ${description}
+    END
 
     Push Button    submitButton
 
@@ -46,9 +51,9 @@ Check Role
     Should Be Equal As Strings    ${res}    ${text}
     Push Button    commitButton
     Sleep    0.1s
-    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout	0
+    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
     Run Keyword And Expect Error
     ...    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Create role'
     ...    Select Dialog    Create role
     Select Main Window
-    Tree Node Should Exist    0     New Connection|Roles (1)|${name}
+    Tree Node Should Exist    0    New Connection|Roles (1)|${name}

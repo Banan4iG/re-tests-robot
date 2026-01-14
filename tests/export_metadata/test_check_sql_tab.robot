@@ -1,31 +1,32 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource   ../../files/keywords.resource 
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
 test_save_script
     Start
     Select Tab As Context    SQL
     Push Button    saveScriptButton
-    ${script_path}=     Catenate    SEPARATOR=    ${TEMPDIR}    /script.sql
-    ${test_base_path}=     Catenate    SEPARATOR=    ${TEMPDIR}    /test.fdb 
-    # @{files}=    Create List   ${script_path}     ${test_base_path}
-    Remove Files    ${script_path}     ${test_base_path}
+    ${script_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /script.sql
+    ${test_base_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /test.fdb
+    # @{files}=    Create List    ${script_path}    ${test_base_path}
+    Remove Files    ${script_path}    ${test_base_path}
     Select Dialog    Save Script
     Type Into Text Field    0    ${script_path}
     Push Button    Save Script
     Sleep    2s
     Close Dialog    Message
     Select Main Window
-    Open connection
+    Open Connection
     Execute Immediate    ALTER TABLE COUNTRY ADD NEW_COLUMN BIGINT
-    Create Database   ${script_path}    ${test_base_path}
+    Create Database    ${script_path}    ${test_base_path}
     Create Connect    ${test_base_path}
     Compare DB
     # Delete Objects    ${rdb5}
-    
 
 test_execute_script
     Start
@@ -36,8 +37,9 @@ test_execute_script
     Combo Box Should Be Enabled    connectionsCombo
     ${text}=    Get Text Field Value    0
     Should Not Be Equal As Strings    ${text}    ${EMPTY}
-    Button Should Be Enabled   execute-script-command
+    Button Should Be Enabled    execute-script-command
     # Delete Objects    ${rdb5}
+
 
 *** Keywords ***
 Start
@@ -53,7 +55,7 @@ Create Connect
     Push Button    new-connection-command
     Sleep    1s
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
+    ${ver}=    Set Variable    ${info}[1]
     IF    ${{$ver == '2.6'}}
         Select From Combo Box    serverCombo    Red Database (Firebird) 2.X
         Select From Combo Box    authCombo    Basic

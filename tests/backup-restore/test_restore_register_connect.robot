@@ -1,43 +1,45 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
- 
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
-test_1    
+test_1
     ${bk_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /employee_backup.fbk
     Remove File    ${bk_path}
-    Open connection
+    Open Connection
     Select From Main Menu    Database|Database Backup/Restore
     Uncheck All Checkboxes
-    Clear Text Field     backupFileField
+    Clear Text Field    backupFileField
     Type Into Text Field    backupFileField    ${bk_path}
-    
+
     Push Button    backupButton
     Sleep    2s
     Select Dialog    Message
     Label Text Should Be    0    Backup completed successfully!
     Push Button    OK
 
-    File Should Exist    ${bk_path} 
+    File Should Exist    ${bk_path}
 
     Select Main Window
-    ${mew_db_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /employee_restore.fdb    
-    Restore    ${mew_db_path}    
+    ${mew_db_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /employee_restore.fdb
+    Restore    ${mew_db_path}
 
     # check register
     Select Main Window
     Tree Node Should Exist    0    employee_restore
-    
+
     Select From Main Menu    Database|Database Backup/Restore
     ${mew_db_path1}=    Catenate    SEPARATOR=    ${TEMPDIR}    /employee_restore.fdb1
     Restore    ${mew_db_path1}
     Select Main Window
     Tree Node Should Exist    0    employee_restore (Copy)
 
-    Remove Files    ${mew_db_path}    ${mew_db_path1}    ${bk_path} 
+    Remove Files    ${mew_db_path}    ${mew_db_path1}    ${bk_path}
+
 
 *** Keywords ***
 Restore

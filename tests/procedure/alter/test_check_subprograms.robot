@@ -1,8 +1,10 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../../files/keywords.resource
-Test Setup       Setup
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../../../files/keywords.resource
+
+Test Setup          Setup
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
 test_1
@@ -15,8 +17,16 @@ test_1
     ${sub_proc}=    Get Text Field Value    0
     Click On Table Cell    0    ${row_func}    Name
     ${sub_func}=    Get Text Field Value    0
-    Should Be Equal As Strings    ${sub_proc}    DECLARE PROCEDURE TEST_SUB ( PAR1 INTEGER ) RETURNS ( PAR2 INTEGER ) AS DECLARE PAR3 TYPE OF CUSTNO; BEGIN PAR2 = 2; END    strip_spaces=${True}    collapse_spaces=${True}
-    Should Be Equal As Strings    ${sub_func}    DECLARE FUNCTION TEST_FUNC RETURNS INTEGER AS DECLARE PAR3 TYPE OF CUSTNO; BEGIN RETURN 123; END    strip_spaces=${True}    collapse_spaces=${True}
+    Should Be Equal As Strings
+    ...    ${sub_proc}
+    ...    DECLARE PROCEDURE TEST_SUB ( PAR1 INTEGER ) RETURNS ( PAR2 INTEGER ) AS DECLARE PAR3 TYPE OF CUSTNO; BEGIN PAR2 = 2; END
+    ...    strip_spaces=${True}
+    ...    collapse_spaces=${True}
+    Should Be Equal As Strings
+    ...    ${sub_func}
+    ...    DECLARE FUNCTION TEST_FUNC RETURNS INTEGER AS DECLARE PAR3 TYPE OF CUSTNO; BEGIN RETURN 123; END
+    ...    strip_spaces=${True}
+    ...    collapse_spaces=${True}
 
 test_alter
     Init proc
@@ -24,17 +34,19 @@ test_alter
     ${row_func}=    Find Table Row    0    FUNCTION    Datatype
     Click On Table Cell    0    ${row_proc}    Name
     Clear Text Field    0
-    Type Into Text Field    0    DECLARE PROCEDURE TEST_SUB AS BEGIN END\n 
+    Type Into Text Field    0    DECLARE PROCEDURE TEST_SUB AS BEGIN END\n
 
-    Check ddl    CREATE OR ALTER PROCEDURE TEST AS DECLARE PROCEDURE TEST_SUB AS BEGIN END DECLARE FUNCTION TEST_FUNC RETURNS INTEGER AS DECLARE PAR3 TYPE OF CUSTNO; BEGIN RETURN 123; END BEGIN END;
-    
+    Check ddl
+    ...    CREATE OR ALTER PROCEDURE TEST AS DECLARE PROCEDURE TEST_SUB AS BEGIN END DECLARE FUNCTION TEST_FUNC RETURNS INTEGER AS DECLARE PAR3 TYPE OF CUSTNO; BEGIN RETURN 123; END BEGIN END;
+
     Select Tab As Context    Subprograms
     Click On Table Cell    0    ${row_func}    Name
     Clear Text Field    0
-    Type Into Text Field    0    DECLARE FUNCTION TEST_FUNC RETURNS INTEGER AS BEGIN END\n 
+    Type Into Text Field    0    DECLARE FUNCTION TEST_FUNC RETURNS INTEGER AS BEGIN END\n
 
-    Check ddl    CREATE OR ALTER PROCEDURE TEST AS DECLARE PROCEDURE TEST_SUB AS BEGIN END DECLARE FUNCTION TEST_FUNC RETURNS INTEGER AS BEGIN END BEGIN END;
-    
+    Check ddl
+    ...    CREATE OR ALTER PROCEDURE TEST AS DECLARE PROCEDURE TEST_SUB AS BEGIN END DECLARE FUNCTION TEST_FUNC RETURNS INTEGER AS BEGIN END BEGIN END;
+
 test_remove
     Init proc
     ${row_proc}=    Find Table Row    0    PROCEDURE    Datatype
@@ -48,8 +60,8 @@ test_remove
 test_empty_remove
     Lock Employee
     Execute Immediate    CREATE OR ALTER PROCEDURE TEST AS BEGIN END
-    Open connection
-    Click On Tree Node   0    New Connection|Procedures (11)|TEST    2
+    Open Connection
+    Click On Tree Node    0    New Connection|Procedures (11)|TEST    2
     Select Tab As Context    Subprograms
 
     Push Button    addRowButton
@@ -59,18 +71,20 @@ test_empty_remove
     Push Button    deleteRowButton
     Sleep    2s
 
+
 *** Keywords ***
 Setup
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
+    ${ver}=    Set Variable    ${info}[1]
     Skip If    ${{$ver == '2.6'}}
-    Setup before every tests
+    Setup Before Every Tests
 
 Init proc
     Lock Employee
-    Execute Immediate    CREATE OR ALTER PROCEDURE TEST AS DECLARE PROCEDURE TEST_SUB ( PAR1 INTEGER ) RETURNS ( PAR2 INTEGER ) AS DECLARE PAR3 TYPE OF CUSTNO; BEGIN PAR2 = 2; END DECLARE FUNCTION TEST_FUNC RETURNS INTEGER AS DECLARE PAR3 TYPE OF CUSTNO; BEGIN RETURN 123; END BEGIN END
-    Open connection
-    Click On Tree Node   0    New Connection|Procedures (11)|TEST    2
+    Execute Immediate
+    ...    CREATE OR ALTER PROCEDURE TEST AS DECLARE PROCEDURE TEST_SUB ( PAR1 INTEGER ) RETURNS ( PAR2 INTEGER ) AS DECLARE PAR3 TYPE OF CUSTNO; BEGIN PAR2 = 2; END DECLARE FUNCTION TEST_FUNC RETURNS INTEGER AS DECLARE PAR3 TYPE OF CUSTNO; BEGIN RETURN 123; END BEGIN END
+    Open Connection
+    Click On Tree Node    0    New Connection|Procedures (11)|TEST    2
     Select Tab As Context    Subprograms
 
 Check ddl

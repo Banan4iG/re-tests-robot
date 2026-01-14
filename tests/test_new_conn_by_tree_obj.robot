@@ -1,29 +1,32 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Library    Process
-Library    Collections
-Resource    ../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
-Suite Setup    Skip If Embedded
+Library             RemoteSwingLibrary
+Library             Process
+Library             Collections
+Resource            ../files/keywords.resource
+
+Suite Setup         Skip If Embedded
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
 test_1
     Create New Conn
     Select From Tree Node Popup Menu    0    New Connection 1    Connect
-    Tree Node Should Not Be Leaf        0    New Connection 1
+    Tree Node Should Not Be Leaf    0    New Connection 1
 
 test_2
     Create New Conn
-    Click On Tree Node              0    New Connection 1    2
+    Click On Tree Node    0    New Connection 1    2
     Tree Node Should Not Be Leaf    0    New Connection 1
+
 
 *** Keywords ***
 Create New Conn
     Push Button    new-connection-command
     Sleep    1s
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
+    ${ver}=    Set Variable    ${info}[1]
     IF    ${{$ver == '2.6'}}
         Select From Combo Box    serverCombo    Red Database (Firebird) 2.X
         Select From Combo Box    authCombo    Basic
@@ -33,8 +36,8 @@ Create New Conn
     ${connect_type}=    Get Environment Variable    CONNECT_TYPE    server
     IF    ${{$connect_type == 'embedded'}}
         ${info}=    Get Server Info
-        ${home_dir}=     Set Variable    ${info}[0]
-        VAR    ${db_path}    ${home_dir}examples/empbuild/employee.fdb
+        ${home_dir}=    Set Variable    ${info}[0]
+        VAR    ${db_path}=    ${home_dir}examples/empbuild/employee.fdb
         Type Into Text Field    fileField    ${db_path}
     ELSE
         Type Into Text Field    fileField    employee.fdb

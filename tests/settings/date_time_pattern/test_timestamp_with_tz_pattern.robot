@@ -1,13 +1,15 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource   ../../../files/keywords.resource
-Resource    keys.resource 
-Test Setup       Setup
-Test Teardown    Teardown
+Library             RemoteSwingLibrary
+Resource            ../../../files/keywords.resource
+Resource            keys.resource
+
+Test Setup          Setup
+Test Teardown       Teardown
+
 
 *** Test Cases ***
 test_1
-    Init table    TIMESTAMP WITH TIME ZONE   15.01.2025 15:35:43.180 +3:00
+    Init table    TIMESTAMP WITH TIME ZONE    15.01.2025 15:35:43.180 +3:00
     Set Pattern    Timestamp with timezone Pattern Format    y-M-d H-m-s-S x
     ${value}=    Test
     Should Be Equal As Strings    ${value}    2025-1-15 15-35-43-1 +03
@@ -38,7 +40,7 @@ test_5
 
 test_6
     Init table    TIMESTAMP WITH TIME ZONE    05.02.2025 15:43:03.008 +3:00
-    Set Pattern    Timestamp with timezone Pattern Format   MMM/yyyy HH.mm.ss.SSS O
+    Set Pattern    Timestamp with timezone Pattern Format    MMM/yyyy HH.mm.ss.SSS O
     ${value}=    Test
     Should Be Equal As Strings    ${value}    Feb/2025 15.43.03.008 GMT+3
 

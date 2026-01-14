@@ -1,8 +1,10 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
 test_execute_sql
@@ -13,16 +15,17 @@ test_execute_statement
     Execute    execute-statement-command
     Check Tool
 
+
 *** Keywords ***
 Execute
     [Arguments]    ${button}
-    Open connection
+    Open Connection
     Clear Text Field    0
     Type Into Text Field    0    select cast(:test as integer) from rdb$database
     Push Button    ${button}
     Select Dialog    Input parameters
     Type Into Text Field    0    1234
-    Push Button     OK
+    Push Button    OK
     Select Main Window
     Sleep    1s
     Push Button    ${button}
@@ -30,10 +33,10 @@ Execute
     ${value}=    Get Text Field Value    0
     Clear Text Field    0
     Type Into Text Field    0    4321
-    Push Button     OK
+    Push Button    OK
     Should Be Equal As Strings    ${value}    1234
-    
-    #cancel
+
+    # cancel
     Select Main Window
     Sleep    1s
     Push Button    ${button}

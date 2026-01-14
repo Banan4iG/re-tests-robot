@@ -1,8 +1,10 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource   ../../files/keywords.resource 
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
 test_check_no_ignore
@@ -12,7 +14,7 @@ test_check_no_ignore
     @{result}=    Check Ignore    ${script_without_properties}
     # Delete Objects    ${rdb5}
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
+    ${ver}=    Set Variable    ${info}[1]
     IF    '${ver}' == '2.6'
         Should Be Equal As Strings    ${result}    [12, 3, 10, 14, 3, 23]
     ELSE
@@ -42,8 +44,14 @@ Extract
     Select Tab As Context    SQL
     ${script}=    Get Text Field Value    0
     RETURN    ${script}
-    
+
 Check Ignore
     [Arguments]    ${script}
-    @{result}    Create List    ${{$script.count("COMMENT ON")}}    ${{$script.count("COMPUTED BY")}}    ${{$script.count("PRIMARY KEY")}}    ${{$script.count("FOREIGN KEY")}}    ${{$script.count("UNIQUE")}}    ${{$script.count("CHECK (")}}
+    @{result}=    Create List
+    ...    ${{$script.count("COMMENT ON")}}
+    ...    ${{$script.count("COMPUTED BY")}}
+    ...    ${{$script.count("PRIMARY KEY")}}
+    ...    ${{$script.count("FOREIGN KEY")}}
+    ...    ${{$script.count("UNIQUE")}}
+    ...    ${{$script.count("CHECK (")}}
     RETURN    @{result}

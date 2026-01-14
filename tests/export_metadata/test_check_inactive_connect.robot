@@ -1,8 +1,9 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource   ../../files/keywords.resource 
-Test Setup       Init
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Init
+Test Teardown       Teardown After Every Tests
 
 
 *** Test Cases ***
@@ -23,9 +24,10 @@ test_compare
     Label Text Should Be    0    Unable to compare.
     Label Text Should Be    1    At least one of the connections is inactive.
 
+
 *** Keywords ***
 Init
-    Setup before every tests
+    Setup Before Every Tests
     Push Button    new-connection-command
     Type Into Text Field    fileField    employee.fdb
     Type Into Text Field    userField    sysdba

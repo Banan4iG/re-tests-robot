@@ -1,15 +1,16 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
 
 
 *** Test Cases ***
 test_1
     Lock Employee
     Check Tool
-    Open connection
+    Open Connection
     Sleep    2s
     Clear Text Field    0
     Type Into Text Field    0    SELECT * FROM COUNTRY;
@@ -21,7 +22,7 @@ test_1
 test_cancel
     Lock Employee
     Check Tool
-    Open connection
+    Open Connection
     Sleep    2s
     Clear Text Field    0
     Type Into Text Field    0    EXECUTE BLOCK AS BEGIN WHILE (1 = 1) DO BEGIN END end
@@ -30,6 +31,7 @@ test_cancel
     Push Button    stop-execution-command
     Clear Text Field    0
     Check Tool
+
 
 *** Keywords ***
 Check Tool

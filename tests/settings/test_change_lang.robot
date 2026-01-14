@@ -1,9 +1,11 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Library    Process
-Resource    ../../files/keywords.resource
-Test Setup    Setup
-Test Teardown    Teardown
+Library             RemoteSwingLibrary
+Library             Process
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup
+Test Teardown       Teardown
+
 
 *** Test Cases ***
 test_no_reload
@@ -11,7 +13,7 @@ test_no_reload
     Push Button    No
     System Exit    0
     Sleep    5s
-    Setup before every tests
+    Setup Before Every Tests
     Check
 
 test_auto_reload
@@ -20,20 +22,21 @@ test_auto_reload
     Connect To RDBExpert
     Check
 
+
 *** Keywords ***
 Setup
     Backup User Properties
-    Setup before every tests
+    Setup Before Every Tests
 
 Teardown
-    Teardown after every tests
+    Teardown After Every Tests
     Restore User Properties
 
 Init
     Select From Main Menu    System|Preferences
     Select Dialog    Preferences
     Click On Tree Node    0    Display
-    ${row}=    Find Table Row    0    Interface language    1   
+    ${row}=    Find Table Row    0    Interface language    1
     Click On Table Cell    0    ${row}    2
     Run Keyword And Ignore Error    Select From Combo Box    0    Russian
     Push Button    applyButton

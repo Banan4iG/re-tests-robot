@@ -1,12 +1,15 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Library    OperatingSystem
-Resource    ../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown
+Library             RemoteSwingLibrary
+Library             OperatingSystem
+Resource            ../files/keywords.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown
+
 
 *** Variables ***
-${db_path}
+${db_path}      ${EMPTY}
+
 
 *** Test Cases ***
 test_create_drop
@@ -35,10 +38,11 @@ test_recreate
     Sleep    1s
     File Should Exist    ${db_path}
 
+
 *** Keywords ***
 Teardown
     Remove File    ${db_path}
-    Teardown after every tests
+    Teardown After Every Tests
 
 Create DB
     # create
@@ -55,14 +59,12 @@ Create DB
     List Components In Context
     Type Into Text Field    connectionName    New Database
     ${connect_type}=    Get Environment Variable    CONNECT_TYPE    server
-    IF    ${{$connect_type == 'embedded'}}
-        Check Check Box    embeddedCheck
-    END
+    IF    ${{$connect_type == 'embedded'}}    Check Check Box    embeddedCheck
     Push Button    createButton
     Select Main Window
     Tree Node Should Exist    0    New Database
     File Should Exist    ${db_path}
-    
+
     Click On Tree Node    0    New Database    2
     Expand All Tree Nodes    0
     Tree Node Should Not Be Leaf    0    New Database

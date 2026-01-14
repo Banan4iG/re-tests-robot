@@ -1,15 +1,16 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource   ../../files/keywords.resource 
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
- 
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
 test_1
-    Open connection
+    Open Connection
     Select From Tree Node Popup Menu    0    New Connection    Extract Metadata
-    Select Tab As Context    SQL    
+    Select Tab As Context    SQL
     Push Button    saveScriptButton
     Select Dialog    Warning
     Push Button    OK
@@ -19,7 +20,7 @@ test_1
     Push Button    executeScriptButton
     Select Dialog    Warning
     Push Button    OK
-    
+
     Select Main Window
     Push Button    selectAllExtractAttributesButton
     Push Button    executeScriptButton

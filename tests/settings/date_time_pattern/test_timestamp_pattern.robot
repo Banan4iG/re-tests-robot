@@ -1,9 +1,11 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource   ../../../files/keywords.resource
-Resource    keys.resource 
-Test Setup       Setup before every tests
-Test Teardown    Teardown
+Library             RemoteSwingLibrary
+Resource            ../../../files/keywords.resource
+Resource            keys.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown
+
 
 *** Test Cases ***
 test_1

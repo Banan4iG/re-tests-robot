@@ -1,9 +1,11 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Resource    keys.resource
-Test Setup       Setup
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+Resource            keys.resource
+
+Test Setup          Setup
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
 test_1
@@ -12,7 +14,7 @@ test_1
 
 test_2
     Init    NEW SEQ    2    2
-    Check    CREATE OR ALTER SEQUENCE "NEW SEQ" START WITH 2 INCREMENT BY 2   NEW SEQ
+    Check    CREATE OR ALTER SEQUENCE "NEW SEQ" START WITH 2 INCREMENT BY 2    NEW SEQ
 
 test_3
     Init    NEW_SEQ    0    0
@@ -21,10 +23,10 @@ test_3
 test_4
     Init    NEW_SEQ    ${EMPTY}    ${EMPTY}
     Error check
-    
+
 test_5
     Init    "NEW_SEQ"    ${EMPTY}    2
-    Check    CREATE OR ALTER SEQUENCE """NEW_SEQ""" START WITH 0 INCREMENT BY 2   "NEW_SEQ"
+    Check    CREATE OR ALTER SEQUENCE """NEW_SEQ""" START WITH 0 INCREMENT BY 2    "NEW_SEQ"
 
 test_6
     Init    ${EMPTY}    2    2
@@ -37,8 +39,8 @@ test_6
 Init
     [Arguments]    ${name}    ${start}    ${increment}
     Lock Employee
-    Open connection
-    Select From Tree Node Popup Menu   0    New Connection|Sequences (2)    Create sequence
+    Open Connection
+    Select From Tree Node Popup Menu    0    New Connection|Sequences (2)    Create sequence
     Select Dialog    Create sequence
     Clear Text Field    nameField
     Type Into Text Field    nameField    ${name}
@@ -60,11 +62,14 @@ Check
 
     Push Button    commitButton
     Sleep    0.1s
-    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout	0
-    Run Keyword And Expect Error    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Create sequence'    Select Dialog    Create sequence
+    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
+    Run Keyword And Expect Error
+    ...    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Create sequence'
+    ...    Select Dialog
+    ...    Create sequence
 
     Select Main Window
-    Tree Node Should Exist    0     New Connection|Sequences (3)|${name}
+    Tree Node Should Exist    0    New Connection|Sequences (3)|${name}
 
 Error check
     Select Dialog    Commiting changes
@@ -77,5 +82,5 @@ Error check
     Select Dialog    Confirmation
     Push Button    Yes
     Select Main Window
-    Tree Node Should Exist    0     New Connection|Sequences (2)
-    Tree Node Should Not Exist    0     New Connection|Sequences (3)
+    Tree Node Should Exist    0    New Connection|Sequences (2)
+    Tree Node Should Not Exist    0    New Connection|Sequences (3)

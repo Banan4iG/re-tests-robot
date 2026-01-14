@@ -1,8 +1,10 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
 test_name
@@ -17,7 +19,9 @@ test_data_type
     Select Tab As Context    Type
     Select From Combo Box    typesCombo    BIGINT
     Check    ALTER DOMAIN TEST_DOMAIN TYPE BIGINT
-    Check SQL    SELECT t.RDB$TYPE_NAME FROM RDB$FIELDS f JOIN RDB$TYPES t ON f.RDB$FIELD_TYPE = t.RDB$TYPE WHERE f.RDB$FIELD_NAME = 'TEST_DOMAIN' AND t.RDB$FIELD_NAME = 'RDB$FIELD_TYPE'    INT64
+    Check SQL
+    ...    SELECT t.RDB$TYPE_NAME FROM RDB$FIELDS f JOIN RDB$TYPES t ON f.RDB$FIELD_TYPE = t.RDB$TYPE WHERE f.RDB$FIELD_NAME = 'TEST_DOMAIN' AND t.RDB$FIELD_NAME = 'RDB$FIELD_TYPE'
+    ...    INT64
     ${res}=    Get Selected Item From Combo Box    typesCombo
     Should Be Equal As Strings    ${res}    BIGINT
 
@@ -46,13 +50,15 @@ test_comment
     Type Into Text Field    0    Test Comment Text
     Check    COMMENT ON DOMAIN TEST_DOMAIN IS 'Test Comment Text'
     Check SQL    SELECT RDB$DESCRIPTION FROM RDB$FIELDS WHERE RDB$FIELD_NAME = 'TEST_DOMAIN'    Test Comment Text
-    
+
     Select Tab As Context    Comment
     Clear Text Field    0
     Type Into Text Field    0    Test Comment Text For Special Button
     Push Button    updateCommentButton
-    Check SQL    SELECT RDB$DESCRIPTION FROM RDB$FIELDS WHERE RDB$FIELD_NAME = 'TEST_DOMAIN'    Test Comment Text For Special Button
-    
+    Check SQL
+    ...    SELECT RDB$DESCRIPTION FROM RDB$FIELDS WHERE RDB$FIELD_NAME = 'TEST_DOMAIN'
+    ...    Test Comment Text For Special Button
+
 test_sql
     Init    CREATE DOMAIN TEST_DOMAIN AS BIGINT
     Select Tab As Context    Type
@@ -63,7 +69,11 @@ test_sql
     Select Main Window
     Select Tab As Context    SQL
     ${res}=    Get Text Field Value    0
-    Should Be Equal As Strings    ${res}    ALTER DOMAIN TEST_DOMAIN DROP CONSTRAINT ADD CHECK (VALUE > 5) TYPE INT128;    strip_spaces=${True}    collapse_spaces=${True}
+    Should Be Equal As Strings
+    ...    ${res}
+    ...    ALTER DOMAIN TEST_DOMAIN DROP CONSTRAINT ADD CHECK (VALUE > 5) TYPE INT128;
+    ...    strip_spaces=${True}
+    ...    collapse_spaces=${True}
     Clear Text Field    0
     Type Into Text Field    0    ALTER DOMAIN TEST_DOMAIN DROP CONSTRAINT ADD CHECK (VALUE > 5);
     Check    ALTER DOMAIN TEST_DOMAIN DROP CONSTRAINT ADD CHECK (VALUE > 5)
@@ -83,7 +93,7 @@ test_ddl_to_create
 
 test_collation
     Init    CREATE DOMAIN TEST_DOMAIN AS VARCHAR(123) CHARACTER SET UTF8 COLLATE UTF8
-    Select From Tree Node Popup Menu   0    New Connection|Domains (16)|TEST_DOMAIN    Edit domain
+    Select From Tree Node Popup Menu    0    New Connection|Domains (16)|TEST_DOMAIN    Edit domain
     ${res}=    Get Selected Item From Combo Box    collatesCombo
     Should Be Equal As Strings    ${res}    UTF8
 
@@ -91,8 +101,8 @@ test_default_value_check_comment
     Lock Employee
     Execute Immediate    CREATE DOMAIN TEST_DOMAIN AS BIGINT DEFAULT 3 CHECK (VALUE < 10)
     Execute Immediate    COMMENT ON DOMAIN TEST_DOMAIN IS 'Test Comment';
-    Open connection
-    Select From Tree Node Popup Menu   0    New Connection|Domains (16)|TEST_DOMAIN    Edit domain    
+    Open Connection
+    Select From Tree Node Popup Menu    0    New Connection|Domains (16)|TEST_DOMAIN    Edit domain
     Select Tab As Context    Default Value
     ${res}=    Get Text Field Value    0
     Should Be Equal As Strings    ${res}    3
@@ -106,13 +116,15 @@ test_default_value_check_comment
     Should Be Equal As Strings    ${res}    Test Comment
     Select Main Window
 
+
 *** Keywords ***
 Init
     [Arguments]    ${text}    ${name}=TEST_DOMAIN
     Lock Employee
     Execute Immediate    ${text}
-    Open connection
-    Select From Tree Node Popup Menu   0    New Connection|Domains (16)|${name}    Edit domain
+    Open Connection
+    Select From Tree Node Popup Menu    0    New Connection|Domains (16)|${name}    Edit domain
+    Select Tab As Context
 
 Check
     [Arguments]    ${text}
@@ -130,5 +142,4 @@ Check SQL
     [Arguments]    ${sql}    ${check}
     ${res}=    Execute    ${sql}
     ${cleared_res}=    Evaluate    "${res}".replace("[(", "").replace(")]", "").replace(",", "").replace("'", "")
-    Should Be Equal As Strings    ${cleared_res}    ${check}    strip_spaces=${True}    collapse_spaces=${True}    
-
+    Should Be Equal As Strings    ${cleared_res}    ${check}    strip_spaces=${True}    collapse_spaces=${True}

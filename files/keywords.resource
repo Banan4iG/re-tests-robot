@@ -1,16 +1,17 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Library    help_func.py
-Library    OperatingSystem
+Library     OperatingSystem
+Library     RemoteSwingLibrary
+Library     help_func.py
+
 
 *** Keywords ***
-Setup before every tests
+Setup Before Every Tests
     Backup Savedconnections File
     ${path_to_exe}=    Get Path
     # Log    ${path_to_exe}    console=True
     TRY
         Start Application    rdb_expert    ${path_to_exe}    timeout=20    remote_port=60900
-        # Start Application    rdb_expert     java -javaagent:D:/re-tests-robot/lib/jacocoagent.jar=destfile=D:/re-tests-robot/results/jacoco.exec,output=file -jar D:/projects/RDBExpert/rdbexpert.jar -exe_path=D:/projects/RDBExpert/bin/RDBExpert.exe    timeout=20
+        # Start Application    rdb_expert    java -javaagent:D:/re-tests-robot/lib/jacocoagent.jar=destfile=D:/re-tests-robot/results/jacoco.exec,output=file -jar D:/projects/RDBExpert/rdbexpert.jar -exe_path=D:/projects/RDBExpert/bin/RDBExpert.exe    timeout=20
     EXCEPT    RemoteSwingLibraryTimeoutError: Agent port not received before timeout
         Log    RDBExpert failed to launch    console=True
         Kill Rdbexpert
@@ -18,16 +19,16 @@ Setup before every tests
 
     Select Main Window
 
-Teardown after every tests
+Teardown After Every Tests
     System Exit    0
     Unlock Employee
     Clear History Files
-    Restore Savedconnections File        
+    Restore Savedconnections File
 
-Open connection
+Open Connection
     Click On Tree Node    0    New Connection    2
 
-Close connection
+Close Connection
     Select From Tree Node Popup Menu    0    New Connection    Disconnect
 
 Connect To RDBExpert

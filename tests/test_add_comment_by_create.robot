@@ -1,8 +1,10 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../files/keywords.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
 test_create_domain
@@ -120,7 +122,7 @@ test_create_exception
 
 test_create_udf
     Init Create    UDFs    Create UDF
-    Check Comment 
+    Check Comment
 
 test_create_index
     Init Create    Indices (38)    Create index
@@ -140,30 +142,29 @@ test_create_job
     Select From Combo Box    jobTypeCombo    BASH
     Check Comment
 
+
 *** Keywords ***
 Check Skip
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
+    ${ver}=    Set Variable    ${info}[1]
     ${srv_ver}=    Set Variable    ${info}[2]
     Skip If    ${{not($ver == '5' and $srv_ver == 'RedDatabase')}}
 
 Check Skip 2.6
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
+    ${ver}=    Set Variable    ${info}[1]
     Skip If    ${{$ver == '2.6'}}
 
 Init Create
     [Arguments]    ${object}    ${menu}
-    Open connection
-    Select From Tree Node Popup Menu   0    New Connection|${object}    ${menu}
+    Open Connection
+    Select From Tree Node Popup Menu    0    New Connection|${object}    ${menu}
     Select Dialog    dialog0
 
 Check Procedure
     [Arguments]    ${tab}
     Select Tab As Context    ${tab}
-    IF    '${tab}' == 'Variables'
-        Push Button    addRowButton    
-    END
+    IF    '${tab}' == 'Variables'    Push Button    addRowButton
     Type Into Table Cell    0    0    Name    TEST
     Set Table Cell Value    0    0    Datatype    BIGINT
     Type Into Table Cell    0    0    Comment    test_comment
@@ -176,11 +177,10 @@ Check Procedure
     ${res}=    Get Text Field Value    0
     Should Not Be Equal As Integers    ${{$res.find('test_comment')}}    -1
 
-
 Init Column
     Type Into Table Cell    0    0    Name    TEST
     Set Table Cell Value    0    0    Datatype    BIGINT
-    Click On Table Cell    0    0    Name    2      
+    Click On Table Cell    0    0    Name    2
     Send Keyboard Event    VK_ENTER
 
 Check Column Comment

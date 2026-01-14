@@ -1,8 +1,9 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
 
 
 *** Test Cases ***
@@ -14,10 +15,11 @@ test_single_statement
     Run Script    execute-statement-command
     [Teardown]    Teardown
 
+
 *** Keywords ***
 Teardown
     Check Tool
-    Teardown after every tests
+    Teardown After Every Tests
 
 Check Tool
     Select From Main Menu    System|Preferences
@@ -33,7 +35,7 @@ Check Tool
 
 Run Script
     [Arguments]    ${button}
-    Open connection
+    Open Connection
     Clear Text Field    0
     Type Into Text Field    0    SELECT * FROM EMPLOYEE;
     Push Button    ${button}

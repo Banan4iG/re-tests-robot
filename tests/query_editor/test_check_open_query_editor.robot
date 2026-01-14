@@ -1,16 +1,18 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
 test_empty_saved
-    Open connection
+    Open Connection
     Sleep    2s
     ${result1}=    Get Text Field Value    0
-    Open connection
-    Open connection
+    Open Connection
+    Open Connection
     Sleep    2s
     ${result2}=    Get Text Field Value    0
     Should Be Equal    ${result1}    ${EMPTY}
@@ -18,11 +20,11 @@ test_empty_saved
 
 test_empty
     Delete Query Files
-    Open connection
+    Open Connection
     Sleep    2s
     ${result1}=    Get Text Field Value    0
-    Open connection
-    Open connection
+    Open Connection
+    Open Connection
     Sleep    2s
     ${result2}=    Get Text Field Value    0
     Sleep    1s
@@ -30,15 +32,15 @@ test_empty
     Should Be Equal    ${result2}    ${EMPTY}
 
 test_saved
-    Open connection
+    Open Connection
     Sleep    2s
     Type Into Text Field    0    select * from employee;
-    Open connection
-    Open connection
+    Open Connection
+    Open Connection
     Sleep    2s
     ${result1}=    Get Text Field Value    0
-    Open connection
-    Open connection
+    Open Connection
+    Open Connection
     Sleep    2s
     ${result2}=    Get Text Field Value    0
     Clear Text Field    0

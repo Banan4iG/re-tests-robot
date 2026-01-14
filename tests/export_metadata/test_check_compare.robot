@@ -1,11 +1,13 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Library    firebird.driver
-Library    fdb
-Library    platform
-Resource   ../../files/keywords.resource 
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Library             firebird.driver
+Library             fdb
+Library             platform
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
 test_same_compare
@@ -22,18 +24,17 @@ test_check_warning
     Select Dialog    Warning
     Label Text Should Be    0    The tool does not support work with selected connection.
 
-
 test_switch_database
-    ${test_base_path}=     Catenate    SEPARATOR=    ${TEMPDIR}    /test.fdb
-    Remove File   ${test_base_path}
+    ${test_base_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /test.fdb
+    Remove File    ${test_base_path}
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
+    ${ver}=    Set Variable    ${info}[1]
     IF    $ver != '2.6'
         firebird.driver.Create Database    database=${test_base_path}    user=SYSDBA    password=masterkey
     ELSE
-        ${home}=     Set Variable    ${info}[0]
-        ${system}    platform.System
-        ${fd_lib}    Set Variable If    '${system}' == 'Linux'    lib/libfbclient.so    bin/fbclient.dll
+        ${home}=    Set Variable    ${info}[0]
+        ${system}=    platform.System
+        ${fd_lib}=    Set Variable If    '${system}' == 'Linux'    lib/libfbclient.so    bin/fbclient.dll
         fdb.Load Api    ${home}${fd_lib}
         fdb.Create Database    database=${test_base_path}    user=SYSDBA    password=masterkey
     END
@@ -46,6 +47,7 @@ test_switch_database
     Select Main Window
     Push Button    switchTargetSourceButton
     Check Compare DB    Objects to create - 0    Objects to drop - 59
+
 
 *** Keywords ***
 Create Connect
@@ -70,7 +72,7 @@ Create Connect
     Push Button    saveButton
 
 Check Compare DB
-    [Arguments]    ${label_create}    ${label_drop}    
+    [Arguments]    ${label_create}    ${label_drop}
     Push Button    compareButton
     Sleep    2s
     Select Dialog    Message

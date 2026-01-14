@@ -1,17 +1,20 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Resource    keys.resource
-Test Setup       Setup
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+Resource            keys.resource
+
+Test Setup          Setup
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
 test_start
     Test    startButton
-    
+
 test_select
     Test    attachmentButton
-    
+
+
 *** Keywords ***
 Test
     [Arguments]    ${button}
@@ -20,4 +23,3 @@ Test
     Select Dialog    Warning
     Label Text Should Be    0    Selected connection is unavailable.
     Push Button    OK
-    

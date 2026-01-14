@@ -1,18 +1,21 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Library    Process
-Library    Collections
-Resource    ../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Library             Process
+Library             Collections
+Resource            ../files/keywords.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
 test_1
     Skip If Embedded
-    Open connection
+    Open Connection
     Check text tooltip    Disconnect
-    Open connection
+    Open Connection
     Check text tooltip    Connect
+
 
 *** Keywords ***
 Check text tooltip

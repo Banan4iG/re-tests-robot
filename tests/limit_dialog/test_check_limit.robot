@@ -1,13 +1,15 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Test Setup       Setup
-Test Teardown    Teardown
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup
+Test Teardown       Teardown
+
 
 *** Test Cases ***
 test_1
     [Setup]    Setup
-    Open connection
+    Open Connection
     Sleep    1s
     Execute Script
     Sleep    3s
@@ -19,7 +21,7 @@ test_1
     Select Main Window
     Execute Script
     Sleep    3s
-    
+
     Select Dialog    Result Set Limit Reached
     Push Button    Increase limit
 
@@ -54,17 +56,18 @@ test_1
     Push Button    Fetch all
     Sleep    3s
     Dialog Should Not Be Open    Result Set Limit Reached
-  
+
     ${current_row_count}=    Get Table Row Count    0
-    Should Be Equal As Integers    ${current_row_count}    100000 
+    Should Be Equal As Integers    ${current_row_count}    100000
+
 
 *** Keywords ***
 Setup
     Backup User Properties
-    Setup before every tests
+    Setup Before Every Tests
 
 Teardown
-    Teardown after every tests
+    Teardown After Every Tests
     Restore User Properties
 
 Check Limit

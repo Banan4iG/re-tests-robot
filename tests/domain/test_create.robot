@@ -1,8 +1,10 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
 test_name
@@ -25,7 +27,7 @@ test_data_type
     Combo Box Should Be Disabled    collatesCombo
     Check Data Type    CREATE DOMAIN TEST_DOMAIN AS BIGINT
 
-    Select From Combo Box    typesCombo    BLOB SUB_TYPE <0    
+    Select From Combo Box    typesCombo    BLOB SUB_TYPE <0
     Text Field Should Be Enabled    sizeField
     Text Field Should Be Disabled    scaleField
     Text Field Should Be Enabled    subtypeField
@@ -82,7 +84,7 @@ test_data_type
     Text Field Should Be Enabled    sizeField
     Text Field Should Be Enabled    scaleField
     Text Field Should Be Disabled    subtypeField
-    Combo Box Should Be Disabled    encodingsCombo    
+    Combo Box Should Be Disabled    encodingsCombo
     Combo Box Should Be Disabled    collatesCombo
     Clear Text Field    sizeField
     Type Into Text Field    sizeField    10
@@ -163,7 +165,7 @@ test_data_type
     Check Data Type    CREATE DOMAIN TEST_DOMAIN AS VARCHAR(123) CHARACTER SET UTF8 COLLATE UNICODE
 
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
+    ${ver}=    Set Variable    ${info}[1]
     IF    ${{$ver == '3'}}
         Select From Combo Box    typesCombo    BOOLEAN
         Text Field Should Be Disabled    sizeField
@@ -241,7 +243,7 @@ test_comment
     Should Be Equal As Strings    ${res}    ${EMPTY}    strip_spaces=${True}    collapse_spaces=${True}
     Type Into Text Field    0    Test Comment Text
     Check    COMMENT ON DOMAIN TEST_DOMAIN IS 'Test Comment Text'
-    
+
 test_sql
     Init
     Select Tab As Context    SQL
@@ -252,12 +254,13 @@ test_sql
     Type Into Text Field    0    CREATE DOMAIN TEST_DOMAIN AS CHAR(111) CHARACTER SET WIN1254 COLLATE WIN1254
     Check    CREATE DOMAIN TEST_DOMAIN AS CHAR(111) CHARACTER SET WIN1254 COLLATE WIN1254
 
+
 *** Keywords ***
 Init
     [Arguments]    ${name}=TEST_DOMAIN
     Lock Employee
-    Open connection
-    Select From Tree Node Popup Menu   0    New Connection|Domains (15)    Create domain
+    Open Connection
+    Select From Tree Node Popup Menu    0    New Connection|Domains (15)    Create domain
     Sleep    0.5s
     Select Dialog    Create domain
     Clear Text Field    nameField
@@ -273,7 +276,7 @@ Check
     Should Be Equal As Strings    ${res}    ${text}    strip_spaces=${True}    collapse_spaces=${True}
     Push Button    commitButton
     Select Main Window
-    Tree Node Should Exist    0     New Connection|Domains (16)|${name}
+    Tree Node Should Exist    0    New Connection|Domains (16)|${name}
 
 Check Data Type
     [Arguments]    ${text}    ${name}=TEST_DOMAIN

@@ -1,7 +1,9 @@
 *** Settings ***
-Resource    ../../files/keywords.resource
-Suite Setup    Suite Setup
-Suite Teardown    Suite Teardown
+Resource            ../../files/keywords.resource
+
+Suite Setup         Suite Setup
+Suite Teardown      Suite Teardown
+
 
 *** Keywords ***
 Suite Setup

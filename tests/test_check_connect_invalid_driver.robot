@@ -1,13 +1,16 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Library    OperatingSystem
-Library    String
-Resource    ../files/keywords.resource
-Test Setup       Init conn
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Library             OperatingSystem
+Library             String
+Resource            ../files/keywords.resource
+
+Test Setup          Init conn
+Test Teardown       Teardown After Every Tests
+
 
 *** Variables ***
-${db_path}
+${db_path}      ${EMPTY}
+
 
 *** Test Cases ***
 test_no_use_default
@@ -22,13 +25,14 @@ test_yes_use_default
     Expand All Tree Nodes    0
     Tree Node Should Not Be Leaf    0    New Connection
 
+
 *** Keywords ***
 Init conn
     Backup Savedconnections File
-    ${build_no}    Get Build No
-    ${home_dir}=	Normalize Path    ~
-    VAR    ${saved_connection_path}    ${home_dir}${/}.rdbexpert${/}${build_no}${/}connection-saved.xml
-    ${content}=     Get File    ${saved_connection_path}
+    ${build_no}=    Get Build No
+    ${home_dir}=    Normalize Path    ~
+    VAR    ${saved_connection_path}=    ${home_dir}${/}.rdbexpert${/}${build_no}${/}connection-saved.xml
+    ${content}=    Get File    ${saved_connection_path}
     ${new_content}=    Replace String    ${content}    <driverid>5555555</driverid>    <driverid>4444444</driverid>
     Create File    ${saved_connection_path}    ${new_content}
 

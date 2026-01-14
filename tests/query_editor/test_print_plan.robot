@@ -1,12 +1,14 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
 test_with_connect
-    Open connection
+    Open Connection
     Clear Text Field    0
     Type Into Text Field    0    SELECT * FROM COUNTRY;
     Push Button    print-plan-command

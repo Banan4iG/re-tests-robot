@@ -1,8 +1,9 @@
 *** Settings ***
-Library    RemoteSwingLibrary
+Library     RemoteSwingLibrary
 Resource    ../../files/keywords.resource
 
+
 *** Keywords ***
-Teardown  
-    Teardown after every tests
+Teardown
+    Teardown After Every Tests
     Restore Audit Profiles

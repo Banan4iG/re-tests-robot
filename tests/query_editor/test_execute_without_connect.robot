@@ -1,8 +1,9 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
 
 
 *** Test Cases ***
@@ -19,6 +20,7 @@ test_execute_statement
 test_execute_in_profiler
     Init
     Push Button    execute-in-profiler-command
+
 
 *** Keywords ***
 Init

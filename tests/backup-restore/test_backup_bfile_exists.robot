@@ -1,8 +1,10 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
 test_1
@@ -27,12 +29,13 @@ test_2
 
 *** Keywords ***
 Init
-    ${bk_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /employee_backup.fbk
+    ${bk_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /employee_backup.fbk
     Remove File    ${bk_path}
-    Open connection
+    Open Connection
     Select From Main Menu    Database|Database Backup/Restore
+    Select Tab    Database backup/restore
     Uncheck All Checkboxes
-    Clear Text Field     backupFileField
+    Clear Text Field    backupFileField
     Type Into Text Field    backupFileField    ${bk_path}
 
     Push Button    backupButton
@@ -40,13 +43,13 @@ Init
     Select Dialog    Message
     Label Text Should Be    0    Backup completed successfully!
     Push Button    OK
-    
+
     File Should Exist    ${bk_path}
 
     Select Main Window
+    Select Tab    Database backup/restore
     Push Button    backupButton
     Select Dialog    Confirmation
     Label Text Should Be    0    The selected file exists.
     Label Text Should Be    1    Overwrite existing file?
     RETURN    ${bk_path}
-    

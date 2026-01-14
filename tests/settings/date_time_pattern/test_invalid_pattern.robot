@@ -1,9 +1,11 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource   ../../../files/keywords.resource
-Resource    keys.resource 
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../../../files/keywords.resource
+Resource            keys.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
 test_1
@@ -17,11 +19,12 @@ test_3
 
 test_4
     Check Skip
-    Test    Time with timezone Pattern Format     zoned time
+    Test    Time with timezone Pattern Format    zoned time
 
 test_5
     Check Skip
     Test    Timestamp with timezone Pattern Format    zoned timestamp
+
 
 *** Keywords ***
 Test
@@ -44,5 +47,5 @@ Test
 
 Check Skip
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
+    ${ver}=    Set Variable    ${info}[1]
     Skip If    ${{$ver != '5'}}

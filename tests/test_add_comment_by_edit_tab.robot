@@ -1,19 +1,21 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../files/keywords.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
-Suite Setup    Skip If Embedded
+Library             RemoteSwingLibrary
+Resource            ../files/keywords.resource
+
+Suite Setup         Skip If Embedded
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
 test_alter_domain
     Init Alter    Domains (15)|ADDRESSLINE
-    Check Comment    RDB$FIELDS 
+    Check Comment    RDB$FIELDS
 
 test_alter_table
     Init Alter    Tables (10)|EMPLOYEE
     Check Table Comment
-    
+
 test_alter_gtt
     Lock Employee
     Execute Immediate    CREATE GLOBAL TEMPORARY TABLE NEW_GTT (TESTS BIGINT) ON COMMIT DELETE ROWS
@@ -65,7 +67,8 @@ test_alter_sequence
     Clear Text Field    0
     Type Into Text Field    0    test_comment
     Push Button    updateCommentButton
-    ${res}=    Execute    select RDB$DESCRIPTION from RDB$GENERATORS where RDB$DESCRIPTION is not NULL and RDB$GENERATOR_NAME = 'EMP_NO_GEN'
+    ${res}=    Execute
+    ...    select RDB$DESCRIPTION from RDB$GENERATORS where RDB$DESCRIPTION is not NULL and RDB$GENERATOR_NAME = 'EMP_NO_GEN'
     Sleep    1s
     Clear Text Field    0
     Push Button    updateCommentButton
@@ -79,7 +82,7 @@ test_alter_udf
     Lock Employee
     Execute Immediate    DECLARE EXTERNAL FUNCTION NEW_UDF RETURNS BIGINT ENTRY_POINT '123' MODULE_NAME '123'
     Init alter    UDFs (1)|NEW_UDF
-    Check Comment     RDB$FUNCTIONS
+    Check Comment    RDB$FUNCTIONS
 
 test_alter_user
     Check Skip 2.6
@@ -114,22 +117,23 @@ test_alter_job
     Check Comment    RDB$JOBS
     Execute Immediate    DROP JOB NEW_JOB
 
+
 *** Keywords ***
 Check Skip
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
+    ${ver}=    Set Variable    ${info}[1]
     ${srv_ver}=    Set Variable    ${info}[2]
     Skip If    ${{not($ver == '5' and $srv_ver == 'RedDatabase')}}
 
 Check Skip 2.6
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
+    ${ver}=    Set Variable    ${info}[1]
     Skip If    ${{$ver == '2.6'}}
 
 Init Alter
     [Arguments]    ${object}
-    Open connection
-    Click On Tree Node   0    New Connection|${object}    2
+    Open Connection
+    Click On Tree Node    0    New Connection|${object}    2
 
 Check Comment
     [Arguments]    ${object}
@@ -142,7 +146,6 @@ Check Comment
     Clear Text Field    0
     Push Button    updateCommentButton
     Should Be Equal    ${res}    [('test_comment',)]
-
 
 Check Table Comment
     Select Tab As Context    Properties

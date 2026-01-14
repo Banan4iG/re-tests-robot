@@ -1,13 +1,15 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Suite Setup    Suite Setup
-Test Setup       Setup before every tests
-Test Teardown    Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Suite Setup         Suite Setup
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown After Every Tests
+
 
 *** Test Cases ***
 test_open
-    Open connection
+    Open Connection
     Select From Main Menu    Database|Database Backup/Restore
     Check Warning
 
@@ -28,6 +30,7 @@ test_open
 
     Select From Main Menu    Tools|Table Validator
     Check Warning
+
 
 *** Keywords ***
 Suite Setup

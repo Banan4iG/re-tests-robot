@@ -1,10 +1,12 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Library    Collections
-Resource    ../../files/keywords.resource
-Resource    keys.resource
-Test Setup       Setup before every tests
-Test Teardown    Teardown
+Library             RemoteSwingLibrary
+Library             Collections
+Resource            ../../files/keywords.resource
+Resource            keys.resource
+
+Test Setup          Setup Before Every Tests
+Test Teardown       Teardown
+
 
 *** Test Cases ***
 test_check_database_properties
@@ -18,7 +20,7 @@ test_check_database_properties
 test_save_to_file_1
     Init Build
     Select From Combo Box    0    RedDatabase 5.0
-    Select Tab As Context   database
+    Select Tab As Context    database
     Check All Checkboxes
     Uncheck Check Box    autoReplaceCheckBox
     Uncheck Check Box    log_trigger_finish
@@ -35,23 +37,23 @@ test_save_to_file_1
     Uncheck Check Box    log_changes_only
     Uncheck Check Box    log_procedure_compile
     Type Into Text Field    textFieldinclude_user_filter    ship
-    Type Into Text Field    textFieldexclude_user_filter   819
+    Type Into Text Field    textFieldexclude_user_filter    819
     Type Into Text Field    textFieldinclude_process_filter    14
     Type Into Text Field    textFieldexclude_process_filter    true
     Type Into Text Field    textFieldinclude_gds_codes    512
-    
+
     Clear Text Field    numberTextFieldmax_sql_length
     Type Into Text Field    numberTextFieldmax_sql_length    4096
     Clear Text Field    numberTextFieldmax_blr_length
     Type Into Text Field    numberTextFieldmax_blr_length    8192
-    
+
     ${conf_path}=    Finish Build
-    Check Build Config   ${conf_path}    0
-    
+    Check Build Config    ${conf_path}    0
+
 test_save_to_file_2
     Init Build
     Select From Combo Box    0    RedDatabase 5.0
-    Select Tab As Context   database
+    Select Tab As Context    database
     Check All Checkboxes
     Uncheck Check Box    autoReplaceCheckBox
     Uncheck Check Box    log_security_incidents
@@ -71,29 +73,29 @@ test_save_to_file_2
     Type Into Text Field    textFieldinclude_filter    ship
     Type Into Text Field    textFieldexclude_filter    819
     Type Into Text Field    textFieldexclude_gds_codes    512
-    
+
     Clear Text Field    numberTextFieldconnection_id
-    Type Into Text Field    numberTextFieldconnection_id     14
+    Type Into Text Field    numberTextFieldconnection_id    14
     Clear Text Field    numberTextFieldmax_dyn_length
-    Type Into Text Field    numberTextFieldmax_dyn_length     1024
+    Type Into Text Field    numberTextFieldmax_dyn_length    1024
     Clear Text Field    numberTextFieldmax_arg_length
-    Type Into Text Field    numberTextFieldmax_arg_length     2048
+    Type Into Text Field    numberTextFieldmax_arg_length    2048
     Clear Text Field    numberTextFieldmax_arg_count
     Type Into Text Field    numberTextFieldmax_arg_count    4096
 
     ${conf_path}=    Finish Build
-    Check Build Config   ${conf_path}    1
+    Check Build Config    ${conf_path}    1
 
 test_service_to_file
     Init Build
     Select From Combo Box    0    RedDatabase 5.0
-    Select Tab As Context  services
+    Select Tab As Context    services
     Check All Checkboxes
 
     Type Into Text Field    textFieldinclude_filter    ship
     Type Into Text Field    textFieldexclude_filter    819
     Type Into Text Field    textFieldinclude_user_filter    ship
-    Type Into Text Field    textFieldexclude_user_filter   819
+    Type Into Text Field    textFieldexclude_user_filter    819
     Type Into Text Field    textFieldinclude_process_filter    14
     Type Into Text Field    textFieldexclude_process_filter    true
     Type Into Text Field    textFieldinclude_gds_codes    512
@@ -101,8 +103,12 @@ test_service_to_file
 
     ${conf_path}=    Finish Build
     ${conf_context}=    Get File    ${conf_path}
-    Should Be Equal As Strings    ${conf_context}    services { log_errors = true include_filter = ship cancel_on_error = true include_user_filter = ship include_process_filter = 14 exclude_filter = 819 log_service_query = true enabled = true log_warnings = true exclude_process_filter = true include_gds_codes = 512 exclude_gds_codes = 512 exclude_user_filter = 819 log_services = true log_initfini = true } database { enabled = true }    strip_spaces=${True}    collapse_spaces=${True}
-    
+    Should Be Equal As Strings
+    ...    ${conf_context}
+    ...    services { log_errors = true include_filter = ship cancel_on_error = true include_user_filter = ship include_process_filter = 14 exclude_filter = 819 log_service_query = true enabled = true log_warnings = true exclude_process_filter = true include_gds_codes = 512 exclude_gds_codes = 512 exclude_user_filter = 819 log_services = true log_initfini = true } database { enabled = true }
+    ...    strip_spaces=${True}
+    ...    collapse_spaces=${True}
+
     # load from file
     Push Button    doubleConfigButton
     Sleep    2s
@@ -123,8 +129,17 @@ test_service_to_file
     Check Box Should Be Checked    checkBoxenabled
     Check Box Should Be Checked    checkBoxlog_services
     Check Box Should Be Checked    checkBoxlog_service_query
-    
-    VAR    @{list_of_name_filed}    textFieldinclude_user_filter    textFieldexclude_user_filter    textFieldinclude_process_filter    textFieldinclude_process_filter    textFieldexclude_process_filter    textFieldinclude_filter    textFieldexclude_filter    textFieldinclude_gds_codes    textFieldexclude_gds_codes
+
+    VAR    @{list_of_name_filed}=
+    ...    textFieldinclude_user_filter
+    ...    textFieldexclude_user_filter
+    ...    textFieldinclude_process_filter
+    ...    textFieldinclude_process_filter
+    ...    textFieldexclude_process_filter
+    ...    textFieldinclude_filter
+    ...    textFieldexclude_filter
+    ...    textFieldinclude_gds_codes
+    ...    textFieldexclude_gds_codes
 
     ${values}=    Check Text Values    @{list_of_name_filed}
     Should Be Equal As Strings    ${values}    ['ship', '819', '14', '14', 'true', 'ship', '819', '512', '512']
@@ -138,29 +153,33 @@ test_save_multiple_database
     Select Dialog    Configuration
     Click On Component    newTabButton
     Click On Component    closeTabButton
-    
+
     Click On Component    newTabButton
-    Select Tab As Context   database
+    Select Tab As Context    database
     Type Into Text Field    nameField    employee2.fdb
     Select Main Window
     Select Dialog    Configuration
 
     ${conf_path}=    Finish Build
     ${conf_context}=    Get File    ${conf_path}
-    Should Be Equal As Strings    ${conf_context}    services { } database = employee.fdb { enabled = true } database = employee2.fdb { enabled = true }    strip_spaces=${True}    collapse_spaces=${True}
+    Should Be Equal As Strings
+    ...    ${conf_context}
+    ...    services { } database = employee.fdb { enabled = true } database = employee2.fdb { enabled = true }
+    ...    strip_spaces=${True}
+    ...    collapse_spaces=${True}
 
 test_load_from_profile
     Init Build
     Type Into Text Field    nameField    NEW_CONFIG
 
-    Check Check Box    checkBoxlog_warnings    
+    Check Check Box    checkBoxlog_warnings
     Check Check Box    checkBoxlog_connections
     Check Check Box    checkBoxlog_statement_prepare
     Check Check Box    checkBoxlog_procedure_finish
     Select Tab As Context    database
     Type Into Text Field    textFieldinclude_filter    true
     Type Into Text Field    textFieldexclude_filter    path
-    
+
     Select Dialog    Configuration
     Push Button    saveButton
     Select Main Window
@@ -176,7 +195,7 @@ test_load_from_profile
     Push Button    loadFromOtherProfile
     Select Dialog    Load Profile
     Select From Combo Box    0    default
-    
+
     Push Button    OK
 
     Select Dialog    Configuration
@@ -184,16 +203,16 @@ test_load_from_profile
     Check Box Should Be Checked    checkBoxenabled
     Check Box Should Be Checked    checkBoxlog_statement_finish
 
-    Check Box Should Be Unchecked    checkBoxlog_warnings    
+    Check Box Should Be Unchecked    checkBoxlog_warnings
     Check Box Should Be Unchecked    checkBoxlog_connections
     Check Box Should Be Unchecked    checkBoxlog_statement_prepare
     Check Box Should Be Unchecked    checkBoxlog_procedure_finish
-    
-    VAR    @{list_of_name_filed}    textFieldinclude_filter    textFieldexclude_filter
+
+    VAR    @{list_of_name_filed}=    textFieldinclude_filter    textFieldexclude_filter
 
     ${values}=    Check Text Values    @{list_of_name_filed}
     Should Be Equal As Strings    ${values}    ['', '']
-    
+
     Select Dialog    Configuration
     Push Button    cancelButton
     Select Main Window
@@ -209,6 +228,7 @@ test_incorect_name
     Check Incorrect Name
     Close Dialog    Configuration
 
+
 *** Keywords ***
 Check Incorrect Name
     Push Button    saveButton
@@ -220,7 +240,7 @@ Check Incorrect Name
 
 Check Text Values
     [Arguments]    @{list_of_name_filed}
-    VAR    @{values}
+    VAR    @{values}=
     FOR    ${par}    IN    @{list_of_name_filed}
         ${value}=    Get Text Field Value    ${par}
         Append To List    ${values}    ${value}
@@ -228,16 +248,16 @@ Check Text Values
     RETURN    ${values}
 
 Init Build
-    Open connection
+    Open Connection
     Select From Main Menu    Tools|Trace Manager
     Sleep    5s
     Backup Audit Profiles
-    Run Keyword In Separate Thread    Select From Combo Box    profileSelector    Create     don't verify
+    Run Keyword In Separate Thread    Select From Combo Box    profileSelector    Create    don't verify
     Sleep    5s
     Select Dialog    Configuration
 
 Finish Build
-    VAR    ${conf_path}    ${TEMPDIR}/test_conf.conf      
+    VAR    ${conf_path}=    ${TEMPDIR}/test_conf.conf
     Select Dialog    Configuration
     Push Button    saveFileButton
     Select Dialog    Save
@@ -272,7 +292,7 @@ Check Database Properties
     END
 
 Check Common Prop
-    Check Box Should Be Enabled    checkBoxlog_warnings    
+    Check Box Should Be Enabled    checkBoxlog_warnings
     Check Box Should Be Enabled    checkBoxenabled
     Check Box Should Be Enabled    checkBoxlog_connections
     Check Box Should Be Enabled    checkBoxlog_transactions
@@ -357,7 +377,7 @@ Check RDB3.0
     Check Box Should Be Enabled    checkBoxreset_counters
 
     Check filters RDB
-    
+
 Check RDB5.0
     Check RDB3.0
     Check Box Should Be Enabled    checkBoxlog_message
@@ -390,7 +410,7 @@ Check Services FB2.5
     Check Common Services Prop
     Check Box Should Be Enabled    checkBoxlog_initfini
     Check Box Should Be Enabled    checkBoxlog_errors
-    
+
 Check Services FB3.0
     Check Services FB2.5
     Text Field Should Be Enabled    textFieldinclude_gds_codes
