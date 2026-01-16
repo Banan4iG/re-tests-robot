@@ -39,6 +39,7 @@ test_alter
     Check ddl
     ...    CREATE OR ALTER PROCEDURE TEST AS DECLARE PROCEDURE TEST_SUB AS BEGIN END DECLARE FUNCTION TEST_FUNC RETURNS INTEGER AS DECLARE PAR3 TYPE OF CUSTNO; BEGIN RETURN 123; END BEGIN END;
 
+    Select Tab As Context    TEST:PROCEDURE:New Connection
     Select Tab As Context    Subprograms
     Click On Table Cell    0    ${row_func}    Name
     Clear Text Field    0
@@ -62,6 +63,7 @@ test_empty_remove
     Execute Immediate    CREATE OR ALTER PROCEDURE TEST AS BEGIN END
     Open Connection
     Click On Tree Node    0    New Connection|Procedures (11)|TEST    2
+    Select Tab As Context    TEST:PROCEDURE:New Connection
     Select Tab As Context    Subprograms
 
     Push Button    addRowButton
@@ -85,6 +87,7 @@ Init proc
     ...    CREATE OR ALTER PROCEDURE TEST AS DECLARE PROCEDURE TEST_SUB ( PAR1 INTEGER ) RETURNS ( PAR2 INTEGER ) AS DECLARE PAR3 TYPE OF CUSTNO; BEGIN PAR2 = 2; END DECLARE FUNCTION TEST_FUNC RETURNS INTEGER AS DECLARE PAR3 TYPE OF CUSTNO; BEGIN RETURN 123; END BEGIN END
     Open Connection
     Click On Tree Node    0    New Connection|Procedures (11)|TEST    2
+    Select Tab As Context    TEST:PROCEDURE:New Connection
     Select Tab As Context    Subprograms
 
 Check ddl

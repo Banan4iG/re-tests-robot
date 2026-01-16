@@ -10,6 +10,7 @@ Test Teardown       Teardown After Every Tests
 test_1
     Open Connection
     Click On Tree Node    0    New Connection|Procedures (10)|DELETE_EMPLOYEE    2
+    Select Tab As Context    DELETE_EMPLOYEE:PROCEDURE:New Connection
     Uncheck Check Box    showHelpersCheck
     Run Keyword And Expect Error
     ...    Can't select tab: Variables because it doesn't contain any container.
@@ -20,6 +21,7 @@ test_1
 test_2
     Open Connection
     Click On Tree Node    0    New Connection|Procedures (10)|DELETE_EMPLOYEE    2
+    Select Tab As Context    DELETE_EMPLOYEE:PROCEDURE:New Connection
     Push Button    2
     Run Keyword And Expect Error
     ...    Can't select tab: Variables because it doesn't contain any container.

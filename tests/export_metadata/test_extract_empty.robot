@@ -11,7 +11,7 @@ Test Teardown       Teardown After Every Tests
 
 *** Test Cases ***
 test_extract
-    ${test_base_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /test.fdb
+    ${test_base_path}=    Catenate    SEPARATOR=${EMPTY}   ${TEMPDIR}    /test.fdb
     Remove File    ${test_base_path}
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]

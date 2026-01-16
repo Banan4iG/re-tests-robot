@@ -225,7 +225,7 @@ test_add_use_gen_without_identity
     ...    ${False}
     ...    gen_name=EMP_NO_GEN
     ...    dialog=dialog1
-    ...    alter_table=ALTER TABLE TEST_TABLE ALTER COLUMN COL SET NOT NULL
+    ...    expected_alter_table=ALTER TABLE TEST_TABLE ALTER COLUMN COL SET NOT NULL
     ...    column_name=COL
     Check Column In Table    column_name=COL
     ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
@@ -348,6 +348,7 @@ Init Edit Column
     Execute Immediate    ${query}
     Open Connection
     Click On Tree Node    0    New Connection|Tables (11)|TEST_TABLE    2
+    Select Tab As Context   TEST_TABLE:TABLE:New Connection
     Select Tab    Columns
     ${row}=    Find Table Row    0    ${column_name}    Name
     Run Keyword In Separate Thread    Click On Table Cell    0    ${row}    Name    2    BUTTON1_MASK
@@ -372,6 +373,7 @@ Check Edit Commit
 Check Column In Table
     [Arguments]    ${column_name}=TEST_COLUMN    ${data_type}=INTEGER    ${size}=${EMPTY}
     Select Main Window
+    Select Tab As Context   TEST_TABLE:TABLE:New Connection
     Select Tab    Columns
     ${row}=    Find Table Row    0    ${column_name}    Name
     Should Not Be Equal As Integers    ${row}    -1
@@ -384,11 +386,10 @@ Check Column In Table
     RETURN    ${row}
 
 Check SQL Statements
-    [Arguments]
-    ...    ${check_sequence}
+    [Arguments]    ${check_sequence}
     ...    ${gen_name}
     ...    ${dialog}=Commiting changes
-    ...    ${alter_table}=ALTER TABLE TEST_TABLE ALTER COLUMN TEST_COLUMN DROP IDENTITY
+    ...    ${expected_alter_table}=ALTER TABLE TEST_TABLE ALTER COLUMN TEST_COLUMN DROP IDENTITY
     ...    ${column_name}=TEST_COLUMN
     Push Button    submitButton
     Sleep    1s
@@ -397,19 +398,19 @@ Check SQL Statements
     ${alter_row}=    Find Table Row    0    ALTER TABLE    Name operation
     Click On Table Cell    0    ${alter_row}    Name operation
     ${alter_table}=    Get Text Field Value    0
-    Should Be Equal As Strings    ${alter_table}    ${alter_table}    strip_spaces=${True}    collapse_spaces=${True}
+    Should Be Equal As Strings    ${alter_table}    ${expected_alter_table}    strip_spaces=${True}    collapse_spaces=${True}
 
     # Check CREATE OR ALTER SEQUENCE statement (only if check_sequence is TRUE)
     IF    ${check_sequence}
         ${info}=    Get Server Info
         ${ver}=    Set Variable    ${info}[1]
         IF    ${{$ver != '2.6'}}
-            ${sequence_row}=    Find Table Row    0    CREATE OR ALTER SEQUENCE    Name operation
+            ${sequence_row}=    Find Table Row    0    CREATE SEQUENCE    Name operation
             Click On Table Cell    0    ${sequence_row}    Name operation
             ${create_sequence}=    Get Text Field Value    0
             Should Be Equal As Strings
             ...    ${create_sequence}
-            ...    CREATE OR ALTER SEQUENCE AUTO_GEN START WITH 0 INCREMENT BY 1
+            ...    CREATE SEQUENCE AUTO_GEN START WITH 0 INCREMENT BY 1
             ...    strip_spaces=${True}
             ...    collapse_spaces=${True}
         ELSE

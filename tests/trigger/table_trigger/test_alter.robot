@@ -95,6 +95,7 @@ Init
     ...    CREATE OR ALTER TRIGGER TEST_TRIGGER FOR COUNTRY ACTIVE BEFORE INSERT POSITION 0 AS BEGIN if (new.COUNTRY is null) then new.COUNTRY = 'test'; END
     Open Connection
     Select From Tree Node Popup Menu    0    New Connection|Table Triggers (5)|${name}    Edit table trigger
+    Select Tab As Context    ${name}:TRIGGER:New Connection
 
 Init No Dependencies
     [Arguments]    ${name}=TEST_TRIGGER

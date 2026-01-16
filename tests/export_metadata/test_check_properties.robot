@@ -25,7 +25,6 @@ test_check_ignore
     Init extract
     Push Button    selectAllExtractPropertiesButton
     ${script_without_properties}=    Extract
-    Log Variables
     @{result}=    Check Ignore    ${script_without_properties}
     # Delete Objects    ${rdb5}
     Should Be Equal As Strings    ${result}    [0, 0, 0, 0, 1, 9]
@@ -41,6 +40,7 @@ Extract
     Push Button    extractButton
     Sleep    5s
     Close Dialog    Message
+    Select Tab As Context    DB Metadata Export
     Select Tab As Context    SQL
     ${script}=    Get Text Field Value    0
     RETURN    ${script}

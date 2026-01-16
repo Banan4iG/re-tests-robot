@@ -17,6 +17,7 @@ test_1
     Open Connection
     Select From Menu    Tools|User Manager
     Sleep    1s
+    Select Tab As Context    User Manager
     ${row}=    Find Table Row    usersTable    TEST_USER    User name
     Select Table Cell    usersTable    ${row}    User name
     Push Button    editUserButton

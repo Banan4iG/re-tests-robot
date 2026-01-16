@@ -1,7 +1,5 @@
 *** Settings ***
 Library             RemoteSwingLibrary
-Library             Process
-Library             Collections
 Resource            ../files/keywords.resource
 
 Test Setup          Setup Before Every Tests
@@ -15,6 +13,7 @@ test_data_with_space
     Execute Immediate    INSERT INTO NEW_TABLE_1 (\"TEST COL\") VALUES (null)
     Open Connection
     Click On Tree Node    0    New Connection|Tables (11)|NEW_TABLE_1    2
+    Select Tab As Context    NEW_TABLE_1:TABLE:New Connection
     Select Tab As Context    Data
     Sleep    2s
     Type Into Table Cell    0    0    TEST COL    PUBLIC
@@ -31,6 +30,7 @@ test_data_with_space
         Open Connection
         Sleep    2s
         Click On Tree Node    0    New Connection|Tables (11)|NEW_TABLE_1    2
+        Select Tab As Context    NEW_TABLE_1:TABLE:New Connection
         Select Tab As Context    Data
         Sleep    2s
     END

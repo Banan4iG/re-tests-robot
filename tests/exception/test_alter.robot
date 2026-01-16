@@ -102,6 +102,7 @@ Init
 
     Open Connection
     Click On Tree Node    0    New Connection|Exceptions (6)|${tree_name}    2
+    Select Tab As Context    ${tree_name}:EXCEPTION:New Connection
     ${name}=    Get Text Field Value    nameField
     Should Be Equal As Strings    ${tree_name}    ${name}
 

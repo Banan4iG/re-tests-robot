@@ -8,9 +8,10 @@ Test Teardown       Teardown After Every Tests
 
 
 *** Test Cases ***
-test_export_Selected data
+test_export_selected_data
     Open Connection
     Click On Tree Node    0    New Connection|Tables (10)|EMPLOYEE    2
+    Select Tab As Context    EMPLOYEE:TABLE:New Connection
     Sleep    1s
     Select Tab As Context    Data
     Select Table Cell Area    0    1    4    19    24
@@ -41,6 +42,7 @@ test_export_Selected data
 test_export_table
     Open Connection
     Click On Tree Node    0    New Connection|Tables (10)|COUNTRY    2
+    Select Tab As Context    COUNTRY:TABLE:New Connection
     Sleep    1s
     Select Tab As Context    Data
     Select From Table Cell Popup Menu    0    0    0    Export|All data
@@ -108,7 +110,7 @@ test_export_table
 Check
     [Arguments]    ${expected_content}
     Select From Combo Box    typeCombo    CSV
-    ${export_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /export.csv
+    VAR    ${export_path}=    ${TEMPDIR}/export.csv
     Remove Files    ${export_path}
     Select Tab    Options
     Uncheck All Checkboxes

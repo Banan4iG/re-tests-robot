@@ -52,7 +52,7 @@ def stop_server():
     p = None
 
 def get_build_no():
-    return os.environ.get('BUILD', "202512")
+    return os.environ.get('BUILD', "202601")
 
 def backup_savedconnections_file():
     backup_file("connection-saved.xml")

@@ -12,18 +12,18 @@ test_1
     ${ver}=    Set Variable    ${info}[1]
     Skip if    ${{$ver == '2.6'}}
     Init    NEW_SEQ    NEW_SEQ
-    Clear Text Field    1
-    Type Into Text Field    1    100
+    Clear Text Field    startValueField
+    Type Into Text Field    startValueField    100
 
-    Clear Text Field    2
-    Type Into Text Field    2    10
+    Clear Text Field    incrementField
+    Type Into Text Field    incrementField    10
 
     Check    CREATE OR ALTER SEQUENCE NEW_SEQ START WITH 100 INCREMENT BY 10
 
     Select Main Window
-    ${start_value}=    Get Text Field Value    1
-    ${increment}=    Get Text Field Value    2
-    ${current_value}=    Get Text Field Value    3
+    ${start_value}=    Get Text Field Value    startValueField
+    ${increment}=    Get Text Field Value    incrementField
+    ${current_value}=    Get Text Field Value    currentValueField
     Should Be Equal As Strings    ${start_value}    100
     IF    ${{$ver == '5'}}
         Should Be Equal As Strings    ${current_value}    90
@@ -77,7 +77,6 @@ test_3
     END
 
 test_4
-    Log Variables
     Init    NEW_SEQ    NEW_SEQ
     Select Tab As Context    Dependencies
     Sleep    1s
@@ -142,6 +141,10 @@ test_5
         ...    collapse_spaces=${True}
     END
 
+test_6
+    Init    NEW_SEQ    NEW_SEQ
+    Push Button    Restart
+    Check    ALTER SEQUENCE NEW_SEQ RESTART
 
 *** Keywords ***
 Init
@@ -161,6 +164,7 @@ Init
     IF    '${TEST_NAME}' == 'test_4'    Execute Immediate    ${create_proc}
     Open Connection
     Click On Tree Node    0    New Connection|Sequences (3)|${tree_name}    2
+    Select Tab As Context    ${tree_name}:SEQUENCE:New Connection
     ${name}=    Get Text Field Value    nameField
     Should Be Equal As Strings    ${tree_name}    ${name}
 

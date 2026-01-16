@@ -26,6 +26,7 @@ test_1
 Check user
     [Arguments]    ${type}
     Select From Tree Node Popup Menu    0    New Connection|Users (3)|${type}    Edit user
+    Select Tab As Context    ${type}:Srp:USER:New Connection
     Select Tab    DDL to create
     ${res}=    Get Text Field Value    1
     RETURN    ${res}

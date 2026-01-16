@@ -10,13 +10,14 @@ Test Timeout        200s
 
 *** Test Cases ***
 test_1
-    ${log_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /test_log.fbtrace_text
+    ${log_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /test_log.fbtrace_text
     Remove File    ${log_path}
     Lock Employee
     Open Connection
     Select From Main Menu    Tools|Trace Manager
     Sleep    5s
     Backup Audit Profiles
+    Select Tab As Context    Trace Manager
     Select Tab    Connection
 
     Run Keyword In Separate Thread    Select From Combo Box    profileSelector    Create    don't verify
@@ -50,7 +51,9 @@ test_1
 
     Push Button    startStopSessionButton
     Sleep    20s
-
+    
+    Select Main Window
+    Select Tab As Context    Trace Manager
     Select Tab    Session Manager
     Push Button    Refresh list
     Push Button    Refresh list
@@ -81,6 +84,7 @@ test_1
     Sleep    20s
 
     Select Main Window
+    Select Tab As Context    Trace Manager
     Select Tab    Session Manager
     Click On List Item    0    New Connection_trace_session
     Push Button    Stop session
@@ -90,6 +94,7 @@ test_1
     Push Button    Yes
 
     Select Main Window
+    Select Tab As Context    Trace Manager
     Select Tab    Grid View
 
     Check Grid View
@@ -97,7 +102,7 @@ test_1
     Push Button    clearTableButton
 
 load_from_file
-    ${log_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /test_log.fbtrace_text
+    ${log_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /test_log.fbtrace_text
     File Should Exist    ${log_path}
 
     Open Connection
@@ -110,6 +115,7 @@ load_from_file
     Push Button    Open
 
     Select Main Window
+    Select Tab As Context    Trace Manager
     Select Tab    Grid View
 
     Check Grid View

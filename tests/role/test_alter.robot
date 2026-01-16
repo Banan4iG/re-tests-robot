@@ -8,11 +8,7 @@ Test Teardown       Teardown After Every Tests
 
 *** Test Cases ***
 test_grant_privileges
-    Lock Employee
-    Execute Immediate    CREATE ROLE NEW_ROLE
-    Open Connection
-    Click On Tree Node    0    New Connection|Roles (1)|NEW_ROLE    2
-    Select From Tree Node Popup Menu    0    New Connection|Roles (1)|NEW_ROLE    Edit role
+    Init
     Select Tab As Context    Privileges
     Click On Table Cell    0    0    Select
     Push Button    Grant all privileges to selected column
@@ -20,11 +16,7 @@ test_grant_privileges
     Push Button    Apply
 
 test_add_comment
-    Lock Employee
-    Execute Immediate    CREATE ROLE NEW_ROLE
-    Open Connection
-    Click On Tree Node    0    New Connection|Roles (1)|NEW_ROLE    2
-    Select From Tree Node Popup Menu    0    New Connection|Roles (1)|NEW_ROLE    Edit role
+    Init
     Select Tab As Context    Comment
     Clear Text Field    0
     Type Into Text Field    0    test_comment
@@ -32,3 +24,13 @@ test_add_comment
     Push Button    Apply
     Select Dialog    Commiting changes
     Push Button    commitButton
+
+
+*** Keywords ***
+Init
+    Lock Employee
+    Execute Immediate    CREATE ROLE NEW_ROLE
+    Open Connection
+    Click On Tree Node    0    New Connection|Roles (1)|NEW_ROLE    2
+    Select From Tree Node Popup Menu    0    New Connection|Roles (1)|NEW_ROLE    Edit role
+    Select Tab As Context    NEW_ROLE:ROLE:New Connection

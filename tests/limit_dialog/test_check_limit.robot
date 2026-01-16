@@ -42,6 +42,7 @@ test_1
     Sleep    3s
 
     Click On Tree Node    0    New Connection|Tables (11)|TEST_TABLE    2
+    Select Tab As Context    TEST_TABLE:TABLE:New Connection
     Select Tab As Context    Data
     Sleep    2s
     Push Button    Fetch all
@@ -51,6 +52,7 @@ test_1
     Push Button    OK
 
     Select Main Window
+    Select Tab As Context    TEST_TABLE:TABLE:New Connection
     Select Tab As Context    Data
     Push Button    5
     Push Button    Fetch all

@@ -101,6 +101,7 @@ Init
     ...    CREATE OR ALTER TRIGGER TEST_TRIGGER ACTIVE BEFORE CREATE FUNCTION POSITION 0 AS DECLARE tmp INTEGER; BEGIN SELECT COUNT(*) FROM SHOW_LANGS('ENG', 1, 'USA') INTO tmp; END
     Open Connection
     Select From Tree Node Popup Menu    0    New Connection|DDL Triggers (1)|${name}    Edit DDL trigger
+    Select Tab As Context    ${name}:DDL TRIGGER:New Connection
 
 Check Changes
     [Arguments]    ${text}    ${name}=TEST_TRIGGER

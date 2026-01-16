@@ -1,7 +1,5 @@
 *** Settings ***
 Library             RemoteSwingLibrary
-Library             Process
-Library             Collections
 Resource            ../files/keywords.resource
 
 Test Setup          Setup Before Every Tests
@@ -12,6 +10,7 @@ Test Teardown       Teardown After Every Tests
 test_1
     Open Connection
     Click On Tree Node    0    New Connection|Tables (10)|EMPLOYEE    2
+    Select Tab As Context    EMPLOYEE:TABLE:New Connection
     Select Tab As Context    Triggers
     Sleep    1s
     ${row1}=    Find Table Row    0    SAVE_SALARY_CHANGE    Trigger Name

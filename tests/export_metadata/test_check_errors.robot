@@ -10,12 +10,14 @@ Test Teardown       Teardown After Every Tests
 test_1
     Open Connection
     Select From Tree Node Popup Menu    0    New Connection    Extract Metadata
+    Select Tab As Context    DB Metadata Export
     Select Tab As Context    SQL
     Push Button    saveScriptButton
     Select Dialog    Warning
     Push Button    OK
 
     Select Main Window
+    Select Tab As Context    DB Metadata Export
     Select Tab As Context    SQL
     Push Button    executeScriptButton
     Select Dialog    Warning

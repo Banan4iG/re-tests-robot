@@ -8,7 +8,8 @@ Test Teardown       Teardown After Every Tests
 
 *** Test Cases ***
 test_1
-    Init    NEW_PACK    NEW_PACK    Body
+    VAR    ${tree_name}=    NEW_PACK
+    Init    NEW_PACK    ${tree_name}    Body
     Select Tab As Context    Header
     ${value}=    Get Text Field Value    0
     Should Be Equal As Strings    ${value}    BEGIN END
@@ -16,6 +17,7 @@ test_1
     Type Into Text Field    0    BEGIN PROCEDURE TEST_PROC; END
 
     Select Main Window
+    Select Tab As Context    ${tree_name}:PACKAGE:New Connection
     Select Tab As Context    Body
     ${value}=    Get Text Field Value    0
     Should Be Equal As Strings    ${value}    BEGIN END
@@ -28,7 +30,8 @@ test_1
     ...    RECREATE PACKAGE BODY NEW_PACK AS BEGIN PROCEDURE TEST_PROC as begin end END
 
 test_2
-    Init    "NEW PACK"    NEW PACK    ${None}
+    VAR    ${tree_name}=    NEW PACK
+    Init    "NEW PACK"    ${tree_name}    ${None}
     Select Tab As Context    Header
     ${value}=    Get Text Field Value    0
     Should Be Equal As Strings    ${value}    BEGIN END
@@ -36,6 +39,7 @@ test_2
     Type Into Text Field    0    BEGIN PROCEDURE TEST_PROC; END
 
     Select Main Window
+    Select Tab As Context    ${tree_name}:PACKAGE:New Connection
     Select Tab As Context    Body
     ${value}=    Get Text Field Value    0
     Should Be Equal As Strings    ${value}    ${EMPTY}
@@ -43,7 +47,8 @@ test_2
     Check    CREATE OR ALTER PACKAGE "NEW PACK" AS BEGIN PROCEDURE TEST_PROC; END    ${None}
 
 test_3
-    Init    NEW_PACK    NEW_PACK    Body
+    VAR    ${tree_name}=    NEW_PACK
+    Init    NEW_PACK    ${tree_name}    Body
     Select Tab As Context    Privileges
     Sleep    1s
     Select Tab As Context    User → Objects
@@ -53,6 +58,7 @@ test_3
     ...    ${values}
     ...    ['COUNTRY', 'CUSTOMER', 'DEPARTMENT', 'EMPLOYEE', 'EMPLOYEE_PROJECT', 'JOB', 'PROJECT', 'PROJ_DEPT_BUDGET', 'SALARY_HISTORY', 'SALES', 'PHONE_LIST', 'ADD_EMP_PROJ', 'ALL_LANGS', 'DELETE_EMPLOYEE', 'DEPT_BUDGET', 'GET_EMP_PROJ', 'MAIL_LABEL', 'ORG_CHART', 'SHIP_ORDER', 'SHOW_LANGS', 'SUB_TOT_BUDGET', 'NEW_PACK', 'CUST_NO_GEN', 'EMP_NO_GEN', 'CUSTOMER_CHECK', 'CUSTOMER_ON_HOLD', 'ORDER_ALREADY_SHIPPED', 'REASSIGN_SALES', 'UNKNOWN_EMP_ID']
     Select Main Window
+    Select Tab As Context    ${tree_name}:PACKAGE:New Connection
     Select Tab As Context    Privileges
     Sleep    1s
     Select Tab As Context    Object → Users
@@ -69,6 +75,7 @@ test_3
         ...    ['SYSDBA', 'PUBLIC', 'PHONE_LIST', 'POST_NEW_ORDER', 'SAVE_SALARY_CHANGE', 'SET_CUST_NO', 'SET_EMP_NO', 'ADD_EMP_PROJ', 'ALL_LANGS', 'DELETE_EMPLOYEE', 'DEPT_BUDGET', 'GET_EMP_PROJ', 'MAIL_LABEL', 'ORG_CHART', 'SHIP_ORDER', 'SHOW_LANGS', 'SUB_TOT_BUDGET', 'NEW_PACK']
     END
     Select Main Window
+    Select Tab As Context    ${tree_name}:PACKAGE:New Connection
     Select Tab As Context    Privileges
     Sleep    1s
     Select Tab As Context    DDL privileges
@@ -144,6 +151,7 @@ Init
     END
     Open Connection
     Click On Tree Node    0    New Connection|Packages (1)|${tree_name}    2
+    Select Tab As Context    ${tree_name}:PACKAGE:New Connection
     ${name}=    Get Text Field Value    nameField
     Should Be Equal As Strings    ${tree_name}    ${name}
 

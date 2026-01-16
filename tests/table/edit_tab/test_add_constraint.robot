@@ -32,8 +32,8 @@ test_primary_empty_index
     Init
     Select From Combo Box    typesCombo    PRIMARY
     Click On List Item    0    ID    2
-    Check commit    ALTER TABLE TEST_TABLE ADD CONSTRAINT PK_TEST_TABLE_1 PRIMARY KEY (ID)
-    Check in table    PK_TEST_TABLE_1    PRIMARY
+    Check Commit    ALTER TABLE TEST_TABLE ADD CONSTRAINT PK_TEST_TABLE_1 PRIMARY KEY (ID)
+    Check In Table    PK_TEST_TABLE_1    PRIMARY
     Check Index    PK_TEST_TABLE_1
 
 test_primary_ascending
@@ -45,9 +45,9 @@ test_primary_ascending
     Type Into Text Field    usingIndexField    TEST_INDEX
     Select From Combo Box    sortingCombo    ASCENDING
     Click On List Item    0    ID    2
-    Check commit
+    Check Commit
     ...    ALTER TABLE TEST_TABLE ADD CONSTRAINT "PK_TEST TABLE_1" PRIMARY KEY (ID) USING ASCENDING INDEX TEST_INDEX
-    Check in table    PK_TEST TABLE_1    PRIMARY
+    Check In Table    PK_TEST TABLE_1    PRIMARY
     Check Index    TEST_INDEX
 
 test_primary_descending
@@ -59,9 +59,9 @@ test_primary_descending
     Type Into Text Field    usingIndexField    TEST INDEX
     Select From Combo Box    sortingCombo    DESCENDING
     Click On List Item    0    ID    2
-    Check commit
+    Check Commit
     ...    ALTER TABLE TEST_TABLE ADD CONSTRAINT """PK_TEST TABLE_1""" PRIMARY KEY (ID) USING DESCENDING INDEX "TEST INDEX"
-    Check in table    "PK_TEST TABLE_1"    PRIMARY
+    Check In Table    "PK_TEST TABLE_1"    PRIMARY
     Check Index    TEST INDEX
 
 test_primary_select_ts
@@ -70,16 +70,16 @@ test_primary_select_ts
     Select From Combo Box    typesCombo    PRIMARY
     Select From Combo Box    tablespacesCombo    TEST_TS
     Click On List Item    0    ID    2
-    Check commit    ALTER TABLE TEST_TABLE ADD CONSTRAINT "PK_TEST TABLE_1" PRIMARY KEY (ID)    TEST_TS
-    Check in table    PK_TEST_TABLE_1    PRIMARY
+    Check Commit    ALTER TABLE TEST_TABLE ADD CONSTRAINT "PK_TEST TABLE_1" PRIMARY KEY (ID)    TEST_TS
+    Check In Table    PK_TEST_TABLE_1    PRIMARY
 
 test_foreign_empty_index
     Init
     Select From Combo Box    typesCombo    FOREIGN
     Select References
-    Check commit
+    Check Commit
     ...    ALTER TABLE TEST_TABLE ADD CONSTRAINT FK_TEST_TABLE_1 FOREIGN KEY (ID) REFERENCES CUSTOMER (CUST_NO)
-    ${row}=    Check in table    FK_TEST_TABLE_1    FOREIGN
+    ${row}=    Check In Table    FK_TEST_TABLE_1    FOREIGN
     ${ref}=    Get Table Cell Value    0    ${row}    Reference Table
     Should Be Equal As Strings    ${ref}    CUSTOMER
     ${ref}=    Get Table Cell Value    0    ${row}    Reference Columns
@@ -95,9 +95,9 @@ test_foreign_ascending
     Select From Combo Box    sortingCombo    ASCENDING
     Select Rules    NO ACTION
     Select References
-    Check commit
+    Check Commit
     ...    ALTER TABLE TEST_TABLE ADD CONSTRAINT FK_TEST_TABLE_1 FOREIGN KEY (ID) REFERENCES CUSTOMER (CUST_NO) ON UPDATE NO ACTION ON DELETE NO ACTION USING ASCENDING INDEX TEST_INDEX
-    ${row}=    Check in table    FK_TEST_TABLE_1    FOREIGN
+    ${row}=    Check In Table    FK_TEST_TABLE_1    FOREIGN
     Check Rules    ${row}    NO ACTION
     Check Index    TEST_INDEX
 
@@ -109,9 +109,9 @@ test_foreign_descending
     Select From Combo Box    sortingCombo    DESCENDING
     Select Rules    CASCADE
     Select References
-    Check commit
+    Check Commit
     ...    ALTER TABLE TEST_TABLE ADD CONSTRAINT FK_TEST_TABLE_1 FOREIGN KEY (ID) REFERENCES CUSTOMER (CUST_NO) ON UPDATE CASCADE ON DELETE CASCADE USING DESCENDING INDEX TEST_INDEX
-    ${row}=    Check in table    FK_TEST_TABLE_1    FOREIGN
+    ${row}=    Check In Table    FK_TEST_TABLE_1    FOREIGN
     Check Rules    ${row}    CASCADE
     Check Index    TEST_INDEX
 
@@ -121,19 +121,19 @@ test_foreign_select_ts
     Select From Combo Box    typesCombo    FOREIGN
     Select From Combo Box    tablespacesCombo    TEST_TS
     Select References
-    Check commit
+    Check Commit
     ...    ALTER TABLE TEST_TABLE ADD CONSTRAINT FK_TEST_TABLE_1 FOREIGN KEY (ID) REFERENCES CUSTOMER (CUST_NO)
     ...    TEST_TS
-    Check in table    FK_TEST_TABLE_1    FOREIGN
+    Check In Table    FK_TEST_TABLE_1    FOREIGN
 
 test_foreign_set_default_rules
     Init
     Select From Combo Box    typesCombo    FOREIGN
     Select Rules    SET DEFAULT
     Select References
-    Check commit
+    Check Commit
     ...    ALTER TABLE TEST_TABLE ADD CONSTRAINT FK_TEST_TABLE_1 FOREIGN KEY (ID) REFERENCES CUSTOMER (CUST_NO) ON UPDATE SET DEFAULT ON DELETE SET DEFAULT
-    ${row}=    Check in table    FK_TEST_TABLE_1    FOREIGN
+    ${row}=    Check In Table    FK_TEST_TABLE_1    FOREIGN
     Check Rules    ${row}    SET DEFAULT
 
 test_foreign_set_null_rules
@@ -141,17 +141,17 @@ test_foreign_set_null_rules
     Select From Combo Box    typesCombo    FOREIGN
     Select Rules    SET NULL
     Select References
-    Check commit
+    Check Commit
     ...    ALTER TABLE TEST_TABLE ADD CONSTRAINT FK_TEST_TABLE_1 FOREIGN KEY (ID) REFERENCES CUSTOMER (CUST_NO) ON UPDATE SET NULL ON DELETE SET NULL
-    ${row}=    Check in table    FK_TEST_TABLE_1    FOREIGN
+    ${row}=    Check In Table    FK_TEST_TABLE_1    FOREIGN
     Check Rules    ${row}    SET NULL
 
 test_unique_empty_index
     Init
     Select From Combo Box    typesCombo    UNIQUE
     Click On List Item    0    ID    2
-    Check commit    ALTER TABLE TEST_TABLE ADD CONSTRAINT UQ_TEST_TABLE_1 UNIQUE (ID)
-    Check in table    UQ_TEST_TABLE_1    UNIQUE
+    Check Commit    ALTER TABLE TEST_TABLE ADD CONSTRAINT UQ_TEST_TABLE_1 UNIQUE (ID)
+    Check In Table    UQ_TEST_TABLE_1    UNIQUE
 
 test_unique_ascending
     Init
@@ -160,8 +160,8 @@ test_unique_ascending
     Type Into Text Field    usingIndexField    TEST_INDEX
     Select From Combo Box    sortingCombo    ASCENDING
     Click On List Item    0    ID    2
-    Check commit    ALTER TABLE TEST_TABLE ADD CONSTRAINT UQ_TEST_TABLE_1 UNIQUE (ID) USING ASCENDING INDEX TEST_INDEX
-    Check in table    UQ_TEST_TABLE_1    UNIQUE
+    Check Commit    ALTER TABLE TEST_TABLE ADD CONSTRAINT UQ_TEST_TABLE_1 UNIQUE (ID) USING ASCENDING INDEX TEST_INDEX
+    Check In Table    UQ_TEST_TABLE_1    UNIQUE
 
 test_unique_descending
     Init
@@ -170,8 +170,8 @@ test_unique_descending
     Type Into Text Field    usingIndexField    TEST_INDEX
     Select From Combo Box    sortingCombo    DESCENDING
     Click On List Item    0    ID    2
-    Check commit    ALTER TABLE TEST_TABLE ADD CONSTRAINT UQ_TEST_TABLE_1 UNIQUE (ID) USING DESCENDING INDEX TEST_INDEX
-    Check in table    UQ_TEST_TABLE_1    UNIQUE
+    Check Commit    ALTER TABLE TEST_TABLE ADD CONSTRAINT UQ_TEST_TABLE_1 UNIQUE (ID) USING DESCENDING INDEX TEST_INDEX
+    Check In Table    UQ_TEST_TABLE_1    UNIQUE
 
 test_unique_select_ts
     Skip
@@ -179,16 +179,16 @@ test_unique_select_ts
     Select From Combo Box    typesCombo    UNIQUE
     Select From Combo Box    tablespacesCombo    TEST_TS
     Click On List Item    0    ID    2
-    Check commit    ALTER TABLE TEST_TABLE ADD CONSTRAINT UQ_TEST_TABLE_1 UNIQUE (ID)    TEST_TS
-    Check in table    UQ_TEST_TABLE_1    UNIQUE
+    Check Commit    ALTER TABLE TEST_TABLE ADD CONSTRAINT UQ_TEST_TABLE_1 UNIQUE (ID)    TEST_TS
+    Check In Table    UQ_TEST_TABLE_1    UNIQUE
 
 test_check
     Init
     Select From Combo Box    typesCombo    CHECK
     Clear Text Field    2
     Type Into Text Field    2    CHECK(1 = 1)
-    Check commit    ALTER TABLE TEST_TABLE ADD CONSTRAINT CHECK_TEST_TABLE_1 CHECK(1 = 1)
-    ${row}=    Check in table    CHECK_TEST_TABLE_1    CHECK
+    Check Commit    ALTER TABLE TEST_TABLE ADD CONSTRAINT CHECK_TEST_TABLE_1 CHECK(1 = 1)
+    ${row}=    Check In Table    CHECK_TEST_TABLE_1    CHECK
     ${check}=    Get Table Cell Value    0    ${row}    Check
     Should Be Equal As Strings    ${check}    CHECK(1 = 1)
 
@@ -201,11 +201,12 @@ Init
     Execute Immediate    CREATE TABLE TEST_TABLE (ID INT NOT NULL)
     Open Connection
     Click On Tree Node    0    New Connection|Tables (11)|TEST_TABLE    2
+    Select Tab As Context    TEST_TABLE:TABLE:New Connection
     Select Tab    Constraints
     Push Button    addConstraintButton
     Select Dialog    Create constraint
 
-Check commit
+Check Commit
     [Arguments]    ${text}    ${ts}=PRIMARY    ${dialog}=Commiting changes
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
@@ -233,9 +234,10 @@ Check commit
     ...    Select Dialog
     ...    Create constraint
 
-Check in table
+Check In Table
     [Arguments]    ${constraint_name}    ${type}
     Select Main Window
+    Select Tab As Context    TEST_TABLE:TABLE:New Connection
     Select Tab    Constraints
     ${row}=    Find Table Row    0    ${constraint_name}    Name
     Should Not Be Equal As Integers    ${row}    -1

@@ -14,6 +14,7 @@ test_1
     Select From Main Menu    Tools|Trace Manager
     Sleep    5s
     Backup Audit Profiles
+    Select Tab As Context    Trace Manager
     Select Tab    Connection
 
     Select From Combo Box    profileSelector    default
@@ -45,6 +46,8 @@ test_1
     Execute    SELECT * from EMPLOYEE
 
     Sleep    5s
+    Select Main Window
+    Select Tab As Context    Trace Manager
     Select Tab As Context    Analyze
 
     Sleep    2s

@@ -10,8 +10,9 @@ Test Teardown       Teardown After Every Tests
 *** Test Cases ***
 test_backup
     Select From Tree Node Popup Menu    0    New Connection (Copy)    Create database backup
-    ${bk_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /employee_backup.fbk
+    ${bk_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /employee_backup.fbk
     Remove File    ${bk_path}
+    Select Tab As Context    Database backup/restore
     Select Tab    Backup
     Clear Text Field    backupFileField
     Type Into Text Field    backupFileField    ${bk_path}
@@ -49,6 +50,7 @@ test_database_statistics
 test_trace_manager
     Select From Main Menu    Tools|Trace Manager
     Sleep    5s
+    Select Tab As Context    Trace Manager
     Push Button    startStopSessionButton
     Sleep    10s
     Select Tab    Session Manager

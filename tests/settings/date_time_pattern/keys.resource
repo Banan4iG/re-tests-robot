@@ -31,6 +31,7 @@ Init table
 Test
     Open Connection
     Click On Tree Node    0    New Connection|Tables (11)|TEST_TABLE    clickCount=2
+    Select Tab As Context    TEST_TABLE:TABLE:New Connection
     Sleep    1s
     Select Tab As Context    Data
     Sleep    2s

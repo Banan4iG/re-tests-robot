@@ -24,6 +24,7 @@ test_edit_name
     Expand Tree Node    0    New Connection
     Select From Tree Node Popup Menu    0    New Connection|Users (2)|${TEST_USERNAME}    Edit user
     Sleep    2s
+    Select Tab As Context    ${TEST_USERNAME}:Srp:USER:New Connection
     Select Tab    Properties
     Sleep    1s
     Type Into Text Field    ${FIELD_INDEX_FIRST_NAME}    ${TEST_NEW_USER_FIRST_NAME}
@@ -124,6 +125,7 @@ test_add_new_comment_full_commit
     Expand Tree Node    0    New Connection
     Select From Tree Node Popup Menu    0    New Connection|Users (2)|${TEST_USERNAME}    Edit user
     Sleep    1s
+    Select Tab As Context    ${TEST_USERNAME}:Srp:USER:New Connection
     Select Tab As Context    Comment
     Clear Text Field    0
     Type Into Text Field    0    test_comment
@@ -143,6 +145,7 @@ test_add_new_comment_commit
     Expand Tree Node    0    New Connection
     Select From Tree Node Popup Menu    0    New Connection|Users (2)|${TEST_USERNAME}    Edit user
     Sleep    1s
+    Select Tab As Context    ${TEST_USERNAME}:Srp:USER:New Connection
     Select Tab As Context    Comment
     Clear Text Field    0
     Type Into Text Field    0    test_comment
@@ -165,6 +168,7 @@ test_user_ddl_after_modification
     Type Into Table Cell    tagTable    0    Tag    example_tag
     Type Into Table Cell    tagTable    0    Value    value123
 
+    Select Tab As Context    ${TEST_USERNAME}:Srp:USER:New Connection
     Select Tab As Context    Comment
     Clear Text Field    0
     Type Into Text Field    0    test_comment
@@ -179,6 +183,7 @@ test_user_ddl_after_modification
     Select Main Window
     Select From Tree Node Popup Menu    0    New Connection|Users (2)|${TEST_USERNAME}    Edit user
     Sleep    1s
+    Select Tab As Context    ${TEST_USERNAME}:Srp:USER:New Connection
     Select Tab As Context    DDL to create
     ${ddl}=    Get Text Field Value    0
 

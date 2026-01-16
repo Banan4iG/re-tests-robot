@@ -18,8 +18,8 @@ test_check_membership
     Open Connection
     Select From Menu    Tools|User Manager
     Sleep    1s
+    Select Tab As Context    User Manager
     Select Tab As Context    Membership
-
     Select Tab As Context    Users → Roles
 
     ${values}=    Get Table Values    usersRolesListTable
@@ -54,10 +54,11 @@ test_check_membership
         VAR    ${expected_result}=    [('ATEST_MEMBERSHIP_USER', 'M', 0, 8), ('BTEST_MEMBERSHIP_USER', 'M', 2, 8)]
     END
 
-    ${result}=    Check membership
+    ${result}=    Check Membership
     Should Be Equal As Strings    ${result}    ${expected_result}
 
     Select Main Window
+    Select Tab As Context    User Manager
     Select Tab As Context    Membership
     Select Tab As Context    Roles → Users
 
@@ -100,12 +101,12 @@ test_check_membership
         Should Be Equal As Strings    ${cell_value}    false
     END
 
-    ${result}=    Check membership
+    ${result}=    Check Membership
     Should Be Equal As Strings    ${result}    []
 
 
 *** Keywords ***
-Check membership
+Check Membership
     ${result}=    Execute
     ...    select CAST(rdb$user as VARCHAR(21)), CAST(rdb$privilege as VARCHAR(1)), rdb$grant_option, rdb$user_type from RDB$USER_PRIVILEGES where rdb$relation_name='ATEST_MEMBERSHIP_ROLE' order by rdb$user
     RETURN    ${result}

@@ -59,6 +59,7 @@ alter_add_cursor
     Execute Immediate    CREATE OR ALTER PROCEDURE TEST RETURNS ( PAR0 INTEGER ) AS BEGIN PAR0 = 55; END
     Open Connection
     Click On Tree Node    0    New Connection|Procedures (11)|TEST    2
+    Select Tab As Context    TEST:PROCEDURE:New Connection
     Select Tab As Context    Cursors
     Push Button    addRowButton
     Type Into Table Cell    0    0    Name    PAR1
@@ -116,6 +117,7 @@ alter_remove_cursor
     ...    CREATE OR ALTER PROCEDURE TEST RETURNS ( TOT INTEGER ) AS DECLARE PAR0 INTEGER; DECLARE PAR1 CURSOR FOR (SELECT * FROM EMPLOYEE); DECLARE PAR2 CURSOR FOR (SELECT * FROM EMPLOYEE); DECLARE PAR3 CURSOR FOR (SELECT * FROM EMPLOYEE); DECLARE PAR4 CURSOR FOR (SELECT * FROM EMPLOYEE); BEGIN tot = 55; END
     Open Connection
     Click On Tree Node    0    New Connection|Procedures (11)|TEST    2
+    Select Tab As Context    TEST:PROCEDURE:New Connection
     Select Tab As Context    Cursors
     FOR    ${par}    IN    PAR4    PAR2    PAR1    PAR3
         ${row}=    Find Table Row    0    ${par}    Name
@@ -165,6 +167,7 @@ Add par
     Execute Immediate    ${init_proc}
     Open Connection
     Click On Tree Node    0    New Connection|Procedures (11)|TEST    2
+    Select Tab As Context    TEST:PROCEDURE:New Connection
     Select Tab As Context    ${tab}
 
     Push Button    addRowButton
@@ -206,6 +209,7 @@ Remove par
     Execute Immediate    ${init_proc}
     Open Connection
     Click On Tree Node    0    New Connection|Procedures (11)|TEST    2
+    Select Tab As Context    TEST:PROCEDURE:New Connection
     Select Tab As Context    ${tab}
     FOR    ${par}    IN    PAR4    PAR2    PAR1    PAR3
         ${row}=    Find Table Row    0    ${par}    Name
@@ -229,6 +233,7 @@ Move par
     Execute Immediate    ${init_proc}
     Open Connection
     Click On Tree Node    0    New Connection|Procedures (11)|TEST    2
+    Select Tab As Context    TEST:PROCEDURE:New Connection
     Select Tab As Context    ${tab}
     ${row}=    Find Table Row    0    PAR2    Name
     Click On Table Cell    0    ${row}    Name

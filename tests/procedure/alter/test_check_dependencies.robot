@@ -10,6 +10,7 @@ Test Teardown       Teardown After Every Tests
 test_1
     Open Connection
     Click On Tree Node    0    New Connection|Procedures (10)|SHOW_LANGS    2
+    Select Tab As Context    SHOW_LANGS:PROCEDURE:New Connection
     Select Tab As Context    Dependencies
     Expand All Tree Nodes    0
     Expand All Tree Nodes    1

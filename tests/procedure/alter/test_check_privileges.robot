@@ -10,6 +10,7 @@ Test Teardown       Teardown After Every Tests
 test_1
     Open Connection
     Click On Tree Node    0    New Connection|Procedures (10)|SHOW_LANGS    2
+    Select Tab As Context    SHOW_LANGS:PROCEDURE:New Connection
     Select Tab As Context    Privileges
     Sleep    1s
     Select Tab As Context    User → Objects
@@ -28,6 +29,7 @@ test_1
         ...    ['COUNTRY', 'CUSTOMER', 'DEPARTMENT', 'EMPLOYEE', 'EMPLOYEE_PROJECT', 'JOB', 'PROJECT', 'PROJ_DEPT_BUDGET', 'SALARY_HISTORY', 'SALES', 'PHONE_LIST', 'ADD_EMP_PROJ', 'ALL_LANGS', 'DELETE_EMPLOYEE', 'DEPT_BUDGET', 'GET_EMP_PROJ', 'MAIL_LABEL', 'ORG_CHART', 'SHIP_ORDER', 'SHOW_LANGS', 'SUB_TOT_BUDGET', 'CUST_NO_GEN', 'EMP_NO_GEN', 'CUSTOMER_CHECK', 'CUSTOMER_ON_HOLD', 'ORDER_ALREADY_SHIPPED', 'REASSIGN_SALES', 'UNKNOWN_EMP_ID']
     END
     Select Main Window
+    Select Tab As Context    SHOW_LANGS:PROCEDURE:New Connection
     Select Tab As Context    Privileges
     Sleep    1s
     Select Tab As Context    Object → Users
@@ -44,6 +46,7 @@ test_1
         ...    ['SYSDBA', 'PUBLIC', 'PHONE_LIST', 'POST_NEW_ORDER', 'SAVE_SALARY_CHANGE', 'SET_CUST_NO', 'SET_EMP_NO', 'ADD_EMP_PROJ', 'ALL_LANGS', 'DELETE_EMPLOYEE', 'DEPT_BUDGET', 'GET_EMP_PROJ', 'MAIL_LABEL', 'ORG_CHART', 'SHIP_ORDER', 'SHOW_LANGS', 'SUB_TOT_BUDGET']
     END
     Select Main Window
+    Select Tab As Context    SHOW_LANGS:PROCEDURE:New Connection
     Select Tab As Context    Privileges
     Sleep    1s
     Select Tab As Context    DDL privileges

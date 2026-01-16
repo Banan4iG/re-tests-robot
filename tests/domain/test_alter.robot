@@ -22,6 +22,7 @@ test_data_type
     Check SQL
     ...    SELECT t.RDB$TYPE_NAME FROM RDB$FIELDS f JOIN RDB$TYPES t ON f.RDB$FIELD_TYPE = t.RDB$TYPE WHERE f.RDB$FIELD_NAME = 'TEST_DOMAIN' AND t.RDB$FIELD_NAME = 'RDB$FIELD_TYPE'
     ...    INT64
+    Select Tab As Context    TEST_DOMAIN:DOMAIN:New Connection
     ${res}=    Get Selected Item From Combo Box    typesCombo
     Should Be Equal As Strings    ${res}    BIGINT
 
@@ -50,7 +51,7 @@ test_comment
     Type Into Text Field    0    Test Comment Text
     Check    COMMENT ON DOMAIN TEST_DOMAIN IS 'Test Comment Text'
     Check SQL    SELECT RDB$DESCRIPTION FROM RDB$FIELDS WHERE RDB$FIELD_NAME = 'TEST_DOMAIN'    Test Comment Text
-
+    Select Tab As Context    TEST_DOMAIN:DOMAIN:New Connection
     Select Tab As Context    Comment
     Clear Text Field    0
     Type Into Text Field    0    Test Comment Text For Special Button
@@ -64,9 +65,11 @@ test_sql
     Select Tab As Context    Type
     Select From Combo Box    typesCombo    INT128
     Select Main Window
+    Select Tab As Context    TEST_DOMAIN:DOMAIN:New Connection
     Select Tab As Context    Check
     Type Into Text Field    0    VALUE > 5
     Select Main Window
+    Select Tab As Context    TEST_DOMAIN:DOMAIN:New Connection
     Select Tab As Context    SQL
     ${res}=    Get Text Field Value    0
     Should Be Equal As Strings
@@ -93,7 +96,6 @@ test_ddl_to_create
 
 test_collation
     Init    CREATE DOMAIN TEST_DOMAIN AS VARCHAR(123) CHARACTER SET UTF8 COLLATE UTF8
-    Select From Tree Node Popup Menu    0    New Connection|Domains (16)|TEST_DOMAIN    Edit domain
     ${res}=    Get Selected Item From Combo Box    collatesCombo
     Should Be Equal As Strings    ${res}    UTF8
 
@@ -103,14 +105,17 @@ test_default_value_check_comment
     Execute Immediate    COMMENT ON DOMAIN TEST_DOMAIN IS 'Test Comment';
     Open Connection
     Select From Tree Node Popup Menu    0    New Connection|Domains (16)|TEST_DOMAIN    Edit domain
+    Select Tab As Context    TEST_DOMAIN:DOMAIN:New Connection
     Select Tab As Context    Default Value
     ${res}=    Get Text Field Value    0
     Should Be Equal As Strings    ${res}    3
     Select Main Window
+    Select Tab As Context    TEST_DOMAIN:DOMAIN:New Connection
     Select Tab As Context    Check
     ${res}=    Get Text Field Value    0
     Should Be Equal As Strings    ${res}    VALUE < 10
     Select Main Window
+    Select Tab As Context    TEST_DOMAIN:DOMAIN:New Connection
     Select Tab As Context    Comment
     ${res}=    Get Text Field Value    0
     Should Be Equal As Strings    ${res}    Test Comment
@@ -119,16 +124,17 @@ test_default_value_check_comment
 
 *** Keywords ***
 Init
-    [Arguments]    ${text}    ${name}=TEST_DOMAIN
+    [Arguments]    ${text}
     Lock Employee
     Execute Immediate    ${text}
     Open Connection
-    Select From Tree Node Popup Menu    0    New Connection|Domains (16)|${name}    Edit domain
-    Select Tab As Context
+    Select From Tree Node Popup Menu    0    New Connection|Domains (16)|TEST_DOMAIN    Edit domain
+    Select Tab As Context    TEST_DOMAIN:DOMAIN:New Connection
 
 Check
     [Arguments]    ${text}
     Select Main Window
+    Select Tab As Context    TEST_DOMAIN:DOMAIN:New Connection
     Sleep    0.5s
     Push Button    submitButton
     Sleep    0.5s

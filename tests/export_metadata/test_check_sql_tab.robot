@@ -11,9 +11,8 @@ test_save_script
     Start
     Select Tab As Context    SQL
     Push Button    saveScriptButton
-    ${script_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /script.sql
-    ${test_base_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /test.fdb
-    # @{files}=    Create List    ${script_path}    ${test_base_path}
+    ${script_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /script.sql
+    ${test_base_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /test.fdb
     Remove Files    ${script_path}    ${test_base_path}
     Select Dialog    Save Script
     Type Into Text Field    0    ${script_path}
@@ -46,6 +45,7 @@ Start
     Lock Employee
     Create Objects
     Push Button    extract-metadata-command
+    Select Tab As Context    DB Metadata Export
     Push Button    extractButton
     Close Dialog    Message
 

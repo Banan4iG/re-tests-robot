@@ -25,7 +25,7 @@ test_check_warning
     Label Text Should Be    0    The tool does not support work with selected connection.
 
 test_switch_database
-    ${test_base_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /test.fdb
+    ${test_base_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /test.fdb
     Remove File    ${test_base_path}
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
