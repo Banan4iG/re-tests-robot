@@ -8,8 +8,8 @@ Test Teardown       Teardown After Every Tests
 
 *** Test Cases ***
 test_full_check
-    ${log_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /test_log.txt
-    ${bk_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /employee_backup.fbk
+    ${log_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /test_log.txt
+    ${bk_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /employee_backup.fbk
     Remove Files    ${log_path}    ${bk_path}
     Open Connection
     Select From Main Menu    Database|Database Backup/Restore
@@ -36,7 +36,7 @@ test_full_check
     File Should Exist    ${bk_path}
     Select Main Window
     Select Tab As Context    Database backup/restore
-    ${mew_db_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /employee_restore.fdb1
+    ${mew_db_path}=    Catenate    SEPARATOR=${EMPTY}   ${TEMPDIR}    /employee_restore.fdb1
     Clear Text Field    databaseFileField
     Type Into Text Field    databaseFileField    ${mew_db_path}
 

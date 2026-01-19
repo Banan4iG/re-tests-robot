@@ -16,6 +16,7 @@ test_empty_file
     Push Button    OK
 
     Select Main Window
+    Select Tab As Context    Database backup/restore
     Select Tab As Context    Restore
     Clear Text Field    backupFileField
 
@@ -25,7 +26,7 @@ test_empty_file
     Push Button    OK
 
 test_browse_withot_fbk
-    ${bk_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /employee_backup
+    ${bk_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /employee_backup
     Init
 
     Push Button    browseBackupFileButton
@@ -39,6 +40,7 @@ test_browse_withot_fbk
     ${bk_path_from_text_field}=    Get Text Field Value    backupFileField
     Should Not Be Equal As Integers    ${{$bk_path_from_text_field.find('.fbk')}}    -1
 
+    Select Tab As Context    Database backup/restore
     Select Tab As Context    Restore
     Clear Text Field    backupFileField
     Push Button    browseBackupFileButton
@@ -48,12 +50,13 @@ test_browse_withot_fbk
     Type Into Text Field    0    ${bk_path}
     Push Button    Select
     Select Main Window
+    Select Tab As Context    Database backup/restore
     Select Tab As Context    Restore
     ${bk_path_from_text_field}=    Get Text Field Value    backupFileField
     Should Not Be Equal As Integers    ${{$bk_path_from_text_field.find('.fbk')}}    -1
 
 test_not_fbk
-    ${bk_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /employee_backup.fb
+    ${bk_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /employee_backup.fb
     Init
 
     Type Into Text Field    backupFileField    ${bk_path}
@@ -63,6 +66,7 @@ test_not_fbk
     Push Button    OK
 
     Select Main Window
+    Select Tab As Context    Database backup/restore
     Select Tab As Context    Restore
     Clear Text Field    backupFileField
     Type Into Text Field    backupFileField    ${bk_path}

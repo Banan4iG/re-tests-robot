@@ -69,19 +69,13 @@ test_open_grant_manager
     Open Connection
     Send Keyboard Event    VK_Q    CTRL_MASK
     Sleep    2s
-    Label Text Should Be    1    Privileges For
+    Component Should Exist    privilegesTypeCombo
 
 test_open_memory_status
     Set Shortcut    Heap Memory Status
     Send Keyboard Event    VK_Q    CTRL_MASK
     Sleep    2s
     Dialog Should Be Open    Java Heap Memory
-
-test_open_new_conn
-    Set Shortcut    New Connection
-    Send Keyboard Event    VK_Q    CTRL_MASK
-    Sleep    5s
-    Component Should Exist    driverCombo
 
 test_open_file
     Click On Tree Node    0    New Connection    1

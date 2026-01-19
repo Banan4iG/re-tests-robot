@@ -42,9 +42,8 @@ test_3
 
 *** Keywords ***
 Init
-    ${bk_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /employee_backup.fbk
+    ${bk_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /employee_backup.fbk
     Remove File    ${bk_path}
-    Open Connection
     Select From Main Menu    Database|Database Backup/Restore
     Clear Text Field    backupFileField
     Type Into Text Field    backupFileField    ${bk_path}
@@ -58,6 +57,7 @@ Init
     File Should Exist    ${bk_path}
 
     Select Main Window
+    Select Tab As Context    Database backup/restore
     Select Tab    Restore
     Uncheck All Checkboxes
     RETURN    ${bk_path}

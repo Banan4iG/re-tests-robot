@@ -44,6 +44,7 @@ Action
     Push Button    extractButton
     Sleep    5s
     Close Dialog    Message
+    Select Tab As Context    DB Metadata Export
     Select Tab As Context    SQL
     ${script}=    Get Text Field Value    0
     @{result}=    Check Ignore    ${script}

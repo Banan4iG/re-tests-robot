@@ -8,7 +8,7 @@ Test Teardown       Teardown After Every Tests
 
 *** Test Cases ***
 test_1
-    ${bk_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /employee_backup.fbk
+    ${bk_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /employee_backup.fbk
     Remove File    ${bk_path}
     Open Connection
     Select From Main Menu    Database|Database Backup/Restore
@@ -25,7 +25,7 @@ test_1
     File Should Exist    ${bk_path}
 
     Select Main Window
-    ${mew_db_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /employee_restore.fdb
+    ${mew_db_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /employee_restore.fdb
     Restore    ${mew_db_path}
 
     # check register
@@ -33,7 +33,7 @@ test_1
     Tree Node Should Exist    0    employee_restore
 
     Select From Main Menu    Database|Database Backup/Restore
-    ${mew_db_path1}=    Catenate    SEPARATOR=    ${TEMPDIR}    /employee_restore.fdb1
+    ${mew_db_path1}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /employee_restore.fdb1
     Restore    ${mew_db_path1}
     Select Main Window
     Tree Node Should Exist    0    employee_restore (Copy)
@@ -46,7 +46,8 @@ Restore
     [Arguments]    ${mew_db_path}
     Clear Text Field    databaseFileField
     Type Into Text Field    databaseFileField    ${mew_db_path}
-
+    
+    Select Tab As Context    Database backup/restore
     Select Tab    Restore
     Push Button    restoreButton
     Sleep    2s

@@ -60,7 +60,7 @@ test_migrate_malahit
 
 test_check_error_and_remove_migrated_db
     Push Button    new-connection-command
-    Init connect    InterDriver    5051    ${EXECDIR}/files/STM.GDB
+    Init Connect    InterDriver    5051    ${EXECDIR}/files/STM.GDB
     Select From Combo Box    serverCombo    Other
     Check Check Box    Store Password
     Push Button    saveButton
@@ -201,7 +201,7 @@ Test
     [Arguments]    ${path_to_interbase_db}    ${interbase_db}
     Push Button    new-connection-command
 
-    Init connect    InterDriver    5051    ${path_to_interbase_db}/${interbase_db}
+    Init Connect    InterDriver    5051    ${path_to_interbase_db}/${interbase_db}
     Select From Combo Box    charsetsCombo    WIN1251
     Select From Combo Box    serverCombo    Other
     Check Check Box    Store Password
@@ -259,7 +259,7 @@ Test
     Expand Tree Node    0    New Connection 1
     Expand Tree Node    0    [migrated] New Connection 1
 
-Init connect
+Init Connect
     [Arguments]    ${driver}    ${port}    ${db}
     Type Into Combobox    hostCombo    localhost
     Clear Text Field    portField

@@ -8,8 +8,8 @@ Test Teardown       Teardown After Every Tests
 
 *** Test Cases ***
 test_1
-    ${bk_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /employee_backup.fbk
-    ${log_path}=    Catenate    SEPARATOR=    ${EMPTY}    log_file.log
+    ${bk_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /employee_backup.fbk
+    ${log_path}=    Catenate    SEPARATOR=${EMPTY}    ${EMPTY}    log_file.log
     Remove Files    ${bk_path}    ${log_path}
     Open Connection
     Select From Main Menu    Database|Database Backup/Restore
