@@ -15,15 +15,15 @@ test_1
     Execute Immediate    CREATE USER "dEmO" PASSWORD 'pass'
     Open Connection
     Expand Tree Node    0    New Connection
-    ${res1}=    Check user    DEMO
+    ${res1}=    Check User    DEMO
     Select Main Window
-    ${res2}=    Check user    dEmO
+    ${res2}=    Check User    dEmO
     Should Be Equal    ${res1}    CREATE USER DEMO ACTIVE USING PLUGIN Srp;\n    collapse_spaces=True
     Should Be Equal    ${res2}    CREATE USER "dEmO" ACTIVE USING PLUGIN Srp;\n    collapse_spaces=True
 
 
 *** Keywords ***
-Check user
+Check User
     [Arguments]    ${type}
     Select From Tree Node Popup Menu    0    New Connection|Users (3)|${type}    Edit user
     Select Tab As Context    ${type}:Srp:USER:New Connection
