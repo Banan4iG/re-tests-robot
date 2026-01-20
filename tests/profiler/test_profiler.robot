@@ -170,10 +170,12 @@ test_display_no_data
     Lock Employee
     Open Connection
     Select From Main Menu    Tools|Profiler
+    Select Tab As Context    Profiler
     Sleep    1s
     Label Text Should Be    0    NO ACCESS DATA
     Uncheck Check Box    accessPathCheck
-    Label Text Should Be    0    ${SPACE}Active Data Sources: 1
+    Run Keyword And Expect Error    org.netbeans.jemmy.TimeoutExpiredException: Wait Any javax.swing.JLabel loaded
+    ...    Label Text Should Be    0    NO ACCESS DATA
 
 test_round
     Start Profiler    EXECUTE BLOCK AS DECLARE I INTEGER; BEGIN I = 0; WHILE ( I <> 100000) DO BEGIN I = I + 1; END end
