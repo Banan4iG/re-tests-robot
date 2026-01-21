@@ -15,10 +15,13 @@ test_1
     Clear Text Field    startValueField
     Type Into Text Field    startValueField    100
 
+    Clear Text Field    currentValueField
+    Type Into Text Field    currentValueField    90
+
     Clear Text Field    incrementField
     Type Into Text Field    incrementField    10
 
-    Check    CREATE OR ALTER SEQUENCE NEW_SEQ START WITH 100 INCREMENT BY 10
+    Check
 
     Select Main Window
     ${start_value}=    Get Text Field Value    startValueField
@@ -26,17 +29,18 @@ test_1
     ${current_value}=    Get Text Field Value    currentValueField
     Should Be Equal As Strings    ${start_value}    100
     IF    ${{$ver == '5'}}
-        Should Be Equal As Strings    ${current_value}    90
+        Should Be Equal As Strings    ${current_value}    80
     ELSE
-        Should Be Equal As Strings    ${current_value}    100
+        Should Be Equal As Strings    ${current_value}    90
     END
     Should Be Equal As Strings    ${increment}    10
 
+    Select Tab As Context    NEW_SEQ:SEQUENCE:New Connection
     Select Tab As Context    DDL to create
     ${res}=    Get Text Field Value    0
     Should Be Equal As Strings
     ...    ${res}
-    ...    CREATE OR ALTER SEQUENCE NEW_SEQ START WITH 100 INCREMENT BY 10
+    ...    CREATE SEQUENCE NEW_SEQ START WITH 100 INCREMENT BY 10;
     ...    strip_spaces=${True}
     ...    collapse_spaces=${True}
 
@@ -45,9 +49,9 @@ test_2
     ${ver}=    Set Variable    ${info}[1]
     Skip if    ${{$ver == '2.6'}}
     Init    NEW_SEQ    NEW_SEQ
-    ${start_value}=    Get Text Field Value    1
-    ${increment}=    Get Text Field Value    2
-    ${current_value}=    Get Text Field Value    3
+    ${start_value}=    Get Text Field Value    startValueField
+    ${increment}=    Get Text Field Value    incrementField
+    ${current_value}=    Get Text Field Value    currentValueField
     Should Be Equal As Strings    ${start_value}    10
     ${info}=    Get Server Info
     IF    ${{$ver == '5'}}
@@ -130,7 +134,7 @@ test_5
     IF    ${{$ver != '2.6'}}
         Should Be Equal As Strings
         ...    ${res}
-        ...    CREATE OR ALTER SEQUENCE """NEW SEQ""" START WITH 10 INCREMENT BY 1;
+        ...    CREATE SEQUENCE """NEW SEQ""" START WITH 10 INCREMENT BY 1;
         ...    strip_spaces=${True}
         ...    collapse_spaces=${True}
     ELSE
@@ -142,9 +146,40 @@ test_5
     END
 
 test_6
+    ${info}=    Get Server Info
+    ${ver}=    Set Variable    ${info}[1]
+    Skip if    ${{$ver == '2.6'}}
     Init    NEW_SEQ    NEW_SEQ
     Push Button    Restart
-    Check    ALTER SEQUENCE NEW_SEQ RESTART
+
+    Single Check    ALTER SEQUENCE NEW_SEQ RESTART
+
+test_restart_with_on_rdb26
+    ${info}=    Get Server Info
+    ${ver}=    Set Variable    ${info}[1]
+    Skip if    ${{$ver != '2.6'}}
+    Init    NEW_SEQ    NEW_SEQ
+
+    Clear Text Field    currentValueField
+    Type Into Text Field    currentValueField    90
+
+    Push Button    submitButton
+
+    Single Check    ALTER SEQUENCE NEW_SEQUENCE_1 RESTART WITH 90
+
+    Select Main Window
+    ${current_value}=    Get Text Field Value    currentValueField
+    Should Be Equal As Strings    ${current_value}    90
+
+    Select Tab As Context    NEW_SEQ:SEQUENCE:New Connection
+    Select Tab As Context    DDL to create
+    ${res}=    Get Text Field Value    0
+    Should Be Equal As Strings
+    ...    ${res}
+    ...    CREATE SEQUENCE NEW_SEQUENCE_1; ALTER SEQUENCE NEW_SEQUENCE_1 RESTART WITH 90;
+    ...    strip_spaces=${True}
+    ...    collapse_spaces=${True}
+
 
 *** Keywords ***
 Init
@@ -169,11 +204,50 @@ Init
     Should Be Equal As Strings    ${tree_name}    ${name}
 
 Check
-    [Arguments]    ${text}
     Push Button    submitButton
     Select Dialog    Commiting changes
+
+    Click On Table Cell    0    0    Name operation
     ${res}=    Get Text Field Value    0
-    Should Be Equal As Strings    ${res}    ${text}
+    Should Be Equal As Strings
+    ...    ${res}
+    ...    ALTER SEQUENCE NEW_SEQ START WITH 100
+    ...    strip_spaces=${True}
+    ...    collapse_spaces=${True}
+
+    Click On Table Cell    0    1    Name operation
+    ${res}=    Get Text Field Value    0
+    Should Be Equal As Strings
+    ...    ${res}
+    ...    ALTER SEQUENCE NEW_SEQ INCREMENT BY 10
+    ...    strip_spaces=${True}
+    ...    collapse_spaces=${True}
+
+    Click On Table Cell    0    2    Name operation
+    ${res}=    Get Text Field Value    0
+    Should Be Equal As Strings
+    ...    ${res}
+    ...    ALTER SEQUENCE NEW_SEQ RESTART WITH 90
+    ...    strip_spaces=${True}
+    ...    collapse_spaces=${True}
+
+    Push Button    commitButton
+    Sleep    0.1s
+    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
+    Run Keyword And Expect Error
+    ...    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Commiting changes'
+    ...    Select Dialog
+    ...    Commiting changes
+
+Single Check
+    [Arguments]    ${expected_ddl}
+    Select Dialog    Commiting changes
+    ${res}=    Get Text Field Value    0
+    Should Be Equal As Strings
+    ...    ${res}
+    ...    ${expected_ddl}
+    ...    strip_spaces=${True}
+    ...    collapse_spaces=${True}
 
     Push Button    commitButton
     Sleep    0.1s
