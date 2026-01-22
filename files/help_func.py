@@ -599,3 +599,56 @@ def get_system_privileges():
         if result[0][0]:
             current_system_privileges.append(privileges)
     return current_system_privileges
+
+def alter_copy(db_path: str):
+    import firebird.driver as fdb
+    ddls = [
+        """CREATE OR ALTER PROCEDURE ALL_LANGS
+RETURNS (
+    CODE VARCHAR(5),
+    GRADE VARCHAR(5),
+    COUNTRY VARCHAR(15),
+    LANG VARCHAR(15)
+)
+AS
+BEGIN
+    FOR SELECT job_code, job_grade, job_country FROM job
+        INTO :code, :grade, :country
+
+    DO
+    BEGIN
+        FOR SELECT languages FROM show_langs
+            (:code, :grade, :country) INTO :lang DO
+            SUSPEND;
+        /* Put nice separators between rows */
+        code = '=====';   
+        grade = '=====';    
+        country = '===============';   
+        lang = '==============';   
+        SUSPEND;
+    END
+    END;""",
+        """CREATE OR ALTER TRIGGER POST_NEW_ORDER FOR SALES
+ACTIVE AFTER INSERT POSITION 0
+AS
+BEGIN
+    POST_EVENT 'new_order';     
+END;"""
+    ]
+    if is_rdb26():
+        import fdb
+        load_api()
+    else:
+        alter_func = """CREATE OR ALTER FUNCTION NEW_FUNC
+RETURNS BIGINT
+AS
+BEGIN
+    /* Function impl */    
+END;"""
+        ddls.append(alter_func)
+
+    with fdb.connect(f"localhost:{db_path}", user="SYSDBA", password="masterkey") as con:
+        for alter_ddl in ddls:
+            con.execute_immediate(alter_ddl)
+    
+        con.commit()
