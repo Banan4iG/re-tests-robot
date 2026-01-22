@@ -36,7 +36,7 @@ test_4
     Error Check
 
 test_5
-    Init    "NEW_SEQ"    ${EMPTY}    2
+    Init    "NEW_SEQ"    0    2
     Check    CREATE SEQUENCE """NEW_SEQ""" START WITH 0 INCREMENT BY 2    "NEW_SEQ"
 
 test_6
