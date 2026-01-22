@@ -29,7 +29,7 @@ test_check_ignore
     # Delete Objects    ${rdb5}
     Should Be Equal As Strings    ${result}    [0, 0, 0, 0, 1, 9]
 
-test_check_ignore_whitesapce
+test_check_ignore_whitespace
     ${info}=    Get Server Info
     ${home_dir}=    Set Variable    ${info}[0]
     ${ver}=    Set Variable    ${info}[1]
