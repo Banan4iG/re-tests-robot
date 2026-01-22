@@ -119,7 +119,7 @@ Init
     ${ver}=    Set Variable    ${info}[1]
     IF    ${{$ver == '2.6'}}
         Lock Employee
-        Set blobs
+        Set Blobs
     END
     Open Connection
     Clear Text Field    0

@@ -4,7 +4,7 @@ Resource    ../../files/keywords.resource
 
 
 *** Keywords ***
-Setup before export data
+Setup Before Export Data
     Open Connection
     Clear Text Field    0
     Insert Into Text Field    0    SELECT * FROM EMPLOYEE
@@ -14,7 +14,7 @@ Setup before export data
     Select From Table Cell Popup Menu On Selected Cells    0    Export|Selected data
     Select Dialog    Export Data
 
-Set blobs
+Set Blobs
     Execute Immediate
     ...    UPDATE "PROJECT" SET PROJ_DESC = 'Design a video data base management system for\ncontrolling on-demand video distribution.\n' WHERE PROJ_ID = 'VBASE'
     Execute Immediate

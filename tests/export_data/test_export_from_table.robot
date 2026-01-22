@@ -51,7 +51,6 @@ test_export_table
 
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
-    ${ser_ver}=    Set Variable    ${info}[2]
     IF    ${{$ver == '2.6'}}
         ${expected_content}=    Catenate
         ...    SEPARATOR=\n

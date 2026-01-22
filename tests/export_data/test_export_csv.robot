@@ -9,7 +9,7 @@ Test Teardown       Teardown After Every Tests
 
 *** Test Cases ***
 test_without
-    Setup before export data
+    Setup Before Export Data
     ${export_path}=    Init CSV
 
     ${expected_content}=    Catenate
@@ -21,10 +21,10 @@ test_without
     ...    Claudia;Sutherland;;1992-04-20T00:00
     ...    Dana;Bishop;290;1992-06-01T00:00
     ...    ${EMPTY}
-    Check content    ${export_path}    ${expected_content}
+    Check Content    ${export_path}    ${expected_content}
 
 test_include_column_name
-    Setup before export data
+    Setup Before Export Data
     ${export_path}=    Init CSV
     Check Check Box    addColumnHeadersCheck
 
@@ -38,10 +38,10 @@ test_include_column_name
     ...    Claudia;Sutherland;;1992-04-20T00:00
     ...    Dana;Bishop;290;1992-06-01T00:00
     ...    ${EMPTY}
-    Check content    ${export_path}    ${expected_content}
+    Check Content    ${export_path}    ${expected_content}
 
 test_double_quotes
-    Setup before export data
+    Setup Before Export Data
     ${export_path}=    Init CSV
     Check Check Box    addQuotesCheck
 
@@ -54,10 +54,10 @@ test_double_quotes
     ...    "Claudia";"Sutherland";;1992-04-20T00:00
     ...    "Dana";"Bishop";"290";1992-06-01T00:00
     ...    ${EMPTY}
-    Check content    ${export_path}    ${expected_content}
+    Check Content    ${export_path}    ${expected_content}
 
 test_replace_null
-    Setup before export data
+    Setup Before Export Data
     ${export_path}=    Init CSV
     Check Check Box    replaceNullCheck
     Clear Text Field    replaceNullField
@@ -71,12 +71,12 @@ test_replace_null
     ...    Claudia;Sutherland;LLUN;1992-04-20T00:00
     ...    Dana;Bishop;290;1992-06-01T00:00
     ...    ${EMPTY}
-    Check content    ${export_path}    ${expected_content}
+    Check Content    ${export_path}    ${expected_content}
 
 test_unuse_replace_endl
     Lock Employee
     Execute Immediate    UPDATE EMPLOYEE SET LAST_NAME = 'Nord\nstrom' where LAST_NAME = 'Nordstrom'
-    Setup before export data
+    Setup Before Export Data
     ${export_path}=    Init CSV
     ${expected_content}=    Catenate
     ...    SEPARATOR=\n
@@ -88,12 +88,12 @@ test_unuse_replace_endl
     ...    Claudia;Sutherland;;1992-04-20T00:00
     ...    Dana;Bishop;290;1992-06-01T00:00
     ...    ${EMPTY}
-    Check content    ${export_path}    ${expected_content}
+    Check Content    ${export_path}    ${expected_content}
 
 test_replace_endl
     Lock Employee
     Execute Immediate    UPDATE EMPLOYEE SET LAST_NAME = 'Nord\nstrom' where LAST_NAME = 'Nordstrom'
-    Setup before export data
+    Setup Before Export Data
     ${export_path}=    Init CSV
     Check Check Box    replaceEndlCheck
     Clear Text Field    replaceEndlCombo    # replace "Combo" to "Field"
@@ -108,10 +108,10 @@ test_replace_endl
     ...    Claudia;Sutherland;;1992-04-20T00:00
     ...    Dana;Bishop;290;1992-06-01T00:00
     ...    ${EMPTY}
-    Check content    ${export_path}    ${expected_content}
+    Check Content    ${export_path}    ${expected_content}
 
 test_select_delimiter
-    Setup before export data
+    Setup Before Export Data
     ${export_path}=    Init CSV
     Select From Combo Box    columnDelimiterCombo    |
 
@@ -124,10 +124,10 @@ test_select_delimiter
     ...    Claudia|Sutherland||1992-04-20T00:00
     ...    Dana|Bishop|290|1992-06-01T00:00
     ...    ${EMPTY}
-    Check content    ${export_path}    ${expected_content}
+    Check Content    ${export_path}    ${expected_content}
 
 test_type_delimiter
-    Setup before export data
+    Setup Before Export Data
     ${export_path}=    Init CSV
     Type Into Combobox    columnDelimiterCombo    123
 
@@ -144,7 +144,7 @@ test_type_delimiter
     ...    Claudia123Sutherland123LLUN1231992-04-20T00:00
     ...    Dana123Bishop1232901231992-06-01T00:00
     ...    ${EMPTY}
-    Check content    ${export_path}    ${expected_content}
+    Check Content    ${export_path}    ${expected_content}
 
 test_execute_to_file
     Open Connection
@@ -159,7 +159,7 @@ test_execute_to_file
     Check Check Box    addColumnHeadersCheck
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
-    ${ser_ver}=    Set Variable    ${info}[2]
+    ${srv_ver}=    Set Variable    ${info}[2]
     IF    ${{$ver == '2.6'}}
         ${expected_content}=    Catenate
         ...    SEPARATOR=\n
@@ -211,20 +211,20 @@ test_execute_to_file
         ...    Portugal;Euro
         ...    ${EMPTY}
     END
-    Check content    ${export_path}    ${expected_content}
+    Check Content    ${export_path}    ${expected_content}
 
 
 *** Keywords ***
 Init CSV
     Select From Combo Box    typeCombo    CSV
-    ${export_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /export.csv
+    ${export_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /export.csv
     Remove Files    ${export_path}
     Clear Text Field    filePathField
     Type Into Text Field    filePathField    ${export_path}
     Uncheck All Checkboxes
     RETURN    ${export_path}
 
-Check content
+Check Content
     [Arguments]    ${export_path}    ${expected_content}
     Push Button    exportButton
     Sleep    5s

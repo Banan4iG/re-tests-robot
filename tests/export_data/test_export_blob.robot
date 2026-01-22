@@ -11,8 +11,8 @@ Test Teardown       Teardown After Every Tests
 test_CSV_export_to_folder
     Init
     Select From Combo Box    typeCombo    CSV
-    ${export_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.csv
-    ${export_blob}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export_blob
+    ${export_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export.csv
+    ${export_blob}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export_blob
     Remove Files    ${export_path}
     Remove Directory    ${export_blob}    ${True}
 
@@ -24,7 +24,7 @@ test_CSV_export_to_folder
 
     Check Check Box    saveBlobsIndividuallyCheck
 
-    ${blob_path1}    ${blob_path2}    ${blob_path3}=    Check blobs in folder    ${export_blob}
+    ${blob_path1}    ${blob_path2}    ${blob_path3}=    Check Blobs In Folder    ${export_blob}
 
     ${expected_content}=    Catenate
     ...    SEPARATOR=\n
@@ -39,8 +39,8 @@ test_CSV_export_to_folder
 test_XML_export_to_folder
     Init
     Select From Combo Box    typeCombo    XML
-    ${export_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.xml
-    ${export_blob}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export_blob
+    ${export_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export.xml
+    ${export_blob}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export_blob
     Remove Files    ${export_path}
     Remove Directory    ${export_blob}    ${True}
     Clear Text Field    filePathField
@@ -50,7 +50,7 @@ test_XML_export_to_folder
     Type Into Text Field    folderPathField    ${export_blob}
     Check Check Box    saveBlobsIndividuallyCheck
 
-    ${blob_path1}    ${blob_path2}    ${blob_path3}=    Check blobs in folder    ${export_blob}
+    ${blob_path1}    ${blob_path2}    ${blob_path3}=    Check Blobs In Folder    ${export_blob}
 
     VAR    ${expected_content}=
     ...    <?xml version="1.0" encoding="UTF-8" standalone="no"?> <result-set> <data> <row number="1"> <PROJ_NAME><![CDATA[Video Database]]></PROJ_NAME> <PROJ_DESC>${blob_path1}</PROJ_DESC> </row> <row number="2"> <PROJ_NAME><![CDATA[DigiPizza]]></PROJ_NAME> <PROJ_DESC>${blob_path2}</PROJ_DESC> </row> <row number="3"> <PROJ_NAME><![CDATA[AutoMap]]></PROJ_NAME> <PROJ_DESC>${blob_path3}</PROJ_DESC> </row> </data> </result-set>
@@ -61,8 +61,8 @@ test_XML_export_to_folder
 test_XLSX_export_to_folder
     Init
     Select From Combo Box    typeCombo    XLSX
-    ${export_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.xlsx
-    ${export_blob}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export_blob
+    ${export_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export.xlsx
+    ${export_blob}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export_blob
     Remove Files    ${export_path}
     Remove Directory    ${export_blob}    ${True}
     Clear Text Field    filePathField
@@ -73,7 +73,7 @@ test_XLSX_export_to_folder
     Check Check Box    saveBlobsIndividuallyCheck
     Check Check Box    addColumnHeadersCheck
 
-    ${blob_path1}    ${blob_path2}    ${blob_path3}=    Check blobs in folder    ${export_blob}
+    ${blob_path1}    ${blob_path2}    ${blob_path3}=    Check Blobs In Folder    ${export_blob}
 
     VAR    ${expected_content}=
     ...    PROJ_NAME PROJ_DESC Video Database ${blob_path1} DigiPizza ${blob_path2} AutoMap ${blob_path3}
@@ -84,8 +84,8 @@ test_XLSX_export_to_folder
 test_SQL_export_to_folder
     Init
     Select From Combo Box    typeCombo    SQL
-    ${export_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.sql
-    ${export_blob}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export_blob
+    ${export_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export.sql
+    ${export_blob}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export_blob
     Remove Files    ${export_path}
     Remove Directory    ${export_blob}    ${True}
     Clear Text Field    filePathField
@@ -99,7 +99,7 @@ test_SQL_export_to_folder
     Clear Text Field    exportTableNameField
     Type Into Text Field    exportTableNameField    TEST_TABLE
 
-    ${blob_path1}    ${blob_path2}    ${blob_path3}=    Check blobs in folder    ${export_blob}
+    ${blob_path1}    ${blob_path2}    ${blob_path3}=    Check Blobs In Folder    ${export_blob}
 
     VAR    ${expected_content}=
     ...    -- table creating -- CREATE TABLE TEST_TABLE ( PROJ_NAME BLOB SUB_TYPE TEXT, PROJ_DESC BLOB SUB_TYPE TEXT ); -- inserting data -- INSERT INTO TEST_TABLE ( PROJ_NAME, PROJ_DESC ) VALUES ( 'Video Database', ?'${blob_path1}' ); INSERT INTO TEST_TABLE ( PROJ_NAME, PROJ_DESC ) VALUES ( 'DigiPizza', ?'${blob_path2}' ); INSERT INTO TEST_TABLE ( PROJ_NAME, PROJ_DESC ) VALUES ( 'AutoMap', ?'${blob_path3}' );
@@ -110,8 +110,8 @@ test_SQL_export_to_folder
 test_CSV_export_to_file
     Init
     Select From Combo Box    typeCombo    CSV
-    ${export_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.csv
-    ${export_blob}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export_blob.txt
+    ${export_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export.csv
+    ${export_blob}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export_blob.txt
     Remove Files    ${export_path}    ${export_blob}
     Clear Text Field    filePathField
     Type Into Text Field    filePathField    ${export_path}
@@ -136,8 +136,8 @@ test_CSV_export_to_file
 test_XML_export_to_file
     Init
     Select From Combo Box    typeCombo    XML
-    ${export_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.xml
-    ${export_blob}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export_blob.txt
+    ${export_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export.xml
+    ${export_blob}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export_blob.txt
     Remove Files    ${export_path}    ${export_blob}
     Clear Text Field    filePathField
     Type Into Text Field    filePathField    ${export_path}
@@ -158,8 +158,8 @@ test_XML_export_to_file
 test_XLSX_export_to_file
     Init
     Select From Combo Box    typeCombo    XLSX
-    ${export_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.xlsx
-    ${export_blob}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export_blob.txt
+    ${export_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export.xlsx
+    ${export_blob}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export_blob.txt
     Remove Files    ${export_path}    ${export_blob}
     Clear Text Field    filePathField
     Type Into Text Field    filePathField    ${export_path}
@@ -181,8 +181,8 @@ test_XLSX_export_to_file
 test_SQL_export_to_file
     Init
     Select From Combo Box    typeCombo    SQL
-    ${export_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.sql
-    ${export_blob}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export_blob.txt
+    ${export_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export.sql
+    ${export_blob}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export_blob.txt
     Remove Files    ${export_path}    ${export_blob}
     Clear Text Field    filePathField
     Type Into Text Field    filePathField    ${export_path}
@@ -212,7 +212,7 @@ Init
     ${ver}=    Set Variable    ${info}[1]
     IF    ${{$ver == '2.6'}}
         Lock Employee
-        Set blobs
+        Set Blobs
     END
     Open Connection
     Clear Text Field    0
@@ -224,16 +224,16 @@ Init
     Select Dialog    Export Data
     RETURN    ${ver}
 
-Check blobs in folder
+Check Blobs In Folder
     [Arguments]    ${export_blob}
     Push Button    exportButton
     Sleep    5s
     Close Dialog    Message
     Directory Should Exist    ${export_blob}
     Directory Should Not Be Empty    ${export_blob}
-    ${blob_path1}=    Catenate    SEPARATOR=    ${export_blob}    ${/}PROJ_DESC_0.txt
-    ${blob_path2}=    Catenate    SEPARATOR=    ${export_blob}    ${/}PROJ_DESC_1.txt
-    ${blob_path3}=    Catenate    SEPARATOR=    ${export_blob}    ${/}PROJ_DESC_2.txt
+    ${blob_path1}=    Catenate    SEPARATOR=${EMPTY}    ${export_blob}    ${/}PROJ_DESC_0.txt
+    ${blob_path2}=    Catenate    SEPARATOR=${EMPTY}    ${export_blob}    ${/}PROJ_DESC_1.txt
+    ${blob_path3}=    Catenate    SEPARATOR=${EMPTY}    ${export_blob}    ${/}PROJ_DESC_2.txt
 
     ${content1}=    Get File    ${blob_path1}
     ${content2}=    Get File    ${blob_path2}
