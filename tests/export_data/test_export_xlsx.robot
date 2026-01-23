@@ -9,7 +9,7 @@ Test Teardown       Teardown After Every Tests
 
 *** Test Cases ***
 test_without
-    Setup before export data
+    Setup Before Export Data
     ${export_path}=    Init XLSX
 
     ${expected_content}=    Catenate
@@ -22,10 +22,10 @@ test_without
     ...    Claudia\tSutherland\t\t1992-04-20T00:00\t
     ...    Dana\tBishop\t290.0\t1992-06-01T00:00\t
     ...    ${EMPTY}
-    Check content    ${export_path}    ${expected_content}
+    Check Content    ${export_path}    ${expected_content}
 
 test_include_column_name
-    Setup before export data
+    Setup Before Export Data
     ${export_path}=    Init XLSX
     Check Check Box    addColumnHeadersCheck
 
@@ -39,10 +39,10 @@ test_include_column_name
     ...    Claudia\tSutherland\t\t1992-04-20T00:00\t
     ...    Dana\tBishop\t290.0\t1992-06-01T00:00\t
     ...    ${EMPTY}
-    Check content    ${export_path}    ${expected_content}
+    Check Content    ${export_path}    ${expected_content}
 
 test_replace_null
-    Setup before export data
+    Setup Before Export Data
     ${export_path}=    Init XLSX
     Check Check Box    replaceNullCheck
     Clear Text Field    replaceNullField
@@ -58,7 +58,7 @@ test_replace_null
     ...    Claudia\tSutherland\tLLUN\t1992-04-20T00:00\t
     ...    Dana\tBishop\t290.0\t1992-06-01T00:00\t
     ...    ${EMPTY}
-    Check content    ${export_path}    ${expected_content}
+    Check Content    ${export_path}    ${expected_content}
 
 test_execute_to_file
     Open Connection
@@ -73,7 +73,6 @@ test_execute_to_file
 
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
-    ${ser_ver}=    Set Variable    ${info}[2]
     IF    ${{$ver == '2.6'}}
         ${expected_content}=    Catenate
         ...    SEPARATOR=\n
@@ -126,7 +125,7 @@ test_execute_to_file
         ...    ${EMPTY}
     END
 
-    Check content    ${export_path}    ${expected_content}
+    Check Content    ${export_path}    ${expected_content}
 
 test_max_row
     [Timeout]    5m
@@ -153,14 +152,14 @@ test_max_row
 *** Keywords ***
 Init XLSX
     Select From Combo Box    typeCombo    XLSX
-    ${export_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /export.xlsx
+    ${export_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /export.xlsx
     Remove Files    ${export_path}
     Clear Text Field    filePathField
     Type Into Text Field    filePathField    ${export_path}
     Uncheck All Checkboxes
     RETURN    ${export_path}
 
-Check content
+Check Content
     [Arguments]    ${export_path}    ${expected_content}
     Push Button    exportButton
     Sleep    5s

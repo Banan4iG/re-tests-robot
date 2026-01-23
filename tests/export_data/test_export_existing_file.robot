@@ -47,9 +47,9 @@ test_overwrite_close
 
 *** Keywords ***
 Init
-    Setup before export data
+    Setup Before Export Data
     Select From Combo Box    typeCombo    CSV
-    ${export_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /export.csv
+    ${export_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /export.csv
     Remove Files    ${export_path}
     Clear Text Field    filePathField
     Type Into Text Field    filePathField    ${export_path}

@@ -9,11 +9,11 @@ Test Teardown       Teardown After Every Tests
 
 *** Test Cases ***
 test_1
-    Setup before export data
-    ${export_path_csv}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.csv
-    ${export_path_xlsx}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.xlsx
-    ${export_path_xml}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.xml
-    ${export_path_sql}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.sql
+    Setup Before Export Data
+    ${export_path_csv}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export.csv
+    ${export_path_xlsx}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export.xlsx
+    ${export_path_xml}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export.xml
+    ${export_path_sql}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export.sql
 
     Select From Combo Box    typeCombo    CSV
     Select Export File Path
@@ -72,7 +72,7 @@ test_blob
     Push Button    Select
     Select Dialog    Export Data
 
-    ${export_path_blob}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.lob
+    ${export_path_blob}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export.lob
     ${current_export_path}=    Get Text Field Value    folderPathField
     Should Be Equal As Strings
     ...    ${current_export_path}

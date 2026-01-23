@@ -17,7 +17,7 @@ test_CSV
     Push Button    editor-export-command
     Select Dialog    Export Data
     Select From Combo Box    typeCombo    CSV
-    ${export_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    /export.csv
+    ${export_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /export.csv
     Remove Files    ${export_path}
     Uncheck All Checkboxes
     Check Check Box    addColumnHeadersCheck
@@ -26,7 +26,7 @@ test_CSV
     Type Into Text Field    filePathField    ${export_path}
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
-    ${ser_ver}=    Set Variable    ${info}[2]
+    ${srv_ver}=    Set Variable    ${info}[2]
     IF    ${{$ver == '2.6'}}
         ${expected_content}=    Catenate
         ...    SEPARATOR=\n

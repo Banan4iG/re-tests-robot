@@ -12,8 +12,8 @@ Test Teardown       Teardown After Every Tests
 test_CSV_export_to_folder
     Init
     Select From Combo Box    typeCombo    CSV
-    ${export_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.csv
-    ${export_blob}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export_blob
+    ${export_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export.csv
+    ${export_blob}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export_blob
     Remove Files    ${export_path}
     Remove Directory    ${export_blob}    ${True}
     Clear Text Field    filePathField
@@ -25,7 +25,7 @@ test_CSV_export_to_folder
 
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
-    @{blob_paths}=    Check blobs in folder    ${export_blob}
+    @{blob_paths}=    Check Blobs In Folder    ${export_blob}
 
     IF    ${{$ver != '2.6'}}
         ${expected_content}=    Catenate
@@ -65,8 +65,8 @@ test_CSV_export_to_folder
 test_XML_export_to_folder
     Init
     Select From Combo Box    typeCombo    XML
-    ${export_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.xml
-    ${export_blob}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export_blob
+    ${export_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export.xml
+    ${export_blob}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export_blob
     Remove Files    ${export_path}
     Remove Directory    ${export_blob}    ${True}
     Clear Text Field    filePathField
@@ -78,7 +78,7 @@ test_XML_export_to_folder
 
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
-    @{blob_paths}=    Check blobs in folder    ${export_blob}
+    @{blob_paths}=    Check Blobs In Folder    ${export_blob}
 
     IF    ${{$ver != '2.6'}}
         VAR    ${expected_content}=
@@ -95,8 +95,8 @@ test_XML_export_to_folder
 test_XLSX_export_to_folder
     Init
     Select From Combo Box    typeCombo    XLSX
-    ${export_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.xlsx
-    ${export_blob}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export_blob
+    ${export_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export.xlsx
+    ${export_blob}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export_blob
     Remove Files    ${export_path}
     Remove Directory    ${export_blob}    ${True}
     Clear Text Field    filePathField
@@ -109,8 +109,8 @@ test_XLSX_export_to_folder
 
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
-    ${ser_ver}=    Set Variable    ${info}[2]
-    @{blob_paths}=    Check blobs in folder    ${export_blob}
+    ${srv_ver}=    Set Variable    ${info}[2]
+    @{blob_paths}=    Check Blobs In Folder    ${export_blob}
 
     IF    ${{$ver != '2.6'}}
         VAR    ${expected_content}=
@@ -126,8 +126,8 @@ test_XLSX_export_to_folder
 test_SQL_export_to_folder
     Init
     Select From Combo Box    typeCombo    SQL
-    ${export_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.sql
-    ${export_blob}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export_blob
+    ${export_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export.sql
+    ${export_blob}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export_blob
     Remove Files    ${export_path}
     Remove Directory    ${export_blob}    ${True}
     Clear Text Field    filePathField
@@ -143,8 +143,8 @@ test_SQL_export_to_folder
 
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
-    ${ser_ver}=    Set Variable    ${info}[2]
-    @{blob_paths}=    Check blobs in folder    ${export_blob}
+    ${srv_ver}=    Set Variable    ${info}[2]
+    @{blob_paths}=    Check Blobs In Folder    ${export_blob}
 
     IF    ${{$ver != '2.6'}}
         VAR    ${expected_content}=
@@ -160,8 +160,8 @@ test_SQL_export_to_folder
 test_CSV_export_to_file
     Init
     Select From Combo Box    typeCombo    CSV
-    ${export_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.csv
-    ${export_blob}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export_blob.txt
+    ${export_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export.csv
+    ${export_blob}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export_blob.txt
     Remove Files    ${export_path}    ${export_blob}
     Clear Text Field    filePathField
     Type Into Text Field    filePathField    ${export_path}
@@ -173,7 +173,7 @@ test_CSV_export_to_file
     Close Dialog    Message
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
-    ${ser_ver}=    Set Variable    ${info}[2]
+    ${srv_ver}=    Set Variable    ${info}[2]
     IF    ${{$ver != '2.6'}}
         ${expected_content}=    Catenate
         ...    SEPARATOR=\n
@@ -214,8 +214,8 @@ test_CSV_export_to_file
 test_XML_export_to_file
     Init
     Select From Combo Box    typeCombo    XML
-    ${export_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.xml
-    ${export_blob}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export_blob.txt
+    ${export_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export.xml
+    ${export_blob}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export_blob.txt
     Remove Files    ${export_path}    ${export_blob}
     Clear Text Field    filePathField
     Type Into Text Field    filePathField    ${export_path}
@@ -228,7 +228,7 @@ test_XML_export_to_file
 
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
-    ${ser_ver}=    Set Variable    ${info}[2]
+    ${srv_ver}=    Set Variable    ${info}[2]
     IF    ${{$ver != '2.6'}}
         VAR    ${expected_content}=
         ...    <?xml version="1.0" encoding="UTF-8" standalone="no"?> <result-set> <data> <row number="1"> <PROJ_ID><![CDATA[VBASE]]></PROJ_ID> <PROJ_NAME><![CDATA[Video Database]]></PROJ_NAME> <PROJ_DESC>:h00000000_00000059</PROJ_DESC> <TEAM_LEADER>45</TEAM_LEADER> <PRODUCT><![CDATA[software]]></PRODUCT> </row> <row number="2"> <PROJ_ID><![CDATA[DGPII]]></PROJ_ID> <PROJ_NAME><![CDATA[DigiPizza]]></PROJ_NAME> <PROJ_DESC>:h00000059_00000077</PROJ_DESC> <TEAM_LEADER>24</TEAM_LEADER> <PRODUCT><![CDATA[other]]></PRODUCT> </row> <row number="3"> <PROJ_ID><![CDATA[GUIDE]]></PROJ_ID> <PROJ_NAME><![CDATA[AutoMap]]></PROJ_NAME> <PROJ_DESC>:h000000d0_00000055</PROJ_DESC> <TEAM_LEADER>20</TEAM_LEADER> <PRODUCT><![CDATA[hardware]]></PRODUCT> </row> <row number="4"> <PROJ_ID><![CDATA[MAPDB]]></PROJ_ID> <PROJ_NAME><![CDATA[MapBrowser port]]></PROJ_NAME> <PROJ_DESC>:h00000125_00000048</PROJ_DESC> <TEAM_LEADER>4</TEAM_LEADER> <PRODUCT><![CDATA[software]]></PRODUCT> </row> <row number="5"> <PROJ_ID><![CDATA[HWRII]]></PROJ_ID> <PROJ_NAME><![CDATA[Translator upgrade]]></PROJ_NAME> <PROJ_DESC>:h0000016d_00000056</PROJ_DESC> <TEAM_LEADER/> <PRODUCT><![CDATA[software]]></PRODUCT> </row> <row number="6"> <PROJ_ID><![CDATA[MKTPR]]></PROJ_ID> <PROJ_NAME><![CDATA[Marketing project 3]]></PROJ_NAME> <PROJ_DESC>:h000001c3_00000061</PROJ_DESC> <TEAM_LEADER>85</TEAM_LEADER> <PRODUCT><![CDATA[N/A]]></PRODUCT> </row> <row number="7"> <PROJ_ID><![CDATA[FCORE]]></PROJ_ID> <PROJ_NAME><![CDATA[Firebird engine]]></PROJ_NAME> <PROJ_DESC>:h00000224_00000087</PROJ_DESC> <TEAM_LEADER>146</TEAM_LEADER> <PRODUCT><![CDATA[software]]></PRODUCT> </row> <row number="8"> <PROJ_ID><![CDATA[FBDOC]]></PROJ_ID> <PROJ_NAME><![CDATA[Documentation]]></PROJ_NAME> <PROJ_DESC>:h000002ab_00000046</PROJ_DESC> <TEAM_LEADER/> <PRODUCT><![CDATA[other]]></PRODUCT> </row> <row number="9"> <PROJ_ID><![CDATA[PYTHN]]></PROJ_ID> <PROJ_NAME><![CDATA[Python drivers]]></PROJ_NAME> <PROJ_DESC>:h000002f1_00000028</PROJ_DESC> <TEAM_LEADER>151</TEAM_LEADER> <PRODUCT><![CDATA[software]]></PRODUCT> </row> <row number="10"> <PROJ_ID><![CDATA[DTNET]]></PROJ_ID> <PROJ_NAME><![CDATA[.NET drivers]]></PROJ_NAME> <PROJ_DESC>:h00000319_00000026</PROJ_DESC> <TEAM_LEADER>152</TEAM_LEADER> <PRODUCT><![CDATA[software]]></PRODUCT> </row> <row number="11"> <PROJ_ID><![CDATA[ODBCD]]></PROJ_ID> <PROJ_NAME><![CDATA[ODBC drivers]]></PROJ_NAME> <PROJ_DESC>:h0000033f_00000015</PROJ_DESC> <TEAM_LEADER/> <PRODUCT><![CDATA[software]]></PRODUCT> </row> <row number="12"> <PROJ_ID><![CDATA[PHPDR]]></PROJ_ID> <PROJ_NAME><![CDATA[PHP drivers]]></PROJ_NAME> <PROJ_DESC>:h00000354_00000025</PROJ_DESC> <TEAM_LEADER/> <PRODUCT><![CDATA[software]]></PRODUCT> </row> <row number="13"> <PROJ_ID><![CDATA[JAVAD]]></PROJ_ID> <PROJ_NAME><![CDATA[Java drivers]]></PROJ_NAME> <PROJ_DESC>:h00000379_00000026</PROJ_DESC> <TEAM_LEADER>153</TEAM_LEADER> <PRODUCT><![CDATA[software]]></PRODUCT> </row> <row number="14"> <PROJ_ID><![CDATA[FB-QA]]></PROJ_ID> <PROJ_NAME><![CDATA[Firebrid QA]]></PROJ_NAME> <PROJ_DESC>:h0000039f_0000001d</PROJ_DESC> <TEAM_LEADER>150</TEAM_LEADER> <PRODUCT><![CDATA[software]]></PRODUCT> </row> <row number="15"> <PROJ_ID><![CDATA[INFRA]]></PROJ_ID> <PROJ_NAME><![CDATA[Infrastructure]]></PROJ_NAME> <PROJ_DESC>:h000003bc_00000021</PROJ_DESC> <TEAM_LEADER/> <PRODUCT><![CDATA[other]]></PRODUCT> </row> <row number="16"> <PROJ_ID><![CDATA[BTLER]]></PROJ_ID> <PROJ_NAME><![CDATA[Firebrid Butler]]></PROJ_NAME> <PROJ_DESC>:h000003dd_0000002d</PROJ_DESC> <TEAM_LEADER>151</TEAM_LEADER> <PRODUCT><![CDATA[software]]></PRODUCT> </row> </data> </result-set>
@@ -245,8 +245,8 @@ test_XML_export_to_file
 test_XLSX_export_to_file
     Init
     Select From Combo Box    typeCombo    XLSX
-    ${export_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.xlsx
-    ${export_blob}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export_blob.txt
+    ${export_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export.xlsx
+    ${export_blob}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export_blob.txt
     Remove Files    ${export_path}    ${export_blob}
     Clear Text Field    filePathField
     Type Into Text Field    filePathField    ${export_path}
@@ -259,7 +259,7 @@ test_XLSX_export_to_file
     Close Dialog    Message
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
-    ${ser_ver}=    Set Variable    ${info}[2]
+    ${srv_ver}=    Set Variable    ${info}[2]
     IF    ${{$ver != '2.6'}}
         VAR    ${expected_content}=
         ...    None None None None None VBASE Video Database :h00000000_00000059 45.0 software DGPII DigiPizza :h00000059_00000077 24.0 other GUIDE AutoMap :h000000d0_00000055 20.0 hardware MAPDB MapBrowser port :h00000125_00000048 4.0 software HWRII Translator upgrade :h0000016d_00000056 software MKTPR Marketing project 3 :h000001c3_00000061 85.0 N/A FCORE Firebird engine :h00000224_00000087 146.0 software FBDOC Documentation :h000002ab_00000046 other PYTHN Python drivers :h000002f1_00000028 151.0 software DTNET .NET drivers :h00000319_00000026 152.0 software ODBCD ODBC drivers :h0000033f_00000015 software PHPDR PHP drivers :h00000354_00000025 software JAVAD Java drivers :h00000379_00000026 153.0 software FB-QA Firebrid QA :h0000039f_0000001d 150.0 software INFRA Infrastructure :h000003bc_00000021 other BTLER Firebrid Butler :h000003dd_0000002d 151.0 software
@@ -276,8 +276,8 @@ test_XLSX_export_to_file
 test_SQL_export_to_file
     Init
     Select From Combo Box    typeCombo    SQL
-    ${export_path}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export.sql
-    ${export_blob}=    Catenate    SEPARATOR=    ${TEMPDIR}    ${/}export_blob.txt
+    ${export_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export.sql
+    ${export_blob}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    ${/}export_blob.txt
     Remove Files    ${export_path}    ${export_blob}
     Clear Text Field    filePathField
     Type Into Text Field    filePathField    ${export_path}
@@ -294,7 +294,7 @@ test_SQL_export_to_file
     Close Dialog    Message
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
-    ${ser_ver}=    Set Variable    ${info}[2]
+    ${srv_ver}=    Set Variable    ${info}[2]
     IF    ${{$ver != '2.6'}}
         VAR    ${expected_content}=
         ...    -- table creating -- CREATE TABLE TEST_TABLE ( PROJ_ID CHAR(5), PROJ_NAME VARCHAR(20), PROJ_DESC BLOB SUB_TYPE 1, TEAM_LEADER SMALLINT, PRODUCT VARCHAR(12) ); -- inserting data -- SET BLOBFILE '${export_blob}'; INSERT INTO TEST_TABLE ( PROJ_ID, PROJ_NAME, PROJ_DESC, TEAM_LEADER, PRODUCT ) VALUES ( 'VBASE', 'Video Database', :h00000000_00000059, 45, 'software' ); INSERT INTO TEST_TABLE ( PROJ_ID, PROJ_NAME, PROJ_DESC, TEAM_LEADER, PRODUCT ) VALUES ( 'DGPII', 'DigiPizza', :h00000059_00000077, 24, 'other' ); INSERT INTO TEST_TABLE ( PROJ_ID, PROJ_NAME, PROJ_DESC, TEAM_LEADER, PRODUCT ) VALUES ( 'GUIDE', 'AutoMap', :h000000d0_00000055, 20, 'hardware' ); INSERT INTO TEST_TABLE ( PROJ_ID, PROJ_NAME, PROJ_DESC, TEAM_LEADER, PRODUCT ) VALUES ( 'MAPDB', 'MapBrowser port', :h00000125_00000048, 4, 'software' ); INSERT INTO TEST_TABLE ( PROJ_ID, PROJ_NAME, PROJ_DESC, TEAM_LEADER, PRODUCT ) VALUES ( 'HWRII', 'Translator upgrade', :h0000016d_00000056, NULL, 'software' ); INSERT INTO TEST_TABLE ( PROJ_ID, PROJ_NAME, PROJ_DESC, TEAM_LEADER, PRODUCT ) VALUES ( 'MKTPR', 'Marketing project 3', :h000001c3_00000061, 85, 'N/A' ); INSERT INTO TEST_TABLE ( PROJ_ID, PROJ_NAME, PROJ_DESC, TEAM_LEADER, PRODUCT ) VALUES ( 'FCORE', 'Firebird engine', :h00000224_00000087, 146, 'software' ); INSERT INTO TEST_TABLE ( PROJ_ID, PROJ_NAME, PROJ_DESC, TEAM_LEADER, PRODUCT ) VALUES ( 'FBDOC', 'Documentation', :h000002ab_00000046, NULL, 'other' ); INSERT INTO TEST_TABLE ( PROJ_ID, PROJ_NAME, PROJ_DESC, TEAM_LEADER, PRODUCT ) VALUES ( 'PYTHN', 'Python drivers', :h000002f1_00000028, 151, 'software' ); INSERT INTO TEST_TABLE ( PROJ_ID, PROJ_NAME, PROJ_DESC, TEAM_LEADER, PRODUCT ) VALUES ( 'DTNET', '.NET drivers', :h00000319_00000026, 152, 'software' ); INSERT INTO TEST_TABLE ( PROJ_ID, PROJ_NAME, PROJ_DESC, TEAM_LEADER, PRODUCT ) VALUES ( 'ODBCD', 'ODBC drivers', :h0000033f_00000015, NULL, 'software' ); INSERT INTO TEST_TABLE ( PROJ_ID, PROJ_NAME, PROJ_DESC, TEAM_LEADER, PRODUCT ) VALUES ( 'PHPDR', 'PHP drivers', :h00000354_00000025, NULL, 'software' ); INSERT INTO TEST_TABLE ( PROJ_ID, PROJ_NAME, PROJ_DESC, TEAM_LEADER, PRODUCT ) VALUES ( 'JAVAD', 'Java drivers', :h00000379_00000026, 153, 'software' ); INSERT INTO TEST_TABLE ( PROJ_ID, PROJ_NAME, PROJ_DESC, TEAM_LEADER, PRODUCT ) VALUES ( 'FB-QA', 'Firebrid QA', :h0000039f_0000001d, 150, 'software' ); INSERT INTO TEST_TABLE ( PROJ_ID, PROJ_NAME, PROJ_DESC, TEAM_LEADER, PRODUCT ) VALUES ( 'INFRA', 'Infrastructure', :h000003bc_00000021, NULL, 'other' ); INSERT INTO TEST_TABLE ( PROJ_ID, PROJ_NAME, PROJ_DESC, TEAM_LEADER, PRODUCT ) VALUES ( 'BTLER', 'Firebrid Butler', :h000003dd_0000002d, 151, 'software' );
@@ -315,7 +315,7 @@ Init
     ${ver}=    Set Variable    ${info}[1]
     IF    ${{$ver == '2.6'}}
         Lock Employee
-        Set blobs
+        Set Blobs
     END
     Open Connection
     Clear Text Field    0
@@ -325,7 +325,7 @@ Init
     Sleep    1s
     Select Dialog    Export Data
 
-Check blobs in folder
+Check Blobs In Folder
     [Arguments]    ${export_blob}
     Push Button    exportButton
     Sleep    5s
@@ -335,7 +335,6 @@ Check blobs in folder
 
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
-    ${ser_ver}=    Set Variable    ${info}[2]
 
     IF    ${{$ver != '2.6'}}
         VAR    ${count}=    16
@@ -346,7 +345,7 @@ Check blobs in folder
     @{blob_paths}=    Create List
     @{contents}=    Create List
     FOR    ${index}    IN RANGE    ${count}
-        ${blob_path}=    Catenate    SEPARATOR=    ${export_blob}    ${/}PROJ_DESC_${index}.txt
+        ${blob_path}=    Catenate    SEPARATOR=${EMPTY}    ${export_blob}    ${/}PROJ_DESC_${index}.txt
         Append To List    ${blob_paths}    ${blob_path}
 
         ${content}=    Get File    ${blob_path}
@@ -443,7 +442,6 @@ Check blobs in file
     [Arguments]    ${export_blob}
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
-    ${ser_ver}=    Set Variable    ${info}[2]
 
     IF    ${{$ver != '2.6'}}
         ${expected_content}=    Catenate

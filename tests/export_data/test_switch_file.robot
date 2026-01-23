@@ -9,12 +9,12 @@ Test Teardown       Teardown After Every Tests
 
 *** Test Cases ***
 test_1
-    Setup before export data
+    Setup Before Export Data
     Select From Combo Box    typeCombo    CSV
-    ${export_path_csv}=    Catenate    SEPARATOR=    ${TEMPDIR}    /export.csv
-    ${export_path_xlsx}=    Catenate    SEPARATOR=    ${TEMPDIR}    /export.xlsx
-    ${export_path_xml}=    Catenate    SEPARATOR=    ${TEMPDIR}    /export.xml
-    ${export_path_sql}=    Catenate    SEPARATOR=    ${TEMPDIR}    /export.sql
+    ${export_path_csv}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /export.csv
+    ${export_path_xlsx}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /export.xlsx
+    ${export_path_xml}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /export.xml
+    ${export_path_sql}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /export.sql
     Clear Text Field    filePathField
     Type Into Text Field    filePathField    ${export_path_csv}
 
