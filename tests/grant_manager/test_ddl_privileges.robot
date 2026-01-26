@@ -48,7 +48,7 @@ test_1
         ...    [('C', 0, 'OBJ$GENERATORS '), ('P', 0, 'OBJ$GENERATORS '), ('T', 0, 'OBJ$GENERATORS ')]
 
         VAR    ${expected_result_3}
-        ...    [('T', 0, 'OBJ$DOMAINS '), ('T', 0, 'OBJ$EXCEPTIONS '), ('T', 0, 'OBJ$FUNCTIONS '), ('T', 0, 'OBJ$GENERATORS '), ('T', 0, 'OBJ$PROCEDURES '), ('T', 0, 'OBJ$ROLES '), ('T', 0, 'OBJ$TABLES '), ('T', 0, 'OBJ$VIEWS')]
+        ...    [('T', 0, 'OBJ$DOMAINS '), ('T', 0, 'OBJ$EXCEPTIONS '), ('T', 0, 'OBJ$FUNCTIONS '), ('T', 0, 'OBJ$GENERATORS '), ('T', 0, 'OBJ$PROCEDURES '), ('T', 0, 'OBJ$ROLES '), ('T', 0, 'OBJ$TABLES '), ('T', 0, 'OBJ$VIEWS ')]
 
         VAR    ${expected_result_4}
         ...    [('T', 1, 'OBJ$DOMAINS '), ('T', 1, 'OBJ$EXCEPTIONS '), ('T', 1, 'OBJ$FUNCTIONS ' ), ('C', 1, 'OBJ$GENERATORS '), ('P', 1, 'OBJ$GENERATORS '), ('T',

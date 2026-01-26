@@ -2,7 +2,7 @@
 Library             RemoteSwingLibrary
 Resource            ../../files/keywords.resource
 
-Test Setup          Setup Before Every Tests
+Test Setup          Setup
 Test Teardown       Teardown After Every Tests
 
 
@@ -23,3 +23,10 @@ test_open_users
     Select Tab As Context    SYSDBA:Srp:USER:New Connection (Copy)
     ${item}=    Get Selected Item From Combo Box    connectionsCombo
     Should Be Equal As Strings    ${item}    New Connection (Copy)
+
+*** Keywords ***
+Setup
+    ${info}=    Get Server Info
+    ${ver}=    Set Variable    ${info}[1]
+    Skip if    ${{$ver == '2.6'}}
+    Setup Before Every Tests

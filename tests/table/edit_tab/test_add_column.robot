@@ -464,7 +464,7 @@ Check SQL Statements
             ${alter_sequence}=    Get Text Field Value    0
             Should Be Equal As Strings
             ...    ${alter_sequence}
-            ...    ALTER SEQUENCE ${gen_name} RESTART WITH 15
+            ...    ALTER SEQUENCE ${gen_name} RESTART WITH 10
             ...    strip_spaces=${True}
             ...    collapse_spaces=${True}
         END

@@ -165,7 +165,7 @@ test_restart_with_on_rdb26
 
     Push Button    submitButton
 
-    Single Check    ALTER SEQUENCE NEW_SEQUENCE_1 RESTART WITH 90
+    Single Check    ALTER SEQUENCE NEW_SEQ RESTART WITH 90
 
     Select Main Window
     ${current_value}=    Get Text Field Value    currentValueField
@@ -176,7 +176,7 @@ test_restart_with_on_rdb26
     ${res}=    Get Text Field Value    0
     Should Be Equal As Strings
     ...    ${res}
-    ...    CREATE SEQUENCE NEW_SEQUENCE_1; ALTER SEQUENCE NEW_SEQUENCE_1 RESTART WITH 90;
+    ...    CREATE SEQUENCE NEW_SEQ; ALTER SEQUENCE NEW_SEQ RESTART WITH 90;
     ...    strip_spaces=${True}
     ...    collapse_spaces=${True}
 
