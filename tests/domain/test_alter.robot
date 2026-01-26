@@ -22,6 +22,9 @@ test_data_type
     Check SQL
     ...    SELECT t.RDB$TYPE_NAME FROM RDB$FIELDS f JOIN RDB$TYPES t ON f.RDB$FIELD_TYPE = t.RDB$TYPE WHERE f.RDB$FIELD_NAME = 'TEST_DOMAIN' AND t.RDB$FIELD_NAME = 'RDB$FIELD_TYPE'
     ...    INT64
+    ${connect_type}=    Get Environment Variable    CONNECT_TYPE    server
+    IF    ${{$connect_type == 'embedded'}}    Open Connection
+    Select From Tree Node Popup Menu    0    New Connection|Domains (16)|TEST_DOMAIN    Edit domain
     Select Tab As Context    TEST_DOMAIN:DOMAIN:New Connection
     ${res}=    Get Selected Item From Combo Box    typesCombo
     Should Be Equal As Strings    ${res}    BIGINT
@@ -51,6 +54,9 @@ test_comment
     Type Into Text Field    0    Test Comment Text
     Check    COMMENT ON DOMAIN TEST_DOMAIN IS 'Test Comment Text'
     Check SQL    SELECT RDB$DESCRIPTION FROM RDB$FIELDS WHERE RDB$FIELD_NAME = 'TEST_DOMAIN'    Test Comment Text
+    ${connect_type}=    Get Environment Variable    CONNECT_TYPE    server
+    IF    ${{$connect_type == 'embedded'}}    Open Connection
+    Select From Tree Node Popup Menu    0    New Connection|Domains (16)|TEST_DOMAIN    Edit domain
     Select Tab As Context    TEST_DOMAIN:DOMAIN:New Connection
     Select Tab As Context    Comment
     Clear Text Field    0
@@ -146,6 +152,9 @@ Check
 
 Check SQL
     [Arguments]    ${sql}    ${check}
+    Select Main Window
+    ${connect_type}=    Get Environment Variable    CONNECT_TYPE    server
+    IF    ${{$connect_type == 'embedded'}}    Close Connection
     ${res}=    Execute    ${sql}
     ${cleared_res}=    Evaluate    "${res}".replace("[(", "").replace(")]", "").replace(",", "").replace("'", "")
     Should Be Equal As Strings    ${cleared_res}    ${check}    strip_spaces=${True}    collapse_spaces=${True}

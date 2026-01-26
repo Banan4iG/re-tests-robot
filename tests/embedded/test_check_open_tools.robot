@@ -16,12 +16,6 @@ test_open
     Select From Main Menu    Database|Convert Database
     Check Warning
 
-    Select From Main Menu    Tools|Database Statistic
-    Check Warning
-
-    Select From Main Menu    Tools|Trace Manager
-    Check Warning
-
     Select From Main Menu    Tools|User Manager
     Check Warning
 

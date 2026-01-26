@@ -117,6 +117,9 @@ Check Comment
     [Arguments]    ${text}
     ${res}=    Get Text Field Value    0
     Should Be Equal As Strings    ${res}    ${text}
+    Select Main Window
+    ${connect_type}=    Get Environment Variable    CONNECT_TYPE    server
+    IF    ${{$connect_type == 'embedded'}}    Close Connection
     ${res}=    Execute    SELECT RDB$DESCRIPTION FROM RDB$TRIGGERS WHERE RDB$TRIGGER_NAME = 'TEST_TRIGGER'
     ${cleared_res}=    Evaluate
     ...    "${res}".replace("[(", "").replace(")]", "").replace(",", "").replace("'", "").replace("None", "")
