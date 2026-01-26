@@ -1,4 +1,5 @@
 *** Settings ***
+Library             platform
 Library             RemoteSwingLibrary
 Resource            ../../files/keywords.resource
 
@@ -59,6 +60,15 @@ test_check_ignore_whitespace
     END
 
     Copy File    ${employee_path}    ${copy_employee_path}
+
+    ${system}=    platform.System
+    IF    ${{$system == 'Linux'}}
+        IF    ${{$ver == '5' and $srv_ver == 'RedDatabase'}}
+            Change Owner    ${copy_employee_path}    reddatabase
+        ELSE
+            Change Owner    ${copy_employee_path}    firebird
+        END
+    END
 
     Alter Copy    ${copy_employee_path}
 
@@ -147,3 +157,15 @@ Local Teardown
     Teardown After Every Tests
     Sleep    2s
     Move File    ${original_employee_path}    ${employee_path}
+
+    ${system}=    platform.System
+    ${info}=    Get Server Info
+    ${ver}=    Set Variable    ${info}[1]
+    ${srv_ver}=    Set Variable    ${info}[2]
+    IF    ${{$system == 'Linux'}}
+        IF    ${{$ver == '5' and $srv_ver == 'RedDatabase'}}
+            Change Owner    ${employee_path}    reddatabase
+        ELSE
+            Change Owner    ${employee_path}    firebird
+        END
+    END

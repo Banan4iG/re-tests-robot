@@ -652,3 +652,10 @@ END;"""
             con.execute_immediate(alter_ddl)
     
         con.commit()
+
+def change_owner(file_path: str, owner:str):
+    from pwd import getpwnam
+    uid = getpwnam(owner).pw_uid
+    gid = getpwnam(owner).pw_gid
+    os.chown(file_path, uid, gid)
+    os.chmod(file_path, 0o777)
