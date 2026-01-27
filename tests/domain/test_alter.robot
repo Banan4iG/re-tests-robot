@@ -67,9 +67,9 @@ test_comment
     ...    Test Comment Text For Special Button
 
 test_sql
-    Init    CREATE DOMAIN TEST_DOMAIN AS BIGINT
+    Init    CREATE DOMAIN TEST_DOMAIN AS INT
     Select Tab As Context    Type
-    Select From Combo Box    typesCombo    INT128
+    Select From Combo Box    typesCombo    BIGINT
     Select Main Window
     Select Tab As Context    TEST_DOMAIN:DOMAIN:New Connection
     Select Tab As Context    Check
@@ -80,7 +80,7 @@ test_sql
     ${res}=    Get Text Field Value    0
     Should Be Equal As Strings
     ...    ${res}
-    ...    ALTER DOMAIN TEST_DOMAIN DROP CONSTRAINT ADD CHECK (VALUE > 5) TYPE INT128;
+    ...    ALTER DOMAIN TEST_DOMAIN DROP CONSTRAINT ADD CHECK (VALUE > 5) TYPE BIGINT;
     ...    strip_spaces=${True}
     ...    collapse_spaces=${True}
     Clear Text Field    0

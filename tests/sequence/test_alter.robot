@@ -10,10 +10,13 @@ Test Teardown       Teardown After Every Tests
 test_1
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
+    ${srv_ver}=    Set Variable    ${info}[2]
     Skip if    ${{$ver == '2.6'}}
     Init    NEW_SEQ    NEW_SEQ
-    Clear Text Field    startValueField
-    Type Into Text Field    startValueField    100
+    IF    ${{$ver == '5' and $srv_ver == 'RedDatabase'}}
+        Clear Text Field    startValueField
+        Type Into Text Field    startValueField    100
+    END
 
     Clear Text Field    currentValueField
     Type Into Text Field    currentValueField    90
@@ -21,16 +24,19 @@ test_1
     Clear Text Field    incrementField
     Type Into Text Field    incrementField    10
 
-    Check
+    Check    ${ver}    ${srv_ver}
 
     Select Main Window
     ${start_value}=    Get Text Field Value    startValueField
     ${increment}=    Get Text Field Value    incrementField
     ${current_value}=    Get Text Field Value    currentValueField
-    Should Be Equal As Strings    ${start_value}    100
-    IF    ${{$ver == '5'}}
+    IF    ${{$ver == '5' and $srv_ver == 'RedDatabase'}}
+        VAR    ${expected_start_value}=    100
+        Should Be Equal As Strings    ${start_value}    ${expected_start_value}
         Should Be Equal As Strings    ${current_value}    80
     ELSE
+        VAR    ${expected_start_value}=    90
+        Should Be Equal As Strings    ${start_value}    ${expected_start_value}
         Should Be Equal As Strings    ${current_value}    90
     END
     Should Be Equal As Strings    ${increment}    10
@@ -40,7 +46,7 @@ test_1
     ${res}=    Get Text Field Value    0
     Should Be Equal As Strings
     ...    ${res}
-    ...    CREATE SEQUENCE NEW_SEQ START WITH 100 INCREMENT BY 10;
+    ...    CREATE SEQUENCE NEW_SEQ START WITH ${expected_start_value} INCREMENT BY 10;
     ...    strip_spaces=${True}
     ...    collapse_spaces=${True}
 
@@ -204,32 +210,51 @@ Init
     Should Be Equal As Strings    ${tree_name}    ${name}
 
 Check
+    [Arguments]    ${ver}    ${srv_ver}
     Push Button    submitButton
     Select Dialog    Commiting changes
 
-    Click On Table Cell    0    0    Name operation
-    ${res}=    Get Text Field Value    0
-    Should Be Equal As Strings
-    ...    ${res}
-    ...    ALTER SEQUENCE NEW_SEQ START WITH 100
-    ...    strip_spaces=${True}
-    ...    collapse_spaces=${True}
+    IF    ${{$ver == '5' and $srv_ver == 'RedDatabase'}}
+        Click On Table Cell    0    0    Name operation
+        ${res}=    Get Text Field Value    0
+        Should Be Equal As Strings
+        ...    ${res}
+        ...    ALTER SEQUENCE NEW_SEQ START WITH 100
+        ...    strip_spaces=${True}
+        ...    collapse_spaces=${True}
 
-    Click On Table Cell    0    1    Name operation
-    ${res}=    Get Text Field Value    0
-    Should Be Equal As Strings
-    ...    ${res}
-    ...    ALTER SEQUENCE NEW_SEQ INCREMENT BY 10
-    ...    strip_spaces=${True}
-    ...    collapse_spaces=${True}
+        Click On Table Cell    0    1    Name operation
+        ${res}=    Get Text Field Value    0
+        Should Be Equal As Strings
+        ...    ${res}
+        ...    ALTER SEQUENCE NEW_SEQ INCREMENT BY 10
+        ...    strip_spaces=${True}
+        ...    collapse_spaces=${True}
 
-    Click On Table Cell    0    2    Name operation
-    ${res}=    Get Text Field Value    0
-    Should Be Equal As Strings
-    ...    ${res}
-    ...    ALTER SEQUENCE NEW_SEQ RESTART WITH 90
-    ...    strip_spaces=${True}
-    ...    collapse_spaces=${True}
+        Click On Table Cell    0    2    Name operation
+        ${res}=    Get Text Field Value    0
+        Should Be Equal As Strings
+        ...    ${res}
+        ...    ALTER SEQUENCE NEW_SEQ RESTART WITH 90
+        ...    strip_spaces=${True}
+        ...    collapse_spaces=${True}
+    ELSE
+        Click On Table Cell    0    0    Name operation
+        ${res}=    Get Text Field Value    0
+        Should Be Equal As Strings
+        ...    ${res}
+        ...    ALTER SEQUENCE NEW_SEQ INCREMENT BY 10
+        ...    strip_spaces=${True}
+        ...    collapse_spaces=${True}
+
+        Click On Table Cell    0    1    Name operation
+        ${res}=    Get Text Field Value    0
+        Should Be Equal As Strings
+        ...    ${res}
+        ...    ALTER SEQUENCE NEW_SEQ RESTART WITH 90
+        ...    strip_spaces=${True}
+        ...    collapse_spaces=${True}
+    END
 
     Push Button    commitButton
     Sleep    0.1s
