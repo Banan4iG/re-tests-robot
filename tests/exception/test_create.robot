@@ -1,8 +1,10 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Test Setup       Test Setup
-Test Teardown    Test Teardown
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Test Setup
+Test Teardown       Test Teardown
+
 
 *** Test Cases ***
 test_1
@@ -39,6 +41,7 @@ test_add_comment
     Type Into Text Field    0    test_comment
     Select Dialog    Create exception
     Check    COMMENT ON EXCEPTION NEW_EXP IS 'test_comment'    NEW_EXP
+
 
 *** Keywords ***
 Init

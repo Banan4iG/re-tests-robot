@@ -13,7 +13,7 @@ test_open_users
     Click On Tree Node    0    New Connection (Copy)    2
 
     Click On Tree Node    0    New Connection|Users (1)|SYSDBA    2
-    Click On Tree Node    0    New Connection (Copy)|Users (1)|SYSDBA   2
+    Click On Tree Node    0    New Connection (Copy)|Users (1)|SYSDBA    2
 
     Select Tab As Context    SYSDBA:Srp:USER:New Connection
     ${item}=    Get Selected Item From Combo Box    connectionsCombo
@@ -23,6 +23,7 @@ test_open_users
     Select Tab As Context    SYSDBA:Srp:USER:New Connection (Copy)
     ${item}=    Get Selected Item From Combo Box    connectionsCombo
     Should Be Equal As Strings    ${item}    New Connection (Copy)
+
 
 *** Keywords ***
 Setup

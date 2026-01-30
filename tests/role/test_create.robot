@@ -1,8 +1,10 @@
 *** Settings ***
-Library         RemoteSwingLibrary
-Resource        ../../files/keywords.resource
-Test Setup      Setup before every tests
-Test Teardown   Teardown after every tests
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup before every tests
+Test Teardown       Teardown after every tests
+
 
 *** Test Cases ***
 test_create_role
@@ -16,6 +18,7 @@ test_create_role_with_space
 test_create_role_with_commit
     Init Role    NEW ROLE    test_commit
     Check Role    COMMENT ON ROLE "NEW ROLE" IS 'test_commit'    NEW ROLE
+
 
 *** Keywords ***
 Init Role

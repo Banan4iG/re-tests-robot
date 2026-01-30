@@ -1,8 +1,9 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Test Setup       Setup
-Test Teardown    Teardown
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup
+Test Teardown       Teardown
 
 
 *** Test Cases ***
@@ -65,7 +66,7 @@ Setup
     Select From Main Menu    System|Preferences
     Select Dialog    Preferences
     Clear Text Field    textField
-    
+
 Teardown
     Close Dialog    Preferences
     Test Teardown

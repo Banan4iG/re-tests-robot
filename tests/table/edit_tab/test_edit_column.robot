@@ -1,8 +1,9 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../../files/keywords.resource
-Test Setup       Test Setup
-Test Teardown    Test Teardown
+Library             RemoteSwingLibrary
+Resource            ../../../files/keywords.resource
+
+Test Setup          Test Setup
+Test Teardown       Test Teardown
 
 
 *** Test Cases ***
@@ -347,7 +348,7 @@ Init Edit Column
     Execute Immediate    ${query}
     Open Connection
     Click On Tree Node    0    New Connection|Tables (11)|TEST_TABLE    2
-    Select Tab As Context   TEST_TABLE:TABLE:New Connection
+    Select Tab As Context    TEST_TABLE:TABLE:New Connection
     Select Tab    Columns
     ${row}=    Find Table Row    0    ${column_name}    Name
     Run Keyword In Separate Thread    Click On Table Cell    0    ${row}    Name    2    BUTTON1_MASK
@@ -372,7 +373,7 @@ Check Edit Commit
 Check Column In Table
     [Arguments]    ${column_name}=TEST_COLUMN    ${data_type}=INTEGER    ${size}=${EMPTY}
     Select Main Window
-    Select Tab As Context   TEST_TABLE:TABLE:New Connection
+    Select Tab As Context    TEST_TABLE:TABLE:New Connection
     Select Tab    Columns
     ${row}=    Find Table Row    0    ${column_name}    Name
     Should Not Be Equal As Integers    ${row}    -1
@@ -397,7 +398,11 @@ Check SQL Statements
     ${alter_row}=    Find Table Row    0    ALTER TABLE    Name operation
     Click On Table Cell    0    ${alter_row}    Name operation
     ${alter_table}=    Get Text Field Value    0
-    Should Be Equal As Strings    ${alter_table}    ${expected_alter_table}    strip_spaces=${True}    collapse_spaces=${True}
+    Should Be Equal As Strings
+    ...    ${alter_table}
+    ...    ${expected_alter_table}
+    ...    strip_spaces=${True}
+    ...    collapse_spaces=${True}
 
     # Check CREATE OR ALTER SEQUENCE statement (only if check_sequence is TRUE)
     IF    ${check_sequence}

@@ -1,8 +1,9 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../files/keywords.resource
-Test Setup       Test Setup
-Test Teardown    Local Test Teardown
+Library             RemoteSwingLibrary
+Resource            ../files/keywords.resource
+
+Test Setup          Test Setup
+Test Teardown       Local Test Teardown
 
 
 *** Test Cases ***

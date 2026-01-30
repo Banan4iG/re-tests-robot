@@ -1,9 +1,11 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Resource    key.resource
-Test Setup       Test Setup
-Test Teardown    Test Teardown
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+Resource            key.resource
+
+Test Setup          Test Setup
+Test Teardown       Test Teardown
+
 
 *** Test Cases ***
 test_1
@@ -17,7 +19,7 @@ test_1
     Select Export File Path
     ${current_export_path}=    Get Text Field Value    filePathField
     Should Be Equal As Strings
-    ...    ${current_export_path}
+    Setup Before Export Datapath}
     ...    ${export_path_csv}
     ...    collapse_spaces=${True}
     ...    strip_spaces=${True}

@@ -1,8 +1,9 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../files/keywords.resource
-Test Setup       Test Setup
-Test Teardown    Test Teardown
+Library             RemoteSwingLibrary
+Resource            ../files/keywords.resource
+
+Test Setup          Test Setup
+Test Teardown       Test Teardown
 
 
 *** Test Cases ***
@@ -21,6 +22,6 @@ test_1
     Click On Table Cell    0    0    TEST_COL
     Push Button    1
     Select Main Window
-    Run Keyword In Separate Thread     Select Tab    Constraints    ${EMPTY}
+    Run Keyword In Separate Thread    Select Tab    Constraints    ${EMPTY}
     Select Dialog    Confirmation
     Push Button    Yes

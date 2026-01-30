@@ -4,8 +4,8 @@ Resource    ../../files/keywords.resource
 
 
 *** Keywords ***
-Setup before export data
-    Open connection
+Setup Before Export Data
+    Open Connection
     Push Button    editor-command
     Clear Text Field    0
     Insert Into Text Field    0    SELECT * FROM EMPLOYEE

@@ -51,7 +51,7 @@ test_1
 
     Push Button    startStopSessionButton
     Sleep    20s
-    
+
     Select Main Window
     Select Tab As Context    Trace Manager
     Select Tab    Session Manager

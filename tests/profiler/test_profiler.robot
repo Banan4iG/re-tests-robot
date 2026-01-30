@@ -1,10 +1,10 @@
 *** Settings ***
-Library    Collections
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
+Library             Collections
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
 
-Test Setup       Test Setup
-Test Teardown    Test Teardown
+Test Setup          Test Setup
+Test Teardown       Test Teardown
 
 
 *** Test Cases ***
@@ -400,6 +400,6 @@ Check Warning
 
 Check Warning After Lose Connect
     Select Dialog    Warning
-    Label Text Should Be    0   Selected connection is unavailable.
-    Label Text Should Be    1   Profiler session discarded.
+    Label Text Should Be    0    Selected connection is unavailable.
+    Label Text Should Be    1    Profiler session discarded.
     Push Button    OK

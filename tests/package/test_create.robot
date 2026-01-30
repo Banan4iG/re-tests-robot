@@ -40,10 +40,15 @@ test_6
 test_add_comment
     Init    NEW_PACK    BEGIN\n\nEND    BEGIN\n\nEND
     Select Dialog    Create package
-    Select Tab As Context   Comment
+    Select Tab As Context    Comment
     Clear Text Field    0
     Type Into Text Field    0    test_comment
-    Check    CREATE OR ALTER PACKAGE NEW_PACK AS BEGIN END    RECREATE PACKAGE BODY NEW_PACK AS BEGIN END    NEW_PACK    COMMENT ON PACKAGE NEW_PACK IS 'test_comment'
+    Check
+    ...    CREATE OR ALTER PACKAGE NEW_PACK AS BEGIN END
+    ...    RECREATE PACKAGE BODY NEW_PACK AS BEGIN END
+    ...    NEW_PACK
+    ...    COMMENT ON PACKAGE NEW_PACK IS 'test_comment'
+
 
 *** Keywords ***
 Init
@@ -89,7 +94,7 @@ Check
         Should Be Equal As Integers    ${row_body}    -1
     END
 
-    ${row_comment}=     Find Table Row    0    ADD COMMENT
+    ${row_comment}=    Find Table Row    0    ADD COMMENT
     IF    $comment != None
         ${value}=    Get Table Cell Value    0    ${row_comment}    Status
         Should Be Equal As Strings    ${value}    Success

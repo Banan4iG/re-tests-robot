@@ -37,7 +37,7 @@ test_2
     Push Button    execute-script-command
     Sleep    1s
 
-    Select Tab As Context   Result Set 1
+    Select Tab As Context    Result Set 1
     ${values}=    Get Table Values    0
     Should Be Equal As Strings    ${values}    [['USA', 'Dollar']]
 

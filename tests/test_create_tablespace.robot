@@ -1,8 +1,9 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../files/keywords.resource
-Test Setup       Test Setup
-Test Teardown    Test Teardown
+Library             RemoteSwingLibrary
+Resource            ../files/keywords.resource
+
+Test Setup          Test Setup
+Test Teardown       Test Teardown
 
 
 *** Test Cases ***
@@ -16,7 +17,10 @@ test_check_cursor
     Push Button    submitButton
     Select Dialog    Commiting changes
     ${textFieldValue}=    Get Textfield Value    0
-    Should Be Equal   ${textFieldValue}     CREATE TABLESPACE NEW_TABLESPACE_1 FILE 'test_file.ts'    collapse_spaces=True
+    Should Be Equal
+    ...    ${textFieldValue}
+    ...    CREATE TABLESPACE NEW_TABLESPACE_1 FILE 'test_file.ts'
+    ...    collapse_spaces=True
     Push Button    rollbackButton
     Select Dialog    Create tablespace
     Push Button    cancelButton

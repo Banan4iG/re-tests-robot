@@ -1,8 +1,10 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Test Setup       Test Setup
-Test Teardown    Test Teardown
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Test Setup
+Test Teardown       Test Teardown
+
 
 *** Test Cases ***
 test_1
@@ -10,7 +12,7 @@ test_1
 
     Push Button    restoreButton
     Close Dialog    Error message
-    
+
     Select Main Window
     Select Tab    Backup
     Remove File    ${bk_path}

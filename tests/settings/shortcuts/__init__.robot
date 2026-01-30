@@ -1,7 +1,8 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../../files/keywords.resource
-Suite Teardown    Suite Teardown
+Library             RemoteSwingLibrary
+Resource            ../../../files/keywords.resource
+
+Suite Teardown      Suite Teardown
 
 
 *** Keywords ***

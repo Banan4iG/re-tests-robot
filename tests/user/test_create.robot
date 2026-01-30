@@ -68,7 +68,10 @@ test_create_with_tags_and_comment
     Clear Text Field    0
     Type Into Text Field    0    test_comment
     Select Dialog    Create user
-    Check    CREATE USER """TEST USER""" PASSWORD '123' ACTIVE USING PLUGIN Srp TAGS (gh = '123456' )    "TEST USER"   ${True}
+    Check
+    ...    CREATE USER """TEST USER""" PASSWORD '123' ACTIVE USING PLUGIN Srp TAGS (gh = '123456' )
+    ...    "TEST USER"
+    ...    ${True}
     [Teardown]    Drop User    """TEST USER"""
 
 

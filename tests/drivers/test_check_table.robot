@@ -1,9 +1,11 @@
 *** Settings ***
-Library    Collections
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Test Setup       Test Setup
-Test Teardown    Test Teardown
+Library             Collections
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Test Setup
+Test Teardown       Test Teardown
+
 
 *** Test Cases ***
 test_1

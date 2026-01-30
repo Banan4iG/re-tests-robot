@@ -1,8 +1,10 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Test Setup       Test Setup
-Test Teardown    Test Teardown
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Test Setup
+Test Teardown       Test Teardown
+
 
 *** Test Cases ***
 test_full_check
@@ -34,7 +36,7 @@ test_full_check
     File Should Exist    ${bk_path}
     Select Main Window
     Select Tab As Context    Database backup/restore
-    ${mew_db_path}=    Catenate    SEPARATOR=${EMPTY}   ${TEMPDIR}    /employee_restore.fdb1
+    ${mew_db_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /employee_restore.fdb1
     Clear Text Field    databaseFileField
     Type Into Text Field    databaseFileField    ${mew_db_path}
 

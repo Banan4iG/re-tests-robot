@@ -79,6 +79,7 @@ test_profiler
     Sleep    2s
     Push Button    finishButton
     Close Dialog    Warning
+
 test_table_validator
     Select From Main Menu    Tools|Table Validator
     ${count}=    Get List Item Count    0

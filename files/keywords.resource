@@ -35,19 +35,19 @@ Suite Teardown
 
 Test Teardown
     Close All Dialogs
-    Close connection
+    Close Connection
     Unlock Employee
     Clear History Files
-    # Restore Savedconnections File    
+    # Restore Savedconnections File
 
 Open Connection
     Click On Tree Node    0    New Connection    2
-    
+
 Close Connection
     Select Main Window
     # ${names}=    Get Tree Node Child Names    0    New Connection
     # IF    ${names}
-    #     Click On Tree Node    0    New Connection    2
+    #    Click On Tree Node    0    New Connection    2
     # END
     Select From Tree Node Popup Menu    0    New Connection    Disconnect
 

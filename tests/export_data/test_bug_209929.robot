@@ -3,11 +3,12 @@ See https://tracker.red-soft.ru/issues/209929
 
 
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Resource    key.resource
-Test Setup       Test Setup
-Test Teardown    Test Teardown
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+Resource            key.resource
+
+Test Setup          Test Setup
+Test Teardown       Test Teardown
 
 
 *** Test Cases ***

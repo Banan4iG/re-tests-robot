@@ -1,10 +1,11 @@
 *** Settings ***
-Library    Collections
-Library    RemoteSwingLibrary
-Resource    ../../files/keywords.resource
-Resource    key.resource
-Test Setup       Test Setup
-Test Teardown    Test Teardown
+Library             Collections
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+Resource            key.resource
+
+Test Setup          Test Setup
+Test Teardown       Test Teardown
 
 
 *** Test Cases ***
@@ -323,11 +324,11 @@ Init
     Push Button    editor-execute-to-file-command
     Push Button    execute-script-command
     Sleep    1s
-    Select Dialog    Export Data    
+    Select Dialog    Export Data
     Uncheck All Checkboxes
 
 Check blobs in folder
-    [Arguments]       ${export_blob}
+    [Arguments]    ${export_blob}
     Push Button    exportButton
     Sleep    5s
     Close Dialog    Message

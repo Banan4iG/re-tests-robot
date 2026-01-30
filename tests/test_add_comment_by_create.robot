@@ -1,8 +1,9 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../files/keywords.resource
-Test Setup       Test Setup
-Test Teardown    Test Teardown
+Library             RemoteSwingLibrary
+Resource            ../files/keywords.resource
+
+Test Setup          Test Setup
+Test Teardown       Test Teardown
 
 
 *** Test Cases ***
@@ -78,7 +79,7 @@ test_create_procedure_cursors
     Select Dialog    ${title}
     Push Button    submitButton
     Select Dialog    Commiting changes
-    ${res}=    Get Text Field Value    0
+    ${res}    Get Text Field Value    0
     Sleep    1s
     Should Not Be Equal As Integers    ${{$res.find('test_comment')}}    -1
 
@@ -114,7 +115,7 @@ test_create_index
     VAR    ${title}    Create index
     Init Create    Indices (38)    ${title}    ${title}
     Push Button    selectAllButton
-    Check Comment     ${title}
+    Check Comment    ${title}
 
 test_create_ts
     Skip If Embedded
@@ -126,20 +127,20 @@ test_create_ts
 
 *** Keywords ***
 Check Skip
-    ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    ${srv_ver}=    Set Variable    ${info}[2]
+    ${info}    Get Server Info
+    ${ver}    Set Variable    ${info}[1]
+    ${srv_ver}    Set Variable    ${info}[2]
     Skip If    ${{not($ver == '5' and $srv_ver == 'RedDatabase')}}
 
 Check Skip 2.6
-    ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    ${info}    Get Server Info
+    ${ver}    Set Variable    ${info}[1]
     Skip If    ${{$ver == '2.6'}}
 
 Init Create
     [Arguments]    ${object}    ${menu}    ${dialog}
     Open connection
-    Select From Tree Node Popup Menu   0    New Connection|${object}    ${menu}
+    Select From Tree Node Popup Menu    0    New Connection|${object}    ${menu}
     Select Dialog    ${dialog}
 
 Check Procedure
@@ -155,7 +156,7 @@ Check Procedure
     Push Button    submitButton
     Select Dialog    Commiting changes
     Sleep    1s
-    ${res}=    Get Text Field Value    0
+    ${res}    Get Text Field Value    0
     Should Not Be Equal As Integers    ${{$res.find('test_comment')}}    -1
     Push Button    commitButton
 
@@ -171,7 +172,7 @@ Check Column Comment
     Push Button    submitButton
     Select Dialog    Commiting changes
     Sleep    1s
-    ${res}=    Get Text Field Value    0
+    ${res}    Get Text Field Value    0
     Should Not Be Equal As Integers    ${{$res.find('\'test_comment\'')}}    -1
     Push Button    commitButton
 
@@ -184,6 +185,6 @@ Check Comment
     Push Button    submitButton
     Select Dialog    Commiting changes
     Sleep    1s
-    ${res}=    Get Text Field Value    0
+    ${res}    Get Text Field Value    0
     Should Not Be Equal As Integers    ${{$res.find('\'test_comment\'')}}    -1
     Push Button    commitButton

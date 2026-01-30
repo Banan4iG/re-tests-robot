@@ -22,7 +22,7 @@ Set Pattern
     Select Main Window
     Focus To Component    0
 
-Init table
+Init Table
     [Arguments]    ${type}    ${value}
     Lock Employee
     Execute Immediate    CREATE TABLE TEST_TABLE (TEST ${type})
@@ -51,7 +51,7 @@ Check Query Editor
 
 Setup
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
+    ${ver}=    Set Variable    ${info}[1]
     Skip If    ${{$ver != '5'}}
     Test Setup
 

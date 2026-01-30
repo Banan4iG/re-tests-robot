@@ -1,9 +1,10 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Library    Collections
-Resource    ../files/keywords.resource
-Test Setup       Test Setup
-Test Teardown    Local Test Teardown
+Library             RemoteSwingLibrary
+Library             Collections
+Resource            ../files/keywords.resource
+
+Test Setup          Test Setup
+Test Teardown       Local Test Teardown
 
 
 *** Test Cases ***
@@ -44,7 +45,7 @@ Create Index
     Open Connection
     Expand Tree Node    0    New Connection
     Select From Tree Node Popup Menu    0    New Connection|Indices (38)    Create index
-    Select Dialog    Create index   
+    Select Dialog    Create index
 
 Local Test Teardown
     Select Dialog    Create index

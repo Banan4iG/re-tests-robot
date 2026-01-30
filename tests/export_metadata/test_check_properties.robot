@@ -3,8 +3,8 @@ Library             platform
 Library             RemoteSwingLibrary
 Resource            ../../files/keywords.resource
 
-Test Setup       Test Setup
-Test Teardown    Test Teardown
+Test Setup          Test Setup
+Test Teardown       Test Teardown
 
 
 *** Test Cases ***
@@ -47,16 +47,20 @@ test_check_ignore_whitespace
         IF    ${{$ver == '5' and $srv_ver == 'RedDatabase'}}
             ${connect_type}=    Get Environment Variable    CONNECT_TYPE    server
             IF    ${{$connect_type == 'embedded'}}
-                VAR    ${expected_tree}=    ['Domains', 'Tables', 'Global Temporary Tables', 'Views', 'Procedures (1)', 'Functions (1)', 'Packages', 'Table Triggers (1)', 'DDL Triggers', 'DB Triggers', 'Sequences', 'Exceptions', 'UDFs', 'Roles', 'Indices', 'Tablespaces', 'Collations']
+                VAR    ${expected_tree}=
+                ...    ['Domains', 'Tables', 'Global Temporary Tables', 'Views', 'Procedures (1)', 'Functions (1)', 'Packages', 'Table Triggers (1)', 'DDL Triggers', 'DB Triggers', 'Sequences', 'Exceptions', 'UDFs', 'Roles', 'Indices', 'Tablespaces', 'Collations']
             ELSE
-                VAR    ${expected_tree}=    ['Domains', 'Tables', 'Global Temporary Tables', 'Views', 'Procedures (1)', 'Functions (1)', 'Packages', 'Table Triggers (1)', 'DDL Triggers', 'DB Triggers', 'Sequences', 'Exceptions', 'UDFs', 'Roles', 'Indices', 'Tablespaces', 'Jobs', 'Collations']
+                VAR    ${expected_tree}=
+                ...    ['Domains', 'Tables', 'Global Temporary Tables', 'Views', 'Procedures (1)', 'Functions (1)', 'Packages', 'Table Triggers (1)', 'DDL Triggers', 'DB Triggers', 'Sequences', 'Exceptions', 'UDFs', 'Roles', 'Indices', 'Tablespaces', 'Jobs', 'Collations']
             END
         ELSE
-            VAR    ${expected_tree}=    ['Domains', 'Tables', 'Global Temporary Tables', 'Views', 'Procedures (1)', 'Functions (1)', 'Packages', 'Table Triggers (1)', 'DDL Triggers', 'DB Triggers', 'Sequences', 'Exceptions', 'UDFs', 'Roles', 'Indices', 'Collations']
+            VAR    ${expected_tree}=
+            ...    ['Domains', 'Tables', 'Global Temporary Tables', 'Views', 'Procedures (1)', 'Functions (1)', 'Packages', 'Table Triggers (1)', 'DDL Triggers', 'DB Triggers', 'Sequences', 'Exceptions', 'UDFs', 'Roles', 'Indices', 'Collations']
         END
     ELSE
         VAR    ${obj_count}=    2
-        VAR    ${expected_tree}=    ['Domains', 'Tables', 'Global Temporary Tables', 'Views', 'Procedures (1)', 'Table Triggers (1)', 'DB Triggers', 'Sequences', 'Exceptions', 'UDFs', 'Roles', 'Indices', 'Collations']
+        VAR    ${expected_tree}=
+        ...    ['Domains', 'Tables', 'Global Temporary Tables', 'Views', 'Procedures (1)', 'Table Triggers (1)', 'DB Triggers', 'Sequences', 'Exceptions', 'UDFs', 'Roles', 'Indices', 'Collations']
     END
 
     Copy File    ${employee_path}    ${copy_employee_path}

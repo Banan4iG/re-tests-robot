@@ -1,9 +1,10 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource    ../files/keywords.resource
+Library             RemoteSwingLibrary
+Resource            ../files/keywords.resource
+
 Suite Setup         Skip If Embedded
-Test Setup       Test Setup
-Test Teardown    Test Teardown
+Test Setup          Test Setup
+Test Teardown       Test Teardown
 
 
 *** Test Cases ***
