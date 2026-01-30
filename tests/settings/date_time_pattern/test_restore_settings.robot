@@ -1,9 +1,10 @@
 *** Settings ***
 Library    RemoteSwingLibrary
 Resource   ../../../files/keywords.resource
-Resource    keys.resource 
+Resource    keys.resource
 Test Setup       Test Setup
 Test Teardown    Test Teardown
+
 
 *** Test Cases ***
 test_1
@@ -24,8 +25,8 @@ test_1
     Click On Tree Node    0    Result Set Table
     Sleep    2s
     ${value}=    Get Table Cell Value    0    ${row}    2
-    Should Be Equal As Strings   ${value}    MM.yy
+    Should Be Equal As Strings    ${value}    MM.yy
 
     Push Button    restoreButton
     ${value}=    Get Table Cell Value    0    ${row}    2
-    Should Be Equal As Strings   ${value}    dd.MM.yyyy
+    Should Be Equal As Strings    ${value}    dd.MM.yyyy

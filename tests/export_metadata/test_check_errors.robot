@@ -1,27 +1,29 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Resource   ../../files/keywords.resource
-Resource    keys.resource
-Test Setup       Local Test Setup
-Test Teardown    Local Test Teardown
-Test Timeout    60s
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup       Test Setup
+Test Teardown    Test Teardown
+
 
 *** Test Cases ***
 test_1
-    Open connection
+    Open Connection
     Select From Tree Node Popup Menu    0    New Connection    Extract Metadata
-    Select Tab As Context    SQL    
+    Select Tab As Context    DB Metadata Export
+    Select Tab As Context    SQL
     Push Button    saveScriptButton
     Select Dialog    Warning
     Push Button    OK
 
-    Select Window    regexp=^Red.*
+    Select Main Window
+    Select Tab As Context    DB Metadata Export
     Select Tab As Context    SQL
     Push Button    executeScriptButton
     Select Dialog    Warning
     Push Button    OK
-    
-    Select Window    regexp=^Red.*
+
+    Select Main Window
     Push Button    selectAllExtractAttributesButton
     Push Button    executeScriptButton
     Select Dialog    Warning

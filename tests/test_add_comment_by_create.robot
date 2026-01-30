@@ -4,6 +4,7 @@ Resource    ../files/keywords.resource
 Test Setup       Test Setup
 Test Teardown    Test Teardown
 
+
 *** Test Cases ***
 test_create_domain
     VAR    ${title}    Create domain
@@ -116,21 +117,23 @@ test_create_index
     Check Comment     ${title}
 
 test_create_ts
+    Skip If Embedded
     Check Skip
     VAR    ${title}    Create tablespace
     Init Create    Tablespaces (0)    ${title}    ${title}
     Check Comment    ${title}
 
+
 *** Keywords ***
 Check Skip
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
+    ${ver}=    Set Variable    ${info}[1]
     ${srv_ver}=    Set Variable    ${info}[2]
-    Skip If    ${{not($ver == '5.0' and $srv_ver == 'RedDatabase')}}
+    Skip If    ${{not($ver == '5' and $srv_ver == 'RedDatabase')}}
 
 Check Skip 2.6
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
+    ${ver}=    Set Variable    ${info}[1]
     Skip If    ${{$ver == '2.6'}}
 
 Init Create
@@ -142,9 +145,7 @@ Init Create
 Check Procedure
     [Arguments]    ${tab}    ${dialog}
     Select Tab As Context    ${tab}
-    IF    '${tab}' == 'Variables'
-        Push Button    addRowButton    
-    END
+    IF    '${tab}' == 'Variables'    Push Button    addRowButton
     Type Into Table Cell    0    0    Name    TEST
     Set Table Cell Value    0    0    Datatype    BIGINT
     Type Into Table Cell    0    0    Comment    test_comment
@@ -161,7 +162,7 @@ Check Procedure
 Init Column
     Type Into Table Cell    0    0    Name    TEST
     Set Table Cell Value    0    0    Datatype    BIGINT
-    Click On Table Cell    0    0    Name    2      
+    Click On Table Cell    0    0    Name    2
     Send Keyboard Event    VK_ENTER
 
 Check Column Comment

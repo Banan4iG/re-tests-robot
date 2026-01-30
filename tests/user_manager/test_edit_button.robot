@@ -1,32 +1,36 @@
 *** Settings ***
 Library    RemoteSwingLibrary
-Resource   ../../files/keywords.resource 
+Resource   ../../files/keywords.resource
 Test Setup       Test Setup
 Test Teardown    Teardown
+
 
 *** Test Cases ***
 test_1
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
+    ${ver}=    Set Variable    ${info}[1]
     Skip If    ${{$ver == '2.6'}}
     Execute Immediate    CREATE USER TEST_USER PASSWORD 'pass'
-    Open connection
-    Select From Menu        Tools|User Manager
+    Open Connection
+    Select From Menu    Tools|User Manager
     Sleep    1s
+    Select Tab As Context    User Manager
     ${row}=    Find Table Row    usersTable    TEST_USER    User name
     Select Table Cell    usersTable    ${row}    User name
     Push Button    editUserButton
     Select Dialog    Edit user
-    Type Into Text Field    firstNameField     first
+    Type Into Text Field    firstNameField    first
     Type Into Text Field    middleNameField    middle
-    Type Into Text Field    lastNameField      last
+    Type Into Text Field    lastNameField    last
     Select Tab    Comment
     Type Into Text Field    0    description
-    Push Button      submitButton
+    Push Button    submitButton
     Select Dialog    Commiting changes
-    Push Button      commitButton
-    ${result}=    Execute    select cast(sec$user_name as VARCHAR(9)), sec$first_name, sec$middle_name, sec$last_name, sec$active, sec$admin, sec$description, cast(sec$plugin as VARCHAR(3)) from sec$users where sec$user_name='TEST_USER'
+    Push Button    commitButton
+    ${result}=    Execute
+    ...    select cast(sec$user_name as VARCHAR(9)), sec$first_name, sec$middle_name, sec$last_name, sec$active, sec$admin, sec$description, cast(sec$plugin as VARCHAR(3)) from sec$users where sec$user_name='TEST_USER'
     Should Be Equal    ${result}    [('TEST_USER', 'first', 'middle', 'last', True, False, None, 'Srp')]
+
 
 *** Keywords ***
 Teardown

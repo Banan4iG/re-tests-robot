@@ -25,25 +25,21 @@
               
         <server_version>5</server_version>
               
-        <minor_server_version>0</minor_server_version>
-              
+        <minor_server_version>1</minor_server_version>
+            
         <certificate/>
               
         <authmethod>MULTI_FACTOR</authmethod>
               
-        <authmethod-mode>Red Database (Firebird) 3+</authmethod-mode>
+        <authmethod-mode>FIREBIRD_3</authmethod-mode>
               
         <conn-type>PURE_JAVA</conn-type>
               
         <url/>
               
-        <drivername>Jaybird 4 Driver</drivername>
-              
-        <driverid>2222222</driverid>
+        <driverid>5555555</driverid>
               
         <folderid/>
-              
-        <autocommit>true</autocommit>
               
         <txisolation>-1</txisolation>
               

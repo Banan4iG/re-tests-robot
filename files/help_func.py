@@ -8,8 +8,9 @@ import psutil
 import openpyxl
 import threading
 import stat
-from pathlib import Path
+import re
 import firebird.driver as fdb
+from pathlib import Path
 from firebird.driver import connect_server, SrvInfoCode   
 
 
@@ -23,10 +24,10 @@ def get_pom_file():
                 context = f.read()
                 print(context)
 
-def kill_redexpert():
+def kill_rdbexpert():
     time.sleep(10)
     for proc in psutil.process_iter():
-        if proc.name() == f'RedExpert64{get_exe()}' or proc.name() == f'java{get_exe()}':
+        if f'RDBExpert{get_exe()}' in proc.name() or proc.name() == f'java{get_exe()}':
             proc.terminate()
 
 def run_server():
@@ -51,7 +52,7 @@ def stop_server():
     p = None
 
 def get_build_no():
-    return os.environ.get('BUILD', "202504")
+    return os.environ.get('BUILD', "202601")
 
 def backup_savedconnections_file():
     backup_file("connection-saved.xml")
@@ -65,16 +66,29 @@ def backup_user_properties():
 def restore_user_properties():
     restore_file("user.properties")
 
+def backup_drivers():
+    backup_file("drivers.xml")
+
+def restore_drivers():
+    restore_file("drivers.xml")
+    
+def backup_audit_profiles():
+    backup_file("audit.profiles.config")
+
+def restore_audit_profiles():
+    restore_file("audit.profiles.config")
+
 def backup_file(file_name: str):
     home_dir = os.path.expanduser("~")
     build_no = get_build_no()
-    file_path = os.path.join(home_dir, f'.redexpert/{build_no}/{file_name}')
-    shutil.copy(file_path, file_path + ".bak")
+    file_path = os.path.join(home_dir, f'.rdbexpert/{build_no}/{file_name}')
+    if os.path.exists(file_path):
+        shutil.copy(file_path, file_path + ".bak")
 
 def restore_file(file_name: str):
     home_dir = os.path.expanduser("~")
     build_no = get_build_no()
-    file_path = os.path.join(home_dir, f'.redexpert/{build_no}/{file_name}')
+    file_path = os.path.join(home_dir, f'.rdbexpert/{build_no}/{file_name}')
     if os.path.exists(file_path + ".bak"):
         if os.path.exists(file_path):
             os.remove(file_path)
@@ -83,7 +97,7 @@ def restore_file(file_name: str):
 def set_urls(urls: str):
     home_dir = os.path.expanduser("~")
     build_no = get_build_no()
-    user_properties_file = os.path.join(home_dir, f'.redexpert/{build_no}/user.properties')
+    user_properties_file = os.path.join(home_dir, f'.rdbexpert/{build_no}/user.properties')
     with open(user_properties_file, 'r') as f:
         context = f.read()
 
@@ -93,25 +107,25 @@ def set_urls(urls: str):
         f.write(context)
 
 def get_path_to_lib():
-    return os.environ.get('DIST', 'C:\\Program Files\\RedExpert') + "/lib"
+    return os.environ.get('DIST', 'D:\\projects\\RDBExpert') + "/lib"
 
 def get_path():
-    DIST = os.environ.get('DIST', 'C:\\Program Files\\RedExpert')
+    DIST = os.environ.get('DIST', 'D:\\projects\\RDBExpert')
     COVERAGE = os.environ.get('COVERAGE')
     bin = get_exe()
     if COVERAGE:
-        path_to_exe = f"java -javaagent:./lib/jacocoagent.jar=destfile=./results/jacoco.exec,output=file -jar {DIST}/RedExpert.jar -exe_path={DIST}/bin/RedExpert64{bin}"
+        path_to_exe = f"java -javaagent:./lib/jacocoagent.jar=destfile=./results/jacoco.exec,output=file -jar {DIST}/rdbexpert.jar -exe_path={DIST}/bin/RDBExpert{bin}"
     else:
-        path_to_exe = f"{DIST}/bin/RedExpert64{bin}"
+        path_to_exe = f"{DIST}/bin/RDBExpert{bin}"
     return path_to_exe
 
 def clear_history_files():
     home_dir = os.path.expanduser("~")
     build_no = get_build_no()
-    history_file = os.path.join(home_dir, f'.redexpert/{build_no}/connection-history.xml')
-    shortcuts_file = os.path.join(home_dir, f'.redexpert/{build_no}/shortcuts.properties')
-    user_panel_state_file = os.path.join(home_dir, f'.redexpert/{build_no}/saved-values.xml')
-    query_dir = os.path.join(home_dir, f'.redexpert/editor')
+    history_file = os.path.join(home_dir, f'.rdbexpert/{build_no}/connection-history.xml')
+    shortcuts_file = os.path.join(home_dir, f'.rdbexpert/{build_no}/shortcuts.properties')
+    user_panel_state_file = os.path.join(home_dir, f'.rdbexpert/{build_no}/saved-values.xml')
+    query_dir = os.path.join(home_dir, f'.rdbexpert/editor')
     if os.path.exists(query_dir):
         shutil.rmtree(query_dir)
     for file in [history_file, shortcuts_file, user_panel_state_file]:
@@ -120,7 +134,7 @@ def clear_history_files():
 
 def get_hosts_history_file():
     home_dir = os.path.expanduser("~")
-    hosts_history_file = os.path.join(home_dir, '.redexpert/hosts.history')
+    hosts_history_file = os.path.join(home_dir, '.rdbexpert/.hosts')
     return hosts_history_file
 
 def copy_dist_path():
@@ -128,16 +142,19 @@ def copy_dist_path():
         os.chmod(path, stat.S_IWRITE)
         func(path)
 
-    DIST = os.environ.get('DIST', "C:\\Program Files\\RedExpert")
+    DIST = os.environ.get('DIST', "D:\\projects\\RDBExpert")
     tmp_dir = tempfile.gettempdir()
 
-    if os.path.exists(tmp_dir + '/RedExpert'):
-        shutil.rmtree(tmp_dir + '/RedExpert', onerror=_on_rm_error)
-    return_path = shutil.copytree(DIST, tmp_dir + '/RedExpert')
-    path_to_exe = return_path + f"/bin/RedExpert64{get_exe()}"
+    if os.path.exists(tmp_dir + '/RDBExpert'):
+        shutil.rmtree(tmp_dir + '/RDBExpert', onerror=_on_rm_error)
+    return_path = shutil.copytree(DIST, tmp_dir + '/RDBExpert')
+    path_to_exe = return_path + f"/bin/RDBExpert{get_exe()}"
     return path_to_exe
 
-def get_server_info():    
+def get_server_info():
+    """
+    Return home_directory, version, srv_version in this position
+    """
     if is_rdb26():
         home_directory = "/opt/RedDatabase/" if platform.system() == "Linux" else "C:\\RedDatabase(x64)\\"
         version = "2.6"
@@ -145,7 +162,7 @@ def get_server_info():
     else:        
         with connect_server(server='localhost', user='SYSDBA', password='masterkey') as srv:
             home_directory = srv.info.home_directory
-            version = str(srv._engine_version())
+            version = str(srv._engine_version())[0]
             srv_version = next(ver for ver in ["Firebird", "RedDatabase"] if srv.info.get_info(SrvInfoCode.SERVER_VERSION).find(ver) > -1)
     
     return home_directory, version, srv_version
@@ -194,12 +211,12 @@ def execute_immediate(query: str):
 
 def delete_query_files():
     home_dir = os.path.expanduser("~")
-    for path in Path(os.path.join(home_dir, f'.redexpert/editor')).glob("script*.sql"):
+    for path in Path(os.path.join(home_dir, f'.rdbexpert/editor')).glob("script*.sql"):
         os.remove(path)
 
 def check_build_config(conf_path: str, number: int):
     check_dict = {}   
-    check_dict["format"] = ["0", "0"]
+    check_dict["format"] = ["text", "text"]
     check_dict["enabled"] = ["true", "true"]
     check_dict["log_security_incidents"] = ["true", "false"]
     check_dict["log_initfini"] = ["true", "false"]
@@ -211,11 +228,14 @@ def check_build_config(conf_path: str, number: int):
     check_dict["log_statement_finish"] = ["true", "false"]
     check_dict["log_procedure_start"] = ["true", "false"]
     check_dict["log_procedure_finish"] = ["true", "false"]
+    check_dict["log_procedure_compile"] = ["false", "true"]
     check_dict["log_function_start"] = ["true", "false"]
     check_dict["log_function_finish"] = ["true", "false"]
+    check_dict["log_function_compile"] = ["true", "true"]
     check_dict["log_trigger_start"] = ["true", "false"]
-    check_dict["log_service_query"] = ["true", "false"]
+    check_dict["log_service_query"] = ["false", "false"]
     check_dict["log_trigger_finish"] = ["false", "true"]
+    check_dict["log_trigger_compile"] = ["true", "false"]
     check_dict["log_context"] = ["false", "true"]
     check_dict["log_errors"] = ["false", "true"]
     check_dict["log_warnings"] = ["false", "true"]
@@ -227,7 +247,15 @@ def check_build_config(conf_path: str, number: int):
     check_dict["print_dyn"] = ["false", "true"]
     check_dict["log_privilege_changes"] = ["false", "true"]
     check_dict["log_changes_only"] = ["false", "true"]
-    check_dict["log_services"] = ["false", "true"]
+    check_dict["log_services"] = ["false", "false"]
+    check_dict["reset_counters"] = ["true", "true"]
+    check_dict["print_hostname"] = ["true", "true"]
+    check_dict["cancel_on_error"] = ["true", "true"]
+    check_dict["log_message"] = ["true", "true"]
+    check_dict["print_security_type"] = ["true", "true"]
+    check_dict["explain_plan"] = ["true", "true"]
+    check_dict["print_security_level"] = ["true", "true"]
+    check_dict["log_sweep"] = ["true", "true"]
     check_dict["include_user_filter"] = ["ship", "0"]
     check_dict["exclude_user_filter"] = ["819", "0"]
     check_dict["include_process_filter"] = ["14", "0"]
@@ -235,27 +263,22 @@ def check_build_config(conf_path: str, number: int):
     check_dict["include_filter"] = ["0", "ship"]
     check_dict["exclude_filter"] = ["0", "819"]
     check_dict["connection_id"] = ["0", "14"]
-    check_dict["log_filename"] = ["0", "true"]
-    check_dict["max_log_size"] = ["1024", "0"]
-    check_dict["time_threshold"] = ["2048", "0"]
+    check_dict["max_log_size"] = ["50", "50"]
+    check_dict["time_threshold"] = ["100", "100"]
     check_dict["max_sql_length"] = ["4096", "0"]
     check_dict["max_blr_length"] = ["8192", "0"]
     check_dict["max_dyn_length"] = ["0", "1024"]
     check_dict["max_arg_length"] = ["0", "2048"]
     check_dict["max_arg_count"] = ["0", "4096"]
+    check_dict["exclude_gds_codes"] = ["0", "512"]
+    check_dict["include_gds_codes"] = ["512", "0"]
+
     with open(conf_path, "r") as f:
-        for i in range(3):
-            f.readline()
-        for i in range(38):
-            first, equal, second = list(f.readline().split())
-            assert check_dict[first][number] == second
-            f.readline()
-        for i in range(5):
-            f.readline()
-        for i in range(9):
-            first, equal, second = list(f.readline().split())
-            assert check_dict[first][number] == second
-            f.readline()
+        for line in f:
+            splited_current_line = list(line.split())
+            if len(splited_current_line) == 3:
+                first, equal, second = splited_current_line
+                assert check_dict[first][number] == second
 
 def create_objects():
     import firebird.driver as fdb
@@ -380,10 +403,10 @@ def create_database(script_path: str, base_path: str):
     with open(script_path, "r") as file:
         context = file.read()
     
-    context = context.replace("employee.fdb", base_path)
-    
+    base_path = base_path.replace("\\", "\\\\")
+    new_context = re.sub(r"(CONNECT\s+)(.*?)(\s+USER)", fr"\1{base_path}\3", context)
     with open(script_path, "w") as file:
-        file.write(context)
+        file.write(new_context)
     
     import firebird.driver as fdb
     if is_rdb26():
@@ -428,14 +451,14 @@ def check_xlsx(xlsx_path: str):
     
     return result
 
-def add_rows():
+def add_rows(rows_count: int):
     execute_immediate("CREATE TABLE TEST_TABLE (ID BIGINT)")
     import firebird.driver as fdb
     if is_rdb26():
         import fdb
         load_api()
     with fdb.connect("localhost:employee.fdb", user="SYSDBA", password="masterkey") as con:
-        for i in range(1048576):
+        for i in range(rows_count):
             con.execute_immediate(f"INSERT INTO TEST_TABLE VALUES ({i})")
     
         con.commit()
@@ -457,3 +480,182 @@ def get_user_for_ssh():
     user = "reduser" if platform.system() == "Linux" else "jenkins"
     password = "1" if platform.system() == "Linux" else "jenkins"
     return  user, password
+
+def compare_data(path_to_ibdb: str):
+    import firebird.driver as fdb
+    list_of_ib_tables= []
+    script = "SELECT RDB$RELATION_NAME FROM RDB$RELATIONS WHERE RDB$SYSTEM_FLAG = 0 ORDER BY RDB$RELATION_NAME"
+    if platform.system() == "Linux":
+        import jaydebeapi
+        
+        DIST = os.environ.get('DIST', "C:\\Program Files\\RedExpert")
+        os.environ["JAVA_HOME"] = f"{DIST}/java"
+
+        jdbc_driver = '/opt/interbase/lib/interclient.jar' if platform.system() == "Linux" else 'C:\\Program Files\\Embarcadero\\InterBase\\SDK\\lib\\interclient.jar'
+        jdbc_url = f'jdbc:interbase://localhost:5051/{path_to_ibdb}'
+        jdbc_user = 'SYSDBA'  
+        jdbc_password = 'masterkey'
+
+        con = jaydebeapi.connect(jclassname='interbase.interclient.Driver', url=jdbc_url, driver_args=[jdbc_user, jdbc_password], jars=[jdbc_driver])  
+        cur = con.cursor()  
+        cur.execute(script)  
+        list_of_ib_tables = cur.fetchall()
+        cur.close()
+        con.close()
+        
+        con = None
+    else:
+        import interbase
+        
+        con = interbase.connect(dsn=f'localhost/5051:{path_to_ibdb}', user='SYSDBA', password='masterkey', charset='WIN1251') 
+        cur = con.cursor()
+        cur.execute(script)
+        list_of_ib_tables = cur.fetchall()
+        cur.close()
+        con.close()
+        
+        con = None
+
+    tmp_dir = tempfile.gettempdir()
+
+    for ib_table in list_of_ib_tables:
+        ib_table = ib_table[0].rstrip()
+        
+        if platform.system() == "Linux":
+            import jaydebeapi
+            
+            if ib_table == 'JOB' or ib_table == 'PROJ_DEPT_BUDGET':
+                continue # because JDBC not supported get data from this tables
+            
+            con = jaydebeapi.connect(jclassname='interbase.interclient.Driver', url=jdbc_url, driver_args=[jdbc_user, jdbc_password], jars=[jdbc_driver])
+        else:
+            import interbase
+            
+            if ib_table == 'DATA_POSITIONS_TECH_RE':
+                ib_table += 'QS'
+            if ib_table == 'SUMMARY_DATA_EXTENSION':
+                ib_table += 'S'
+            
+            con = interbase.connect(dsn=f'localhost/5051:{path_to_ibdb}', user='SYSDBA', password='masterkey', charset='WIN1251')
+        
+        cur = con.cursor()
+        data_script = f"select * from {ib_table}"
+        cur.execute(data_script)
+        ib_result_data = cur.fetchall()
+        cur.close()
+        con.close()
+
+        con = None
+
+        with fdb.connect(f'localhost/3050:{tmp_dir}/mirgated_db.fdb', user='SYSDBA', password='masterkey', charset='WIN1251') as con:
+            cur = con.cursor()
+            cur.execute(data_script)
+            rdb_result_data = cur.fetchall()
+            cur.close()
+
+        assert ib_result_data.sort() == rdb_result_data.sort()
+
+def get_system_privileges():
+    all_system_privileges = ["USER_MANAGEMENT",
+                             "READ_RAW_PAGES",
+                             "CREATE_USER_TYPES",
+                             "USE_NBACKUP_UTILITY",
+                             "CHANGE_SHUTDOWN_MODE",
+                             "TRACE_ANY_ATTACHMENT",
+                             "MONITOR_ANY_ATTACHMENT",
+                             "CREATE_DATABASE",
+                             "DROP_DATABASE",
+                             "USE_GBAK_UTILITY",
+                             "USE_GSTAT_UTILITY",
+                             "USE_GFIX_UTILITY",
+                             "IGNORE_DB_TRIGGERS",
+                             "CHANGE_HEADER_SETTINGS",
+                             "SELECT_ANY_OBJECT_IN_DATABASE",
+                             "ACCESS_ANY_OBJECT_IN_DATABASE",
+                             "MODIFY_ANY_OBJECT_IN_DATABASE",
+                             "CHANGE_MAPPING_RULES",
+                             "USE_GRANTED_BY_CLAUSE",
+                             "GRANT_REVOKE_ON_ANY_OBJECT",
+                             "GRANT_REVOKE_ANY_DDL_RIGHT",
+                             "CREATE_PRIVILEGED_ROLES",
+                             "GET_DBCRYPT_INFO",
+                             "MODIFY_EXT_CONN_POOL",
+                             "REPLICATE_INTO_DATABASE",
+                             "PROFILE_ANY_ATTACHMENT"]
+    
+    _, _, srv_version = get_server_info()
+    if srv_version == "RedDatabase":
+        all_system_privileges.append("EXECUTE_ANY_OBJECT_IN_DATABASE")
+        all_system_privileges.append("UPDATE_ANY_OBJECT_IN_DATABASE")
+    else:
+        all_system_privileges.append("ACCESS_SHUTDOWN_DATABASE")
+
+    current_system_privileges = []
+    for privileges in all_system_privileges:
+        with fdb.connect("localhost:employee.fdb", user='TEST_USER', password='pass', role='TEST_ROLE') as con:
+            with con.cursor() as cur:
+                cur.execute(f"select RDB$SYSTEM_PRIVILEGE({privileges}) from RDB$DATABASE")
+                result = cur.fetchall()
+        if result[0][0]:
+            current_system_privileges.append(privileges)
+    return current_system_privileges
+
+def alter_copy(db_path: str):
+    import firebird.driver as fdb
+    ddls = [
+        """CREATE OR ALTER PROCEDURE ALL_LANGS
+RETURNS (
+    CODE VARCHAR(5),
+    GRADE VARCHAR(5),
+    COUNTRY VARCHAR(15),
+    LANG VARCHAR(15)
+)
+AS
+BEGIN
+    FOR SELECT job_code, job_grade, job_country FROM job
+        INTO :code, :grade, :country
+
+    DO
+    BEGIN
+        FOR SELECT languages FROM show_langs
+            (:code, :grade, :country) INTO :lang DO
+            SUSPEND;
+        /* Put nice separators between rows */
+        code = '=====';   
+        grade = '=====';    
+        country = '===============';   
+        lang = '==============';   
+        SUSPEND;
+    END
+    END;""",
+        """CREATE OR ALTER TRIGGER POST_NEW_ORDER FOR SALES
+ACTIVE AFTER INSERT POSITION 0
+AS
+BEGIN
+    POST_EVENT 'new_order';     
+END;"""
+    ]
+    if is_rdb26():
+        import fdb
+        load_api()
+    else:
+        alter_func = """CREATE OR ALTER FUNCTION NEW_FUNC
+RETURNS BIGINT
+AS
+BEGIN
+    /* Function impl */    
+END;"""
+        ddls.append(alter_func)
+
+    with fdb.connect(f"localhost:{db_path}", user="SYSDBA", password="masterkey") as con:
+        for alter_ddl in ddls:
+            con.execute_immediate(alter_ddl)
+    
+        con.commit()
+
+def change_owner(file_path: str, owner:str):
+    from pwd import getpwnam
+    uid = getpwnam(owner).pw_uid
+    gid = getpwnam(owner).pw_gid
+    os.chown(file_path, uid, gid)
+    os.chmod(file_path, 0o777)

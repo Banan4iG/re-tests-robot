@@ -17,11 +17,12 @@ test_3
 
 test_4
     Check Skip
-    Test    Time with timezone Pattern Format     zoned time
+    Test    Time with timezone Pattern Format    zoned time
 
 test_5
     Check Skip
     Test    Timestamp with timezone Pattern Format    zoned timestamp
+
 
 *** Keywords ***
 Test
@@ -44,5 +45,5 @@ Test
 
 Check Skip
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
-    Skip If    ${{$ver != '5.0'}}
+    ${ver}=    Set Variable    ${info}[1]
+    Skip If    ${{$ver != '5'}}

@@ -20,6 +20,7 @@ test_execute_in_profiler
     Init
     Push Button    execute-in-profiler-command
 
+
 *** Keywords ***
 Init
     Push Button    editor-command

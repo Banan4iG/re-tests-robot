@@ -8,9 +8,9 @@ Test Teardown    Teardown
 *** Test Cases ***
 test_execute
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
+    ${ver}=    Set Variable    ${info}[1]
     ${srv_ver}=    Set Variable    ${info}[2]
-    IF    ${{$ver == '5.0' and $srv_ver == 'RedDatabase'}}
+    IF    ${{$ver == '5' and $srv_ver == 'RedDatabase'}}
         Init    test_script5.sql
     ELSE IF    ${{$ver == '2.6'}}
         Init    test_script26.sql
@@ -19,7 +19,6 @@ test_execute
     END
     Sleep    5s
     Push Button    editor-stop-on-error-command
-
 
 test_cancel
     Init    test_script26.sql
@@ -33,12 +32,12 @@ test_cancel
 Init
     [Arguments]    ${file}
     Lock Employee
-    Open connection
+    Open Connection
     Sleep    2s
     Clear Text Field    0
     Select From Main Menu    Edit|Open file
     Select Dialog    Open
-    ${script_path}=    Catenate    SEPARATOR=    ${EXECDIR}    /files/${file}
+    ${script_path}=    Catenate    SEPARATOR=${EMPTY}    ${EXECDIR}    /files/${file}
     Type Into Text Field    0    ${script_path}
     Push Button    Open
     Select Main Window

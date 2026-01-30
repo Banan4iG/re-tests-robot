@@ -1,10 +1,10 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Library    Process
-Library    Collections
-Resource    ../../files/keywords.resource
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
 Test Setup       Test Setup
 Test Teardown    Test Teardown
+
 
 *** Test Cases ***
 test_1
@@ -19,11 +19,12 @@ test_3
 test_4
     action    CREATE
 
+
 *** Keywords ***
 action
     [Arguments]    ${type}
-    Open connection
-    Select From Tree Node Popup Menu   0    New Connection|Tables (10)|EMPLOYEE    Generate SQL|${type} statement       
-    Send Keyboard Event    VK_Z   CTRL_MASK
+    Open Connection
+    Select From Tree Node Popup Menu    0    New Connection|Tables (10)|EMPLOYEE    Generate SQL|${type} statement
+    Send Keyboard Event    VK_Z    CTRL_MASK
     ${res}=    Get Text Field Value    0
-    Should Be Equal As Strings    ${res}     second=
+    Should Be Equal As Strings    ${res}    second=${EMPTY}

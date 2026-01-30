@@ -1,6 +1,7 @@
 *** Settings ***
-Library    RemoteSwingLibrary
+Library     RemoteSwingLibrary
 Resource    ../../../files/keywords.resource
+
 
 *** Keywords ***
 Set Pattern
@@ -22,14 +23,15 @@ Set Pattern
     Focus To Component    0
 
 Init table
-    [Arguments]     ${type}    ${value}
+    [Arguments]    ${type}    ${value}
     Lock Employee
     Execute Immediate    CREATE TABLE TEST_TABLE (TEST ${type})
     Execute Immediate    INSERT INTO TEST_TABLE VALUES ('${value}')
 
 Test
-    Open connection
+    Open Connection
     Click On Tree Node    0    New Connection|Tables (11)|TEST_TABLE    clickCount=2
+    Select Tab As Context    TEST_TABLE:TABLE:New Connection
     Sleep    1s
     Select Tab As Context    Data
     Sleep    2s
@@ -37,7 +39,7 @@ Test
     RETURN    ${value}
 
 Check Query Editor
-    Open connection
+    Open Connection
     Sleep    2s
     Push Button    editor-command
     Clear Text Field    0
@@ -50,7 +52,7 @@ Check Query Editor
 Setup
     ${info}=    Get Server Info
     ${ver}=     Set Variable    ${info}[1]
-    Skip If    ${{$ver != '5.0'}}
+    Skip If    ${{$ver != '5'}}
     Test Setup
 
 Teardown

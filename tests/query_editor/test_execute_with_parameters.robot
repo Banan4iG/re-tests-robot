@@ -4,6 +4,7 @@ Resource    ../../files/keywords.resource
 Test Setup       Test Setup
 Test Teardown    Test Teardown
 
+
 *** Test Cases ***
 test_execute_sql
     Execute    execute-script-command
@@ -13,16 +14,17 @@ test_execute_statement
     Execute    execute-statement-command
     Check Tool
 
+
 *** Keywords ***
 Execute
     [Arguments]    ${button}
-    Open connection
+    Open Connection
     Clear Text Field    0
     Type Into Text Field    0    select cast(:test as integer) from rdb$database
     Push Button    ${button}
     Select Dialog    Input parameters
     Type Into Text Field    0    1234
-    Push Button     OK
+    Push Button    OK
     Select Main Window
     Sleep    1s
     Push Button    ${button}
@@ -30,10 +32,10 @@ Execute
     ${value}=    Get Text Field Value    0
     Clear Text Field    0
     Type Into Text Field    0    4321
-    Push Button     OK
+    Push Button    OK
     Should Be Equal As Strings    ${value}    1234
-    
-    #cancel
+
+    # cancel
     Select Main Window
     Sleep    1s
     Push Button    ${button}

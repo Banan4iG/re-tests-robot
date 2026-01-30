@@ -1,9 +1,9 @@
 *** Settings ***
 Library    RemoteSwingLibrary
-Resource   ../../files/keywords.resource 
-Resource    keys.resource
+Resource   ../../files/keywords.resource
 Test Setup       Local Setup
-Test Teardown    Local Test Teardown
+Test Teardown    Test Teardown
+
 
 *** Test Cases ***
 test_extract
@@ -11,9 +11,8 @@ test_extract
     Combo Box Should Be Disabled    dbTargetComboBox
     Push Button    extractButton
     Select Dialog    Warning
-    Run Keyword And Continue On Failure    Label Text Should Be    0    Unable to compare.
-    Run Keyword And Continue On Failure    Label Text Should Be    1    Connection is inactive.
-
+    Label Text Should Be    0    Unable to compare.
+    Label Text Should Be    1    Connection is inactive.
 
 test_compare
     Push Button    comparerDB-command
@@ -21,12 +20,13 @@ test_compare
     Combo Box Should Be Disabled    dbTargetComboBox
     Push Button    compareButton
     Select Dialog    Warning
-    Run Keyword And Continue On Failure    Label Text Should Be    0    Unable to compare.
-    Run Keyword And Continue On Failure    Label Text Should Be    1    The same connections selected.
+    Label Text Should Be    0    Unable to compare.
+    Label Text Should Be    1    At least one of the connections is inactive.
+
 
 *** Keywords ***
 Local Setup
-    Local Test Setup
+    Test Setup
     Select From Tree Node Popup Menu In Separate Thread    0    New Connection    Delete connection
     Select Dialog    Delete connection
     Push Button    Yes

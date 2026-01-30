@@ -1,6 +1,6 @@
 *** Settings ***
-Library    RemoteSwingLibrary
 Library    Collections
+Library    RemoteSwingLibrary
 Resource    ../../files/keywords.resource
 Test Setup       Test Setup
 Test Teardown    Test Teardown
@@ -10,4 +10,6 @@ test_1
     Sleep    1s
     ${tableValues}=    Get Table Values    driversTable
     Sort List    ${tableValues}
-    Should Be Equal As Strings    ${tableValues}    [['Jaybird 3 Driver', 'Jaybird 3 Driver', 'Red Database', 'org.firebirdsql.jdbc.FBDriver'], ['Jaybird 4 Driver', 'Jaybird 4 Driver', 'Red Database', 'org.firebirdsql.jdbc.FBDriver'], ['Jaybird 5 Driver', 'Jaybird 5 Driver', 'Red Database', 'org.firebirdsql.jdbc.FBDriver']]
+    Should Be Equal As Strings
+    ...    ${tableValues}
+    ...    [['RedDatabase JDBC Driver 5', 'Latest RedDatabase JDBC Driver 5 (Recommended)', 'Red Database', 'org.firebirdsql.jdbc.FBDriver'], ['RedDatabase JDBC Driver 6', 'Latest RedDatabase JDBC Driver 6', 'Red Database', 'org.firebirdsql.jdbc.FBDriver']]

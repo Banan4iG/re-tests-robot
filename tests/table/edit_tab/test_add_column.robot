@@ -9,36 +9,36 @@ Test Teardown    Test Teardown
 test_check_types
     Init
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
-    Check type    BIGINT
-    Check type    BLOB SUB_TYPE <0    expected_size=80
-    Check type    BLOB SUB_TYPE BINARY    expected_size=80
-    Check type    BLOB SUB_TYPE TEXT    expected_size=80    expected_subtype=1
-    Check type    CHAR    expected_size=1
-    Check type    DATE
-    Check type    DECIMAL    expected_size=1    expected_scale=1
-    Check type    DOUBLE PRECISION
-    Check type    FLOAT
-    Check type    INTEGER
-    Check type    NUMERIC    expected_size=1    expected_scale=1
-    Check type    SMALLINT
-    Check type    TIME
-    Check type    TIMESTAMP
-    Check type    VARCHAR    expected_size=1
-    IF    ${{$ver == '5.0'}}
-        Check type    BOOLEAN
-        Check type    DECFLOAT    expected_size=1
-        Check type    TIME WITH TIME ZONE
-        Check type    TIMESTAMP WITH TIME ZONE
-        Check type    INT128
-    ELSE IF    ${{$ver == '3.0'}}
-        Check type    BOOLEAN
+    ${ver}=    Set Variable    ${info}[1]
+    Check Type    BIGINT
+    Check Type    BLOB SUB_TYPE <0    expected_size=80
+    Check Type    BLOB SUB_TYPE BINARY    expected_size=80
+    Check Type    BLOB SUB_TYPE TEXT    expected_size=80    expected_subtype=1
+    Check Type    CHAR    expected_size=1
+    Check Type    DATE
+    Check Type    DECIMAL    expected_size=1    expected_scale=1
+    Check Type    DOUBLE PRECISION
+    Check Type    FLOAT
+    Check Type    INTEGER
+    Check Type    NUMERIC    expected_size=1    expected_scale=1
+    Check Type    SMALLINT
+    Check Type    TIME
+    Check Type    TIMESTAMP
+    Check Type    VARCHAR    expected_size=1
+    IF    ${{$ver == '5'}}
+        Check Type    BOOLEAN
+        Check Type    DECFLOAT    expected_size=1
+        Check Type    TIME WITH TIME ZONE
+        Check Type    TIMESTAMP WITH TIME ZONE
+        Check Type    INT128
+    ELSE IF    ${{$ver == '3'}}
+        Check Type    BOOLEAN
     END
 
 test_check_domain
     Init
     Check Check Box    useDomainCheck
-    Switch domain    ADDRESSLINE    VARCHAR    expected_size=30
+    Switch Domain    ADDRESSLINE    VARCHAR    expected_size=30
     Push Button    editDomainButton
     Select Dialog    Edit domain
     ${name}=    Get Text Field Value    nameField
@@ -53,10 +53,10 @@ test_check_domain
     Close Dialog    Create domain
 
     Select Dialog    Create table column
-        
-    Switch domain    DEPTNO    CHAR    expected_size=3
-    Check commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_1 DEPTNO
-    ${row}=    Check in table    data_type=CHAR
+
+    Switch Domain    DEPTNO    CHAR    expected_size=3
+    Check Commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_1 DEPTNO    dialog3
+    ${row}=    Check In Table    data_type=CHAR
     ${size}=    Get Table Cell Value    0    ${row}    Size or precision
     Should Be Equal As Strings    ${size}    3
     ${domain}=    Get Table Cell Value    0    ${row}    Domain
@@ -65,10 +65,10 @@ test_check_domain
 test_check_empty_domain
     Init
     Check Check Box    useDomainCheck
-    Switch domain    EMPNO    SMALLINT    expected_size=2
+    Switch Domain    EMPNO    SMALLINT    expected_size=2
     Select From Combo Box    domainCombo    ${EMPTY}
-    Check commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_1 SMALLINT
-    ${row}=    Check in table    data_type=SMALLINT
+    Check Commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_1 SMALLINT
+    ${row}=    Check In Table    data_type=SMALLINT
     ${size}=    Get Table Cell Value    0    ${row}    Size or precision
     Should Be Equal As Strings    ${size}    2
     ${domain}=    Get Table Cell Value    0    ${row}    Domain
@@ -80,23 +80,23 @@ test_check_encoding
     Type Into Text Field    nameField    NEW_COLUMN
     Select From Combo Box    typesCombo    VARCHAR
     Select From Combo Box    encodingsCombo    UTF8
-    Select From Combo Box    collatesCombo    UTF8
-    Check commit    ALTER TABLE TEST_TABLE ADD NEW_COLUMN VARCHAR(1) CHARACTER SET UTF8 COLLATE UTF8
-    Check in table    NEW_COLUMN    VARCHAR
+    Select From Combo Box    collatesCombo    UNICODE
+    Check Commit    ALTER TABLE TEST_TABLE ADD NEW_COLUMN VARCHAR(1) CHARACTER SET UTF8 COLLATE UNICODE
+    Check In Table    NEW_COLUMN    VARCHAR
 
 test_check_scale
     Init
     Clear Text Field    nameField
     Type Into Text Field    nameField    NEW COLUMN
     Select From Combo Box    typesCombo    DECIMAL
-    
+
     # Clear Text Field    sizeField
     Insert Into Text Field    sizeField    18
     # Clear Text Field    scaleField
     Insert Into Text Field    scaleField    15
-    
-    Check commit    ALTER TABLE TEST_TABLE ADD "NEW COLUMN" DECIMAL(18,15)
-    ${row}=    Check in table    NEW COLUMN    DECIMAL
+
+    Check Commit    ALTER TABLE TEST_TABLE ADD "NEW COLUMN" DECIMAL(18,15)
+    ${row}=    Check In Table    NEW COLUMN    DECIMAL
     ${size}=    Get Table Cell Value    0    ${row}    Size or precision
     Should Be Equal As Strings    ${size}    18
     ${scale}=    Get Table Cell Value    0    ${row}    Scale
@@ -107,11 +107,11 @@ test_check_not_null
     Clear Text Field    nameField
     Type Into Text Field    nameField    "NEW COLUMN"
     Check Check Box    requiredCheck
-    Check commit    ALTER TABLE TEST_TABLE ADD """NEW COLUMN""" BIGINT NOT NULL
-    ${row}=    Check in table    column_name="NEW COLUMN"
+    Check Commit    ALTER TABLE TEST_TABLE ADD """NEW COLUMN""" BIGINT NOT NULL
+    ${row}=    Check In Table    column_name="NEW COLUMN"
     ${required}=    Get Table Cell Value    0    ${row}    Required    model
-    Should Be Equal As Strings    ${required}    true    
-    
+    Should Be Equal As Strings    ${required}    true
+
 test_check_default_1
     Init default    BIGINT    BIGINT    2
 
@@ -120,14 +120,14 @@ test_check_default_2
 
 test_check_auto_name
     Init
-    Check commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_1 BIGINT
-    Check in table
+    Check Commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_1 BIGINT
+    Check In Table
     Push Button    addColumnButton
     Select Dialog    Create table column
     ${name}=    Get Text Field Value    nameField
     Should Be Equal As Strings    ${name}    NEW_TABLE_COLUMN_2
-    Check commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_2 BIGINT
-    Check in table    column_name=NEW_TABLE_COLUMN_2
+    Check Commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_2 BIGINT    dialog=dialog3
+    Check In Table    column_name=NEW_TABLE_COLUMN_2
 
 test_computed
     Init
@@ -137,10 +137,15 @@ test_computed
     Type Into Text Field    0    COMPUTED BY ( ID * 2 )
     Select Main Window
     Select Dialog    Create table column
-    Check commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_1 COMPUTED BY ( ID * 2 )
-    ${row}=    Check in table
+    Check Commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_1 COMPUTED BY ( ID * 2 )
+    ${row}=    Check In Table
     ${computed}=    Get Table Cell Value    0    ${row}    Computed Source
     Should Be Equal As Strings    ${computed}    ID * 2    strip_spaces=${True}
+    ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
+    IF    ${{$connect_type == 'embedded'}}
+        Select Main Window
+        Close Connection
+    END
     Execute Immediate    INSERT INTO TEST_TABLE VALUES (2)
     ${res}=    Execute    SELECT * FROM TEST_TABLE
     Should Be Equal As Strings    ${res}    [(2, 4)]
@@ -153,13 +158,17 @@ test_check
     Type Into Text Field    0    CHECK ( NEW_TABLE_COLUMN_1 BETWEEN 1 AND 5 )
     Select Main Window
     Select Dialog    Create table column
-    Check commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_1 BIGINT CHECK ( NEW_TABLE_COLUMN_1 BETWEEN 1 AND 5 )
-    Check in table
+    Check Commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_1 BIGINT CHECK ( NEW_TABLE_COLUMN_1 BETWEEN 1 AND 5 )
+    Check In Table
     Select Tab    Constraints
     ${row}=    Find Table Row    0    CHECK    Type
     ${check}=    Get Table Cell Value    0    ${row}    Check
     Should Be Equal As Strings    ${check}    CHECK ( NEW_TABLE_COLUMN_1 BETWEEN 1 AND 5 )
-
+    ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
+    IF    ${{$connect_type == 'embedded'}}
+        Select Main Window
+        Close Connection
+    END
     Execute Immediate    INSERT INTO TEST_TABLE VALUES (1,2)
     Run Keyword And Expect Error    STARTS:DatabaseError:    Execute Immediate    INSERT INTO TEST_TABLE VALUES (1,6)
     ${res}=    Execute    SELECT * FROM TEST_TABLE
@@ -167,14 +176,19 @@ test_check
 
 test_autoincrement_always_identity
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
-    Skip If    ${{$ver != '5.0'}}
+    ${ver}=    Set Variable    ${info}[1]
+    Skip If    ${{$ver != '5'}}
     Init autoincrement    identityRadio
     Select From Combo Box    identityCombo    GENERATED ALWAYS
-    Check commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_1 BIGINT GENERATED ALWAYS AS IDENTITY
-    ${row}=    Check in table
+    Check Commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_1 BIGINT GENERATED ALWAYS AS IDENTITY
+    ${row}=    Check In Table
     ${required}=    Get Table Cell Value    0    ${row}    Required    model
-    Should Be Equal As Strings    ${required}    true    
+    Should Be Equal As Strings    ${required}    true
+    ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
+    IF    ${{$connect_type == 'embedded'}}
+        Select Main Window
+        Close Connection
+    END
     Execute Immediate    INSERT INTO TEST_TABLE (ID) VALUES (2)
     Execute Immediate    INSERT INTO TEST_TABLE (ID) VALUES (6)
     Run Keyword And Expect Error    STARTS:DatabaseError:    Execute Immediate    INSERT INTO TEST_TABLE VALUES (6, 10)
@@ -183,26 +197,32 @@ test_autoincrement_always_identity
 
 test_autoincrement_default_identity
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
+    ${ver}=    Set Variable    ${info}[1]
     Skip If    ${{$ver == '2.6'}}
     Init autoincrement    identityRadio
-    IF    ${{$ver == '5.0'}}
+    IF    ${{$ver == '5'}}
         Select From Combo Box    identityCombo    GENERATED BY DEFAULT
         Clear Text Field    incrementField
         Type Into Text Field    incrementField    2
-        VAR    ${expected_increment}    ${SPACE}INCREMENT BY 2
-        VAR    ${expected_res}    2, 5
+        VAR    ${expected_increment}=    ${SPACE}INCREMENT BY 2
+        VAR    ${expected_res}=    2, 5
     ELSE
-        VAR    ${expected_increment}    ${EMPTY}
-        VAR    ${expected_res}    2, 6
+        VAR    ${expected_increment}=    ${EMPTY}
+        VAR    ${expected_res}=    2, 6
     END
     Clear Text Field    startValueField
     Type Into Text Field    startValueField    5
-    
-    Check commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_1 BIGINT GENERATED BY DEFAULT AS IDENTITY (START WITH 5${expected_increment})
-    ${row}=    Check in table
+
+    Check Commit
+    ...    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_1 BIGINT GENERATED BY DEFAULT AS IDENTITY (START WITH 5${expected_increment})
+    ${row}=    Check In Table
     ${required}=    Get Table Cell Value    0    ${row}    Required    model
-    Should Be Equal As Strings    ${required}    true    
+    Should Be Equal As Strings    ${required}    true
+    ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
+    IF    ${{$connect_type == 'embedded'}}
+        Select Main Window
+        Close Connection
+    END
     Execute Immediate    INSERT INTO TEST_TABLE (ID) VALUES (2)
     Execute Immediate    INSERT INTO TEST_TABLE (ID) VALUES (6)
     Execute Immediate    INSERT INTO TEST_TABLE VALUES (6, 10)
@@ -212,11 +232,14 @@ test_autoincrement_default_identity
 test_autoincrement_create_generator
     Init autoincrement    newSequenceRadio
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
+    ${ver}=    Set Variable    ${info}[1]
     IF    ${{$ver != '2.6'}}
         Select Dialog    Warning
         Label Text Should Be    0    Using IDENTITY is preferred when creating an auto-incremented column
         Push Button    OK
+        VAR    ${dialog}=    dialog2
+    ELSE
+        VAR    ${dialog}=    dialog1
     END
     Select Dialog    Create table column
     Clear Text Field    nameField
@@ -227,19 +250,24 @@ test_autoincrement_create_generator
     Type Into Text Field    startValueField    10
     Clear Text Field    incrementField
     Type Into Text Field    incrementField    5
-    
-    Check SQL Statements    ${True}    AUTO_GEN    COL
 
-    ${row}=    Check in table    column_name=COL
+    Check SQL Statements    ${True}    AUTO_GEN    COL    ${dialog}
+
+    ${row}=    Check In Table    column_name=COL
     ${required}=    Get Table Cell Value    0    ${row}    Required    model
-    Should Be Equal As Strings    ${required}    true    
+    Should Be Equal As Strings    ${required}    true
+    ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
+    IF    ${{$connect_type == 'embedded'}}
+        Select Main Window
+        Close Connection
+    END
     Execute Immediate    INSERT INTO TEST_TABLE (ID) VALUES (1)
     Execute Immediate    INSERT INTO TEST_TABLE (ID) VALUES (2)
     Execute Immediate    INSERT INTO TEST_TABLE VALUES (3, 20)
     ${res}=    Execute    SELECT * FROM TEST_TABLE
-    IF    ${{$ver == '5.0'}}
+    IF    ${{$ver == '5'}}
         Should Be Equal As Strings    ${res}    [(1, 10), (2, 15), (3, 20)]
-    ELSE IF     ${{$ver == '3.0'}}
+    ELSE IF    ${{$ver == '3'}}
         Should Be Equal As Strings    ${res}    [(1, 15), (2, 20), (3, 20)]
     ELSE
         Should Be Equal As Strings    ${res}    [(1, 16), (2, 17), (3, 20)]
@@ -248,23 +276,30 @@ test_autoincrement_create_generator
 test_autoincrement_use_generator
     Init autoincrement    existingSequenceRadio
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
+    ${ver}=    Set Variable    ${info}[1]
     IF    ${{$ver != '2.6'}}
         Select Dialog    Warning
         Label Text Should Be    0    Using IDENTITY is preferred when creating an auto-incremented column
         Push Button    OK
+        VAR    ${dialog}=    dialog2
+    ELSE
+        VAR    ${dialog}=    dialog1
     END
     Select Dialog    Create table column
     Clear Text Field    nameField
-    Type Into Text Field    nameField    COL   
+    Type Into Text Field    nameField    COL
     Select From Combo Box    sequencesCombo    EMP_NO_GEN
 
     Check SQL Statements    ${False}    EMP_NO_GEN    COL
 
-    ${row}=    Check in table    COL
+    ${row}=    Check In Table    COL
     ${required}=    Get Table Cell Value    0    ${row}    Required    model
-    Should Be Equal As Strings    ${required}    true    
-
+    Should Be Equal As Strings    ${required}    true
+    ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
+    IF    ${{$connect_type == 'embedded'}}
+        Select Main Window
+        Close Connection
+    END
     Execute Immediate    INSERT INTO TEST_TABLE (ID) VALUES (2)
     Execute Immediate    INSERT INTO TEST_TABLE (ID) VALUES (6)
     Execute Immediate    INSERT INTO TEST_TABLE VALUES (6, 25)
@@ -274,11 +309,14 @@ test_autoincrement_use_generator
 test_check_autoupdate_object_tree
     Init autoincrement    newSequenceRadio
     ${info}=    Get Server Info
-    ${ver}=     Set Variable    ${info}[1]
+    ${ver}=    Set Variable    ${info}[1]
     IF    ${{$ver != '2.6'}}
         Select Dialog    Warning
         Label Text Should Be    0    Using IDENTITY is preferred when creating an auto-incremented column
         Push Button    OK
+        VAR    ${dialog}=    dialog2
+    ELSE
+        VAR    ${dialog}=    dialog1
     END
     Select Dialog    Create table column
     Clear Text Field    nameField
@@ -292,16 +330,18 @@ test_check_autoupdate_object_tree
     Check SQL Statements    ${True}    AUTO_GEN    COL
     Select Main Window
     Expand Tree Node    0    New Connection|Table Triggers (5)
-    Tree Node Should Exist    0   New Connection|Table Triggers (5)|TRIGGER_BI_TEST_TABLE_COL
+    Tree Node Should Exist    0    New Connection|Table Triggers (5)|TRIGGER_BI_TEST_TABLE_COL
     Expand Tree Node    0    New Connection|Sequences (3)
-    Tree Node Should Exist    0   New Connection|Sequences (3)|AUTO_GEN
+    Tree Node Should Exist    0    New Connection|Sequences (3)|AUTO_GEN
+
 
 *** Keywords ***
 Init
     Lock Employee
     Execute Immediate    CREATE TABLE TEST_TABLE (ID INT)
-    Open connection
+    Open Connection
     Click On Tree Node    0    New Connection|Tables (11)|TEST_TABLE    2
+    Select Tab As Context    TEST_TABLE:TABLE:New Connection
     Select Tab    Columns
     Push Button    addColumnButton
     Select Dialog    Create table column
@@ -323,12 +363,12 @@ Init default
     Type Into Text Field    0    2
     Select Main Window
     Select Dialog    Create table column
-    Check commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_1 ${type2} DEFAULT ${default}
-    ${row}=    Check in table    data_type=${type1}
+    Check Commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_1 ${type2} DEFAULT ${default}
+    ${row}=    Check In Table    data_type=${type1}
     ${default_value}=    Get Table Cell Value    0    ${row}    Default
     Should Be Equal As Strings    ${default_value}    ${default}
 
-Switch domain
+Switch Domain
     [Arguments]    ${domain}    ${expected_type}    ${expected_size}=0    ${expected_scale}=0    ${expected_subtype}=0
     Select From Combo Box    domainCombo    ${domain}
     ${type}=    Get Selected Item From Combo Box    typesCombo
@@ -340,7 +380,7 @@ Switch domain
     Should Be Equal As Strings    ${scale}    ${expected_scale}
     Should Be Equal As Strings    ${subtype}    ${expected_subtype}
 
-Check type
+Check Type
     [Arguments]    ${type}    ${expected_size}=0    ${expected_scale}=0    ${expected_subtype}=0
     Select From Combo Box    typesCombo    ${type}
     ${size}=    Get Text Field Value    sizeField
@@ -350,7 +390,7 @@ Check type
     Should Be Equal As Strings    ${scale}    ${expected_scale}
     Should Be Equal As Strings    ${subtype}    ${expected_subtype}
 
-Check commit
+Check Commit
     [Arguments]    ${text}    ${dialog}=Commiting changes
     Push Button    submitButton
     Sleep    1s
@@ -360,12 +400,16 @@ Check commit
 
     Push Button    commitButton
     Sleep    0.1s
-    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout	0
-    Run Keyword And Expect Error    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Create table column'    Select Dialog    Create table column
+    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
+    Run Keyword And Expect Error
+    ...    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Create table column'
+    ...    Select Dialog
+    ...    Create table column
 
-Check in table
+Check In Table
     [Arguments]    ${column_name}=NEW_TABLE_COLUMN_1    ${data_type}=BIGINT
     Select Main Window
+    Select Tab As Context    TEST_TABLE:TABLE:New Connection
     Select Tab    Columns
     ${row}=    Find Table Row    0    ${column_name}    Name
     Should Not Be Equal As Integers    ${row}    -1
@@ -383,32 +427,48 @@ Check SQL Statements
     ${alter_row}=    Find Table Row    0    ALTER TABLE    Name operation
     Click On Table Cell    0    ${alter_row}    Name operation
     ${alter_table}=    Get Text Field Value    0
-    Should Be Equal As Strings    ${alter_table}    ALTER TABLE TEST_TABLE ADD ${column_name} BIGINT NOT NULL    strip_spaces=${True}    collapse_spaces=${True}
-    
+    Should Be Equal As Strings
+    ...    ${alter_table}
+    ...    ALTER TABLE TEST_TABLE ADD ${column_name} BIGINT NOT NULL
+    ...    strip_spaces=${True}
+    ...    collapse_spaces=${True}
+
     # Check CREATE OR ALTER SEQUENCE statement (only if check_sequence is TRUE)
     IF    ${check_sequence}
         ${info}=    Get Server Info
-        ${ver}=     Set Variable    ${info}[1]
+        ${ver}=    Set Variable    ${info}[1]
         IF    ${{$ver != '2.6'}}
-            ${sequence_row}=    Find Table Row    0    CREATE OR ALTER SEQUENCE    Name operation
+            ${sequence_row}=    Find Table Row    0    CREATE SEQUENCE    Name operation
             Click On Table Cell    0    ${sequence_row}    Name operation
             ${create_sequence}=    Get Text Field Value    0
-            Should Be Equal As Strings    ${create_sequence}    CREATE OR ALTER SEQUENCE AUTO_GEN START WITH 10 INCREMENT BY 5    strip_spaces=${True}    collapse_spaces=${True}
+            Should Be Equal As Strings
+            ...    ${create_sequence}
+            ...    CREATE SEQUENCE AUTO_GEN START WITH 10 INCREMENT BY 5
+            ...    strip_spaces=${True}
+            ...    collapse_spaces=${True}
         ELSE
             # Check CREATE SEQUENCE statement
             ${create_sequence_row}=    Find Table Row    0    CREATE SEQUENCE    Name operation
             Click On Table Cell    0    ${create_sequence_row}    Name operation
             ${create_sequence}=    Get Text Field Value    0
-            Should Be Equal As Strings    ${create_sequence}    CREATE SEQUENCE ${gen_name}    strip_spaces=${True}    collapse_spaces=${True}
-            
+            Should Be Equal As Strings
+            ...    ${create_sequence}
+            ...    CREATE SEQUENCE ${gen_name}
+            ...    strip_spaces=${True}
+            ...    collapse_spaces=${True}
+
             # Check ALTER SEQUENCE statement
             ${alter_sequence_row}=    Find Table Row    0    ALTER SEQUENCE    Name operation
             Click On Table Cell    0    ${alter_sequence_row}    Name operation
             ${alter_sequence}=    Get Text Field Value    0
-            Should Be Equal As Strings    ${alter_sequence}    ALTER SEQUENCE ${gen_name} RESTART WITH 15    strip_spaces=${True}    collapse_spaces=${True}
+            Should Be Equal As Strings
+            ...    ${alter_sequence}
+            ...    ALTER SEQUENCE ${gen_name} RESTART WITH 10
+            ...    strip_spaces=${True}
+            ...    collapse_spaces=${True}
         END
     END
-    
+
     # Check CREATE TRIGGER statement
     ${trigger_row}=    Find Table Row    0    CREATE TRIGGER    Name operation
     Click On Table Cell    0    ${trigger_row}    Name operation
@@ -421,9 +481,16 @@ Check SQL Statements
     ...    IF (NEW.${column_name} IS NULL) THEN
     ...    NEW.${column_name} = NEXT VALUE FOR ${gen_name};
     ...    END
-    Should Be Equal As Strings    ${create_trigger}    ${expected_trigger}    strip_spaces=${True}    collapse_spaces=${True}
+    Should Be Equal As Strings
+    ...    ${create_trigger}
+    ...    ${expected_trigger}
+    ...    strip_spaces=${True}
+    ...    collapse_spaces=${True}
 
     Push Button    commitButton
     Sleep    0.1s
     ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
-    Run Keyword And Expect Error    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Create table column'    Select Dialog    Create table column
+    Run Keyword And Expect Error
+    ...    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Create table column'
+    ...    Select Dialog
+    ...    Create table column

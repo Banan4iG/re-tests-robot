@@ -1,10 +1,11 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Library    Process
-Library    OperatingSystem
-Resource    ../../files/keywords.resource
-Test Setup    Setup
-Test Teardown    Teardown
+Library             RemoteSwingLibrary
+Library             Process
+Resource            ../../files/keywords.resource
+
+Test Setup          Setup
+Test Teardown       Teardown
+
 
 *** Test Cases ***
 test_no_reload
@@ -18,8 +19,9 @@ test_no_reload
 test_auto_reload
     Init
     Run Keyword And Ignore Error    Push Button    Yes
-    Connect To Red Expert
+    Connect To RDBExpert
     Check
+
 
 *** Keywords ***
 Setup
@@ -34,7 +36,7 @@ Init
     Select From Main Menu    System|Preferences
     Select Dialog    Preferences
     Click On Tree Node    0    Display
-    ${row}=    Find Table Row    0    Interface language    1   
+    ${row}=    Find Table Row    0    Interface language    1
     Click On Table Cell    0    ${row}    2
     Run Keyword And Ignore Error    Select From Combo Box    0    Russian
     Push Button    applyButton

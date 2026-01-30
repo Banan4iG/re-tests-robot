@@ -4,6 +4,7 @@ Resource    ../../files/keywords.resource
 Test Setup       Test Setup
 Test Teardown    Test Teardown
 
+
 *** Test Cases ***
 test_1
     Check Tool
@@ -16,6 +17,7 @@ test_1
     Push Button    execute-statement-command
     Clear Text Field    0
     Check Tool
+
 
 *** Keywords ***
 Check Tool

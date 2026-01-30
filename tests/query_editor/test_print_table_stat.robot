@@ -11,13 +11,13 @@ test_sql_script
 test_single_statement
     Check Tool
     Run Script    execute-statement-command
-    Check Tool
+    [Teardown]    Teardown
+
 
 *** Keywords ***
-Select Driver
-    [Arguments]    ${driver}
-    Select From Tree Node Popup Menu    0    New Connection    Connection information
-    Select From Combo Box    driverCombo    ${driver}
+Teardown
+    Check Tool
+    Teardown After Every Tests
 
 Check Tool
     Select From Main Menu    System|Preferences
@@ -33,10 +33,8 @@ Check Tool
 
 Run Script
     [Arguments]    ${button}
-    Select Driver    Jaybird 5 Driver
-    Open connection
+    Open Connection
     Clear Text Field    0
     Type Into Text Field    0    SELECT * FROM EMPLOYEE;
     Push Button    ${button}
     Sleep    1s
-    Select Driver    Jaybird 4 Driver

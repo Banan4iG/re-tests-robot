@@ -4,6 +4,7 @@ Resource    ../../files/keywords.resource
 Test Setup       Test Setup
 Test Teardown    Test Teardown
 
+
 *** Test Cases ***
 test_1
     Push Button    editor-command

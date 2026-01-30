@@ -1,25 +1,26 @@
 *** Settings ***
 Library    RemoteSwingLibrary
-Resource   ../../files/keywords.resource 
+Resource   ../../files/keywords.resource
 Test Setup       Test Setup
 Test Teardown    Test Teardown
 
+
 *** Test Cases ***
 test_1
-    Open connection
-    Select From Menu        Tools|User Manager
+    Open Connection
+    Select From Menu    Tools|User Manager
     Push Button    addRoleButton
     Select Dialog    Create role
     Type Into Text Field    nameField    test_role
-    Push Button      submitButton
+    Push Button    submitButton
     Select Dialog    Commiting changes
-    Push Button      commitButton
-    Select Window    regexp=^Red.*
+    Push Button    commitButton
+    Select Main Window
     Sleep    1s
-    ${row}=    Find Table Row   rolesTable    TEST_ROLE    Role name
+    ${row}=    Find Table Row    rolesTable    TEST_ROLE    Role name
     ${result}=    Execute    select CAST(rdb$role_name as VARCHAR(10)) from rdb$roles where rdb$role_name='TEST_ROLE'
     Should Be Equal    ${result}    [('TEST_ROLE ',)]
-    Click On Table Cell    rolesTable    ${row}    Role name  
+    Click On Table Cell    rolesTable    ${row}    Role name
     Push Button    deleteRoleButton
     Select Dialog    Commiting changes
-    Push Button      commitButton
+    Push Button    commitButton

@@ -1,16 +1,15 @@
 *** Settings ***
-Library    RemoteSwingLibrary
-Library    Process
-Library    Collections
-Resource    ../../files/keywords.resource
-Resource    keys.resource
-Test Setup       Setup
-Test Teardown    Local Test Teardown
+Library             RemoteSwingLibrary
+Resource            ../../files/keywords.resource
+
+Test Setup          Test Setup
+Test Teardown       Test Teardown
+
 
 *** Test Cases ***
 test_cron_false
-    Open connection
-    Select From Tree Node Popup Menu    0    New Connection|Jobs (0)    Create job
+    Open Connection
+    Select From Tree Node Popup Menu    0    New Connection|Jobs    Create job
     Select Dialog    Create job
     Check All Checkboxes
     Select Tab As Context    Task
@@ -34,7 +33,7 @@ test_cron_false
     Type Into Text Field    intervalField    3
     ${cron}=    Get Text Field Value    cronField
     Should Be Equal As Strings    ${cron}    57 22 */3 * *    collapse_spaces=${True}    strip_spaces=${True}
-    
+
     Push Radio Button    everyWeekdayRadio
     Increase Spinner Value    0    2
     Clear Text Field    intervalField
@@ -60,5 +59,7 @@ test_cron_false
     ${row}=    Find Table Row    0    Success    Status
     ${script}=    Get Text Field Value    0
     Should Not Be Equal As Integers    ${row}    -1
-    Should Be Equal As Strings    ${script}    CREATE JOB NEW_JOB_1 '57/30 3 * * * ' ACTIVE START DATE NULL END DATE NULL AS begin /*job is here*/ end    collapse_spaces=${True}
-    
+    Should Be Equal As Strings
+    ...    ${script}
+    ...    CREATE JOB NEW_JOB_1 '57/30 3 * * * ' ACTIVE START DATE NULL END DATE NULL AS begin /*job is here*/ end
+    ...    collapse_spaces=${True}

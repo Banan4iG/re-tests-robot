@@ -21,15 +21,17 @@ test_create_role_with_commit
 Init Role
     [Arguments]    ${name}    ${description}
     Lock Employee
-    Open connection
+    Open Connection
     Expand Tree Node    0    New Connection
     Sleep    1s
-    Select From Tree Node Popup Menu    0    New Connection|Roles (0)    Create role
+    Select From Tree Node Popup Menu    0    New Connection|Roles    Create role
     Select Dialog    Create role
     Clear Text Field    nameField
     Type Into Text Field    nameField    ${name}
 
-    Run Keyword If    """${description}""" != """${EMPTY}"""    Fill Description Field    ${description}
+    IF    """${description}""" != """${EMPTY}"""
+        Fill Description Field    ${description}
+    END
 
     Push Button    submitButton
 
@@ -46,9 +48,9 @@ Check Role
     Should Be Equal As Strings    ${res}    ${text}
     Push Button    commitButton
     Sleep    0.1s
-    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout	0
+    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
     Run Keyword And Expect Error
     ...    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Create role'
     ...    Select Dialog    Create role
     Select Main Window
-    Tree Node Should Exist    0     New Connection|Roles (1)|${name}
+    Tree Node Should Exist    0    New Connection|Roles (1)|${name}

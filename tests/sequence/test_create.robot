@@ -5,83 +5,18 @@ Resource    keys.resource
 Test Setup       Setup
 Test Teardown    Test Teardown
 
+
 *** Test Cases ***
 test_1
     Init    NEW_SEQ    0    10
-    Check    CREATE OR ALTER SEQUENCE NEW_SEQ START WITH 0 INCREMENT BY 10    NEW_SEQ
+    Check    CREATE SEQUENCE NEW_SEQ START WITH 0 INCREMENT BY 10    NEW_SEQ
 
 test_2
     Init    NEW SEQ    2    2
-    Check    CREATE OR ALTER SEQUENCE "NEW SEQ" START WITH 2 INCREMENT BY 2   NEW SEQ
+    Check    CREATE SEQUENCE "NEW SEQ" START WITH 2 INCREMENT BY 2    NEW SEQ
 
 test_3
     Init    NEW_SEQ    0    0
-    Error check
-
-test_4
-    Init    NEW_SEQ    ${EMPTY}    ${EMPTY}
-    Error check
-    
-test_5
-    Init    "NEW_SEQ"    ${EMPTY}    2
-    Check    CREATE OR ALTER SEQUENCE """NEW_SEQ""" START WITH 0 INCREMENT BY 2   "NEW_SEQ"
-
-test_6
-    Init    ${EMPTY}    2    2
-    Push Button    submitButton
-    Select Dialog    Error message
-    Label Text Should Be    0    Name can not be empty
-    Push Button    OK
-    Select Dialog    Create sequence
-    Push Button    cancelButton
-
-    Select Dialog    Confirmation
-    Push Button    Yes
-    
-    Select Main Window
-
-test_add_comment
-    Init    NEW_SEQ    0    1
-    Select Tab As Context    Comment
-    Clear Text Field    0
-    Type Into Text Field    0    test_comment
-    Select Dialog    Create sequence
-    Check    COMMENT ON SEQUENCE NEW_SEQ IS 'test_comment'    NEW_SEQ
-
-*** Keywords ***
-Init
-    [Arguments]    ${name}    ${start}    ${increment}
-    Lock Employee
-    Open connection
-    Select From Tree Node Popup Menu   0    New Connection|Sequences (2)    Create sequence
-    Select Dialog    Create sequence
-    Clear Text Field    nameField
-    Type Into Text Field    nameField    ${name}
-
-    Clear Text Field    1
-    Type Into Text Field    1    ${start}
-
-    Clear Text Field    2
-    Type Into Text Field    2    ${increment}
-
-Check
-    [Arguments]    ${text}    ${name}
-    Push Button    submitButton
-    Select Dialog    Commiting changes
-    Sleep    1s
-    ${res}=    Get Text Field Value    0
-    Should Be Equal As Strings    ${res}    ${text}
-
-    Push Button    commitButton
-    Sleep    0.1s
-    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout	0
-    Run Keyword And Expect Error    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Create sequence'    Select Dialog    Create sequence
-
-    Select Main Window
-    Tree Node Should Exist    0     New Connection|Sequences (3)|${name}
-
-Error check
-    Push Button    submitButton
     Select Dialog    Commiting changes
     Sleep    1s
     ${value}=    Get Table Cell Value    0    0    Status
@@ -92,5 +27,79 @@ Error check
     Select Dialog    Confirmation
     Push Button    Yes
     Select Main Window
-    Tree Node Should Exist    0     New Connection|Sequences (2)
-    Tree Node Should Not Exist    0     New Connection|Sequences (3)
+    Tree Node Should Exist    0    New Connection|Sequences (2)
+    Tree Node Should Not Exist    0    New Connection|Sequences (3)
+
+test_4
+    Init    NEW_SEQ    ${EMPTY}    ${EMPTY}
+    Error Check
+
+test_5
+    Init    "NEW_SEQ"    0    2
+    Check    CREATE SEQUENCE """NEW_SEQ""" START WITH 0 INCREMENT BY 2    "NEW_SEQ"
+
+test_6
+    Init    ${EMPTY}    2    2
+    Error Check
+
+    Select Dialog    Confirmation
+    Push Button    Yes
+
+    Select Main Window
+
+test_add_comment
+    Init    NEW_SEQ    0    1
+    Select Tab As Context    Comment
+    Clear Text Field    0
+    Type Into Text Field    0    test_comment
+    Select Dialog    Create sequence
+    Check    COMMENT ON SEQUENCE NEW_SEQ IS 'test_comment'    NEW_SEQ
+
+
+*** Keywords ***
+Init
+    [Arguments]    ${name}    ${start}    ${increment}
+    Lock Employee
+    Open Connection
+    Select From Tree Node Popup Menu    0    New Connection|Sequences (2)    Create sequence
+    Select Dialog    Create sequence
+    Clear Text Field    nameField
+    Type Into Text Field    nameField    ${name}
+
+    Clear Text Field    1
+    Type Into Text Field    1    ${start}
+
+    Clear Text Field    2
+    Type Into Text Field    2    ${increment}
+    Push Button    submitButton
+
+Check
+    [Arguments]    ${text}    ${name}
+    Select Dialog    Commiting changes
+    Sleep    1s
+    ${res}=    Get Text Field Value    0
+    Should Be Equal As Strings    ${res}    ${text}    strip_spaces=${True}    collapse_spaces=${True}
+
+    Push Button    commitButton
+    Sleep    0.1s
+    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
+    Run Keyword And Expect Error
+    ...    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Create sequence'
+    ...    Select Dialog
+    ...    Create sequence
+
+    Select Main Window
+    Tree Node Should Exist    0    New Connection|Sequences (3)|${name}
+
+Error Check
+    Select Dialog    Warning
+    Label Text Should Be    0    Fill in all required fields
+    Push Button    OK
+
+    Select Dialog    Create sequence
+    Push Button    cancelButton
+    Select Dialog    Confirmation
+    Push Button    Yes
+    Select Main Window
+    Tree Node Should Exist    0    New Connection|Sequences (2)
+    Tree Node Should Not Exist    0    New Connection|Sequences (3)

@@ -4,27 +4,29 @@ Resource    ../files/keywords.resource
 Test Setup       Test Setup
 Test Teardown    Test Teardown
 
+
 *** Test Cases ***
 test_create_table
     Create Table    Tables (10)    Create table
 
 test_create_gtt
-    Create Table    Global Temporary Tables (0)    Create global temporary table
+    Create Table    Global Temporary Tables    Create global temporary table
+
 
 *** Keywords ***
 Create Table
     [Arguments]    ${type}    ${create}
     Lock Employee
-    Open connection
-    Expand Tree Node    0    New Connection    
+    Open Connection
+    Expand Tree Node    0    New Connection
     Select From Tree Node Popup Menu    0    New Connection|${type}    ${create}
     Select Dialog    Create table
     Clear Text Field    nameField
     Type Into Text Field    nameField    TEST TABLE
     Type Into Table Cell    0    0    Name    TEST
     Set Table Cell Value    0    0    Datatype    BIGINT
-    Click On Table Cell    0    0    Name    2      
-    Send Keyboard Event    VK_ENTER                
+    Click On Table Cell    0    0    Name    2
+    Send Keyboard Event    VK_ENTER
     Push Button    submitButton
     Select Dialog    Commiting changes
     ${textFieldValue}=    Get Textfield Value    0

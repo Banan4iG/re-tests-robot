@@ -4,15 +4,18 @@ Resource    ../files/keywords.resource
 Test Setup       Test Setup
 Test Teardown    Test Teardown
 
+
 *** Test Cases ***
 test_1
-    Open connection
-    Check text tooltip    Disconnect
-    Open connection
-    Check text tooltip    Connect
+    Skip If Embedded
+    Open Connection
+    Check Text Tooltip    Disconnect
+    Open Connection
+    Check Text Tooltip    Connect
+
 
 *** Keywords ***
-Check text tooltip
+Check Text Tooltip
     [Arguments]    ${expected}
     ${tooltip}=    Get Tooltip Text    connect-to-database-command
     Should Be Equal    ${expected}    ${tooltip}
