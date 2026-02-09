@@ -78,3 +78,18 @@ Close All Tabs
         END
     END
     Set Jemmy Timeout    ComponentOperator.WaitComponentTimeout    ${old}
+
+Change Prompt Save
+    Select Main Window
+    Select From Main Menu    System|Preferences
+    Select Dialog    Preferences
+    Click On Tree Node    0    General
+    ${row}=    Find Table Row    0    Prompt to save open documents
+    @{values}=    Get Table Values    0
+    Click On Table Cell    0    ${row}    2
+    Click On Tree Node    0    General
+    Sleep    10s
+    Push Button    applyButton
+    Close Dialog    Message
+    Close Dialog    Preferences
+    Select Main Window

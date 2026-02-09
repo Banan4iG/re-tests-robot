@@ -52,10 +52,8 @@ Action
 
 Local Teardown
     Select Main Window
-    Run Keyword In Separate Thread    Click On Component    regexp=^closeTabLabel for "Entity Relationship Diagram.*    clickCountString=1    buttonString=BUTTON1_MASK
-    # Thread
-    Sleep    10
-    Select Dialog    Confirmation
-    Push Button    No
+    Change Prompt Save
+    Click On Component    regexp=^closeTabLabel for "Entity Relationship Diagram.*
+    Change Prompt Save
     Select Main Window
     Test Teardown
