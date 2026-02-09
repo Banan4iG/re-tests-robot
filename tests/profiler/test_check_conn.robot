@@ -6,7 +6,7 @@ Library             platform
 Resource            ../../files/keywords.resource
 Resource            keys.resource
 
-Test Setup          Test Setup
+Test Setup          Setup
 Test Teardown       Teardown
 
 
@@ -47,10 +47,13 @@ Init
     Execute Immediate    GRANT TEST_ROLE TO TEST_USER;
 
 Teardown
-    Test Teardown
+    Close All Dialogs
+    Close All Tabs
+    Close Connection
     Execute Immediate    REVOKE TEST_ROLE FROM TEST_USER;
     Execute Immediate    DROP USER TEST_USER;
     Execute Immediate    DROP ROLE TEST_ROLE;
+    Unlock Employee
 
 Check
     [Arguments]    ${ip}
@@ -79,6 +82,6 @@ Check
 
     Close Dialog    Select Attachment
 
-Test Setup
+Setup
     Skip If Embedded
-    Setup
+    Local Setup

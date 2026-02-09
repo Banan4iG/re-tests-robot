@@ -317,8 +317,10 @@ Init
         Lock Employee
         Set Blobs
     END
-    Open connection
+    Open Connection
+    Close All Tabs
     Push Button    editor-command
+    Select Tab As Context    regexp=^Query Editor.*
     Clear Text Field    0
     Insert Into Text Field    0    select * from PROJECT
     Push Button    editor-execute-to-file-command

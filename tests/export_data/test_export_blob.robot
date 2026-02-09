@@ -214,12 +214,15 @@ Init
         Lock Employee
         Set Blobs
     END
-    Open connection
+    Open Connection
+    Close All Tabs
     Push Button    editor-command
+    Select Tab As Context    regexp=^Query Editor.*
     Clear Text Field    0
     Insert Into Text Field    0    select * from PROJECT
     Push Button    execute-script-command
     Sleep    1s
+    Select Tab As Context    Result Set 1
     Select Table Cell Area    0    1    2    0    2
     Select From Table Cell Popup Menu On Selected Cells    0    Export|Selected data
     Select Dialog    Export Data

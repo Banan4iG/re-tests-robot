@@ -1,16 +1,16 @@
 *** Settings ***
 Library             RemoteSwingLibrary
 Resource            ../../files/keywords.resource
-Resource            keys.resource
+Resource            ./key.resource
 
-Test Setup          Setup
-Test Teardown       Local Test Teardown
+Test Setup          Test Setup
+Test Teardown       Local Teardown
 
 
 *** Test Cases ***
 test_1
-    Open connection
-    Select From Tree Node Popup Menu    0    New Connection|Jobs (0)    Create job
+    Open Connection
+    Select From Tree Node Popup Menu    0    New Connection|Jobs    Create job
     Select Dialog    Create job
     Select From Combo Box    jobTypeCombo    BASH
     Select Tab As Context    Comment

@@ -154,11 +154,18 @@ Chech Objects Count
     Label Text Should Be    2    Objects to alter - ${obj_count}
     Label Text Should Be    3    Objects to drop - 0
     Sleep    2s
-    Close Dialog    Message
+    Push Button    OK
+    Select Main Window
 
 Local Teardown
     [Arguments]    ${original_employee_path}    ${employee_path}
-    Teardown After Every Tests
+    Select Main Window
+    Close All Tabs
+    Select From Tree Node Popup Menu    0    New Connection 1    Disconnect
+    Select From Tree Node Popup Menu In Separate Thread    0    New Connection 1    Delete connection
+    Select Dialog    Delete connection
+    Push Button    Yes
+    Test Teardown
     Sleep    2s
     Move File    ${original_employee_path}    ${employee_path}
 

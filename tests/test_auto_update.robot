@@ -47,6 +47,15 @@ remind_later
 *** Keywords ***
 Start RDBExpert
     [Arguments]    ${urls}
+    TRY
+        System Exit    0
+    EXCEPT
+        Log    App is not run
+    END
+    Clear History Files
+    Restore Savedconnections File
+    Restore User Properties
+
     Run Server
     Backup User Properties
     Set Urls    urls=${urls}
@@ -61,7 +70,8 @@ Start RDBExpert
 Teardown
     Stop Server
     Kill Rdbexpert
-    Test Teardown
+    Clear History Files
+    Restore Savedconnections File
     Restore User Properties
 
 Test Api
@@ -70,12 +80,9 @@ Test Api
     Push Button    startUpdateButton
     Sleep    10s
     Select Dialog    Update downloaded
-    Copy Updater
-    RETURN    ${path_to_exe}
-
-Copy Updater
     ${dist}=    Get Environment Variable    DIST    C:/Program Files/RDBExpert
     Copy File    ${dist}${/}Updater.jar    ${TEMPDIR}${/}RDBExpert${/}Updater.jar
+    RETURN    ${path_to_exe}
 
 No Reload
     [Arguments]    ${path_to_exe}

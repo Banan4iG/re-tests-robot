@@ -35,9 +35,9 @@ test_3
     Lock Employee
     Open Connection
     Clear Text Field    0
-    Type Into Text Field    0    SELECT * FROM 123;
+    Type Into Text Field    0    EXECUTE BLOCK AS BEGIN WHILE (1 = 1) DO BEGIN END end
     Push Button    execute-in-profiler-command
-    Sleep    0.5s
+    Sleep    3s
     Push Button    stop-execution-command
 
 

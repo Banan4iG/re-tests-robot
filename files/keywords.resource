@@ -9,7 +9,7 @@ Suite Setup
     Start RDB Expert
 
 Test Setup
-    # Backup Savedconnections File
+    Backup Savedconnections File
     TRY
         Application Started    red_expert    timeout=1    remote_port=60900
     EXCEPT
@@ -34,22 +34,29 @@ Suite Teardown
     Kill Rdbexpert
 
 Test Teardown
+    Select Main Window
     Close All Dialogs
+    Close All Tabs
     Close Connection
     Unlock Employee
-    Clear History Files
-    # Restore Savedconnections File
+    IF    ${{$TEST_STATUS == 'FAIL'}}
+        System Exit    0
+        Kill Rdbexpert
+        Clear History Files
+        Restore Savedconnections File
+    END
 
 Open Connection
     Click On Tree Node    0    New Connection    2
 
 Close Connection
     Select Main Window
-    # ${names}=    Get Tree Node Child Names    0    New Connection
-    # IF    ${names}
-    #    Click On Tree Node    0    New Connection    2
-    # END
-    Select From Tree Node Popup Menu    0    New Connection    Disconnect
+    Set Jemmy Timeouts    200ms
+    ${names}=    Get Tree Node Child Names    0    New Connection
+    IF    ${names}
+       Select From Tree Node Popup Menu    0    New Connection    Disconnect
+    END
+    Set Jemmy Timeouts    5
 
 Connect To RDBExpert
     Application Started    rdb_expert    timeout=20    remote_port=60900
@@ -58,3 +65,16 @@ Connect To RDBExpert
 Skip If Embedded
     ${connect_type}=    Get Environment Variable    CONNECT_TYPE    server
     Skip If    ${{$connect_type == 'embedded'}}
+
+Close All Tabs
+    Select Main Window
+    VAR    ${expression}=    ${True}
+    ${old}=    Set Jemmy Timeout    ComponentOperator.WaitComponentTimeout    200ms
+    WHILE    ${expression}
+        TRY
+            Click On Component    regexp=^closeTabLabel for.*
+        EXCEPT
+            VAR    ${expression}=    ${False}
+        END
+    END
+    Set Jemmy Timeout    ComponentOperator.WaitComponentTimeout    ${old}

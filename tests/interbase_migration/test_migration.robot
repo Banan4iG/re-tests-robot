@@ -5,8 +5,7 @@ Resource            ../../files/keywords.resource
 
 Suite Setup         Suite Setup
 Suite Teardown      Suite Teardown
-Test Setup          Setup Before Every Tests
-Test Teardown       Teardown After Every Tests
+Test Setup          Test Setup
 
 
 *** Test Cases ***
@@ -33,6 +32,8 @@ test_migrate_employee
 
     Compare Data    ${path_to_interbase_db}/employee.gdb
 
+    [Teardown]    Local Teardown
+
 test_migrate_malahit
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
@@ -57,6 +58,9 @@ test_migrate_malahit
     END
 
     Compare Data    ${EXECDIR}/files/STM.GDB
+
+    [Teardown]    Local Teardown
+
 
 test_check_error_and_remove_migrated_db
     Push Button    new-connection-command
@@ -155,6 +159,8 @@ test_check_error_and_remove_migrated_db
     Select Main Window
     Tree Node Should Not Exist    0    [migrated] New Connection 1
 
+    [Teardown]    Local Teardown    ${False}
+
 
 *** Keywords ***
 Suite Setup
@@ -167,9 +173,14 @@ Suite Setup
     ...    /opt/interbase/lib/interclient.jar
     ...    C:\\Program Files\\Embarcadero\\InterBase\\SDK\\lib\\interclient.jar
 
+    TRY
+        System Exit    0
+    EXCEPT
+        Log    App is not run
+    END
+
     Backup Drivers
-    ${path_to_exe}=    Get Path
-    Start Application    rdb_expert    ${path_to_exe}    timeout=20    remote_port=60900
+    Test Setup
     Select Main Window
 
     Select From Main Menu    System|Drivers
@@ -192,10 +203,34 @@ Suite Setup
     Push Button    Save
     Select Main Window
 
-    System Exit    0
-
 Suite Teardown
+    Select Main Window
+    Close All Dialogs
+    Close All Tabs
+    Close Connection
+    Unlock Employee
+    System Exit    0
+    Kill Rdbexpert
+    Clear History Files
+    Restore Savedconnections File
     Restore Drivers
+
+Local Teardown
+    [Arguments]    ${double}=${True}
+    Select Main Window
+    Close All Tabs
+    Select From Tree Node Popup Menu    0    New Connection 1    Disconnect
+    Select From Tree Node Popup Menu In Separate Thread    0    New Connection 1    Delete connection
+    Select Dialog    Delete connection
+    Push Button    Yes
+    IF    ${double}
+        Select Main Window
+        Select From Tree Node Popup Menu    0    [migrated] New Connection 1    Disconnect
+        Select From Tree Node Popup Menu In Separate Thread    0    [migrated] New Connection 1    Delete connection
+        Select Dialog    Delete connection
+        Push Button    Yes
+    END
+    Test Teardown
 
 Test
     [Arguments]    ${path_to_interbase_db}    ${interbase_db}

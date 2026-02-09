@@ -10,11 +10,14 @@ Test Teardown       Test Teardown
 *** Test Cases ***
 test_1
     Open Connection
+    Close All Tabs
     Push Button    editor-command
+    Select Tab As Context    regexp=^Query Editor.*
     Clear Text Field    0
     Insert Into Text Field    0    SELECT * FROM PROJECT
     Push Button    execute-script-command
     Sleep    1s
+    Select Tab As Context    Result Set 1
     Select From Table Cell Popup Menu    0    0    0    Export|All data
     Select Dialog    Export Data
     Select From Combo Box    typeCombo    CSV

@@ -71,6 +71,7 @@ Init
 
 Check
     [Arguments]    ${create_header}    ${create_body}    ${name}    ${comment}=${None}
+    Select Dialog    Create package
     Push Button    submitButton
     Select Dialog    Commiting changes
     Sleep    1s
@@ -117,6 +118,8 @@ Check
     Tree Node Should Exist    0    New Connection|Packages (1)|${name}
 
 Check Error
+    Select Dialog    Create package
+    Push Button    submitButton
     Select Dialog    Commiting changes
     Sleep    1s
     ${value}=    Get Table Cell Value    0    0    Status

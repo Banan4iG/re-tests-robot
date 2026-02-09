@@ -1,11 +1,10 @@
 *** Settings ***
-Library             RemoteSwingLibrary
-Library             OperatingSystem
 Library             String
+Library             RemoteSwingLibrary
 Resource            ../files/keywords.resource
 
-Test Setup          Init conn
-Test Teardown       Teardown After Every Tests
+Test Setup          Init Conn
+Test Teardown       Local Teardown
 
 
 *** Variables ***
@@ -27,7 +26,15 @@ test_yes_use_default
 
 
 *** Keywords ***
-Init conn
+Init Conn
+    TRY
+        System Exit    0
+    EXCEPT
+        Log    App is not run
+    END
+    Clear History Files
+    Restore Savedconnections File
+    Restore User Properties
     Backup Savedconnections File
     ${build_no}=    Get Build No
     ${home_dir}=    Normalize Path    ~
@@ -50,3 +57,9 @@ Init conn
 
     Label Text Should Be    0    The driver specified for connection "New Connection" does not exist, use the
     Label Text Should Be    1    default driver (RedDatabase JDBC Driver 5)?
+
+Local Teardown
+    System Exit    0
+    Clear History Files
+    Restore Savedconnections File
+    Restore User Properties

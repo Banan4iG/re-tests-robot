@@ -19,7 +19,7 @@ test_single_statement
 *** Keywords ***
 Teardown
     Check Tool
-    Teardown After Every Tests
+    Test Teardown
 
 Check Tool
     Select From Main Menu    System|Preferences

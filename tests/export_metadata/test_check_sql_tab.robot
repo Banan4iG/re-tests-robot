@@ -20,12 +20,13 @@ test_save_script
     Sleep    2s
     Close Dialog    Message
     Select Main Window
-    Open Connection
+    Close Connection
     Execute Immediate    ALTER TABLE COUNTRY ADD NEW_COLUMN BIGINT
     Create Database    ${script_path}    ${test_base_path}
     Create Connect    ${test_base_path}
     Compare DB
     # Delete Objects    ${rdb5}
+    [Teardown]    Local Teardown
 
 test_execute_script
     Start
@@ -33,6 +34,7 @@ test_execute_script
     Push Button    executeScriptButton
     Sleep    1s
     Select Main Window
+    Select Tab As Context    regexp=^Query Editor.*
     Combo Box Should Be Enabled    connectionsCombo
     ${text}=    Get Text Field Value    0
     Should Not Be Equal As Strings    ${text}    ${EMPTY}
@@ -44,6 +46,7 @@ test_execute_script
 Start
     Lock Employee
     Create Objects
+    Close All Tabs
     Push Button    extract-metadata-command
     Select Tab As Context    DB Metadata Export
     Push Button    extractButton
@@ -84,3 +87,12 @@ Compare DB
     Run Keyword And Continue On Failure    Label Text Should Be    3    Objects to drop - 0
     Run Keyword And Continue On Failure    Label Text Should Be    2    Objects to alter - 1
     Sleep    2s
+    Close Dialog    Message
+
+Local Teardown
+    Select Main Window
+    Select From Tree Node Popup Menu    0    New Connection 1    Disconnect
+    Select From Tree Node Popup Menu In Separate Thread    0    New Connection 1    Delete connection
+    Select Dialog    Delete connection
+    Push Button    Yes
+    Test Teardown

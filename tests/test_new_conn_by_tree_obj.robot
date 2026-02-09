@@ -50,6 +50,7 @@ Create New Conn
 
 Local Test Teardown
     Select Main Window
+    Select From Tree Node Popup Menu    0    New Connection 1    Disconnect
     Select From Tree Node Popup Menu In Separate Thread    0    New Connection 1    Delete connection
     Select Dialog    Delete connection
     Push Button    Yes

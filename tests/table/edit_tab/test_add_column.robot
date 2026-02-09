@@ -56,7 +56,7 @@ test_check_domain
     Select Dialog    Create table column
 
     Switch Domain    DEPTNO    CHAR    expected_size=3
-    Check Commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_1 DEPTNO    dialog3
+    Check Commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_1 DEPTNO
     ${row}=    Check In Table    data_type=CHAR
     ${size}=    Get Table Cell Value    0    ${row}    Size or precision
     Should Be Equal As Strings    ${size}    3
@@ -127,7 +127,7 @@ test_check_auto_name
     Select Dialog    Create table column
     ${name}=    Get Text Field Value    nameField
     Should Be Equal As Strings    ${name}    NEW_TABLE_COLUMN_2
-    Check Commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_2 BIGINT    dialog=dialog3
+    Check Commit    ALTER TABLE TEST_TABLE ADD NEW_TABLE_COLUMN_2 BIGINT
     Check In Table    column_name=NEW_TABLE_COLUMN_2
 
 test_computed

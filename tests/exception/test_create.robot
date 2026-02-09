@@ -56,6 +56,8 @@ Init
     Clear Text Field    1
     Type Into Text Field    1    ${text}
 
+    Push Button    submitButton
+
 Check
     [Arguments]    ${text}    ${name}
     Select Dialog    Commiting changes

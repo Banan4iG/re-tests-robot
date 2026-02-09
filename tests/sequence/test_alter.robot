@@ -130,8 +130,6 @@ test_4
         ...    ${tree2}
         ...    ['Domains', 'Tables', 'Global Temporary Tables', 'Views', 'Procedures', 'Functions', 'Packages', 'Table Triggers', 'DDL Triggers', 'DB Triggers', 'Sequences', 'Exceptions', 'UDFs', 'Users', 'Roles', 'Indices']
     END
-    Select Main Window
-    Select Tab As Context    Comment
 
 test_5
     ${info}=    Get Server Info

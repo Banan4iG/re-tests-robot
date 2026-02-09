@@ -1,6 +1,6 @@
 *** Settings ***
-Library             RemoteSwingLibrary
 Library             Collections
+Library             RemoteSwingLibrary
 Resource            ../files/keywords.resource
 
 Test Setup          Test Setup
@@ -11,6 +11,7 @@ Test Teardown       Local Test Teardown
 test_check_default_active
     Create Index
     Check Box Should Be Enabled    Active
+    Uncheck Check Box    Active
 
 test_check_order_fields
     ${info}=    Get Server Info

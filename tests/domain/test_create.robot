@@ -2,8 +2,8 @@
 Library             RemoteSwingLibrary
 Resource            ../../files/keywords.resource
 
-Test Setup          Setup Before Every Tests
-Test Teardown       Teardown After Every Tests
+Test Setup          Test Setup
+Test Teardown       Test Teardown
 
 
 *** Test Cases ***
@@ -221,6 +221,12 @@ test_data_type
             Check Data Type    CREATE DOMAIN TEST_DOMAIN AS TIMESTAMP WITH TIME ZONE
         END
     END
+
+    Select Main Window
+    Select Dialog    Create domain
+    Push Button    cancelButton
+    Select Dialog    Confirmation
+    Push Button    Yes
 
 test_default_value
     Init

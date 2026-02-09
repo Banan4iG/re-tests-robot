@@ -1,6 +1,6 @@
 *** Settings ***
 Library             RemoteSwingLibrary
-Resource            ../files/keywords.resource
+Resource            ../../files/keywords.resource
 
 Test Setup          Test Setup
 Test Teardown       Test Teardown
@@ -30,6 +30,7 @@ test_drop_trigger_for_db
 *** Keywords ***
 Drop Trigger
     [Arguments]    ${script}    ${path}    ${type}
+    Lock Employee
     Execute Immediate    ${script}
     Open Connection
     Run Keyword In Separate Thread
@@ -37,7 +38,7 @@ Drop Trigger
     ...    0
     ...    New Connection|${path}
     ...    Delete ${type} trigger
-    Select Dialog    dialog0
+    Select Dialog    Commiting changes
     ${row}=    Find Table Row    0    Success    Status
     Push Button    commitButton
     Should Not Be Equal As Integers    ${row}    -1

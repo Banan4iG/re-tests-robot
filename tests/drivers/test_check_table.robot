@@ -9,6 +9,7 @@ Test Teardown       Test Teardown
 
 *** Test Cases ***
 test_1
+    Select From Main Menu    System|Drivers
     Sleep    1s
     ${tableValues}=    Get Table Values    driversTable
     Sort List    ${tableValues}

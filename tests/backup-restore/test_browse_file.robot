@@ -24,8 +24,6 @@ test_empty_file
     Select Dialog    Warning
     Label Text Should Be    0    The file name must not be empty
     Push Button    OK
-    Select Main Window
-    Select Tab    Backup
 
 test_browse_withot_fbk
     ${bk_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /employee_backup

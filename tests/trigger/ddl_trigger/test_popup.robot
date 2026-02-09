@@ -5,7 +5,7 @@ Resource            ../keys.resource
 Resource            key.resource
 
 Test Setup          Setup
-Test Teardown       Teardown After Every Tests
+Test Teardown       Test Teardown
 
 
 *** Test Cases ***

@@ -131,6 +131,7 @@ test_4
     END
 
     Select Main Window
+    Select Tab As Context    NEW_PACK:PACKAGE:New Connection
     Select Tab As Context    Header
 
 test_5

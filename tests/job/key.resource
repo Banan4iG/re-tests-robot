@@ -2,9 +2,6 @@
 Resource            ../../files/keywords.resource
 Library             RemoteSwingLibrary
 
-Suite Setup         Suite Setup
-Test Teardown       Local Teardown
-
 
 *** Keywords ***
 Local Teardown
@@ -18,10 +15,3 @@ Local Teardown
 
     Select Main Window
     Test Teardown
-
-Suite Setup
-    Skip If Embedded
-    ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    ${srv_ver}=    Set Variable    ${info}[2]
-    Skip If    ${{not($ver == '5' and $srv_ver == 'RedDatabase')}}

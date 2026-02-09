@@ -2,7 +2,7 @@
 Library             RemoteSwingLibrary
 Resource            ../../files/keywords.resource
 
-Test Setup          Test Setup
+Test Setup          Local Setup
 Test Teardown       Test Teardown
 
 
@@ -13,6 +13,7 @@ test_empty_name
     Clear Text Field    nameField
     Push Button    Save
     Select Main Window
+    Select Tab As Context    Drivers
     ${row}=    Find Table Row    driversTable    ${EMPTY}    Driver Name
     Click On Table Cell    driversTable    ${row}    Driver Name
     Push Button    removeDriverButton
@@ -91,7 +92,6 @@ test_check_library
     Push Button    OK
 
 test_connect_with_new_driver
-    Skip    msg=Temp
     Push Button    addDriverButton
     Select Dialog    Add New Driver
     Select From Combo Box    databaseNameCombo    Firebird
@@ -101,16 +101,17 @@ test_connect_with_new_driver
     Clear Text Field    0
     Type Into Text Field    0    ${path_to_lib}/reddatabase.driver.5.jar
     Push Button    Select
-    Sleep    10s
+    Sleep    2s
     Select Dialog    Add New Driver
     Push Button    Save
 
     Select Main Window
     Select From Tree Node Popup Menu    0    New Connection    Duplicate connection
     Sleep    2s
-    List Components In Context
-    # Select From Tree Node Popup Menu    0    New Connection    Connection information
+
+    Select Tab As Context    Database Browser
     Select From Combo Box    driverCombo    New Driver
+    Push Button    Save
     Push Button    Test
     Sleep    2s
     Select Dialog    Message
@@ -132,12 +133,25 @@ add_new_driver_with_same_name
 
 
 *** Keywords ***
-Local Teardown
+Local Setup
+    Test Setup
     Select From Main Menu    System|Drivers
     Sleep    1s
+    Select Tab As Context    Drivers
+
+Local Teardown
+    Select Main Window
+    Select Tab As Context    Drivers
     ${row}=    Find Table Row    driversTable    New Driver    Driver Name
     Click On Table Cell    driversTable    ${row}    Driver Name
     Push Button    removeDriverButton
     Select Dialog    Confirmation
     Push Button    Yes
+    Select Main Window
+
+    Select From Tree Node Popup Menu    0    New Connection (Copy)    Delete connection
+    Select Dialog    Delete connection
+    Push Button    Yes
+
+    Select Main Window
     Test Teardown

@@ -3,7 +3,7 @@ Library             RemoteSwingLibrary
 Resource            ../files/keywords.resource
 
 Test Setup          Test Setup
-Test Teardown       Test Teardown
+Test Teardown       Teardown
 
 
 *** Test Cases ***
@@ -23,13 +23,12 @@ test_1
     Sleep    2s
     ${row}=    Find Table Row    0    PUBLIC    TEST_COL
     Should Be Equal As Integers    ${row}    -1
+    Close Connection
 
 
 *** Keywords ***
 Teardown
-    System Exit    0
     ${result}=    Execute    SELECT * from NEW_TABLE_1
     Should Be Equal    ${result}    []
     Unlock Employee
-    Clear History Files
-    Restore Savedconnections File
+    Test Teardown

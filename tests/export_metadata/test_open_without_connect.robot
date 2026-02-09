@@ -3,7 +3,7 @@ Library             RemoteSwingLibrary
 Resource            ../../files/keywords.resource
 
 Test Setup          Local Setup
-Test Teardown       Test Teardown
+Test Teardown       Local Teardown
 
 
 *** Test Cases ***
@@ -27,8 +27,20 @@ test_compare
 
 *** Keywords ***
 Local Setup
+    TRY
+        System Exit    0
+    EXCEPT
+        Log    App is not run
+    END
+    Clear History Files
+    Restore Savedconnections File
     Test Setup
     Select From Tree Node Popup Menu In Separate Thread    0    New Connection    Delete connection
     Select Dialog    Delete connection
     Push Button    Yes
     Select Main Window
+
+Local Teardown
+    System Exit    0
+    Clear History Files
+    Restore Savedconnections File

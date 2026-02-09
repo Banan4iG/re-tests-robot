@@ -64,6 +64,8 @@ Init
 Init Double
     [Arguments]    ${export_path}
     Select Main Window
+    Select Tab As Context    regexp=^Query Editor.*
+    Select Tab As Context    Result Set 1
     Select From Table Cell Popup Menu    0    0    0    Export|All data
     Select Dialog    Export Data
     Clear Text Field    filePathField

@@ -94,9 +94,11 @@ test_open_preferences
 
 test_open_print
     Click On Tree Node    0    New Connection    1
+    Push Button    editor-command
     Send Keyboard Event    VK_P    CTRL_MASK
     Sleep    2s
-    Run Keyword And Continue On Failure    Dialog Should Be Open    Print
+    Dialog Should Be Open    Print
+    Close Dialog    Print
 
 test_open_profile
     Set Shortcut    Profiler

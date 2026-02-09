@@ -23,6 +23,7 @@ test_check_warning
     Run Keyword In Separate Thread    Select From Combo Box    dbMasterComboBox    New Connection 1    don't verify
     Select Dialog    Warning
     Label Text Should Be    0    The tool does not support work with selected connection.
+    [Teardown]    Local Teardown
 
 test_switch_database
     ${test_base_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /test.fdb
@@ -47,6 +48,7 @@ test_switch_database
     Select Main Window
     Push Button    switchTargetSourceButton
     Check Compare DB    Objects to create - 0    Objects to drop - 59
+    [Teardown]    Local Teardown
 
 
 *** Keywords ***
@@ -81,3 +83,10 @@ Check Compare DB
     Run Keyword And Continue On Failure    Label Text Should Be    3    ${label_drop}
     Sleep    2s
     Close Dialog    Message
+
+Local Teardown
+    Select Main Window
+    Select From Tree Node Popup Menu In Separate Thread    0    New Connection 1    Delete connection
+    Select Dialog    Delete connection
+    Push Button    Yes
+    Test Teardown

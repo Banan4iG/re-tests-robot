@@ -3,7 +3,7 @@ Library             OperatingSystem
 Library             RemoteSwingLibrary
 Resource            ../files/keywords.resource
 
-Test Setup          Setup Before Every Tests
+Test Setup          Test Setup
 Test Teardown       Teardown
 
 
@@ -42,8 +42,12 @@ test_recreate
 
 *** Keywords ***
 Teardown
+    Select Main Window
+    Select From Tree Node Popup Menu In Separate Thread    0    New Database    Delete connection
+    Select Dialog    Delete connection
+    Push Button    Yes
     Remove File    ${DB_PATH}
-    Teardown After Every Tests
+    Test Teardown
 
 Create DB
     # create

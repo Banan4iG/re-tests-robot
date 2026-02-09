@@ -199,13 +199,13 @@ Setup
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
     Skip if    ${{$ver == '2.6'}}
-    Setup Before Every Tests
+    Test Setup
 
 Create User
     Execute Immediate    CREATE USER ${TEST_USERNAME} PASSWORD '${TEST_USER_PASSWORD}' ACTIVE USING PLUGIN Srp
 
 Drop User
-    Teardown After Every Tests
+    Test Teardown
     Run Keyword And Ignore Error    Execute Immediate    DROP USER ${TEST_USERNAME}
 
 Check Updated Text Field
@@ -245,4 +245,4 @@ Check
 
 Teardown
     Drop User
-    Teardown After Every Tests
+    Test Teardown

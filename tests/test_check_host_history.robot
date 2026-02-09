@@ -39,18 +39,24 @@ test_count_hosts_default
 test_count_hosts_max
     ${path}=    Set Count Hosts    9
     Check hosts count    ${path}    127.1.1.3\n127.1.1.2\n127.1.1.1\nhost2\nhost4\nhost3\nhost0\n127.0.0.1\nhost
-    Restore Hosts Count
+    [Teardown]    Restore Hosts Count
 
 test_count_hosts_min
     ${path}=    Set Count Hosts    1
     Check hosts count    ${path}    127.1.1.3
-    Restore Hosts Count
+    [Teardown]    Restore Hosts Count
 
 
 *** Keywords ***
 Setup
+    TRY
+        System Exit    0
+    EXCEPT
+        Log    App is not run
+    END
     ${path}=    Get Hosts History File
     Remove File    ${path}
+    Restore Savedconnections File
     Test Setup
     Select From Tree Node Popup Menu    0    New Connection    Duplicate connection
     Sleep    2s
@@ -83,8 +89,14 @@ Add More Hosts
 
 Set Count Hosts
     [Arguments]    ${count}
+    TRY
+        System Exit    0
+    EXCEPT
+        Log    App is not run
+    END
     ${path}=    Get Hosts History File
     Remove File    ${path}
+    Restore Savedconnections File
     Test Setup
     Select From Main Menu    System|Preferences
     Select Dialog    Preferences
@@ -120,8 +132,10 @@ Restore Hosts Count
     ${value}=    Get Table Cell Value    0    ${row}    2
     Should Be Equal As Integers    ${value}    4
     Push Button    OK
-    Select Dialog    Confirmation
-    Push Button    No
+    Select Dialog    Message
+    Push Button    OK
+    Select Main Window
+    Local Test Teardown
 
 Local Test Teardown
     Select Main Window

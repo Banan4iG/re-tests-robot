@@ -65,11 +65,24 @@ test_1
 
 *** Keywords ***
 Setup
+    TRY
+        System Exit    0
+    EXCEPT
+        Log    App is not run
+    END
     Backup User Properties
-    Setup Before Every Tests
+    Test Setup
 
 Teardown
-    Teardown After Every Tests
+    Select Main Window
+    Close All Dialogs
+    Close All Tabs
+    Close Connection
+    Unlock Employee
+    System Exit    0
+    Kill Rdbexpert
+    Clear History Files
+    Restore Savedconnections File
     Restore User Properties
 
 Check Limit
@@ -79,6 +92,9 @@ Check Limit
     Should Contain    ${content}    limit [${limit}]
 
 Execute Script
+    Close All Tabs
+    Push Button    editor-command
+    Select Tab As Context    regexp=^Query Editor.*
     Clear Text Field    0
     Type Into Text Field    0    select * from test_table
     Push Button    execute-script-command

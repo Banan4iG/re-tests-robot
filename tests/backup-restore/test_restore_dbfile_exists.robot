@@ -13,8 +13,6 @@ test_1
     Push Button    restoreButton
     Close Dialog    Error message
 
-    Select Main Window
-    Select Tab    Backup
     Remove File    ${bk_path}
 
 test_2
@@ -26,8 +24,6 @@ test_2
     Select Dialog    Message
     Label Text Should Be    0    Restore completed successfully!
     Push Button    OK
-    Select Main Window
-    Select Tab    Backup
     Remove File    ${bk_path}
 
 test_3
@@ -35,6 +31,8 @@ test_3
     ${info}=    Get Server Info
     ${home_dir}=    Set Variable    ${info}[0]
     VAR    ${db_path}=    ${home_dir}examples/empbuild/employee.fdb
+    Select Main Window
+    Select Tab As Context    Database backup/restore
     Clear Text Field    databaseFileField
     Type Into Text Field    databaseFileField    ${db_path}
     Push Button    restoreButton
@@ -42,8 +40,6 @@ test_3
     Label Text Should Be    0    The selected file exists.
     Label Text Should Be    1    Overwrite existing file?
     Push Button    No
-    Select Main Window
-    Select Tab    Backup
     Remove File    ${bk_path}
 
 
@@ -52,6 +48,8 @@ Init
     ${bk_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /employee_backup.fbk
     Remove File    ${bk_path}
     Select From Main Menu    Database|Database Backup/Restore
+    Select Tab As Context    Database backup/restore
+    Select Tab As Context    Backup
     Clear Text Field    backupFileField
     Type Into Text Field    backupFileField    ${bk_path}
 
@@ -65,6 +63,6 @@ Init
 
     Select Main Window
     Select Tab As Context    Database backup/restore
-    Select Tab    Restore
+    Select Tab As Context   Restore
     Uncheck All Checkboxes
     RETURN    ${bk_path}

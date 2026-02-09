@@ -3,7 +3,7 @@ Library             RemoteSwingLibrary
 Resource            ../../files/keywords.resource
 
 Test Setup          Init
-Test Teardown       Test Teardown
+Test Teardown       Local Teardown
 
 
 *** Test Cases ***
@@ -27,9 +27,17 @@ test_compare
 
 *** Keywords ***
 Init
-    Setup Before Every Tests
+    Test Setup
     Push Button    new-connection-command
     Type Into Text Field    fileField    employee.fdb
     Type Into Text Field    userField    sysdba
     Type Into Text Field    passwordField    masterkey
     Push Button    saveButton
+
+Local Teardown
+    Close Dialog    Warning
+    Select Main Window
+    Select From Tree Node Popup Menu In Separate Thread    0    New Connection 1    Delete connection
+    Select Dialog    Delete connection
+    Push Button    Yes
+    Test Teardown

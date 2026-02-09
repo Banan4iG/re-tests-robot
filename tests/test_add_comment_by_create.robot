@@ -7,11 +7,6 @@ Test Teardown       Test Teardown
 
 
 *** Test Cases ***
-test_create_domain
-    VAR    ${title}    Create domain
-    Init Create    Domains (15)    ${title}    ${title}
-    Check Comment    ${title}
-
 test_create_table
     VAR    ${title}    Create table
     Init Create    Tables (10)    ${title}    ${title}
@@ -26,12 +21,12 @@ test_create_table_columns
 
 test_create_gtt
     VAR    ${title}    Create table
-    Init Create    Global Temporary Tables (0)    Create global temporary table    ${title}
+    Init Create    Global Temporary Tables    Create global temporary table    ${title}
     Init Column
     Check Comment    ${title}
 
 test_create_gtt_columns
-    Init Create    Global Temporary Tables (0)    Create global temporary table    Create table
+    Init Create    Global Temporary Tables    Create global temporary table    Create table
     Init Column
     Check Column Comment
 
@@ -58,7 +53,7 @@ test_create_procedure_output_p
     VAR    ${title}    Create procedure
     Init Create    Procedures (10)    ${title}    ${title}
     Check Procedure    Output Parameters    ${title}
-
+ 
 test_create_procedure_variables
     VAR    ${title}    Create procedure
     Init Create    Procedures (10)    ${title}    ${title}
@@ -82,33 +77,34 @@ test_create_procedure_cursors
     ${res}    Get Text Field Value    0
     Sleep    1s
     Should Not Be Equal As Integers    ${{$res.find('test_comment')}}    -1
+    Push Button    commitButton
 
 test_create_function
     VAR    ${title}    Create function
     Check Skip 2.6
-    Init Create    Functions (0)    ${title}    ${title}
+    Init Create    Functions    ${title}    ${title}
     Check Comment    ${title}
 
 test_create_function_arg
     Check Skip 2.6
     VAR    ${title}    Create function
-    Init Create    Functions (0)    ${title}    ${title}
+    Init Create    Functions    ${title}    ${title}
     Check Procedure    Arguments    ${title}
 
 test_create_function_variables
     Check Skip 2.6
     VAR    ${title}    Create function
-    Init Create    Functions (0)    ${title}    ${title}
+    Init Create    Functions    ${title}    ${title}
     Check Procedure    Variables    ${title}
 
 test_create_function_cursors
     Skip    Sometimes we got java NPE
     VAR    ${title}    Create function
-    Init Create    Functions (0)    ${title}    ${title}
+    Init Create    Functions    ${title}    ${title}
 
 test_create_udf
     VAR    ${title}    Create UDF
-    Init Create    UDFs (0)    ${title}    ${title}
+    Init Create    UDFs    ${title}    ${title}
     Check Comment    ${title}
 
 test_create_index
@@ -121,7 +117,7 @@ test_create_ts
     Skip If Embedded
     Check Skip
     VAR    ${title}    Create tablespace
-    Init Create    Tablespaces (0)    ${title}    ${title}
+    Init Create    Tablespaces    ${title}    ${title}
     Check Comment    ${title}
 
 
@@ -139,7 +135,8 @@ Check Skip 2.6
 
 Init Create
     [Arguments]    ${object}    ${menu}    ${dialog}
-    Open connection
+    Lock Employee
+    Open Connection
     Select From Tree Node Popup Menu    0    New Connection|${object}    ${menu}
     Select Dialog    ${dialog}
 
@@ -188,3 +185,11 @@ Check Comment
     ${res}    Get Text Field Value    0
     Should Not Be Equal As Integers    ${{$res.find('\'test_comment\'')}}    -1
     Push Button    commitButton
+
+# Close Create Dialog
+#     [Arguments]    ${dialog}
+#     Select Dialog    ${dialog}
+#     Push Button    cancelButton
+#     Select Dialog    Confirmation
+#     Push Button    Yes
+#     Select Main Window

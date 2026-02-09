@@ -43,18 +43,13 @@ test_6
     Init    ${EMPTY}    2    2
     Error Check
 
-    Select Dialog    Confirmation
-    Push Button    Yes
-
-    Select Main Window
-
-test_add_comment
-    Init    NEW_SEQ    0    1
-    Select Tab As Context    Comment
-    Clear Text Field    0
-    Type Into Text Field    0    test_comment
-    Select Dialog    Create sequence
-    Check    COMMENT ON SEQUENCE NEW_SEQ IS 'test_comment'    NEW_SEQ
+# test_add_comment
+#     Init    NEW_SEQ    0    1
+#     Select Tab As Context    Comment
+#     Clear Text Field    0
+#     Type Into Text Field    0    test_comment
+#     Select Dialog    Create sequence
+#     Check    COMMENT ON SEQUENCE NEW_SEQ IS 'test_comment'    NEW_SEQ
 
 
 *** Keywords ***

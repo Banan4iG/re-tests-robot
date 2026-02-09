@@ -3,7 +3,7 @@ Library             RemoteSwingLibrary
 Resource            ../../files/keywords.resource
 Resource            keys.resource
 
-Test Setup          Setup Before Every Tests
+Test Setup          Test Setup
 Test Teardown       Teardown
 Test Timeout        200s
 

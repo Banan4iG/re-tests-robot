@@ -79,7 +79,7 @@ Setup
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
     Skip If    ${{$ver == '2.6'}}
-    Setup Before Every Tests
+    Test Setup
 
 Init proc
     Lock Employee

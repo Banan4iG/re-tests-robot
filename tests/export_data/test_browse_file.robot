@@ -19,7 +19,7 @@ test_1
     Select Export File Path
     ${current_export_path}=    Get Text Field Value    filePathField
     Should Be Equal As Strings
-    Setup Before Export Datapath}
+    ...    ${current_export_path}
     ...    ${export_path_csv}
     ...    collapse_spaces=${True}
     ...    strip_spaces=${True}

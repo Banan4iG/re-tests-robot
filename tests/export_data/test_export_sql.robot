@@ -74,11 +74,15 @@ test_open_query_editor_no
 
 test_open_empty_query_editor
     Open Connection
+    Close All Tabs
+    Push Button    editor-command
+    Select Tab As Context    regexp=^Query Editor.*
     Clear Text Field    0
     Insert Into Text Field    0    SELECT * FROM EMPLOYEE
     Push Button    execute-script-command
     Sleep    1s
     Clear Text Field    0
+    Select Tab As Context    Result Set 1
     Select Table Cell Area    0    1    4    19    24
     Select From Table Cell Popup Menu On Selected Cells    0    Export|Selected data
     Select Dialog    Export Data
@@ -111,6 +115,9 @@ test_add_create_table_statement
 
 test_execute_to_file
     Open Connection
+    Close All Tabs
+    Push Button    editor-command
+    Select Tab As Context    regexp=^Query Editor.*
     Clear Text Field    0
     Insert Into Text Field    0    SELECT * FROM COUNTRY
     Push Button    editor-execute-to-file-command
@@ -124,7 +131,6 @@ test_execute_to_file
 
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
-    ${srv_ver}=    Set Variable    ${info}[2]
     IF    ${{$ver == '2.6'}}
         VAR    ${expected_content}=
         ...    -- table creating -- CREATE TABLE TEST_TABLE ( COUNTRY VARCHAR(15), CURRENCY VARCHAR(10) ); -- inserting data -- INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'USA', 'Dollar' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'England', 'Pound' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'Canada', 'CdnDlr' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'Switzerland', 'SFranc' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'Japan', 'Yen' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'Italy', 'Lira' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'France', 'FFranc' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'Germany', 'D-Mark' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'Australia', 'ADollar' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'Hong Kong', 'HKDollar' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'Netherlands', 'Guilder' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'Belgium', 'BFranc' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'Austria', 'Schilling' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'Fiji', 'FDollar' );

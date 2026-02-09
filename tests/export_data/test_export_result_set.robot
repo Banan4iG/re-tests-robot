@@ -10,7 +10,9 @@ Test Teardown       Test Teardown
 *** Test Cases ***
 test_CSV
     Open Connection
+    Close All Tabs
     Push Button    editor-command
+    Select Tab As Context    regexp=^Query Editor.*
     Clear Text Field    0
     Insert Into Text Field    0    SELECT * FROM COUNTRY
     Push Button    execute-script-command

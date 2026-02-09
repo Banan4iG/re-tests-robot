@@ -22,6 +22,7 @@ test_1
     Click On Table Cell    0    0    TEST_COL
     Push Button    1
     Select Main Window
+    Select Tab As Context    NEW_TABLE_1:TABLE:New Connection
     Run Keyword In Separate Thread    Select Tab    Constraints    ${EMPTY}
     Select Dialog    Confirmation
     Push Button    Yes

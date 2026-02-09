@@ -3,12 +3,16 @@ Library             RemoteSwingLibrary
 Library             platform
 Resource            ../../files/keywords.resource
 
-Test Setup          Setup
-Test Teardown       Test Teardown
+Suite Setup         Setup
+Suite Teardown      Teardown
+Test Setup          Test Setup
+Test Teardown       Local Test Teardown
 
 
 *** Test Cases ***
 test_backup
+    Lock Employee
+    Click On Tree Node    0    New Connection (Copy)    2
     Select From Tree Node Popup Menu    0    New Connection (Copy)    Create database backup
     ${bk_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /employee_backup.fbk
     Remove File    ${bk_path}
@@ -24,6 +28,8 @@ test_backup
     Push Button    OK
 
 test_execute_query
+    Lock Employee
+    Click On Tree Node    0    New Connection (Copy)    2
     Select From Main Menu    Tools|Query Editor
     Select Main Window
     Clear Text Field    0
@@ -36,18 +42,23 @@ test_execute_query
     Clear Text Field    0
 
 test_export_metadata
+    Lock Employee
+    Click On Tree Node    0    New Connection (Copy)    2
     Select From Tree Node Popup Menu    0    New Connection (Copy)    Extract Metadata
     Push Button    extractButton
     Sleep    5s
     Close Dialog    Message
 
 test_database_statistics
+    Click On Tree Node    0    New Connection (Copy)    2
     Select From Main Menu    Tools|Database Statistic
     Push Button    getStatButton
     ${text}=    Get Text Field Value    0
     Should Not Be Empty    ${text}
 
 test_trace_manager
+    Lock Employee
+    Click On Tree Node    0    New Connection (Copy)    2
     Select From Main Menu    Tools|Trace Manager
     Sleep    5s
     Select Tab As Context    Trace Manager
@@ -58,12 +69,16 @@ test_trace_manager
     Select Main Window
 
 test_user_manager
+    Lock Employee
+    Click On Tree Node    0    New Connection (Copy)    2
     Select From Main Menu    Tools|User Manager
     Sleep    1s
     ${values}=    Get Table Cell Value    usersTable    0    User name
     Should Be Equal As Strings    ${values}    SYSDBA
 
 test_grant_manager
+    Lock Employee
+    Click On Tree Node    0    New Connection (Copy)    2
     Select From Main Menu    Tools|Grant Manager
     Sleep    1s
     @{privileges_for_list}=    Get List Values    0
@@ -74,6 +89,8 @@ test_profiler
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
     Skip if    ${{$ver != '5'}}
+    Lock Employee
+    Click On Tree Node    0    New Connection (Copy)    2
     Select From Main Menu    Tools|Profiler
     Push Button    startButton
     Sleep    2s
@@ -81,12 +98,16 @@ test_profiler
     Close Dialog    Warning
 
 test_table_validator
+    Lock Employee
+    Click On Tree Node    0    New Connection (Copy)    2
     Select From Main Menu    Tools|Table Validator
     ${count}=    Get List Item Count    0
     Should Be Equal As Integers    ${count}    10
 
 test_import_data
+    Lock Employee
     Execute Immediate    CREATE TABLE TEST_TABLE (COUNTRY VARCHAR(1024), CURRENCY VARCHAR(1024))
+    Click On Tree Node    0    New Connection (Copy)    2
     Select From Main Menu    Tools|Import Data
     Check Check Box    importFromConnectionCheck
     Select From Combo Box    sourceTableCombo    COUNTRY
@@ -96,7 +117,9 @@ test_import_data
     Close Dialog    Message
 
 test_data_generator
+    Lock Employee
     Execute Immediate    CREATE TABLE TEST_TABLE (COUNTRY VARCHAR(1024), CURRENCY VARCHAR(1024))
+    Click On Tree Node    0    New Connection (Copy)    2
     Select From Main Menu    Tools|Data Generator
     Select From Combo Box    tablesCombo    TEST_TABLE
     Click On Table Cell    0    0    0
@@ -105,23 +128,11 @@ test_data_generator
     Sleep    0.5s
     Close Dialog    Message
 
-test_remove_conn
-    Select From Tree Node Popup Menu    0    New Connection (Copy)    Disconnect
-    Run Keyword In Separate Thread
-    ...    Select From Tree Node Popup Menu
-    ...    0
-    ...    New Connection (Copy)
-    ...    Delete connection
-    Select Dialog    Delete connection
-    Push Button    Yes
-    Select Main Window
-
 
 *** Keywords ***
 Setup
     ${system}=    platform.System
     Skip If    '${system}' == 'Linux'
-    Lock Employee
     Test Setup
     Select From Tree Node Popup Menu    0    New Connection    Duplicate connection
     Select From Tree Node Popup Menu    0    New Connection (Copy)    Connection properties
@@ -148,4 +159,15 @@ Setup
     Label Text Should Be    0    The connection test was successful!
     Push Button    OK
     Select Main Window
-    Push Button    connectButton
+
+Local Test Teardown
+    Select Main Window
+    Close All Tabs
+    Select From Tree Node Popup Menu    0    New Connection (Copy)    Disconnect
+    Test Teardown
+
+Teardown
+    Select Main Window
+    Select From Tree Node Popup Menu In Separate Thread    0    New Connection (Copy)    Delete connection
+    Select Dialog    Delete connection
+    Push Button    Yes

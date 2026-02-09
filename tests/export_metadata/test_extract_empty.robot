@@ -5,8 +5,8 @@ Library             fdb
 Library             platform
 Resource            ../../files/keywords.resource
 
-Test Setup          Setup Before Every Tests
-Test Teardown       Teardown After Every Tests
+Test Setup          Test Setup
+Test Teardown       Local Teardown
 
 
 *** Test Cases ***
@@ -50,4 +50,13 @@ test_extract
     Select Dialog    Message
     Run Keyword And Continue On Failure    Label Text Should Be    1    Objects to create - 0
     Close Dialog    Message
+
+
+*** Keywords ***
+Local Teardown
     Select Main Window
+    Select From Tree Node Popup Menu    0    New Connection 1    Disconnect
+    Select From Tree Node Popup Menu In Separate Thread    0    New Connection 1    Delete connection
+    Select Dialog    Delete connection
+    Push Button    Yes
+    Test Teardown

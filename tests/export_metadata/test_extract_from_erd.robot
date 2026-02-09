@@ -3,7 +3,7 @@ Library             RemoteSwingLibrary
 Resource            ../../files/keywords.resource
 
 Test Setup          Test Setup
-Test Teardown       Test Teardown
+Test Teardown       Local Teardown
 
 
 *** Test Cases ***
@@ -49,3 +49,13 @@ Action
     ${script}=    Get Text Field Value    0
     @{result}=    Check Ignore    ${script}
     Should Be Equal As Strings    ${result}    ${expected_result}
+
+Local Teardown
+    Select Main Window
+    Run Keyword In Separate Thread    Click On Component    regexp=^closeTabLabel for "Entity Relationship Diagram.*    clickCountString=1    buttonString=BUTTON1_MASK
+    # Thread
+    Sleep    10
+    Select Dialog    Confirmation
+    Push Button    No
+    Select Main Window
+    Test Teardown

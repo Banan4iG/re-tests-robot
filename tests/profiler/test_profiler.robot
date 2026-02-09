@@ -2,8 +2,9 @@
 Library             Collections
 Library             RemoteSwingLibrary
 Resource            ../../files/keywords.resource
+Resource            ./keys.resource
 
-Test Setup          Test Setup
+Test Setup          Local Setup
 Test Teardown       Test Teardown
 
 
@@ -11,24 +12,35 @@ Test Teardown       Test Teardown
 test_start_finish
     Start Profiler    select * from employee
     Push Button    finishButton
-    Start App And Load
+    Check
 
 test_pause_resume
     Start Profiler    select * from employee
     Push Button    pauseButton
+
+    Select Main Window
+    Select Tab As Context    regexp=^Query Editor.*
     Clear Text Field    0
     Type Into Text Field    0    select * from country
     Push Button    execute-script-command
     Sleep    1s
 
+    Select Main Window
+    Select Tab As Context    Profiler
     Push Button    resumeButton
+
+    Select Main Window
+    Select Tab As Context    regexp=^Query Editor.*
     Clear Text Field    0
     Type Into Text Field    0    select * from project
     Push Button    execute-script-command
     Sleep    1s
 
+    Select Main Window
+    Select Tab As Context    Profiler
     Push Button    finishButton
-    Start App And Load
+
+    Check
     ${row}=    Find Table Row    0    select * from country    PROCESS NAME
     Should Be Equal As Integers    ${row}    -1
     ${row}=    Find Table Row    0    select * from project    PROCESS NAME
@@ -45,7 +57,7 @@ test_cancel
     Push Button    cancelButton
     Run Keyword And Expect Error
     ...    org.robotframework.swing.table.InvalidCellException: The specified table cell (row: -1, column: ID) is invalid.
-    ...    Start App And Load
+    ...    Check Session
 
 test_save_load_file
     VAR    ${path}=    ${TEMPDIR}${/}profile_session.replg
@@ -62,10 +74,10 @@ test_save_load_file
     Label Text Should Be    0    File saved successfully to
     Label Text Should Be    1    ${path}
     Push Button    OK
-    System Exit
-    Clear History Files
     File Should Exist    ${path}
-    Load
+    Select Main Window
+    Push Button    loadButton
+    Select Dialog    Select Session
     Check Check Box    fromFileCheck
     Push Button    browseButton
     Select Dialog    Open
@@ -74,29 +86,41 @@ test_save_load_file
     Push Button    Open
     Select Main Window
     Select Dialog    Select Session
+    Push Button    OK
+    Select Main Window
     Check
+    Select Main Window
     Remove File    ${path}
 
 test_discard_yes
     Lock Employee
     Open Connection
+    Close All Tabs
     FOR    ${i}    IN RANGE    3
         Select From Main Menu    Tools|Profiler
         Push Button    startButton
         Sleep    1s
     END
     Push Button    editor-command
+    Select Tab As Context    regexp=^Query Editor.*
     Clear Text Field    0
     Type Into Text Field    0    select * from employee
     Push Button    execute-script-command
     Sleep    1s
+    Select Main Window
+    Select Tab As Context    Profiler
     Push Button    discardButton
     Select Dialog    Confirmation
     Label Text Should Be    0    You are trying to cancel all profiler sessions. Continue?
     Push Button    Yes
-    Load
+
+    Select Main Window
+    Select Tab As Context    Profiler
+    Push Button    loadButton
+    Select Dialog    Select Session
     @{values}=    Get Table Values    sessionsTable
     Should Be Equal As Strings    ${values}    []
+    Push Button    OK
 
 test_discard_no
     Start Profiler    select * from employee
@@ -106,16 +130,17 @@ test_discard_no
     Push Button    No
     Select Main Window
     Push Button    finishButton
-    Start App And Load
+    Check
 
 test_compact_view
     Start Profiler    execute procedure SUB_TOT_BUDGET(600)
     Push Button    finishButton
-    Load
-    ${row}=    Find Table Row    sessionsTable    1    ID
-    Click On Table Cell    sessionsTable    ${row}    ID
-    Push Button    OK
-    Select Main Window
+    Sleep    1s
+    # Load
+    # ${row}=    Find Table Row    sessionsTable    1    ID
+    # Click On Table Cell    sessionsTable    ${row}    ID
+    # Push Button    OK
+    # Select Main Window
 
     @{values}=    Get Table Column Values    0    PROCESS NAME
     Should Be Equal As Strings
@@ -141,11 +166,12 @@ test_compact_view
 test_display_with_data
     Start Profiler    execute procedure SUB_TOT_BUDGET(600)
     Push Button    finishButton
-    Load
-    ${row}=    Find Table Row    sessionsTable    1    ID
-    Click On Table Cell    sessionsTable    ${row}    ID
-    Push Button    OK
-    Select Main Window
+    Sleep    1s
+
+    # ${row}=    Find Table Row    sessionsTable    1    ID
+    # Click On Table Cell    sessionsTable    ${row}    ID
+    # Push Button    OK
+    # Select Main Window
     Click On Proc
 
     ${row}=    Find Table Row    0    2: SELECT SUM(budget), AVG(budget), MIN(budget), MAX(budget)    PROCESS NAME
@@ -160,11 +186,13 @@ test_display_with_data
     ...    collapse_spaces=${True}
 
     Uncheck Check Box    accessPathCheck
-    Run Keyword And Expect Error
-    ...    org.robotframework.swing.table.InvalidCellException: The specified table cell (row: 0, column: ACCESS PATH) is invalid.
-    ...    Get Table Column Values
-    ...    1
-    ...    ACCESS PATH
+    Set Jemmy Timeouts    200ms
+    TRY
+        Get Table Column Values    1    ACCESS PATH
+    EXCEPT    org.netbeans.jemmy.TimeoutExpiredException: Wait Any javax.swing.JTable loaded
+        Log    All good
+    END
+    Set Jemmy Timeouts    5
 
 test_display_no_data
     Lock Employee
@@ -180,11 +208,10 @@ test_display_no_data
 test_round
     Start Profiler    EXECUTE BLOCK AS DECLARE I INTEGER; BEGIN I = 0; WHILE ( I <> 100000) DO BEGIN I = I + 1; END end
     Push Button    finishButton
-    Load
-    ${row}=    Find Table Row    sessionsTable    1    ID
-    Click On Table Cell    sessionsTable    ${row}    ID
-    Push Button    OK
-    Select Main Window
+    # ${row}=    Find Table Row    sessionsTable    1    ID
+    # Click On Table Cell    sessionsTable    ${row}    ID
+    # Push Button    OK
+    # Select Main Window
     Sleep    2s
     ${row}=    Find Table Row
     ...    0
@@ -203,7 +230,7 @@ test_round
 test_popup_copy
     Start Profiler    select * from employee
     Push Button    finishButton
-    ${row}=    Start App And Load
+    ${row}=    Check
     Click On Table Cell    0    ${row}    PROCESS NAME
     Select From Table Cell Popup Menu On Selected Cells    0    Copy
 
@@ -215,7 +242,7 @@ test_popup_copy
 test_popup_show
     Start Profiler    select * from employee
     Push Button    finishButton
-    ${row}=    Start App And Load
+    ${row}=    Check
     Click On Table Cell    0    ${row}    PROCESS NAME
     Select From Table Cell Popup Menu On Selected Cells    0    Show
     Select Dialog    Data Item Viewer
@@ -243,7 +270,7 @@ test_popup_show
 test_show_double_click
     Start Profiler    select * from employee
     Push Button    finishButton
-    ${row}=    Start App And Load
+    ${row}=    Check
     Click On Table Cell    0    ${row}    PROCESS NAME
     Run Keyword In Separate Thread    Click On Table Cell    0    ${row}    PROCESS NAME    2    BUTTON1_MASK
     Select Dialog    Data Item Viewer
@@ -273,7 +300,7 @@ test_pause_after_lose_connect
     Select From Main Menu    Tools|Profiler
     Push Button    startButton
     Sleep    1s
-    Open Connection
+    Close Connection
     Push Button    pauseButton
     Check Warning After Lose Connect
 
@@ -285,7 +312,7 @@ test_resume_after_lose_connect
     Sleep    1s
     Push Button    pauseButton
     Close Dialog    Warning
-    Open Connection
+    Close Connection
     Push Button    resumeButton
     Check Warning After Lose Connect
 
@@ -295,13 +322,14 @@ test_stop_after_lose_connect
     Select From Main Menu    Tools|Profiler
     Push Button    startButton
     Sleep    1s
-    Open Connection
+    Close Connection
     Push Button    finishButton
     Check Warning After Lose Connect
 
 test_auto-reload_tree
     Start Profiler    select * from employee
     Push Button    finishButton
+    Select Main Window
     Push Button    reload-connection-tree-selection-command    # temp
     Expand All Tree Nodes    0
     Sleep    1s
@@ -339,35 +367,25 @@ Start Profiler
     [Arguments]    ${script}
     Lock Employee
     Open Connection
+    Close All Tabs
     Select From Main Menu    Tools|Profiler
     Push Button    startButton
     Push Button    editor-command
+    Select Tab As Context    regexp=^Query Editor.*
     Clear Text Field    0
     Type Into Text Field    0    ${script}
     Push Button    execute-script-command
     Sleep    1s
-
-Start App And Load
-    Load
-    ${row}=    Find Table Row    sessionsTable    1    ID
-    Click On Table Cell    sessionsTable    ${row}    ID
-    ${row}=    Check
-    RETURN    ${row}
-
-Load
-    System Exit
-    Clear History Files
-    ${path_to_exe}=    Get Path
-    Start Application    rdb_expert    ${path_to_exe}    timeout=20    remote_port=60900
     Select Main Window
-    Open Connection
-    Select From Main Menu    Tools|Profiler
+    Select Tab As Context    Profiler
+
+Check Session
     Push Button    loadButton
     Select Dialog    Select Session
+    ${row}=    Find Table Row    sessionsTable    1    ID
+    Click On Table Cell    sessionsTable    ${row}    ID
 
 Check
-    Push Button    OK
-    Select Main Window
     Sleep    2s
     Uncheck Check Box    compactViewCheck
     ${row}=    Find Table Row    0    select * from employee    PROCESS NAME

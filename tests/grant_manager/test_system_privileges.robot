@@ -65,4 +65,4 @@ Setup
 Teardown
     Execute Immediate    REVOKE TEST_ROLE FROM USER TEST_USER
     Execute Immediate    DROP USER TEST_USER
-    Teardown After Every Tests
+    Test Teardown

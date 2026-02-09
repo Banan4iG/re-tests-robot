@@ -3,7 +3,7 @@ Library             RemoteSwingLibrary
 Resource            ../../files/keywords.resource
 
 Test Setup          Setup
-Test Teardown       Teardown After Every Tests
+Test Teardown       Local Teardown
 
 
 *** Test Cases ***
@@ -30,4 +30,13 @@ Setup
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
     Skip if    ${{$ver == '2.6'}}
-    Setup Before Every Tests
+    Test Setup
+
+Local Teardown
+    Select Main Window
+    Close All Tabs
+    Select From Tree Node Popup Menu    0    New Connection (Copy)    Disconnect
+    Select From Tree Node Popup Menu In Separate Thread    0    New Connection (Copy)    Delete connection
+    Select Dialog    Delete connection
+    Push Button    Yes
+    Test Teardown
