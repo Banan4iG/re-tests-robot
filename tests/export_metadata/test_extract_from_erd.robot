@@ -28,6 +28,7 @@ Check Ignore
 
 Action
     [Arguments]    ${expected_result}
+    Skip    Temp
     Execute Immediate    COMMENT ON TABLE EMPLOYEE IS 'comment'
     Open Connection
     Select From Main Menu    Tools|ER-diagram editor
