@@ -159,7 +159,7 @@ def get_server_info():
         home_directory = "/opt/RedDatabase/" if platform.system() == "Linux" else "C:\\RedDatabase(x64)\\"
         version = "2.6"
         srv_version = "RedDatabase"
-    else:        
+    else:
         with connect_server(server='localhost', user='SYSDBA', password='masterkey') as srv:
             home_directory = srv.info.home_directory
             version = str(srv._engine_version())[0]
