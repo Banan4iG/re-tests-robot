@@ -105,6 +105,10 @@ test_collation
     ${res}=    Get Selected Item From Combo Box    collatesCombo
     Should Be Equal As Strings    ${res}    UTF8 (DEFAULT)
 
+    Select From Combo Box    encodingsCombo    WIN1251
+    Select From Combo Box    collatesCombo    PXW_CYRL
+    Check    ALTER DOMAIN TEST_DOMAIN TYPE VARCHAR(123) CHARACTER SET WIN1251 COLLATE PXW_CYRL
+
 test_default_value_check_comment
     Lock Employee
     Execute Immediate    CREATE DOMAIN TEST_DOMAIN AS BIGINT DEFAULT 3 CHECK (VALUE < 10)
