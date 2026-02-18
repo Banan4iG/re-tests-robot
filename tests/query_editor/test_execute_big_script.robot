@@ -3,7 +3,6 @@ Library             RemoteSwingLibrary
 Resource            ../../files/keywords.resource
 
 Test Setup          Test Setup
-Suite Setup         Skip
 Test Teardown       Teardown
 
 

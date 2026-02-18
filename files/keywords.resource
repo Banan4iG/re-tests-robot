@@ -88,7 +88,6 @@ Change Prompt Save
     @{values}=    Get Table Values    0
     Click On Table Cell    0    ${row}    2
     Click On Tree Node    0    General
-    Sleep    10s
     Push Button    applyButton
     Close Dialog    Message
     Close Dialog    Preferences

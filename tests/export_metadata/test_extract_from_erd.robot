@@ -28,7 +28,6 @@ Check Ignore
 
 Action
     [Arguments]    ${expected_result}
-    Skip    Temp
     Execute Immediate    COMMENT ON TABLE EMPLOYEE IS 'comment'
     Open Connection
     Select From Main Menu    Tools|ER-diagram editor
@@ -54,7 +53,7 @@ Action
 Local Teardown
     Select Main Window
     Change Prompt Save
-    Click On Component    regexp=^closeTabLabel for "Entity Relationship Diagram.*
+    Click On Component    regexp=^closeTabLabel.*Entity Relationship Diagram.*
     Change Prompt Save
     Select Main Window
     Test Teardown
