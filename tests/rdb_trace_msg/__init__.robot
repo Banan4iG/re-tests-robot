@@ -3,13 +3,9 @@ Resource            ../../files/keywords.resource
 Library             RemoteSwingLibrary
 
 Suite Setup         Local Suite Setup
-Suite Teardown      Local Suite Teardown
 
 
 *** Keywords ***
-Local Suite Teardown
-    Test Teardown
-
 Local Suite Setup
     Skip If Embedded
     ${info}=    Get Server Info
