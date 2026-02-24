@@ -80,6 +80,7 @@ Compare DB
     Push Button    comparerDB-command
     Select From Combo Box    dbMasterComboBox    New Connection 1
     Push Button    selectAllAttributesButton
+    Check Check Box    ignoreWhitespaces
     Push Button    compareButton
     Sleep    2s
     Select Dialog    Message

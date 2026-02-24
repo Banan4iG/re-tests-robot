@@ -37,7 +37,7 @@ test_extract
     Type Into Text Field    userField    sysdba
     Type Into Text Field    passwordField    masterkey
     Check Check Box    Store Password
-    ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
+    ${connect_type}=    Get Environment Variable    CONNECT_TYPE    server
     IF    ${{$connect_type == 'embedded'}}
         Check Check Box    useEmbeddedCheck
     END
