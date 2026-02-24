@@ -149,7 +149,7 @@ Local Teardown
     Push Button    Yes
     Select Main Window
 
-    Select From Tree Node Popup Menu    0    New Connection (Copy)    Delete connection
+    Select From Tree Node Popup Menu In Separate Thread   0    New Connection (Copy)    Delete connection
     Select Dialog    Delete connection
     Push Button    Yes
 
