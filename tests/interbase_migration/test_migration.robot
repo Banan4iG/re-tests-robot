@@ -6,6 +6,7 @@ Resource            ../../files/keywords.resource
 Suite Setup         Suite Setup
 Suite Teardown      Suite Teardown
 Test Setup          Test Setup
+Test Teardown       Local Teardown
 
 
 *** Test Cases ***
@@ -60,7 +61,6 @@ test_migrate_malahit
     Compare Data    ${EXECDIR}/files/STM.GDB
 
     [Teardown]    Local Teardown
-
 
 test_check_error_and_remove_migrated_db
     Push Button    new-connection-command
@@ -159,7 +159,7 @@ test_check_error_and_remove_migrated_db
     Select Main Window
     Tree Node Should Not Exist    0    [migrated] New Connection 1
 
-    [Teardown]    Local Teardown    ${False}
+    [Teardown]    Local Teardown
 
 
 *** Keywords ***
@@ -204,33 +204,14 @@ Suite Setup
     Select Main Window
 
 Suite Teardown
-    Select Main Window
-    Close All Dialogs
-    Close All Tabs
-    Close Connection
-    Unlock Employee
-    System Exit    0
-    Kill Rdbexpert
     Clear History Files
     Restore Savedconnections File
     Restore Drivers
 
 Local Teardown
-    [Arguments]    ${double}=${True}
-    Select Main Window
-    Close All Tabs
-    Select From Tree Node Popup Menu    0    New Connection 1    Disconnect
-    Select From Tree Node Popup Menu In Separate Thread    0    New Connection 1    Delete connection
-    Select Dialog    Delete connection
-    Push Button    Yes
-    IF    ${double}
-        Select Main Window
-        Select From Tree Node Popup Menu    0    [migrated] New Connection 1    Disconnect
-        Select From Tree Node Popup Menu In Separate Thread    0    [migrated] New Connection 1    Delete connection
-        Select Dialog    Delete connection
-        Push Button    Yes
-    END
-    Test Teardown
+    Unlock Employee
+    Kill Rdbexpert
+    Restore Savedconnections File
 
 Test
     [Arguments]    ${path_to_interbase_db}    ${interbase_db}
@@ -255,6 +236,7 @@ Test
     Push Button    nextButton
     # step 3 (Create database)
 
+    Type Into Combobox     1     localhost
     Insert Into Text Field    0    ${TEMPDIR}/mirgated_db.fdb
     Insert Into Text Field    2    3050
     Insert Into Text Field    3    SYSDBA
