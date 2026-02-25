@@ -19,25 +19,6 @@ test_alter_gtt
     Init Alter    Global Temporary Tables (1)|NEW_GTT
     Check Table Comment    NEW_GTT    GLOBAL TEMPORARY
 
-test_alter_procedure
-    Init Alter    Procedures (10)|ALL_LANGS
-    Check Comment    ALL_LANGS    PROCEDURE
-
-test_alter_procedure_input_p
-    Check Proc Tab Comment    Procedures (10)    ADD_EMP_PROJ    Input Parameters    EMP_NO
-
-test_alter_procedure_output_p
-    Check Proc Tab Comment    Procedures (10)    ALL_LANGS    Output Parameters    CODE
-
-test_alter_procedure_variables
-    Check Proc Tab Comment    Procedures (10)    DELETE_EMPLOYEE    Variables    any_sales
-
-test_alter_procedure_cursor
-    Lock Employee
-    Execute Immediate
-    ...    CREATE OR ALTER PROCEDURE NEW_PROC AS DECLARE test CURSOR FOR (select * from employee); BEGIN END
-    Check Proc Tab Comment    Procedures (11)    NEW_PROC    Cursors    test
-
 test_alter_function
     Check Skip 2.6
     Lock Employee

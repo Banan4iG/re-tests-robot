@@ -53,7 +53,7 @@ test_create_procedure_output_p
     VAR    ${title}    Create procedure
     Init Create    Procedures (10)    ${title}    ${title}
     Check Procedure    Output Parameters    ${title}
- 
+
 test_create_procedure_variables
     VAR    ${title}    Create procedure
     Init Create    Procedures (10)    ${title}    ${title}
@@ -80,8 +80,8 @@ test_create_procedure_cursors
     Push Button    commitButton
 
 test_create_function
-    VAR    ${title}    Create function
     Check Skip 2.6
+    VAR    ${title}    Create function
     Init Create    Functions    ${title}    ${title}
     Check Comment    ${title}
 

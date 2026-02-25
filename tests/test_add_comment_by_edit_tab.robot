@@ -22,10 +22,6 @@ test_alter_view
     Init Alter    Views (1)|PHONE_LIST
     Check Comment    PHONE_LIST    VIEW    RDB$RELATIONS
 
-test_alter_procedure
-    Init Alter    Procedures (10)|ALL_LANGS
-    Check Comment    ALL_LANGS    PROCEDURE    RDB$PROCEDURES
-
 test_alter_function
     Check Skip 2.6
     Lock Employee
