@@ -51,7 +51,7 @@ test_clear
     @{names}=    Get Tree Node Child Names    navigationTree
     Should Be Equal As Strings
     ...    ${names}
-    ...    ['General', 'Display', 'Shortcuts', 'SQL Shortcuts', 'Connection', 'Editor', 'Result Set Table', 'Tool Bar', 'Fonts', 'Colours']
+    ...    ['General', 'Display', 'Shortcuts', 'SQL Shortcuts', 'Connection', 'Editor', 'Code Formatting', 'Result Set Table', 'Tool Bar', 'Fonts', 'Colours']
 
 test_no_find
     Type Into Text Field    textField    aaaaaa
