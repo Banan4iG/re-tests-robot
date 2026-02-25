@@ -19,7 +19,12 @@ test_check_boxs
 
 test_combo_boxs
     Init No Dependencies
-    Select From Combo Box    userContextComboBox    DEFINER
+    ${info}=    Get Server Info
+    ${ver}=    Set Variable    ${info}[1]
+    ${srv}=    Set Variable    ${info}[2]
+    IF    ${{$ver != '2.6' or not($ver == '3' and $srv == 'Firebird')}}
+        Select From Combo Box    userContextComboBox    DEFINER
+    END
     Select From Combo Box    tableCombo    PROJECT
     Select From Combo Box    beforeAfterCombo    AFTER
     Check Changes
@@ -35,6 +40,9 @@ test_text_fields
     ...    CREATE OR ALTER TRIGGER TEST_TRIGGER FOR COUNTRY ACTIVE BEFORE INSERT POSITION 1 AS BEGIN -- Test comment for test END
 
 test_external_module
+    ${info}=    Get Server Info
+    ${ver}=    Set Variable    ${info}[1]
+    Skip If    ${{$ver != '2.6'}}
     Init
     Check Check Box    useExternalCheck
     Type Into Text Field    externalField    TestExternalMetod

@@ -4,7 +4,7 @@ Resource            ../../../files/keywords.resource
 Resource            ../keys.resource
 Resource            key.resource
 
-Test Setup          Setup
+Test Setup          Local Test Setup
 Test Teardown       Test Teardown
 
 

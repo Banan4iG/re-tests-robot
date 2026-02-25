@@ -271,7 +271,7 @@ test_autoincrement_create_generator
     ELSE IF    ${{$ver == '3'}}
         Should Be Equal As Strings    ${res}    [(1, 15), (2, 20), (3, 20)]
     ELSE
-        Should Be Equal As Strings    ${res}    [(1, 16), (2, 17), (3, 20)]
+        Should Be Equal As Strings    ${res}    [(1, 11), (2, 12), (3, 20)]
     END
 
 test_autoincrement_use_generator

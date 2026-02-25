@@ -178,11 +178,15 @@ test_add_new_gen_without_identity
     Check Check Box    incrementedCheck
     Check Box Should Be Checked    requiredCheck
     Select Tab    Autoincrement
-    ${old}=    Set Jemmy Timeouts    100ms
-    Run Keyword And Expect Error
-    ...    org.netbeans.jemmy.TimeoutExpiredException: Component enabled: class javax.swing.JRadioButton
-    ...    Push Radio Button
-    ...    identityRadio
+    ${info}=    Get Server Info
+    ${ver}=    Set Variable    ${info}[1]
+    IF    ${{$ver != '2.6'}}
+        ${old}=    Set Jemmy Timeouts    100ms
+        Run Keyword And Expect Error
+        ...    org.netbeans.jemmy.TimeoutExpiredException: Component enabled: class javax.swing.JRadioButton
+        ...    Push Radio Button
+        ...    identityRadio
+    END
     Push Radio Button    newSequenceRadio
     Clear Text Field    sequenceNameField
     Type Into Text Field    sequenceNameField    AUTO_GEN
@@ -201,8 +205,6 @@ test_add_new_gen_without_identity
     Execute Immediate    INSERT INTO TEST_TABLE DEFAULT VALUES
     Execute Immediate    INSERT INTO TEST_TABLE DEFAULT VALUES
     ${res}=    Execute    SELECT COL FROM TEST_TABLE
-    ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
     IF    ${{$ver == '5'}}
         Should Be Equal As Strings    ${res}    [(0,), (1,)]
     ELSE
@@ -214,11 +216,15 @@ test_add_use_gen_without_identity
     Check Check Box    incrementedCheck
     Check Box Should Be Checked    requiredCheck
     Select Tab    Autoincrement
-    ${old}=    Set Jemmy Timeouts    100ms
-    Run Keyword And Expect Error
-    ...    org.netbeans.jemmy.TimeoutExpiredException: Component enabled: class javax.swing.JRadioButton
-    ...    Push Radio Button
-    ...    identityRadio
+    ${info}=    Get Server Info
+    ${ver}=    Set Variable    ${info}[1]
+    IF    ${{$ver != '2.6'}}
+        ${old}=    Set Jemmy Timeouts    100ms
+        Run Keyword And Expect Error
+        ...    org.netbeans.jemmy.TimeoutExpiredException: Component enabled: class javax.swing.JRadioButton
+        ...    Push Radio Button
+        ...    identityRadio
+    END
     Push Radio Button    existingSequenceRadio
     Select From Combo Box    sequencesCombo    EMP_NO_GEN
     Check SQL Statements

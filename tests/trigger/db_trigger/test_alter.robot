@@ -15,18 +15,21 @@ test_active
     ...    CREATE OR ALTER TRIGGER TEST_TRIGGER INACTIVE ON CONNECT POSITION 0 AS DECLARE tmp INTEGER; BEGIN SELECT COUNT(*) FROM SHOW_LANGS('ENG', 1, 'USA') INTO tmp; END
 
 test_sql_security_1
+    Check Skip 2.6
     Init
     Select From Combo Box    userContextComboBox    DEFINER
     Check Changes
     ...    CREATE OR ALTER TRIGGER TEST_TRIGGER ACTIVE ON CONNECT POSITION 0 SQL SECURITY DEFINER AS DECLARE tmp INTEGER; BEGIN SELECT COUNT(*) FROM SHOW_LANGS('ENG', 1, 'USA') INTO tmp; END
 
 test_sql_security_2
+    Check Skip 2.6
     Init
     Select From Combo Box    userContextComboBox    INVOKER
     Check Changes
     ...    CREATE OR ALTER TRIGGER TEST_TRIGGER ACTIVE ON CONNECT POSITION 0 SQL SECURITY INVOKER AS DECLARE tmp INTEGER; BEGIN SELECT COUNT(*) FROM SHOW_LANGS('ENG', 1, 'USA') INTO tmp; END
 
 test_external_module
+    Check Skip 2.6
     Init
     Check Check Box    useExternalCheck
     Type Into Text Field    externalField    TestExternalMetod
@@ -124,3 +127,8 @@ Check Comment
     ${cleared_res}=    Evaluate
     ...    "${res}".replace("[(", "").replace(")]", "").replace(",", "").replace("'", "").replace("None", "")
     Should Be Equal As Strings    ${cleared_res}    ${text}
+
+Check Skip 2.6
+    ${info}=    Get Server Info
+    ${ver}=    Set Variable    ${info}[1]
+    Skip If    ${{$ver == '2.6'}}

@@ -4,7 +4,7 @@ Resource    ../../../files/keywords.resource
 
 
 *** Keywords ***
-Setup
+Local Test Setup
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
     Skip If    ${{$ver == '2.6'}}
