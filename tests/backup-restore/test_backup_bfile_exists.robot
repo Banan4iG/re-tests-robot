@@ -17,10 +17,17 @@ test_1
 test_2
     ${bk_path}=    Init
     Push Button    Yes
-    @{dialogs}=    List Dialogs
-    Get Pom File
-    Select Dialog    Message
-    Label Text Should Be    0    Backup completed successfully!
+    ${info}=    Get Server Info
+    ${ver}=    Set Variable    ${info}[1]
+    ${srv_ver}=    Set Variable    ${info}[2]
+    IF    ${{$ver == '5' and $srv_ver == 'RedDatabase'}}
+        Select Dialog    Message
+        Label Text Should Be    0    Backup completed successfully!
+    ELSE
+        Select Dialog    Warning
+        Label Text Should Be    0    The DBMS version you are using does not support the ability to overwrite the
+        Label Text Should Be    1    backup file.
+    END
     Push Button    OK
 
     # delete files
