@@ -33,6 +33,7 @@ test_1
     ...    EXECUTOR
     ...    FAILED
     ...    GRANTOR
+    ...    HOSTNAME
     ...    ID_CLIENT_PROCESS
     ...    ID_CONNECTION
     ...    ID_PROCESS
