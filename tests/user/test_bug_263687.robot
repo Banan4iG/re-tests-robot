@@ -2,7 +2,7 @@
 Library             RemoteSwingLibrary
 Resource            ../../files/keywords.resource
 
-Test Setup          Setup
+Test Setup          Local Setup
 Test Teardown       Local Teardown
 
 
@@ -26,17 +26,19 @@ test_open_users
 
 
 *** Keywords ***
-Setup
+Local Setup
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
-    Skip if    ${{$ver == '2.6'}}
+    Skip if    ${{$ver == '5'}}
     Test Setup
 
 Local Teardown
-    Select Main Window
-    Close All Tabs
-    Select From Tree Node Popup Menu    0    New Connection (Copy)    Disconnect
-    Select From Tree Node Popup Menu In Separate Thread    0    New Connection (Copy)    Delete connection
-    Select Dialog    Delete connection
-    Push Button    Yes
-    Test Teardown
+    IF    '${TEST_STATUS}' != 'SKIP'
+        Select Main Window
+        Close All Tabs
+        Select From Tree Node Popup Menu    0    New Connection (Copy)    Disconnect
+        Select From Tree Node Popup Menu In Separate Thread    0    New Connection (Copy)    Delete connection
+        Select Dialog    Delete connection
+        Push Button    Yes
+        Test Teardown
+    END
