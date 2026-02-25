@@ -80,7 +80,7 @@ test_open_empty_query_editor
     Clear Text Field    0
     Insert Into Text Field    0    SELECT * FROM EMPLOYEE
     Push Button    execute-script-command
-    Sleep    1s
+    Sleep    5s
     Clear Text Field    0
     Select Tab As Context    Result Set 1
     Select Table Cell Area    0    1    4    19    24
@@ -122,7 +122,7 @@ test_execute_to_file
     Insert Into Text Field    0    SELECT * FROM COUNTRY
     Push Button    editor-execute-to-file-command
     Push Button    execute-script-command
-    Sleep    1s
+    Sleep    5s
     Select Dialog    Export Data
     ${export_path}=    Init SQL
     Check Check Box    addCreateTableStatementCheck

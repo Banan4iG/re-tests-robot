@@ -16,7 +16,7 @@ test_CSV
     Clear Text Field    0
     Insert Into Text Field    0    SELECT * FROM COUNTRY
     Push Button    execute-script-command
-    Sleep    1s
+    Sleep    5s
     Push Button    editor-export-command
     Select Dialog    Export Data
     Select From Combo Box    typeCombo    CSV

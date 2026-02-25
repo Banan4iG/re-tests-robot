@@ -12,9 +12,8 @@ Setup Before Export Data
     Clear Text Field    0
     Insert Into Text Field    0    SELECT * FROM EMPLOYEE
     Push Button    execute-script-command
-    Sleep    1s
-
     Select Tab As Context    Result Set 1
+    Sleep    5s
     Select Table Cell Area    0    1    4    19    24
     Select From Table Cell Popup Menu On Selected Cells    0    Export|Selected data
     Select Dialog    Export Data

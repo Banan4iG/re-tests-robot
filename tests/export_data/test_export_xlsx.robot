@@ -69,7 +69,7 @@ test_execute_to_file
     Insert Into Text Field    0    SELECT * FROM COUNTRY
     Push Button    editor-execute-to-file-command
     Push Button    execute-script-command
-    Sleep    1s
+    Sleep    5s
     Select Dialog    Export Data
     ${export_path}=    Init XLSX
     Check Check Box    addColumnHeadersCheck
@@ -142,7 +142,7 @@ test_max_row
     Insert Into Text Field    0    SELECT * FROM TEST_TABLE
     Push Button    editor-execute-to-file-command
     Push Button    execute-script-command
-    Sleep    1s
+    Sleep    5s
     Select Dialog    Export Data
     ${export_path}=    Init XLSX
     Push Button    exportButton

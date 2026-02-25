@@ -325,7 +325,7 @@ Init
     Insert Into Text Field    0    select * from PROJECT
     Push Button    editor-execute-to-file-command
     Push Button    execute-script-command
-    Sleep    1s
+    Sleep    5s
     Select Dialog    Export Data
     Uncheck All Checkboxes
 

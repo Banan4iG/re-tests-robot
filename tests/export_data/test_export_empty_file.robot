@@ -16,7 +16,7 @@ test_1
     Clear Text Field    0
     Insert Into Text Field    0    SELECT * FROM PROJECT
     Push Button    execute-script-command
-    Sleep    1s
+    Sleep    5s
     Select Tab As Context    Result Set 1
     Select From Table Cell Popup Menu    0    0    0    Export|All data
     Select Dialog    Export Data

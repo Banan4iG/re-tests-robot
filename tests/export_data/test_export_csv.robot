@@ -155,7 +155,7 @@ test_execute_to_file
     Insert Into Text Field    0    SELECT * FROM COUNTRY
     Push Button    editor-execute-to-file-command
     Push Button    execute-script-command
-    Sleep    1s
+    Sleep    5s
     Select Dialog    Export Data
     ${export_path}=    Init CSV
     Select From Combo Box    columnDelimiterCombo    ;

@@ -139,7 +139,7 @@ Init
     Clear Text Field    0
     Insert Into Text Field    0    select * from PROJECT
     Push Button    execute-script-command
-    Sleep    1s
+    Sleep    5s
     Select Tab As Context    Result Set 1
     Select Table Cell Area    0    1    2    0    2
     Select From Table Cell Popup Menu On Selected Cells    0    Export|Selected data
