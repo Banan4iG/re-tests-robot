@@ -8,6 +8,7 @@ Test Teardown       Teardown
 
 *** Test Cases ***
 test_1
+    [Timeout]    120s
     [Setup]    Setup
     Open Connection
     Sleep    1s

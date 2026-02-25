@@ -36,6 +36,7 @@ test_migrate_employee
     [Teardown]    Local Teardown
 
 test_migrate_malahit
+    [Timeout]    120s
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
     Skip If    ${{$ver == '3'}}
