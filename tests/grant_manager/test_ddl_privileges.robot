@@ -52,13 +52,13 @@ test_1
 
         VAR    ${expected_result_4}
         ...    [('T', 1, 'OBJ$DOMAINS '), ('T', 1, 'OBJ$EXCEPTIONS '), ('T', 1, 'OBJ$FUNCTIONS ' ), ('C', 1, 'OBJ$GENERATORS '), ('P', 1, 'OBJ$GENERATORS '), ('T',
-        ...    1, 'OBJ$GENERATORS '), ('T', 1, 'OBJ$PROCEDURES '), ('T', 1, 'OBJ$ROLES '), ('T', 1, 'OBJ$TABLES '), ('T', 1, 'OBJ$VIEWS)]
+        ...    1, 'OBJ$GENERATORS '), ('T', 1, 'OBJ$PROCEDURES '), ('T', 1, 'OBJ$ROLES '), ('T', 1, 'OBJ$TABLES '), ('T', 1, 'OBJ$VIEWS ')]
 
         VAR    ${expected_result_5}
-        ...    [('C', 0, 'OBJ$DOMAINS '), ('P', 0, 'OBJ$DOMAINS '), ('T', 0, 'OBJ$DOMAINS '), ('C', 0, 'OBJ$EXCEPTIONS '), ('P', 0, 'OBJ$EXCEPTIONS '), ('T', 0, 'OBJ$EXCEPTIONS '), ('C', 0, 'OBJ$FUNCTIONS '), ('P', 0, 'OBJ$FUNCTIONS '), ('T', 0, 'OBJ$FUNCTIONS ' ), ('C', 0, 'OBJ$GENERATORS '), ('P', 0, 'OBJ$GENERATORS '), ('T', 0, 'OBJ$GENERATORS '), ('C', 0, 'OBJ$PROCEDURES '), ('P', 0, 'OBJ$PROCEDURES '), ('T', 0, 'OBJ$PROCEDURES '), ('C', 0, 'OBJ$ROLES '), ('P', 0, 'OBJ$ROLES '), ('T', 0, 'OBJ$ROLES '), ('C', 0, 'OBJ$TABLES '), ('P', 0, 'OBJ$TABLES '), ('T', 0, 'OBJ$TABLES '), ('C', 0, 'OBJ$VIEWS '), ('P', 0, 'OBJ$VIEWS '), ('T', 0, 'OBJ$VIEWS)]
+        ...    [('C', 0, 'OBJ$DOMAINS '), ('P', 0, 'OBJ$DOMAINS '), ('T', 0, 'OBJ$DOMAINS '), ('C', 0, 'OBJ$EXCEPTIONS '), ('P', 0, 'OBJ$EXCEPTIONS '), ('T', 0, 'OBJ$EXCEPTIONS '), ('C', 0, 'OBJ$FUNCTIONS '), ('P', 0, 'OBJ$FUNCTIONS '), ('T', 0, 'OBJ$FUNCTIONS ' ), ('C', 0, 'OBJ$GENERATORS '), ('P', 0, 'OBJ$GENERATORS '), ('T', 0, 'OBJ$GENERATORS '), ('C', 0, 'OBJ$PROCEDURES '), ('P', 0, 'OBJ$PROCEDURES '), ('T', 0, 'OBJ$PROCEDURES '), ('C', 0, 'OBJ$ROLES '), ('P', 0, 'OBJ$ROLES '), ('T', 0, 'OBJ$ROLES '), ('C', 0, 'OBJ$TABLES '), ('P', 0, 'OBJ$TABLES '), ('T', 0, 'OBJ$TABLES '), ('C', 0, 'OBJ$VIEWS '), ('P', 0, 'OBJ$VIEWS '), ('T', 0, 'OBJ$VIEWS ')]
 
         VAR    ${expected_result_6}
-        ...    [('C', 1, 'OBJ$DOMAINS '), ('P', 1, 'OBJ$DOMAINS '), ('T', 1, 'OBJ$DOMAINS '), ('C', 1, 'OBJ$EXCEPTIONS '), ('P', 1, 'OBJ$EXCEPTIONS '), ('T', 1, 'OBJ$EXCEPTIONS '), ('C', 1, 'OBJ$FUNCTIONS '), ('P', 1, 'OBJ$FUNCTIONS '), ('T', 1, 'OBJ$FUNCTIONS ' ), ('C', 1, 'OBJ$GENERATORS '), ('P', 1, 'OBJ$GENERATORS '), ('T', 1, 'OBJ$GENERATORS '), ('C', 1, 'OBJ$PROCEDURES '), ('P', 1, 'OBJ$PROCEDURES '), ('T', 1, 'OBJ$PROCEDURES '), ('C', 1, 'OBJ$ROLES '), ('P', 1, 'OBJ$ROLES '), ('T', 1, 'OBJ$ROLES '), ('C', 1, 'OBJ$TABLES '), ('P', 1, 'OBJ$TABLES '), ('T', 1, 'OBJ$TABLES '), ('C', 1, 'OBJ$VIEWS '), ('P', 1, 'OBJ$VIEWS '), ('T', 1, 'OBJ$VIEWS)]
+        ...    [('C', 1, 'OBJ$DOMAINS '), ('P', 1, 'OBJ$DOMAINS '), ('T', 1, 'OBJ$DOMAINS '), ('C', 1, 'OBJ$EXCEPTIONS '), ('P', 1, 'OBJ$EXCEPTIONS '), ('T', 1, 'OBJ$EXCEPTIONS '), ('C', 1, 'OBJ$FUNCTIONS '), ('P', 1, 'OBJ$FUNCTIONS '), ('T', 1, 'OBJ$FUNCTIONS ' ), ('C', 1, 'OBJ$GENERATORS '), ('P', 1, 'OBJ$GENERATORS '), ('T', 1, 'OBJ$GENERATORS '), ('C', 1, 'OBJ$PROCEDURES '), ('P', 1, 'OBJ$PROCEDURES '), ('T', 1, 'OBJ$PROCEDURES '), ('C', 1, 'OBJ$ROLES '), ('P', 1, 'OBJ$ROLES '), ('T', 1, 'OBJ$ROLES '), ('C', 1, 'OBJ$TABLES '), ('P', 1, 'OBJ$TABLES '), ('T', 1, 'OBJ$TABLES '), ('C', 1, 'OBJ$VIEWS '), ('P', 1, 'OBJ$VIEWS '), ('T', 1, 'OBJ$VIEWS ')]
     ELSE
         VAR    ${expected_result_1}    [('C', 0, 'SQL$GENERATORS '), ('O', 1, 'SQL$GENERATORS ')]
 
