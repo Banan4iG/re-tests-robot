@@ -1,5 +1,6 @@
 *** Settings ***
 Library     OperatingSystem
+Library     Screenshot
 Library     RemoteSwingLibrary
 Library     help_func.py
 
@@ -34,16 +35,18 @@ Suite Teardown
     Kill Rdbexpert
 
 Test Teardown
-    Select Main Window
-    Close All Dialogs
-    Close All Tabs
-    Close Connection
-    Unlock Employee
     IF    ${{$TEST_STATUS == 'FAIL'}}
-        System Exit    0
+        Sleep    1s
+        Take Screenshot    ${{$SUITE_NAME.replace(' ', '_') + '_' + $TEST_NAME}}    1080
         Kill Rdbexpert
         Clear History Files
         Restore Savedconnections File
+    ELSE
+        Select Main Window
+        Close All Dialogs
+        Close All Tabs
+        Close Connection
+        Unlock Employee
     END
 
 Open Connection
