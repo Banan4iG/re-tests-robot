@@ -246,8 +246,10 @@ test_autoincrement_create_generator
     Type Into Text Field    sequenceNameField    AUTO_GEN
     Clear Text Field    startValueField
     Type Into Text Field    startValueField    10
-    Clear Text Field    incrementField
-    Type Into Text Field    incrementField    5
+    IF    ${{$ver != '2.6'}}
+        Clear Text Field    incrementField
+        Type Into Text Field    incrementField    5
+    END
 
     Check SQL Statements    ${True}    AUTO_GEN    COL
 
