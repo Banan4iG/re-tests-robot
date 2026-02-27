@@ -45,8 +45,13 @@ test_alter_exception
 test_alter_udf
     Lock Employee
     Execute Immediate    DECLARE EXTERNAL FUNCTION NEW_UDF RETURNS BIGINT ENTRY_POINT '123' MODULE_NAME '123'
-    Init alter    UDFs (1)|NEW_UDF
+    Init Alter    UDFs (1)|NEW_UDF
     Check Comment    NEW_UDF    EXTERNAL FUNCTION
+
+test_alter_index
+    Lock Employee
+    Init Alter    Indices (38)|BUDGETX
+    Check Comment    BUDGETX    INDEX
 
 test_alter_ts
     Check Skip

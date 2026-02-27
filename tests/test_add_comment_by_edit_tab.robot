@@ -60,6 +60,11 @@ test_alter_udf
     Init alter    UDFs (1)|NEW_UDF
     Check Comment    NEW_UDF    EXTERNAL FUNCTION    RDB$FUNCTIONS
 
+test_alter_index
+    Lock Employee
+    Init Alter    Indices (38)|BUDGETX
+    Check Comment    BUDGETX    INDEX    RDB$INDICES
+
 test_alter_ts
     Check Skip
     Execute Immediate    CREATE TABLESPACE NEW_TS FILE 'test1.ts'
