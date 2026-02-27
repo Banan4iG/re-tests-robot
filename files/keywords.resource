@@ -36,9 +36,10 @@ Suite Teardown
 
 Test Teardown
     IF    ${{$TEST_STATUS == 'FAIL'}}
-        Sleep    1s
+        Sleep    0.5s
         Take Screenshot    ${{$SUITE_NAME.replace(' ', '_') + '_' + $TEST_NAME}}    1080
         Kill Rdbexpert
+        Unlock Employee
         Clear History Files
         Restore Savedconnections File
     ELSE
