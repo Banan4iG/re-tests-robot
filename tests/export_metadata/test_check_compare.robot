@@ -86,6 +86,9 @@ Check Compare DB
 
 Local Teardown
     Select Main Window
+    IF    '${TEST_NAME}' == 'test_switch_database'
+        Select From Tree Node Popup Menu    0    New Connection 1    Disconnect
+    END
     Select From Tree Node Popup Menu In Separate Thread    0    New Connection 1    Delete connection
     Select Dialog    Delete connection
     Push Button    Yes
