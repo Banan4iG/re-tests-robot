@@ -7,10 +7,7 @@ class Listener:
     def start_test(self, data, result):
         self.runned_tests += 1
         print(f'[{self.runned_tests}/{self.total_tests}]')
-
-    def end_test(self, data, result):
-        print(f'\nTest started:\t{result.starttime}')
-        print(f'Test ended:\t{result.endtime}')
+        print(f'Test started:\t{result.starttime}')
 
     def start_suite(self, data, result):
         def _get_total_tests(suites):
