@@ -53,6 +53,7 @@ Init Comment Tab
     Type Into Text Field    0    test_comment
 
 Check Comment
+    Close All Tabs
     Close Connection
     ${res}=    Execute    select RDB$DESCRIPTION from RDB$PROCEDURES where RDB$DESCRIPTION is not NULL
     Should Be Equal    ${res}    [('test_comment',)]
