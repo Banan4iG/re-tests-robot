@@ -238,9 +238,6 @@ test_autoincrement_create_generator
         Select Dialog    Warning
         Label Text Should Be    0    Using IDENTITY is preferred when creating an auto-incremented column
         Push Button    OK
-        VAR    ${dialog}=    dialog2
-    ELSE
-        VAR    ${dialog}=    dialog1
     END
     Select Dialog    Create table column
     Clear Text Field    nameField
@@ -252,7 +249,7 @@ test_autoincrement_create_generator
     Clear Text Field    incrementField
     Type Into Text Field    incrementField    5
 
-    Check SQL Statements    ${True}    AUTO_GEN    COL    ${dialog}
+    Check SQL Statements    ${True}    AUTO_GEN    COL
 
     ${row}=    Check In Table    column_name=COL
     ${required}=    Get Table Cell Value    0    ${row}    Required    model
@@ -282,9 +279,6 @@ test_autoincrement_use_generator
         Select Dialog    Warning
         Label Text Should Be    0    Using IDENTITY is preferred when creating an auto-incremented column
         Push Button    OK
-        VAR    ${dialog}=    dialog2
-    ELSE
-        VAR    ${dialog}=    dialog1
     END
     Select Dialog    Create table column
     Clear Text Field    nameField
@@ -315,9 +309,6 @@ test_check_autoupdate_object_tree
         Select Dialog    Warning
         Label Text Should Be    0    Using IDENTITY is preferred when creating an auto-incremented column
         Push Button    OK
-        VAR    ${dialog}=    dialog2
-    ELSE
-        VAR    ${dialog}=    dialog1
     END
     Select Dialog    Create table column
     Clear Text Field    nameField

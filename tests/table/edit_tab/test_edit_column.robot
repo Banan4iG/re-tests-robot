@@ -191,11 +191,10 @@ test_add_new_gen_without_identity
     Clear Text Field    sequenceNameField
     Type Into Text Field    sequenceNameField    AUTO_GEN
     Check SQL Statements
-    ...    ${True}
-    ...    AUTO_GEN
-    ...    dialog1
-    ...    ALTER TABLE TEST_TABLE ALTER COLUMN COL SET NOT NULL
-    ...    COL
+    ...    check_sequence=${True}
+    ...    gen_name=AUTO_GEN
+    ...    expected_alter_table=ALTER TABLE TEST_TABLE ALTER COLUMN COL SET NOT NULL
+    ...    column_name=COL
     Check Column In Table    COL
     ${connect_type}=    Get Environment Variable    CONNECT_TYPE    embedded
     IF    ${{$connect_type == 'embedded'}}
@@ -230,7 +229,6 @@ test_add_use_gen_without_identity
     Check SQL Statements
     ...    ${False}
     ...    gen_name=EMP_NO_GEN
-    ...    dialog=dialog1
     ...    expected_alter_table=ALTER TABLE TEST_TABLE ALTER COLUMN COL SET NOT NULL
     ...    column_name=COL
     Check Column In Table    column_name=COL
@@ -335,11 +333,10 @@ test_check_autoupdate_object_tree
     Clear Text Field    sequenceNameField
     Type Into Text Field    sequenceNameField    AUTO_GEN
     Check SQL Statements
-    ...    ${True}
-    ...    AUTO_GEN
-    ...    dialog1
-    ...    ALTER TABLE TEST_TABLE ALTER COLUMN COL SET NOT NULL
-    ...    COL
+    ...    check_sequence=${True}
+    ...    gen_name=AUTO_GEN
+    ...    expected_alter_table=ALTER TABLE TEST_TABLE ALTER COLUMN COL SET NOT NULL
+    ...    column_name=COL
     Select Main Window
     Expand Tree Node    0    New Connection|Table Triggers (5)
     Tree Node Should Exist    0    New Connection|Table Triggers (5)|TRIGGER_BI_TEST_TABLE_COL
