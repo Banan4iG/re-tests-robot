@@ -39,6 +39,7 @@ Test Teardown
         Sleep    0.5s
         Take Screenshot    ${{$SUITE_NAME.replace(' ', '_') + '_' + $TEST_NAME}}    1080
         Kill Rdbexpert
+        Sleep    0.5s
         Unlock Employee
         Clear History Files
         Restore Savedconnections File
@@ -47,6 +48,7 @@ Test Teardown
         Close All Dialogs
         Close All Tabs
         Close Connection
+        Sleep    0.5s
         Unlock Employee
     END
 
