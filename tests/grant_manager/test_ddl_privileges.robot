@@ -10,6 +10,7 @@ Test Teardown       Test Teardown
 *** Test Cases ***
 test_1
     Select From Combo Box    userTypeCombo    Roles
+    Sleep    0.5s
     Select From Combo Box    privilegesTypeCombo    DDL privileges
     Click On List Item    0    TEST_ROLE
     Sleep    2s

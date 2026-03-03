@@ -638,6 +638,7 @@ test_check_grant
     Execute Immediate    CREATE ROLE TEST_ROLE;
     Init Grant Manager
     Select From Combo Box    privilegesTypeCombo    DML privileges
+    Sleep    0.5s
     Select From Combo Box    userTypeCombo    Roles
     Click On List Item    0    TEST_ROLE
     Sleep    2s
@@ -747,6 +748,7 @@ test_check_grant_column
     Execute Immediate    CREATE ROLE TEST_ROLE;
     Init Grant Manager
     Select From Combo Box    privilegesTypeCombo    DML privileges
+    Sleep    0.5s
     Select From Combo Box    userTypeCombo    Roles
     Click On List Item    0    TEST_ROLE
     Sleep    2s
