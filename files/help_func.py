@@ -659,3 +659,12 @@ def change_owner(file_path: str, owner:str):
     gid = getpwnam(owner).pw_gid
     os.chown(file_path, uid, gid)
     os.chmod(file_path, 0o777)
+
+def take_dump(file_path: str):
+    def _get_jstack_path():
+        return '/usr/java/jdk-22-oracle-x64/bin/jstack' if platform.system() == 'Linux' else "C:\\Program Files\\Java\\jdk-22\\bin\\jstack.exe"
+    
+    for proc in psutil.process_iter():
+        if f'RDBExpert{get_exe()}' in proc.name() or proc.name() == f'java{get_exe()}':
+            with open(f"{file_path}_{proc.pid}_java_dump_.txt", 'w') as f:
+                subprocess.call([f"{_get_jstack_path()}", "-l", f"{proc.pid}"], stdout=f, stderr=subprocess.PIPE)

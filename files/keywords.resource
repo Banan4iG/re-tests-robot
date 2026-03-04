@@ -37,7 +37,9 @@ Suite Teardown
 Test Teardown
     IF    ${{$TEST_STATUS == 'FAIL'}}
         Sleep    0.5s
-        Take Screenshot    ${{$SUITE_NAME.replace(' ', '_') + '_' + $TEST_NAME}}    1080
+        VAR    ${file_name}=    ${{$SUITE_NAME.replace(' ', '_') + '_' + $TEST_NAME}}
+        Take Screenshot    ${file_name}    1080
+        Take Dump    ${OUTPUT_DIR}${/}${file_name}
         Kill Rdbexpert
         Sleep    0.5s
         Unlock Employee
