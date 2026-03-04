@@ -666,5 +666,5 @@ def take_dump(file_path: str):
     
     for proc in psutil.process_iter():
         if f'RDBExpert{get_exe()}' in proc.name() or proc.name() == f'java{get_exe()}':
-            with open(f"{file_path}_{proc.pid}_java_dump_.txt", 'w') as f:
+            with open(f"{file_path}_{proc.pid}_java_dump.txt", 'w') as f:
                 subprocess.call([f"{_get_jstack_path()}", "-l", f"{proc.pid}"], stdout=f, stderr=subprocess.PIPE)
