@@ -13,7 +13,7 @@ Test Teardown       Local Test Teardown
 test_backup
     Lock Employee
     Click On Tree Node    0    New Connection (Copy)    2
-    Select From Tree Node Popup Menu    0    New Connection (Copy)    Create database backup
+    Select From Tree Node Popup Menu    0    New Connection (Copy)    Backup/Restore Database
     ${bk_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /employee_backup.fbk
     Remove File    ${bk_path}
     Select Tab As Context    Database backup/restore
@@ -131,8 +131,8 @@ test_data_generator
 
 *** Keywords ***
 Setup
-    ${system}=    platform.System
-    Skip If    '${system}' == 'Linux'
+    # ${system}=    platform.System
+    # Skip If    '${system}' == 'Linux'
     Test Setup
     Select From Tree Node Popup Menu    0    New Connection    Duplicate connection
     Select From Tree Node Popup Menu    0    New Connection (Copy)    Connection properties

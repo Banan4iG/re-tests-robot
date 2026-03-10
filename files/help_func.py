@@ -11,7 +11,7 @@ import stat
 import re
 import firebird.driver as fdb
 from pathlib import Path
-from firebird.driver import connect_server, SrvInfoCode   
+from firebird.driver import connect_server, SrvInfoCode
 
 
 def get_pom_file():
@@ -477,7 +477,7 @@ def get_exe():
     return "" if platform.system() == "Linux" else ".exe"
 
 def get_user_for_ssh():
-    user = "reduser" if platform.system() == "Linux" else "jenkins"
+    user = "root" if platform.system() == "Linux" else "jenkins"
     password = "1" if platform.system() == "Linux" else "jenkins"
     return  user, password
 
