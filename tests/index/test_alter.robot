@@ -8,32 +8,38 @@ Test Teardown       Test Teardown
 
 *** Test Cases ***
 test_change_field
-    Init    "TEST INDEX"    TEST INDEX
+    Init
+    ...    create_name="TEST INDEX"
+    ...    tree_name=TEST INDEX
     Select From Combo Box    tableCombo    EMPLOYEE
     Select From Combo Box    sortingCombo    DESCENDING
     Click On List Item    0    0    2
     Check
     ...    text=CREATE DESCENDING INDEX "TEST INDEX" ON EMPLOYEE ( EMP_NO )
     ...    name=TEST INDEX
+    ...    ddl=CREATE DESCENDING INDEX "TEST INDEX" ON EMPLOYEE ( EMP_NO );
 
 test_select_ts
     ${info}=    Get Server Info
     VAR    ${ver}=    ${info}[1]
     VAR    ${srv_ver}=    ${info}[2]
     Skip If    ${{not($ver == '5' and $srv_ver == 'RedDatabase')}}
-    Init    """TEST INDEX"""
+    Init
+    ...    create_name="""TEST INDEX"""
+    ...    tree_name="TEST INDEX"
     Select From Combo Box    tablespaceCombo    NEW_TS
 
     Check
-    ...    text=ALTER INDEX """TEST INDEX""" SET
+    ...    text=ALTER INDEX """TEST INDEX""" SET TABLESPACE TO NEW_TS
     ...    name="TEST INDEX"
-    ...    ts=NEW_TS
+    ...    ddl=CREATE INDEX """TEST INDEX""" ON COUNTRY ( COUNTRY ) TABLESPACE NEW_TS;
 
 test_active
     Init
     Uncheck Check Box    activeCheck
     Check
     ...    text=ALTER INDEX TEST_INDEX INACTIVE
+    ...    ddl=CREATE INDEX TEST_INDEX ON COUNTRY ( COUNTRY ); ALTER INDEX TEST_INDEX INACTIVE;
 
 test_condition
     ${info}=    Get Server Info
@@ -48,6 +54,7 @@ test_condition
 
     Check
     ...    text=CREATE UNIQUE INDEX TEST_INDEX ON COUNTRY ( COUNTRY ) WHERE 1 = 1
+    ...    ddl=CREATE UNIQUE INDEX TEST_INDEX ON COUNTRY ( COUNTRY ) WHERE 1 = 1;
 
 test_computed_by_with_comment
     Init
@@ -63,13 +70,36 @@ test_computed_by_with_comment
     Type Into Text Field    0    test_comment
     Check
     ...    text=CREATE INDEX TEST_INDEX ON COUNTRY COMPUTED BY ('1' || '1')
-    ...    text2=COMMENT ON INDEX TEST_INDEX IS 'test_comment'
+    ...    ddl=CREATE INDEX TEST_INDEX ON COUNTRY COMPUTED BY ('1' || '1'); COMMENT ON INDEX TEST_INDEX IS 'test_comment';
+
+test_add_comment
+    Init
+    Select Tab As Context    Comment
+    Clear Text Field    0
+    Type Into Text Field    0    test_comment
+    Push Button    updateCommentButton
+    ${connect_type}=    Get Environment Variable    CONNECT_TYPE    server
+    IF    ${{$connect_type == 'embedded'}}    Close Connection
+    ${res}=    Execute    select RDB$DESCRIPTION from RDB$INDICES where RDB$DESCRIPTION is not NULL
+    Should Be Equal As Strings    ${res}    [('test_comment',)]
+    IF    ${{$connect_type == 'embedded'}}    Open Connection
+    Select Main Window
+    Click On Tree Node    0    New Connection|Indices (39)|TEST_INDEX    2
+    Select Tab As Context    TEST_INDEX:INDEX:New Connection
+    Select Tab As Context    DDL to create
+    ${res}=    Get Text Field Value    0
+    Should Be Equal As Strings    ${res}    CREATE INDEX TEST_INDEX ON COUNTRY ( COUNTRY ); COMMENT ON INDEX TEST_INDEX IS 'test_comment';    strip_spaces=${True}    collapse_spaces=${True}
 
 test_statistic
     Init
     Select Tab As Context    Statistic (selectivity)
-    @{headers}=    Get Table Headers    0
+    Select Main Window
+    @{headers}=    Get Table Headers    statisticsTable
     Should Be Equal As Strings    ${headers}    ['Field Name', 'Statistic (selectivity)', 'Field Position']
+    Select Main Window
+    Select Tab As Context    TEST_INDEX:INDEX:New Connection
+    Push Button    actionButton
+    Check    text=SET STATISTICS INDEX TEST_INDEX
 
 
 *** Keywords ***
@@ -78,6 +108,7 @@ Init
     Lock Employee
     Execute Immediate    ${sql}
     IF    '${TEST_NAME}' == 'test_select_ts'
+        Remove File    ${TEMPDIR}${/}new_ts.ts
         Execute Immediate    CREATE TABLESPACE NEW_TS FILE '${TEMPDIR}${/}new_ts.ts'
     END
     Open Connection
@@ -87,12 +118,12 @@ Init
     Should Be Equal As Strings    ${tree_name}    ${name}
 
 Check
-    [Arguments]    ${text}    ${name}=TEST_INDEX   ${text2}=${EMPTY}    ${ts}=PRIMARY
+    [Arguments]    ${text}    ${name}=TEST_INDEX   ${ddl}=${EMPTY}
     ${info}=    Get Server Info
     VAR    ${ver}=    ${info}[1]
     VAR    ${srv_ver}=    ${info}[2]
     IF    ${{$ver == '5' and $srv_ver == 'RedDatabase'}}
-        VAR    ${check_ts}=    ${SPACE}TABLESPACE ${ts}
+        VAR    ${check_ts}=    ${SPACE}TABLESPACE PRIMARY
     ELSE
         VAR    ${check_ts}=    ${EMPTY}
     END
@@ -111,20 +142,23 @@ Check
         ${res}=    Get Text Field Value    0
         Should Be Equal As Strings    ${res}    ${text}${check_ts}    strip_spaces=${True}    collapse_spaces=${True}
 
-        IF    ${text2}
+        IF    '${TEST_NAME}' == 'test_computed_by_with_comment'
             Click On Table Cell    0    2    Name operation
             ${res}=    Get Text Field Value    0
-            Should Be Equal As Strings    ${res}    ${text2}    strip_spaces=${True}    collapse_spaces=${True}
+            Should Be Equal As Strings    ${res}    COMMENT ON INDEX TEST_INDEX IS 'test_comment'    strip_spaces=${True}    collapse_spaces=${True}
         END
     ELSE
         ${res}=    Get Text Field Value    0
-        Should Be Equal As Strings    ${res}    ${text}${check_ts}    strip_spaces=${True}    collapse_spaces=${True}
+        Should Be Equal As Strings    ${res}    ${text}   strip_spaces=${True}    collapse_spaces=${True}
     END
 
     Push Button    commitButton
 
     Select Main Window
-    Select Tab As Context    ${name}:INDEX:New Connection
-    Select Tab As Context    DDL to Create
-    ${res}=    Get Text Field Value    0
-    Should Be Equal As Strings    ${res}    ${text}${check_ts}    strip_spaces=${True}    collapse_spaces=${True}
+
+    IF    '${ddl}' != '${EMPTY}'
+        Select Tab As Context    ${name}:INDEX:New Connection
+        Select Tab As Context    DDL to create
+        ${res}=    Get Text Field Value    0
+        Should Be Equal As Strings    ${res}    ${ddl}    strip_spaces=${True}    collapse_spaces=${True}
+    END

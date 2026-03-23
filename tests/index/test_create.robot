@@ -108,6 +108,19 @@ test_computed_by_with_comment
     ...    text=CREATE INDEX TEST_INDEX ON COUNTRY COMPUTED BY ('1' || '1')
     ...    text2=COMMENT ON INDEX TEST_INDEX IS 'test_comment'
 
+test_check_warning
+    Init    ${EMPTY}
+    Check Warning
+    Type Into Text Field    nameField    TEST_INDEX
+    Check Warning
+    Check Check Box    computedCheck
+    Check Warning
+
+    Push Button    cancelButton
+    Select Dialog    Confirmation
+    Push Button    Yes
+    Select Main Window
+
 
 *** Keywords ***
 Init
@@ -160,3 +173,10 @@ Check
 
     Select Main Window
     Tree Node Should Exist    0    New Connection|Indices (39)|${name}
+
+Check Warning
+    Push Button    submitButton
+    Select Dialog    Warning
+    Label Text Should Be    0    Fill in all required fields
+    Push Button    OK
+    Select Dialog    Create index
