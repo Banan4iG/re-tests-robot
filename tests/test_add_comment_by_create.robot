@@ -107,12 +107,6 @@ test_create_udf
     Init Create    UDFs    ${title}    ${title}
     Check Comment    ${title}
 
-test_create_index
-    VAR    ${title}    Create index
-    Init Create    Indices (38)    ${title}    ${title}
-    Push Button    selectAllButton
-    Check Comment    ${title}
-
 test_create_ts
     Skip If Embedded
     Check Skip

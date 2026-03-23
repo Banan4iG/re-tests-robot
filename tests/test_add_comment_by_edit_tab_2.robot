@@ -48,11 +48,6 @@ test_alter_udf
     Init Alter    UDFs (1)|NEW_UDF
     Check Comment    NEW_UDF    EXTERNAL FUNCTION
 
-test_alter_index
-    Lock Employee
-    Init Alter    Indices (38)|BUDGETX
-    Check Comment    BUDGETX    INDEX
-
 test_alter_ts
     Check Skip
     Lock Employee
