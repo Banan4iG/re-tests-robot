@@ -156,7 +156,7 @@ Check
 
     Select Main Window
 
-    IF    '${ddl}' != '${EMPTY}'
+    IF    ${{$ddl != ''}}
         Select Tab As Context    ${name}:INDEX:New Connection
         Select Tab As Context    DDL to create
         ${res}=    Get Text Field Value    0

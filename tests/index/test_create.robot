@@ -127,6 +127,7 @@ Init
     [Arguments]    ${name}=TEST_INDEX
     Lock Employee
     IF    '${TEST_NAME}' == 'test_select_ts'
+        Remove File    ${TEMPDIR}${/}new_ts.ts
         Execute Immediate    CREATE TABLESPACE NEW_TS FILE '${TEMPDIR}${/}new_ts.ts'
     END
     Open Connection
