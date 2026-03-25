@@ -18,8 +18,8 @@ test_1
     ${res1}=    Check User    DEMO
     Select Main Window
     ${res2}=    Check User    dEmO
-    Should Be Equal    ${res1}    CREATE USER DEMO ACTIVE USING PLUGIN Srp;\n    collapse_spaces=True
-    Should Be Equal    ${res2}    CREATE USER "dEmO" ACTIVE USING PLUGIN Srp;\n    collapse_spaces=True
+    Should Be Equal As Strings    ${res1}    CREATE USER DEMO ACTIVE USING PLUGIN SRP;\n    collapse_spaces=${True}    strip_spaces=${True}
+    Should Be Equal As Strings    ${res2}    CREATE USER "dEmO" ACTIVE USING PLUGIN SRP;\n    collapse_spaces=${True}    strip_spaces=${True}
 
 
 *** Keywords ***

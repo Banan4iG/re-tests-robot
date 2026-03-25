@@ -15,7 +15,7 @@ test_check_boxs
     Check Check Box    updateCheck
     Check Check Box    deleteCheck
     Check Changes
-    ...    CREATE OR ALTER TRIGGER TEST_TRIGGER FOR COUNTRY INACTIVE BEFORE UPDATE OR DELETE POSITION 0 AS BEGIN if (new.COUNTRY is null) then new.COUNTRY = 'test'; END
+    ...    CREATE OR ALTER TRIGGER TEST_TRIGGER FOR COUNTRY INACTIVE BEFORE UPDATE OR DELETE POSITION 0 AS BEGIN IF (new.COUNTRY IS NULL) THEN new.COUNTRY = 'test'; END
 
 test_combo_boxs
     Init No Dependencies
@@ -91,7 +91,7 @@ test_ddl_to_create
     Select Tab As Context    DDL to create
     ${res}=    Get Text Field Value    0
     ${text}=    Set Variable
-    ...    CREATE OR ALTER TRIGGER TEST_TRIGGER FOR COUNTRY ACTIVE BEFORE INSERT POSITION 0 AS BEGIN if (new.COUNTRY is null) then new.COUNTRY = 'test'; END;
+    ...    CREATE OR ALTER TRIGGER TEST_TRIGGER FOR COUNTRY ACTIVE BEFORE INSERT POSITION 0 AS BEGIN IF (new.COUNTRY IS NULL) THEN new.COUNTRY = 'test'; END;
     Should Be Equal As Strings    ${res}    ${text}    strip_spaces=${True}    collapse_spaces=${True}
 
 
@@ -100,7 +100,7 @@ Init
     [Arguments]    ${name}=TEST_TRIGGER
     Lock Employee
     Execute Immediate
-    ...    CREATE OR ALTER TRIGGER TEST_TRIGGER FOR COUNTRY ACTIVE BEFORE INSERT POSITION 0 AS BEGIN if (new.COUNTRY is null) then new.COUNTRY = 'test'; END
+    ...    CREATE OR ALTER TRIGGER TEST_TRIGGER FOR COUNTRY ACTIVE BEFORE INSERT POSITION 0 AS BEGIN IF (new.COUNTRY IS NULL) THEN new.COUNTRY = 'test'; END
     Open Connection
     Select From Tree Node Popup Menu    0    New Connection|Table Triggers (5)|${name}    Edit table trigger
     Select Tab As Context    ${name}:TRIGGER:New Connection
