@@ -29,6 +29,8 @@ test_compare
 Init
     Test Setup
     Push Button    new-connection-command
+    Type Into Combobox    hostCombo    ${EMPTY}
+    Clear Text Field    portField
     Type Into Text Field    fileField    employee.fdb
     Type Into Text Field    userField    sysdba
     Type Into Text Field    passwordField    masterkey

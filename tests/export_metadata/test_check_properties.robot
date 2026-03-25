@@ -94,6 +94,7 @@ test_check_ignore_whitespace
     END
     Push Button    saveButton
 
+    Click On Tree Node    0    New Connection
     Push Button    comparerDB-command
     Select Tab As Context    Comparer DB
 

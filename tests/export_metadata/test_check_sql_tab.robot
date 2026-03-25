@@ -77,6 +77,7 @@ Create Connect
 
 Compare DB
     Select Main Window
+    Click On Tree Node    0    New Connection
     Push Button    comparerDB-command
     Select From Combo Box    dbMasterComboBox    New Connection 1
     Push Button    selectAllAttributesButton
