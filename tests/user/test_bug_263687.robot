@@ -29,7 +29,7 @@ test_open_users
 Local Setup
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
-    Skip if    ${{$ver == '5'}}
+    Skip if    ${{$ver == '2.6'}}
     Test Setup
 
 Local Teardown

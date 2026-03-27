@@ -22,7 +22,7 @@ test_combo_boxs
     ${info}=    Get Server Info
     ${ver}=    Set Variable    ${info}[1]
     ${srv}=    Set Variable    ${info}[2]
-    IF    ${{$ver != '2.6' or not($ver == '3' and $srv == 'Firebird')}}
+    IF    ${{$ver == '5' or ($ver == '3' and $srv == 'RedDatabase')}}
         Select From Combo Box    userContextComboBox    DEFINER
     END
     Select From Combo Box    tableCombo    PROJECT
