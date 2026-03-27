@@ -80,6 +80,7 @@ test_select_ts
     VAR    ${ver}=    ${info}[1]
     VAR    ${srv_ver}=    ${info}[2]
     Skip If    ${{not($ver == '5' and $srv_ver == 'RedDatabase')}}
+    Skip If Embedded
     Init    "TEST INDEX"
     Push Button    sortAvailableButton
     Click On List Item    0    0    2
