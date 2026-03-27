@@ -83,6 +83,9 @@ test_list_tables
     Should Be Equal As Strings
     ...    ${tables}
     ...    ['COUNTRY', 'CUSTOMER', 'DEPARTMENT', 'EMPLOYEE', 'EMPLOYEE_PROJECT', 'JOB', 'PROJECT', 'PROJ_DEPT_BUDGET', 'SALARY_HISTORY', 'SALES', 'PHONE_LIST']
+    Push Button    cancelButton
+    Select Dialog    Confirmation
+    Push Button    Yes
 
 test_external_module
     ${info}=    Get Server Info
