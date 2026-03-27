@@ -16,6 +16,7 @@ test_extract
     Label Text Should Be    1    Connection is inactive.
 
 test_compare
+    Click On Tree Node    0    New Connection
     Push Button    comparerDB-command
     Push Button    selectAllAttributesButton
     Select From Combo Box    dbTargetComboBox    New Connection 1
