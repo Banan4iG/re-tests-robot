@@ -155,7 +155,12 @@ Setup
     Select From Combo Box    charsetsCombo    UTF8
     Push Button    saveButton
     Push Button    testButton
-    Select Dialog    Message
+    TRY
+        Select Dialog    Message
+    EXCEPT    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Message'
+        VAR    ${file_name}=    ${{$SUITE_NAME.replace(' ', '_')}}
+        Take Screenshot    ${file_name}    1080
+    END
     Label Text Should Be    0    The connection test was successful!
     Push Button    OK
     Select Main Window
