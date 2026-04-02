@@ -27,10 +27,10 @@ test_1
 test_2
     Open Connection
     TRY
-        Select Tab As Context    regexp=^Query Editor.*
-    EXCEPT    Can't select tab: regexp=^Query Editor.* because it doesn't contain any container.
+        Select Tab As Context    regexp=^Untitled.*
+    EXCEPT    Can't select tab: regexp=^Untitled.* because it doesn't contain any container.
         Push Button    editor-command
-        Select Tab As Context    regexp=^Query Editor.*
+        Select Tab As Context    regexp=^Untitled.*
     END
     Clear Text Field    0
     Type Into Text Field    0    select FIRST 1 * from COUNTRY
@@ -42,7 +42,7 @@ test_2
     Should Be Equal As Strings    ${values}    [['USA', 'Dollar']]
 
     Select Main Window
-    Select Tab As Context    regexp=^Query Editor.*
+    Select Tab As Context    regexp=^Untitled.*
     Click On Component    closeTabLabel for "Result Set 1"
     Click On Component    closeTabLabel for "Output"
 

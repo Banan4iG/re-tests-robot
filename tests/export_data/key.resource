@@ -8,7 +8,7 @@ Setup Before Export Data
     Open Connection
     Close All Tabs
     Push Button    editor-command
-    Select Tab As Context    regexp=^Query Editor.*
+    Select Tab As Context    regexp=^Untitled.*
     Clear Text Field    0
     Insert Into Text Field    0    SELECT * FROM EMPLOYEE
     Push Button    execute-script-command

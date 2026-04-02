@@ -76,7 +76,7 @@ test_open_empty_query_editor
     Open Connection
     Close All Tabs
     Push Button    editor-command
-    Select Tab As Context    regexp=^Query Editor.*
+    Select Tab As Context    regexp=^Untitled.*
     Clear Text Field    0
     Insert Into Text Field    0    SELECT * FROM EMPLOYEE
     Push Button    execute-script-command
@@ -117,7 +117,7 @@ test_execute_to_file
     Open Connection
     Close All Tabs
     Push Button    editor-command
-    Select Tab As Context    regexp=^Query Editor.*
+    Select Tab As Context    regexp=^Untitled.*
     Clear Text Field    0
     Insert Into Text Field    0    SELECT * FROM COUNTRY
     Push Button    editor-execute-to-file-command

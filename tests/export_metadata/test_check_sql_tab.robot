@@ -34,7 +34,7 @@ test_execute_script
     Push Button    executeScriptButton
     Sleep    1s
     Select Main Window
-    Select Tab As Context    regexp=^Query Editor.*
+    Select Tab As Context    regexp=^Untitled.*
     Combo Box Should Be Enabled    connectionsCombo
     ${text}=    Get Text Field Value    0
     Should Not Be Equal As Strings    ${text}    ${EMPTY}

@@ -46,7 +46,7 @@ Init
     Run Keyword In Separate Thread    Push Button    execute-script-command
 
 Teardown
-    # Click On Component    regexp=.*Query Editor - test_script.*
+    # Click On Component    regexp=.*Untitled - test_script.*
     # Sleep    5s
     # Select Dialog    Confirmation
     # Push Button    No

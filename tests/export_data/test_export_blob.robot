@@ -217,7 +217,7 @@ Init
     Open Connection
     Close All Tabs
     Push Button    editor-command
-    Select Tab As Context    regexp=^Query Editor.*
+    Select Tab As Context    regexp=^Untitled.*
     Clear Text Field    0
     Insert Into Text Field    0    select * from PROJECT
     Push Button    execute-script-command

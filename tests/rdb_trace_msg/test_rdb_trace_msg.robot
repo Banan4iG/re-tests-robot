@@ -121,7 +121,7 @@ Check
 Exec
     Close All Tabs
     Push Button    editor-command
-    Select Tab As Context    regexp=^Query Editor.*
+    Select Tab As Context    regexp=^Untitled.*
     Clear Text Field    0
     Type Into Text Field    0    select RDB$TRACE_MSG('MeSsaGE') FROM RDB$DATABASE
     Push Button    execute-script-command

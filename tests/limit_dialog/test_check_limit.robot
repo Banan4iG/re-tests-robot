@@ -95,7 +95,7 @@ Check Limit
 Execute Script
     Close All Tabs
     Push Button    editor-command
-    Select Tab As Context    regexp=^Query Editor.*
+    Select Tab As Context    regexp=^Untitled.*
     Clear Text Field    0
     Type Into Text Field    0    select * from test_table
     Push Button    execute-script-command

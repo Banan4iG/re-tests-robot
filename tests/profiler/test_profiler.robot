@@ -19,7 +19,7 @@ test_pause_resume
     Push Button    pauseButton
 
     Select Main Window
-    Select Tab As Context    regexp=^Query Editor.*
+    Select Tab As Context    regexp=^Untitled.*
     Clear Text Field    0
     Type Into Text Field    0    select * from country
     Push Button    execute-script-command
@@ -30,7 +30,7 @@ test_pause_resume
     Push Button    resumeButton
 
     Select Main Window
-    Select Tab As Context    regexp=^Query Editor.*
+    Select Tab As Context    regexp=^Untitled.*
     Clear Text Field    0
     Type Into Text Field    0    select * from project
     Push Button    execute-script-command
@@ -102,7 +102,7 @@ test_discard_yes
         Sleep    1s
     END
     Push Button    editor-command
-    Select Tab As Context    regexp=^Query Editor.*
+    Select Tab As Context    regexp=^Untitled.*
     Clear Text Field    0
     Type Into Text Field    0    select * from employee
     Push Button    execute-script-command
@@ -371,7 +371,7 @@ Start Profiler
     Select From Main Menu    Tools|Profiler
     Push Button    startButton
     Push Button    editor-command
-    Select Tab As Context    regexp=^Query Editor.*
+    Select Tab As Context    regexp=^Untitled.*
     Clear Text Field    0
     Type Into Text Field    0    ${script}
     Push Button    execute-script-command
