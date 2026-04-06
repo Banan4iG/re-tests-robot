@@ -20,8 +20,7 @@ test_1
     Open Connection
     Close All Tabs
     Push Button    editor-command
-    # Select Tab As Context    regexp=^Untitled.*
-    Select Tab As Context    regexp=^Query Editor.*
+    Select Tab As Context    regexp=^Untitled.*
     Clear Text Field    0
     Insert Into Text Field    0    execute block as begin while (1 = 1) do begin end end
     Push Button    execute-script-command
@@ -53,8 +52,7 @@ test_1
 *** Keywords ***
 Local Test Teardown
     Test Setup
-    # Select Tab As Context    regexp=^Untitled.*
-    Select Tab As Context    regexp=^Query Editor.*
+    Select Tab As Context    regexp=^Untitled.*
     Push Button    stop-execution-command
     Select Main Window
     Select From Main Menu    System|Preferences
