@@ -13,9 +13,13 @@ Set Pattern
     Sleep    2s
     ${row}=    Find Table Row    0    ${pattern_name}
 
-    Clear Table Cell    0    ${row}    2
-    Type Into Table Cell    0    ${row}    2    ${pattern}
-    Click On Tree Node    0    Result Set Table
+    Run Keyword In Separate Thread    Click On Table Cell    0    ${row}    2    2    BUTTON1_MASK
+    Select Dialog    Date/time format
+    Clear Text Field    textField
+    Type Into Text Field    textField    ${pattern}
+    Push Button    applyButton
+
+    Select Dialog    Preferences
     Push Button    applyButton
     Close Dialog    Message
     Close Dialog    Preferences
