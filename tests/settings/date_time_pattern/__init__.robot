@@ -1,7 +1,5 @@
 *** Settings ***
 Resource            ../../../files/keywords.resource
-Library             RemoteSwingLibrary
-
 Suite Setup         Local Suite Teardown
 
 

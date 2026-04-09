@@ -35,15 +35,19 @@ Test
     Sleep    2s
     ${row}=    Find Table Row    0    ${pattern_name}
 
-    Clear Table Cell    0    ${row}    2
-    Type Into Table Cell    0    ${row}    2    aaaa
-
-    Push Button    OK
+    Run Keyword In Separate Thread    Click On Table Cell    0    ${row}    2    2    BUTTON1_MASK
+    Select Dialog    Date/time format
+    Clear Text Field    textField
+    Type Into Text Field    textField    aaaa
+    Push Button    applyButton
 
     Select Dialog    Warning
     Label Text Should Be    0    Invalid ${name} format: aaaa
     Label Text Should Be    1    Changes will reversed
     Push Button    OK
+
+    Close Dialog    Date/time format
+    Close Dialog    Preferences
 
 Check Skip
     ${info}=    Get Server Info

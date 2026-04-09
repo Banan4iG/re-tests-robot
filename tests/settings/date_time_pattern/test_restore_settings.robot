@@ -15,8 +15,13 @@ test_1
     Sleep    2s
     ${row}=    Find Table Row    0    Date Pattern Format
 
-    Clear Table Cell    0    ${row}    2
-    Type Into Table Cell    0    ${row}    2    MM.yy
+    Run Keyword In Separate Thread    Click On Table Cell    0    ${row}    2    2    BUTTON1_MASK
+    Select Dialog    Date/time format
+    Clear Text Field    textField
+    Type Into Text Field    textField    MM.yy
+    Push Button    applyButton
+
+    Select Dialog    Preferences
     Push Button    applyButton
     Close Dialog    Message
     Close Dialog    Preferences
