@@ -155,6 +155,7 @@ Setup
     Select From Combo Box    charsetsCombo    UTF8
     Push Button    saveButton
     Push Button    testButton
+    Sleep    2s
     TRY
         Select Dialog    Message
     EXCEPT    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Message'

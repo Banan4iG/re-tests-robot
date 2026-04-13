@@ -13,6 +13,7 @@ Test Teardown       Teardown
 *** Test Cases ***
 test_re
     Init
+    ${dist}=    Get Environment Variable    DIST    D:\\projects\\RDBExpert
     Select From Tree Node Popup Menu    0    New Connection    Duplicate connection
     Type Into Text Field    roleField    TEST_ROLE
     Clear Text Field    userField
@@ -22,7 +23,7 @@ test_re
     Push Button    saveButton
     Push Button    connectButton
     Open Connection
-    Check    127.0.0.1
+    Check    127.0.0.1    ${dist}
 
     Select Main Window
     Click On Tree Node    0    New Connection (Copy)    2
@@ -33,9 +34,17 @@ test_re
 test_isql
     Skip
     Init
+    ${info}=    Get Server Info
+    VAR    ${home_dir}=    ${info}[0]
+    ${system}=    platform.System
+    IF    ${{$system == 'Linux'}}
+        VAR    ${dist}=    ${home_dir}/bin/isql
+    ELSE
+        VAR    ${dist}=    ${home_dir}/isql.exe
+    END
     Run Isql
     Open Connection
-    Check    ::1
+    Check    ::1    ${dist}
     Stop Server
 
 
@@ -56,7 +65,7 @@ Teardown
     Unlock Employee
 
 Check
-    [Arguments]    ${ip}
+    [Arguments]    ${ip}    ${dist}
     ${name}=    os.Getlogin
     ${host}=    platform.Node
     Select From Main Menu    Tools|Profiler
@@ -74,11 +83,11 @@ Check
     Should Not Be Equal As Integers    ${{$values[0][1].find('${ip}')}}    -1
     Should Be Equal As Strings
     ...    ${values}[0][2:]
-    ...    ['TEST_USER', 'TEST_ROLE', '${host}', '${name}']
+    ...    ['TEST_USER', 'TEST_ROLE', '${host}', '${name}', '${dist}']
     ...    ignore_case=${True}
 
     Should Not Be Equal As Integers    ${{$values[1][1].find('127.0.0.1')}}    -1
-    Should Be Equal As Strings    ${values}[1][2:]    ['SYSDBA', 'NONE', '${host}', '${name}']
+    Should Be Equal As Strings    ${values}[1][2:]    ['SYSDBA', 'NONE', '${host}', '${name}', '${dist}']
 
     Close Dialog    Select Attachment
 

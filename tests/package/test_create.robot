@@ -31,11 +31,38 @@ test_4
 
 test_5
     Init    ${EMPTY}    BEGIN\n\nEND    BEGIN\n\nEND
-    Check Error
+    Select Dialog    Create package
+    Push Button    submitButton
+    Select Dialog    Warning
+    Label Text Should Be    0    Fill in all required fields
+    Push Button    OK
+    Select Dialog    Create package
+    Push Button    cancelButton
+    Select Dialog    Confirmation
+    Push Button    Yes
+    Select Main Window
+    Tree Node Should Exist    0    New Connection|Packages
+    Set Jemmy Timeouts    0
+    Tree Node Should Not Exist    0    New Connection|Packages (1)
 
 test_6
     Init    NEW_PACK    ${EMPTY}    BEGIN\n\nEND
-    Check Error
+    Select Dialog    Create package
+    Push Button    submitButton
+    Select Dialog    Commiting changes
+    Sleep    1s
+    ${value}=    Get Table Cell Value    0    0    Status
+    Should Be Equal As Strings    ${value}    Error
+    Push Button    rollbackButton
+    Select Dialog    Create package
+    Push Button    cancelButton
+    Select Dialog    Confirmation
+    Push Button    Yes
+    Sleep    0.1s
+    Select Main Window
+    Tree Node Should Exist    0    New Connection|Packages
+    Set Jemmy Timeouts    0
+    Tree Node Should Not Exist    0    New Connection|Packages (1)
 
 test_add_comment
     Init    NEW_PACK    BEGIN\n\nEND    BEGIN\n\nEND
@@ -116,21 +143,3 @@ Check
 
     Select Main Window
     Tree Node Should Exist    0    New Connection|Packages (1)|${name}
-
-Check Error
-    Select Dialog    Create package
-    Push Button    submitButton
-    Select Dialog    Commiting changes
-    Sleep    1s
-    ${value}=    Get Table Cell Value    0    0    Status
-    Should Be Equal As Strings    ${value}    Error
-    Push Button    rollbackButton
-    Select Dialog    Create package
-    Push Button    cancelButton
-    Select Dialog    Confirmation
-    Push Button    Yes
-    Sleep    0.1s
-    Select Main Window
-    Tree Node Should Exist    0    New Connection|Packages
-    Set Jemmy Timeouts    0
-    Tree Node Should Not Exist    0    New Connection|Packages (1)

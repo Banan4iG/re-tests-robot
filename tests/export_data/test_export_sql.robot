@@ -40,7 +40,7 @@ test_open_query_editor_yes
     VAR    ${expected_content}=
     ...    INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Carol', 'Nordstrom', '420', '1991-10-02 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Luke', 'Leung', '3', '1992-02-18 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Sue Anne', 'O''Brien', '877', '1992-03-23 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Jennifer M.', 'Burbank', '289', '1992-04-15 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Claudia', 'Sutherland', NULL, '1992-04-20 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Dana', 'Bishop', '290', '1992-06-01 00:00' );
     Check Content    ${export_path}    ${expected_content}
-    Select Dialog    ${EMPTY}
+    Select Dialog    Confirmation
     Push Button    Yes
 
     Select Main Window
@@ -60,8 +60,8 @@ test_open_query_editor_no
     VAR    ${expected_content}=
     ...    INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Carol', 'Nordstrom', '420', '1991-10-02 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Luke', 'Leung', '3', '1992-02-18 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Sue Anne', 'O''Brien', '877', '1992-03-23 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Jennifer M.', 'Burbank', '289', '1992-04-15 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Claudia', 'Sutherland', NULL, '1992-04-20 00:00' ); INSERT INTO TEST_TABLE ( FIRST_NAME, LAST_NAME, PHONE_EXT, HIRE_DATE ) VALUES ( 'Dana', 'Bishop', '290', '1992-06-01 00:00' );
     Check Content    ${export_path}    ${expected_content}
-    Select Dialog    ${EMPTY}
-    Push Button    No
+    Select Dialog    Confirmation
+    Push Button    No, open in new editor
 
     Select Main Window
     VAR    ${expected_content}=    SELECT * FROM EMPLOYEE

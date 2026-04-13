@@ -10,6 +10,7 @@ Test Teardown       Test Teardown
 test_grant_privileges
     Init
     Select Tab As Context    Privileges
+    Select Tab As Context    User → Objects
     Click On Table Cell    0    0    Select
     Push Button    Grant all privileges to selected column
     Select Main Window

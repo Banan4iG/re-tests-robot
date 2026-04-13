@@ -25,8 +25,8 @@ test_exec
     Select From Popup Menu    textArea    Configure RDB$TRACE_MSG format
     Select Dialog    Message format
 
-    Clear Text Field    0
-    Type Into Text Field    0    {msg}
+    Clear Text Field    textField
+    Type Into Text Field    textField    {msg}
 
     Push Button    Save
     Select Main Window
@@ -43,8 +43,17 @@ test_exec_2
     Select Dialog    Preferences
     Click On Tree Node    0    General
     Sleep    1s
-    ${row}=    Find Table Row    0    Enable RDB$TRACE_MSG output
+    ${row}=    Find Table Row    0    RDB$TRACE_MSG output
     Click On Table Cell    0    ${row}    2
+
+    ${row}=    Find Table Row    0    RDB$TRACE_MSG format
+    Run Keyword In Separate Thread    Click On Table Cell    0    ${row}    2    2    BUTTON1_MASK
+    Select Dialog    Message format
+    Clear Text Field    textField
+    Type Into Text Field    textField    {msg}
+    Push Button    Save
+
+    Select Dialog    Preferences
     Push Button    applyButton
     Close Dialog    Message
     Close Dialog    Preferences
@@ -66,14 +75,14 @@ Configure Format
     Select Context    systemOutputPanel
     Select From Popup Menu    textArea    Configure RDB$TRACE_MSG format
     Select Dialog    Message format
-    Clear Text Field    formatField
-    Type Into Text Field    formatField    DB:${SPACE}
-    Click On List Item    placeholdersList    {db} - database    2
-    Type Into Text Field    formatField    ${SPACE},${SPACE}
-    Type Into Text Field    formatField    MESSAGE:${SPACE}
-    Click On List Item    placeholdersList    {msg} - trace message text    2
+    Clear Text Field    textField
+    Type Into Text Field    textField    DB:${SPACE}
+    Click On List Item    tokenList    {db} - database    2
+    Type Into Text Field    textField    ${SPACE},${SPACE}
+    Type Into Text Field    textField    MESSAGE:${SPACE}
+    Click On List Item    tokenList    {msg} - trace message text    2
     VAR    ${expected_value}=    DB: {db} , MESSAGE: {msg}
-    ${value}=    Get Text Field Value    formatField
+    ${value}=    Get Text Field Value    textField
     Should Be Equal As Strings    ${value}    ${expected_value}
     RETURN    ${expected_value}
 
@@ -91,7 +100,7 @@ Check
     Select Context    systemOutputPanel
     Select From Popup Menu    textArea    Configure RDB$TRACE_MSG format
     Select Dialog    Message format
-    ${value}=    Get Text Field Value    formatField
+    ${value}=    Get Text Field Value    textField
     IF    ${equal}
         Should Be Equal As Strings    ${value}    ${expected_value}
     ELSE

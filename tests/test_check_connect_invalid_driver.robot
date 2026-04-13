@@ -55,8 +55,7 @@ Init Conn
     Run Keyword In Separate Thread    Select From Tree Node Popup Menu    0    New Connection    Connect
     Select Dialog    Confirmation
 
-    Label Text Should Be    0    The driver specified for connection "New Connection" does not exist, use the
-    Label Text Should Be    1    default driver (RedDatabase JDBC Driver 5)?
+    Label Text Should Be    0    The driver specified for connection "New Connection" does not exist, use the default driver (RedDatabase JDBC Driver 5)?
 
 Local Teardown
     System Exit    0
