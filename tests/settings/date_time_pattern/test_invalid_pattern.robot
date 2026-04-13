@@ -43,7 +43,6 @@ Test
 
     Select Dialog    Warning
     Label Text Should Be    0    Invalid ${name} format: aaaa
-    Label Text Should Be    1    Changes will reversed
     Push Button    OK
 
     Close Dialog    Date/time format

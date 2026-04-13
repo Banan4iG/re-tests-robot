@@ -22,17 +22,16 @@ test_3
 test_4
     Init    ${EMPTY}    test text
     Push Button    submitButton
-    Select Dialog    Commiting changes
-    Sleep    1s
-    ${value}=    Get Table Cell Value    0    0    Status
-    Should Be Equal As Strings    ${value}    Error
-    Push Button    rollbackButton
+    Select Dialog    Warning
+    Label Text Should Be    0    Fill in all required fields
+    Push Button    OK
     Select Dialog    Create exception
     Push Button    cancelButton
     Select Dialog    Confirmation
     Push Button    Yes
     Select Main Window
     Tree Node Should Exist    0    New Connection|Exceptions (5)
+    Set Jemmy Timeouts    0
     Tree Node Should Not Exist    0    New Connection|Exceptions (6)
 
 test_add_comment

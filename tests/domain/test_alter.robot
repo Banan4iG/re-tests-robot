@@ -103,7 +103,7 @@ test_ddl_to_create
 test_collation
     Init    CREATE DOMAIN TEST_DOMAIN AS VARCHAR(123) CHARACTER SET UTF8 COLLATE UTF8
     ${res}=    Get Selected Item From Combo Box    collatesCombo
-    Should Be Equal As Strings    ${res}    UTF8 (DEFAULT)
+    Should Be Equal As Strings    ${res}    UTF8 (Default)
 
     Select From Combo Box    encodingsCombo    WIN1251
     Select From Combo Box    collatesCombo    PXW_CYRL
