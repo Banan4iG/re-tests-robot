@@ -1,6 +1,6 @@
 *** Settings ***
 Library             RemoteSwingLibrary
-Resource            ../../../files/keywords.resource
+Resource            ../../files/keywords.resource
 Test Setup          Test Setup
 Test Teardown       Local Test Teardown
 
@@ -39,6 +39,7 @@ test_1
     Tree Node Should Exist    0    New Connection|Roles (1)|NEW_ROLE_1
 
     Select From Main Menu    Tools|User Manager
+    Sleep    1s
     ${values}=    Get Table Cell Value    usersTable    0    User name
     Should Be Equal As Strings    ${values}    SYSDBA
 
