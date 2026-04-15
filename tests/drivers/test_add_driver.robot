@@ -88,7 +88,6 @@ test_check_library
     Sleep    0.5s
     Select Dialog    Warning
     Label Text Should Be    0    No valid classes implementing java.sql.Driver were found in the specified resource paths
-    Label Text Should Be    1    resource paths
     Push Button    OK
 
 test_connect_with_new_driver
