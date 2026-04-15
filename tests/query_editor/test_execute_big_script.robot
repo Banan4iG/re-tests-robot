@@ -9,8 +9,8 @@ Test Teardown       Teardown
 *** Test Cases ***
 test_execute
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    ${srv_ver}=    Set Variable    ${info}[2]
+    VAR    ${ver}=    ${info}[1]
+    VAR    ${srv_ver}=    ${info}[2]
     IF    ${{$ver == '5' and $srv_ver == 'RedDatabase'}}
         Init    test_script5.sql
     ELSE IF    ${{$ver == '2.6'}}

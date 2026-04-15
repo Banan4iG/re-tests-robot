@@ -17,7 +17,7 @@ test_not_ignore
 *** Keywords ***
 Check Ignore
     [Arguments]    ${script}
-    @{result}=    Create List
+    VAR    @{result}=
     ...    ${{$script.count("CREATE TABLE")}}
     ...    ${{$script.count("COMMENT ON")}}
     ...    ${{$script.count("COMPUTED BY")}}

@@ -23,8 +23,8 @@ test_1
     Click On Table Cell    tableDDLPrivileges    ${index}    Drop    clickCountString=2
 
     ${info}    Get Server Info
-    ${ver}    Set Variable    ${info}[1]
-    ${srv_version}    Set Variable    ${info}[2]
+    VAR    ${ver}    ${info}[1]
+    VAR    ${srv_version}    ${info}[2]
     IF    ${{$ver == '5' and $srv_version == 'RedDatabase'}}
         VAR    ${expected_result_1}    [('C', 0, 'SQL$GENERATORS '), ('O', 1, 'SQL$GENERATORS ')]
 

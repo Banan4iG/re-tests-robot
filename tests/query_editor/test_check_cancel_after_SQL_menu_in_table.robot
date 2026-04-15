@@ -8,20 +8,20 @@ Test Teardown       Test Teardown
 
 *** Test Cases ***
 test_1
-    action    SELECT
+    Action    SELECT
 
 test_2
-    action    INSERT
+    Action    INSERT
 
 test_3
-    action    UPDATE
+    Action    UPDATE
 
 test_4
-    action    CREATE
+    Action    CREATE
 
 
 *** Keywords ***
-action
+Action
     [Arguments]    ${type}
     Open Connection
     Select From Tree Node Popup Menu    0    New Connection|Tables (10)|EMPLOYEE    Generate SQL|${type} statement

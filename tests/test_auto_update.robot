@@ -13,7 +13,7 @@ no_reload
     No Reload    ${path_to_exe}
 
 auto_reload
-    ${path_to_exe}=    Test Api
+    Test Api
     ...    \nupdate.use.https=false\nupdate.check.url=http\://localhost/?project=rdbexpert&version=9999.98\nupdate.check.rc.url=http\://localhost/?project=rdbexpert&version=9999.98&showrc=true
     Auto Reload
 

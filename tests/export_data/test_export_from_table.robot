@@ -50,7 +50,7 @@ test_export_table
     Select Dialog    Export Data
 
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     IF    ${{$ver == '2.6'}}
         ${expected_content}=    Catenate
         ...    SEPARATOR=\n

@@ -161,8 +161,7 @@ test_execute_to_file
     Select From Combo Box    columnDelimiterCombo    ;
     Check Check Box    addColumnHeadersCheck
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    ${srv_ver}=    Set Variable    ${info}[2]
+    VAR    ${ver}=    ${info}[1]
     IF    ${{$ver == '2.6'}}
         ${expected_content}=    Catenate
         ...    SEPARATOR=\n

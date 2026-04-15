@@ -32,8 +32,7 @@ test_1
     Click On Component    icon_grant_column
 
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    ${srv_ver}=    Set Variable    ${info}[2]
+    VAR    ${srv_ver}=    ${info}[2]
     IF    ${{$srv_ver == 'RedDatabase'}}
         VAR    ${expected_roles}=
         ...    ['USER_MANAGEMENT', 'READ_RAW_PAGES', 'CREATE_USER_TYPES', 'USE_NBACKUP_UTILITY', 'CHANGE_SHUTDOWN_MODE', 'TRACE_ANY_ATTACHMENT', 'MONITOR_ANY_ATTACHMENT', 'CREATE_DATABASE', 'DROP_DATABASE', 'USE_GBAK_UTILITY', 'USE_GSTAT_UTILITY', 'USE_GFIX_UTILITY', 'IGNORE_DB_TRIGGERS', 'CHANGE_HEADER_SETTINGS', 'SELECT_ANY_OBJECT_IN_DATABASE', 'ACCESS_ANY_OBJECT_IN_DATABASE', 'MODIFY_ANY_OBJECT_IN_DATABASE', 'CHANGE_MAPPING_RULES', 'USE_GRANTED_BY_CLAUSE', 'GRANT_REVOKE_ON_ANY_OBJECT', 'GRANT_REVOKE_ANY_DDL_RIGHT', 'CREATE_PRIVILEGED_ROLES', 'GET_DBCRYPT_INFO', 'MODIFY_EXT_CONN_POOL', 'REPLICATE_INTO_DATABASE', 'PROFILE_ANY_ATTACHMENT', 'EXECUTE_ANY_OBJECT_IN_DATABASE', 'UPDATE_ANY_OBJECT_IN_DATABASE']
@@ -54,7 +53,7 @@ test_1
 *** Keywords ***
 Setup
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     Skip If    ${{$ver != '5'}}
     Lock Employee
     Execute Immediate    CREATE ROLE TEST_ROLE;

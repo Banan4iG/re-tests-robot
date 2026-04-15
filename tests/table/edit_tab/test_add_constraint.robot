@@ -209,8 +209,8 @@ Init
 Check Commit
     [Arguments]    ${text}    ${ts}=PRIMARY    ${dialog}=Commiting changes
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    ${srv_ver}=    Set Variable    ${info}[2]
+    VAR    ${ver}=    ${info}[1]
+    VAR    ${srv_ver}=    ${info}[2]
     IF    ${{$ver == '5' and $srv_ver == 'RedDatabase'}}
         IF    '${TEST_NAME}' == 'test_check'
             VAR    ${check_ts}=    ${EMPTY}
@@ -228,7 +228,7 @@ Check Commit
 
     Push Button    commitButton
     Sleep    0.1s
-    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
+    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
     Run Keyword And Expect Error
     ...    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Create constraint'
     ...    Select Dialog
@@ -253,8 +253,8 @@ Check Index
 
 Check Skip
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    ${srv_ver}=    Set Variable    ${info}[2]
+    VAR    ${ver}=    ${info}[1]
+    VAR    ${srv_ver}=    ${info}[2]
     Skip If    ${{not($ver == '5' and $srv_ver == 'RedDatabase')}}
 
 Select References

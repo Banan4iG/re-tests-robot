@@ -209,7 +209,7 @@ test_SQL_export_to_file
 *** Keywords ***
 Init
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     IF    ${{$ver == '2.6'}}
         Lock Employee
         Set Blobs

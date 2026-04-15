@@ -23,7 +23,7 @@ Create New Conn
     Push Button    new-connection-command
     Sleep    1s
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     IF    ${{$ver == '2.6'}}
         Select From Combo Box    serverCombo    Red Database (Firebird) 2.X
         Select From Combo Box    authCombo    Basic
@@ -33,7 +33,7 @@ Create New Conn
     ${connect_type}=    Get Environment Variable    CONNECT_TYPE    server
     IF    ${{$connect_type == 'embedded'}}
         ${info}=    Get Server Info
-        ${home_dir}=    Set Variable    ${info}[0]
+        VAR    ${home_dir}=    ${info}[0]
         VAR    ${db_path}=    ${home_dir}examples/empbuild/employee.fdb
         Type Into Text Field    fileField    ${db_path}
     ELSE

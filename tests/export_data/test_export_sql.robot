@@ -130,7 +130,7 @@ test_execute_to_file
     Type Into Text Field    exportTableNameField    TEST_TABLE
 
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     IF    ${{$ver == '2.6'}}
         VAR    ${expected_content}=
         ...    -- table creating -- CREATE TABLE TEST_TABLE ( COUNTRY VARCHAR(15), CURRENCY VARCHAR(10) ); -- inserting data -- INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'USA', 'Dollar' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'England', 'Pound' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'Canada', 'CdnDlr' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'Switzerland', 'SFranc' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'Japan', 'Yen' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'Italy', 'Lira' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'France', 'FFranc' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'Germany', 'D-Mark' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'Australia', 'ADollar' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'Hong Kong', 'HKDollar' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'Netherlands', 'Guilder' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'Belgium', 'BFranc' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'Austria', 'Schilling' ); INSERT INTO TEST_TABLE ( COUNTRY, CURRENCY ) VALUES ( 'Fiji', 'FDollar' );

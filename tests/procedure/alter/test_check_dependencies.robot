@@ -20,8 +20,8 @@ test_1
     @{tree22}=    Get Tree Node Child Names    1    New Connection|Tables (1)
 
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    ${srv_ver}=    Set Variable    ${info}[2]
+    VAR    ${ver}=    ${info}[1]
+    VAR    ${srv_ver}=    ${info}[2]
     IF    ${{$ver == '5' and $srv_ver == 'RedDatabase'}}
         ${connect_type}=    Get Environment Variable    CONNECT_TYPE    server
         IF    ${{$connect_type == 'embedded'}}

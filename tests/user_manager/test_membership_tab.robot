@@ -41,8 +41,8 @@ test_check_membership
     Click On Table Cell    usersRolesListTable    ${index}    0
 
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    ${srv_version}=    Set Variable    ${info}[2]
+    VAR    ${ver}=    ${info}[1]
+    VAR    ${srv_version}=    ${info}[2]
     IF    ${{not(($srv_version == 'Firebird' and $ver == '3') or $ver == '2.6')}}
         ${row}=    Find Table Row    membershipTable    ATEST_MEMBERSHIP_ROLE    Roles
         Click On Table Cell    membershipTable    ${row}    Default    2
@@ -86,8 +86,8 @@ test_check_membership
     Should Be Equal As Strings    ${cell_value}    false
 
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    ${srv_version}=    Set Variable    ${info}[2]
+    VAR    ${ver}=    ${info}[1]
+    VAR    ${srv_version}=    ${info}[2]
     IF    ${{not(($srv_version == 'Firebird' and $ver == '3') or $ver == '2.6')}}
         ${row}=    Find Table Row    membershipTable    BTEST_MEMBERSHIP_ROLE    Users/Roles
         ${cell_value}=    Get Table Cell Value    membershipTable    ${row}    User Type

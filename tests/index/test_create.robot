@@ -167,7 +167,7 @@ Check
     END
     Push Button    commitButton
     Sleep    0.1s
-    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
+    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
     Run Keyword And Expect Error
     ...    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Create index'
     ...    Select Dialog

@@ -18,7 +18,7 @@ test_1
     Push Button    removeAllButton
     Push Button    sortAvailableButton
     @{list_column}=    Get List Values    0
-    @{expected_list_column}=    Create List
+    VAR    @{expected_list_column}=
     ...    CHARSET
     ...    CLIENT_ADDRESS
     ...    CLIENT_PROCESS
@@ -88,10 +88,9 @@ test_1
 Randoming
     Push Button    removeAllButton
     Push Button    selectAllButton
-    @{list_column}=    Get List Values    1
-    @{avaible_actions}=    Create List    movePageUpButton    moveUpButton    moveDownButton    movePageDownButton
-    VAR    ${i}=    0
-    FOR    ${i}    IN    5
+    @{list_column}=    Get List Values    1    # robocop: off
+    VAR    @{avaible_actions}=    movePageUpButton    moveUpButton    moveDownButton    movePageDownButton    # robocop: off
+    FOR    IN RANGE    5
         ${rel}=    random.Choice    ${list_column}
         ${ract}=    random.Choice    ${avaible_actions}
         Click On List Item    1    ${rel}

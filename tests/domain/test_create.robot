@@ -165,7 +165,7 @@ test_data_type
     Check Data Type    CREATE DOMAIN TEST_DOMAIN AS VARCHAR(123) CHARACTER SET UTF8 COLLATE UNICODE
 
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     IF    ${{$ver == '3'}}
         Select From Combo Box    typesCombo    BOOLEAN
         Text Field Should Be Disabled    sizeField
@@ -254,7 +254,7 @@ test_sql
     Init
     Select Tab As Context    SQL
     ${res}=    Get Text Field Value    0
-    ${expectation}=    Set Variable    CREATE DOMAIN TEST_DOMAIN AS BIGINT;
+    VAR    ${expectation}=    CREATE DOMAIN TEST_DOMAIN AS BIGINT;
     Should Be Equal As Strings    ${res}    ${expectation}    strip_spaces=${True}    collapse_spaces=${True}
     Clear Text Field    0
     Type Into Text Field    0    CREATE DOMAIN TEST_DOMAIN AS CHAR(111) CHARACTER SET WIN1254 COLLATE WIN1254
@@ -285,7 +285,7 @@ Check
     Tree Node Should Exist    0    New Connection|Domains (16)|${name}
 
 Check Data Type
-    [Arguments]    ${text}    ${name}=TEST_DOMAIN
+    [Arguments]    ${text}
     Select Dialog    Create domain
     Push Button    submitButton
     Sleep    0.5s

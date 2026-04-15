@@ -9,7 +9,7 @@ Test Teardown       Test Teardown
 *** Test Cases ***
 test_1
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     Skip If    ${{$ver != '5'}}
     Lock Employee
     ${create_procudere_script}=    Build Procedure

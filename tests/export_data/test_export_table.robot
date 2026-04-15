@@ -28,7 +28,7 @@ test_1
     Clear Text Field    filePathField
     Type Into Text Field    filePathField    ${export_path}
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     IF    ${{$ver == '2.6'}}
         ${expected_content}=    Catenate
         ...    SEPARATOR=\n

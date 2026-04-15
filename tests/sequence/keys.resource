@@ -6,7 +6,6 @@ Resource    ../../files/keywords.resource
 *** Keywords ***
 Setup
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    ${srv_ver}=    Set Variable    ${info}[2]
+    VAR    ${ver}=    ${info}[1]
     Skip If    ${{$ver == '2.6'}}
     Test Setup

@@ -22,7 +22,7 @@ test_1
     Type Into Text Field    lastNameField    test
     Push Button    submitButton
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     IF    ${{$ver != '2.6'}}
         Select Dialog    Commiting changes
         Push Button    commitButton

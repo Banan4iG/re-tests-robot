@@ -26,7 +26,6 @@ test_delete
 
 *** Keywords ***
 Init
-    [Arguments]    ${name}=TEST_DOMAIN
     Lock Employee
     Execute Immediate    CREATE DOMAIN TEST_DOMAIN AS BIGINT
     Open Connection

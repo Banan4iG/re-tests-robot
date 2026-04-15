@@ -20,14 +20,14 @@ test_alter_gtt
     Check Table Comment    NEW_GTT    GLOBAL TEMPORARY
 
 test_alter_function
-    Check Skip 2.6
+    Check Skip 26
     Lock Employee
     Execute Immediate    CREATE OR ALTER FUNCTION NEW_FUNC RETURNS VARCHAR(5) AS begin RETURN 'five'; end
     Init Alter    Functions (1)|NEW_FUNC
     Check Comment    NEW_FUNC    FUNCTION
 
 test_alter_package
-    Check Skip 2.6
+    Check Skip 26
     Lock Employee
     Execute Immediate    CREATE OR ALTER PACKAGE NEW_PACK AS BEGIN END
     Execute Immediate    RECREATE PACKAGE BODY NEW_PACK AS BEGIN END
@@ -67,13 +67,13 @@ test_alter_job
 *** Keywords ***
 Check Skip
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    ${srv_ver}=    Set Variable    ${info}[2]
+    VAR    ${ver}=    ${info}[1]
+    VAR    ${srv_ver}=    ${info}[2]
     Skip If    ${{not($ver == '5' and $srv_ver == 'RedDatabase')}}
 
-Check Skip 2.6
+Check Skip 26
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     Skip If    ${{$ver == '2.6'}}
 
 Init Alter

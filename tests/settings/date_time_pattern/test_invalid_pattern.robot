@@ -50,5 +50,5 @@ Test
 
 Check Skip
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     Skip If    ${{$ver != '5'}}

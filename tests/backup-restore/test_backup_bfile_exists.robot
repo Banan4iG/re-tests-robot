@@ -18,8 +18,8 @@ test_2
     ${bk_path}=    Init
     Push Button    Yes
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    ${srv_ver}=    Set Variable    ${info}[2]
+    VAR    ${ver}=    ${info}[1]
+    VAR    ${srv_ver}=    ${info}[2]
     IF    ${{$ver == '5' and $srv_ver == 'RedDatabase'}}
         Select Dialog    Message
         Label Text Should Be    0    Backup completed successfully!

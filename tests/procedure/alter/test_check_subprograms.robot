@@ -8,7 +8,7 @@ Test Teardown       Test Teardown
 
 *** Test Cases ***
 test_1
-    Init proc
+    Init Proc
     @{value}=    Get Table Values    0
     Should Be Equal As Strings    ${value}    [['TEST_SUB', 'PROCEDURE'], ['TEST_FUNC', 'FUNCTION']]
     ${row_proc}=    Find Table Row    0    PROCEDURE    Datatype
@@ -29,14 +29,14 @@ test_1
     ...    collapse_spaces=${True}
 
 test_alter
-    Init proc
+    Init Proc
     ${row_proc}=    Find Table Row    0    PROCEDURE    Datatype
     ${row_func}=    Find Table Row    0    FUNCTION    Datatype
     Click On Table Cell    0    ${row_proc}    Name
     Clear Text Field    0
     Type Into Text Field    0    DECLARE PROCEDURE TEST_SUB AS BEGIN END\n
 
-    Check ddl
+    Check DDL
     ...    CREATE OR ALTER PROCEDURE TEST AS DECLARE PROCEDURE TEST_SUB AS BEGIN END DECLARE FUNCTION TEST_FUNC RETURNS INTEGER AS DECLARE PAR3 TYPE OF CUSTNO; BEGIN RETURN 123; END BEGIN END;
 
     Select Tab As Context    TEST:PROCEDURE:New Connection
@@ -45,18 +45,18 @@ test_alter
     Clear Text Field    0
     Type Into Text Field    0    DECLARE FUNCTION TEST_FUNC RETURNS INTEGER AS BEGIN END\n
 
-    Check ddl
+    Check DDL
     ...    CREATE OR ALTER PROCEDURE TEST AS DECLARE PROCEDURE TEST_SUB AS BEGIN END DECLARE FUNCTION TEST_FUNC RETURNS INTEGER AS BEGIN END BEGIN END;
 
 test_remove
-    Init proc
+    Init Proc
     ${row_proc}=    Find Table Row    0    PROCEDURE    Datatype
     Click On Table Cell    0    ${row_proc}    Name
     Push Button    deleteRowButton
     ${row_func}=    Find Table Row    0    FUNCTION    Datatype
     Click On Table Cell    0    ${row_func}    Name
     Push Button    deleteRowButton
-    Check ddl    CREATE OR ALTER PROCEDURE TEST AS BEGIN END;
+    Check DDL    CREATE OR ALTER PROCEDURE TEST AS BEGIN END;
 
 test_empty_remove
     Lock Employee
@@ -77,11 +77,11 @@ test_empty_remove
 *** Keywords ***
 Setup
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     Skip If    ${{$ver == '2.6'}}
     Test Setup
 
-Init proc
+Init Proc
     Lock Employee
     Execute Immediate
     ...    CREATE OR ALTER PROCEDURE TEST AS DECLARE PROCEDURE TEST_SUB ( PAR1 INTEGER ) RETURNS ( PAR2 INTEGER ) AS DECLARE PAR3 TYPE OF CUSTNO; BEGIN PAR2 = 2; END DECLARE FUNCTION TEST_FUNC RETURNS INTEGER AS DECLARE PAR3 TYPE OF CUSTNO; BEGIN RETURN 123; END BEGIN END
@@ -90,7 +90,7 @@ Init proc
     Select Tab As Context    TEST:PROCEDURE:New Connection
     Select Tab As Context    Subprograms
 
-Check ddl
+Check DDL
     [Arguments]    ${ddl}
     Select Main Window
     ${new_ddl}=    Get Text Field Value    2

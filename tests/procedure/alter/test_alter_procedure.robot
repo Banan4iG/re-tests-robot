@@ -33,21 +33,21 @@ alter_ddl
 
 alter_add_input_par
     ${authid}=    Get Authid
-    Add par
+    Add Par
     ...    CREATE OR ALTER PROCEDURE TEST (PAR0 INTEGER) RETURNS ( TOT INTEGER ) AS BEGIN tot = 55; END
     ...    Input Parameters
     ...    CREATE OR ALTER PROCEDURE TEST${authid}( PAR0 INTEGER, PAR1 EMPNO, PAR2 TYPE OF CUSTNO, PAR3 TYPE OF COLUMN COUNTRY.COUNTRY, PAR4 VARCHAR(10) CHARACTER SET UTF8 NOT NULL DEFAULT 'test' ) RETURNS ( TOT INTEGER ) AS BEGIN tot = 55; END;
 
 alter_add_out_par
     ${authid}=    Get Authid
-    Add par
+    Add Par
     ...    CREATE OR ALTER PROCEDURE TEST RETURNS ( PAR0 INTEGER ) AS BEGIN PAR0 = 55; END
     ...    Output Parameters
     ...    CREATE OR ALTER PROCEDURE TEST${authid}RETURNS ( PAR0 INTEGER, PAR1 EMPNO, PAR2 TYPE OF CUSTNO, PAR3 TYPE OF COLUMN COUNTRY.COUNTRY, PAR4 VARCHAR(10) CHARACTER SET UTF8 NOT NULL ) AS BEGIN PAR0 = 55; END;
 
 alter_add_var
     ${authid}=    Get Authid
-    Add par
+    Add Par
     ...    CREATE OR ALTER PROCEDURE TEST RETURNS ( TOT INTEGER ) AS DECLARE PAR0 INTEGER; BEGIN tot = 55; END
     ...    Variables
     ...    CREATE OR ALTER PROCEDURE TEST${authid}RETURNS ( TOT INTEGER ) AS DECLARE PAR0 INTEGER; DECLARE PAR1 EMPNO; DECLARE PAR2 TYPE OF CUSTNO; DECLARE PAR3 TYPE OF COLUMN COUNTRY.COUNTRY; DECLARE PAR4 VARCHAR(10) CHARACTER SET UTF8 NOT NULL DEFAULT 'test'; BEGIN tot = 55; END;
@@ -55,7 +55,7 @@ alter_add_var
 alter_add_cursor
     Lock Employee
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     Execute Immediate    CREATE OR ALTER PROCEDURE TEST RETURNS ( PAR0 INTEGER ) AS BEGIN PAR0 = 55; END
     Open Connection
     Click On Tree Node    0    New Connection|Procedures (11)|TEST    2
@@ -92,21 +92,21 @@ alter_add_cursor
 
 alter_remove_input_par
     ${authid}=    Get Authid
-    Remove par
+    Remove Par
     ...    CREATE OR ALTER PROCEDURE TEST ( PAR0 INTEGER, PAR1 VARCHAR(10) CHARACTER SET UTF8 NOT NULL, PAR2 EMPNO, PAR3 TYPE OF CUSTNO, PAR4 TYPE OF COLUMN COUNTRY.COUNTRY ) RETURNS ( TOT INTEGER ) AS BEGIN tot = 55; END
     ...    Input Parameters
     ...    CREATE OR ALTER PROCEDURE TEST${authid}( PAR0 INTEGER ) RETURNS ( TOT INTEGER ) AS BEGIN tot = 55; END;
 
 alter_remove_out_par
     ${authid}=    Get Authid
-    Remove par
+    Remove Par
     ...    CREATE OR ALTER PROCEDURE TEST RETURNS ( PAR0 INTEGER, PAR1 VARCHAR(10) CHARACTER SET UTF8 NOT NULL, PAR2 EMPNO, PAR3 TYPE OF CUSTNO, PAR4 TYPE OF COLUMN COUNTRY.COUNTRY ) AS BEGIN PAR0 = 55; END
     ...    Output Parameters
     ...    CREATE OR ALTER PROCEDURE TEST${authid}RETURNS ( PAR0 INTEGER ) AS BEGIN PAR0 = 55; END;
 
 alter_remove_var
     ${authid}=    Get Authid
-    Remove par
+    Remove Par
     ...    CREATE OR ALTER PROCEDURE TEST RETURNS ( TOT INTEGER ) AS DECLARE PAR0 INTEGER; DECLARE PAR1 VARCHAR(10) CHARACTER SET UTF8 NOT NULL; DECLARE PAR2 EMPNO; DECLARE PAR3 TYPE OF CUSTNO; DECLARE PAR4 TYPE OF COLUMN COUNTRY.COUNTRY; BEGIN tot = 55; END
     ...    Variables
     ...    CREATE OR ALTER PROCEDURE TEST${authid}RETURNS ( TOT INTEGER ) AS DECLARE PAR0 INTEGER; BEGIN tot = 55; END;
@@ -147,21 +147,21 @@ alter_remove_cursor
 
 move_input_par
     ${authid}=    Get Authid
-    Move par
+    Move Par
     ...    CREATE OR ALTER PROCEDURE TEST ( PAR1 INTEGER, PAR2 INTEGER, PAR3 INTEGER, PAR4 INTEGER ) AS BEGIN END
     ...    Input Parameters
     ...    CREATE OR ALTER PROCEDURE TEST${authid}( PAR1 INTEGER, PAR3 INTEGER, PAR2 INTEGER, PAR4 INTEGER ) AS BEGIN END;
 
 move_out_par
     ${authid}=    Get Authid
-    Move par
+    Move Par
     ...    CREATE OR ALTER PROCEDURE TEST RETURNS ( PAR1 INTEGER, PAR2 INTEGER, PAR3 INTEGER, PAR4 INTEGER ) AS BEGIN END
     ...    Output Parameters
     ...    CREATE OR ALTER PROCEDURE TEST${authid}RETURNS ( PAR1 INTEGER, PAR3 INTEGER, PAR2 INTEGER, PAR4 INTEGER ) AS BEGIN END;
 
 
 *** Keywords ***
-Add par
+Add Par
     [Arguments]    ${init_proc}    ${tab}    ${ddl}
     Lock Employee
     Execute Immediate    ${init_proc}
@@ -203,7 +203,7 @@ Add par
     ${new_ddl2}=    Get Text Field Value    1
     Should Be Equal As Strings    ${new_ddl2}    ${ddl}    strip_spaces=${True}    collapse_spaces=${True}
 
-Remove par
+Remove Par
     [Arguments]    ${init_proc}    ${tab}    ${ddl}
     Lock Employee
     Execute Immediate    ${init_proc}
@@ -227,7 +227,7 @@ Remove par
     ${new_ddl2}=    Get Text Field Value    1
     Should Be Equal As Strings    ${new_ddl2}    ${ddl}    strip_spaces=${True}    collapse_spaces=${True}
 
-Move par
+Move Par
     [Arguments]    ${init_proc}    ${tab}    ${ddl}
     Lock Employee
     Execute Immediate    ${init_proc}
@@ -253,7 +253,7 @@ Move par
 
 Get Authid
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     IF    ${{$ver == '2.6'}}
         VAR    ${authid}=    ${SPACE}AUTHID OWNER${SPACE}
     ELSE

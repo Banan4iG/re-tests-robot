@@ -88,7 +88,7 @@ test_ddl_to_create
     Init
     Select Tab As Context    DDL to create
     ${res}=    Get Text Field Value    0
-    ${text}=    Set Variable
+    VAR    ${text}=
     ...    CREATE OR ALTER TRIGGER TEST_TRIGGER ACTIVE BEFORE CREATE FUNCTION POSITION 0 AS DECLARE tmp INTEGER; BEGIN SELECT COUNT(*) FROM SHOW_LANGS('ENG', 1, 'USA') INTO tmp; END;
     Should Be Equal As Strings    ${res}    ${text}    strip_spaces=${True}    collapse_spaces=${True}
 
@@ -104,7 +104,7 @@ Init
     Select Tab As Context    ${name}:DDL TRIGGER:New Connection
 
 Check Changes
-    [Arguments]    ${text}    ${name}=TEST_TRIGGER
+    [Arguments]    ${text}
     Select Main Window
     Push Button    submitButton
     Sleep    0.1s

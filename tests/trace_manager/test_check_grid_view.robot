@@ -24,10 +24,10 @@ test_1
     Sleep    5s
     Select Dialog    Configuration
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    ${srv_ver}=    Set Variable    ${info}[2]
+    VAR    ${ver}=    ${info}[1]
+    VAR    ${srv_ver}=    ${info}[2]
     IF    $ver != '2.6'
-        ${ver}=    Set Variable    ${ver}.0
+        VAR    ${ver}=    ${ver}.0
     END
     Select From Combo Box    0    ${srv_ver} ${ver}
     Check Check Box    checkBoxlog_statement_finish

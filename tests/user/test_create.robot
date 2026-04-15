@@ -113,7 +113,7 @@ Check
 
     Push Button    commitButton
     Sleep    0.1s
-    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
+    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
     Run Keyword And Expect Error
     ...    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Create user'
     ...    Select Dialog
@@ -128,6 +128,6 @@ Drop User
 
 Setup
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    Skip if    ${{$ver == '2.6'}}
+    VAR    ${ver}=    ${info}[1]
+    Skip If    ${{$ver == '2.6'}}
     Test Setup

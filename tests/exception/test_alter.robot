@@ -17,7 +17,7 @@ test_1
 
 test_2
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     Skip If    ${{$ver == '2.6'}}
     Init    "NEW EXP"    NEW EXP
     Select Tab As Context    Privileges
@@ -55,8 +55,8 @@ test_4
     @{tree_proc}=    Get Tree Node Child Names    0    New Connection|Procedures (1)
     Should Be Equal As Strings    ${tree_proc}    ['NEW_PROC']
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    ${srv_ver}=    Set Variable    ${info}[2]
+    VAR    ${ver}=    ${info}[1]
+    VAR    ${srv_ver}=    ${info}[2]
     IF    ${{$ver == '5' and $srv_ver == 'RedDatabase'}}
         ${connect_type}=    Get Environment Variable    CONNECT_TYPE    server
         IF    ${{$connect_type == 'embedded'}}
@@ -115,7 +115,7 @@ Check
 
     Push Button    commitButton
     Sleep    0.1s
-    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
+    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
     Run Keyword And Expect Error
     ...    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Commiting changes'
     ...    Select Dialog

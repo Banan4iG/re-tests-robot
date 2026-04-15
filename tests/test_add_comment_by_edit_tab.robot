@@ -23,14 +23,14 @@ test_alter_view
     Check Comment    PHONE_LIST    VIEW    RDB$RELATIONS
 
 test_alter_function
-    Check Skip 2.6
+    Check Skip 26
     Lock Employee
     Execute Immediate    CREATE OR ALTER FUNCTION NEW_FUNC RETURNS VARCHAR(5) AS begin RETURN 'five'; end
     Init Alter    Functions (1)|NEW_FUNC
     Check Comment    NEW_FUNC    FUNCTION    RDB$FUNCTIONS
 
 test_alter_package
-    Check Skip 2.6
+    Check Skip 26
     Lock Employee
     Execute Immediate    CREATE OR ALTER PACKAGE NEW_PACK AS BEGIN END
     Init Alter    Packages (1)|NEW_PACK
@@ -57,7 +57,7 @@ test_alter_exception
 test_alter_udf
     Lock Employee
     Execute Immediate    DECLARE EXTERNAL FUNCTION NEW_UDF RETURNS BIGINT ENTRY_POINT '123' MODULE_NAME '123'
-    Init alter    UDFs (1)|NEW_UDF
+    Init Alter    UDFs (1)|NEW_UDF
     Check Comment    NEW_UDF    EXTERNAL FUNCTION    RDB$FUNCTIONS
 
 test_alter_ts
@@ -78,13 +78,13 @@ test_alter_job
 *** Keywords ***
 Check Skip
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    ${srv_ver}=    Set Variable    ${info}[2]
+    VAR    ${ver}=    ${info}[1]
+    VAR    ${srv_ver}=    ${info}[2]
     Skip If    ${{not($ver == '5' and $srv_ver == 'RedDatabase')}}
 
-Check Skip 2.6
+Check Skip 26
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     Skip If    ${{$ver == '2.6'}}
 
 Init Alter

@@ -34,16 +34,16 @@ test_3
 
 test_count_hosts_default
     ${path}=    Setup
-    Check hosts count    ${path}    127.1.1.3\n127.1.1.2\n127.1.1.1\nhost2
+    Check Hosts Count    ${path}    127.1.1.3\n127.1.1.2\n127.1.1.1\nhost2
 
 test_count_hosts_max
     ${path}=    Set Count Hosts    9
-    Check hosts count    ${path}    127.1.1.3\n127.1.1.2\n127.1.1.1\nhost2\nhost4\nhost3\nhost0\n127.0.0.1\nhost
+    Check Hosts Count    ${path}    127.1.1.3\n127.1.1.2\n127.1.1.1\nhost2\nhost4\nhost3\nhost0\n127.0.0.1\nhost
     [Teardown]    Restore Hosts Count
 
 test_count_hosts_min
     ${path}=    Set Count Hosts    1
-    Check hosts count    ${path}    127.1.1.3
+    Check Hosts Count    ${path}    127.1.1.3
     [Teardown]    Restore Hosts Count
 
 
@@ -114,7 +114,7 @@ Set Count Hosts
     Sleep    2s
     RETURN    ${path}
 
-Check hosts count
+Check Hosts Count
     [Arguments]    ${path}    ${expected_content}
     Add Hosts
     Add More Hosts

@@ -9,7 +9,7 @@ Test Teardown       Test Teardown
 
 
 *** Variables ***
-@{list_create_check_boxes}
+@{LIST_CREATE_CHECK_BOXES}
 ...                             CREATE FUNCTION check
 ...                             CREATE INDEX check
 ...                             CREATE PROCEDURE check
@@ -26,7 +26,7 @@ Test Teardown       Test Teardown
 ...                             CREATE ROLE check
 ...                             CREATE PACKAGE BODY check
 
-@{list_alter_check_boxes}
+@{LIST_ALTER_CHECK_BOXES}
 ...                             ALTER FUNCTION check
 ...                             ALTER INDEX check
 ...                             ALTER PROCEDURE check
@@ -42,7 +42,7 @@ Test Teardown       Test Teardown
 ...                             ALTER MAPPING check
 ...                             ALTER ROLE check
 
-@{list_drop_check_boxes}
+@{LIST_DROP_CHECK_BOXES}
 ...                             DROP FUNCTION check
 ...                             DROP INDEX check
 ...                             DROP PROCEDURE check
@@ -67,9 +67,9 @@ test_check_any_statement
     Check Box Should Be Checked    createAllCheck
     Check Box Should Be Checked    alterAllCheck
     Check Box Should Be Checked    dropAllCheck
-    Check Boxes Should Be Checked    @{list_create_check_boxes}
-    Check Boxes Should Be Checked    @{list_alter_check_boxes}
-    Check Boxes Should Be Checked    @{list_drop_check_boxes}
+    Check Boxes Should Be Checked    @{LIST_CREATE_CHECK_BOXES}
+    Check Boxes Should Be Checked    @{LIST_ALTER_CHECK_BOXES}
+    Check Boxes Should Be Checked    @{LIST_DROP_CHECK_BOXES}
 
     Check
     ...    CREATE OR ALTER TRIGGER NEW_TRIGGER ACTIVE BEFORE ANY DDL STATEMENT POSITION 0 AS BEGIN /* Trigger impl */ END
@@ -81,9 +81,9 @@ test_check_only_create_statements
     Check Box Should Be Checked    createAllCheck
     Check Box Should Not Be Checked    alterAllCheck
     Check Box Should Not Be Checked    dropAllCheck
-    Check Boxes Should Be Checked    @{list_create_check_boxes}
-    Check Boxes Should Not Be Checked    @{list_alter_check_boxes}
-    Check Boxes Should Not Be Checked    @{list_drop_check_boxes}
+    Check Boxes Should Be Checked    @{LIST_CREATE_CHECK_BOXES}
+    Check Boxes Should Not Be Checked    @{LIST_ALTER_CHECK_BOXES}
+    Check Boxes Should Not Be Checked    @{LIST_DROP_CHECK_BOXES}
 
     Check
     ...    CREATE OR ALTER TRIGGER "NEW TRIGGER" ACTIVE AFTER CREATE FUNCTION OR CREATE INDEX OR CREATE PROCEDURE OR CREATE SEQUENCE OR CREATE TABLE OR CREATE TRIGGER OR CREATE VIEW OR CREATE DOMAIN OR CREATE EXCEPTION OR CREATE PACKAGE OR CREATE USER OR CREATE COLLATION OR CREATE MAPPING OR CREATE ROLE OR CREATE PACKAGE BODY POSITION 0 AS BEGIN /* Trigger impl */ END
@@ -96,9 +96,9 @@ test_check_only_alter_statements
     Check Box Should Not Be Checked    createAllCheck
     Check Box Should Be Checked    alterAllCheck
     Check Box Should Not Be Checked    dropAllCheck
-    Check Boxes Should Not Be Checked    @{list_create_check_boxes}
-    Check Boxes Should Be Checked    @{list_alter_check_boxes}
-    Check Boxes Should Not Be Checked    @{list_drop_check_boxes}
+    Check Boxes Should Not Be Checked    @{LIST_CREATE_CHECK_BOXES}
+    Check Boxes Should Be Checked    @{LIST_ALTER_CHECK_BOXES}
+    Check Boxes Should Not Be Checked    @{LIST_DROP_CHECK_BOXES}
 
     Check
     ...    CREATE OR ALTER TRIGGER """NEW TRIGGER""" INACTIVE BEFORE ALTER FUNCTION OR ALTER INDEX OR ALTER PROCEDURE OR ALTER SEQUENCE OR ALTER TABLE OR ALTER TRIGGER OR ALTER VIEW OR ALTER DOMAIN OR ALTER EXCEPTION OR ALTER PACKAGE OR ALTER USER OR ALTER CHARACTER SET OR ALTER MAPPING OR ALTER ROLE POSITION 0 AS BEGIN /* Trigger impl */ END
@@ -112,9 +112,9 @@ test_check_only_drop_statements
     Check Box Should Not Be Checked    createAllCheck
     Check Box Should Not Be Checked    alterAllCheck
     Check Box Should Be Checked    dropAllCheck
-    Check Boxes Should Not Be Checked    @{list_create_check_boxes}
-    Check Boxes Should Not Be Checked    @{list_alter_check_boxes}
-    Check Boxes Should Be Checked    @{list_drop_check_boxes}
+    Check Boxes Should Not Be Checked    @{LIST_CREATE_CHECK_BOXES}
+    Check Boxes Should Not Be Checked    @{LIST_ALTER_CHECK_BOXES}
+    Check Boxes Should Be Checked    @{LIST_DROP_CHECK_BOXES}
 
     Check
     ...    CREATE OR ALTER TRIGGER NEW_TRIGGER ACTIVE BEFORE DROP FUNCTION OR DROP INDEX OR DROP PROCEDURE OR DROP SEQUENCE OR DROP TABLE OR DROP TRIGGER OR DROP VIEW OR DROP DOMAIN OR DROP EXCEPTION OR DROP PACKAGE OR DROP USER OR DROP COLLATION OR DROP MAPPING OR DROP ROLE OR DROP PACKAGE BODY POSITION 10 AS BEGIN /* Trigger impl */ END
@@ -186,7 +186,7 @@ Check
 
     Push Button    commitButton
     Sleep    0.1s
-    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
+    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
     Run Keyword And Expect Error
     ...    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Create DDL trigger'
     ...    Select Dialog

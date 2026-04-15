@@ -29,14 +29,12 @@ test_switch_database
     ${test_base_path}=    Catenate    SEPARATOR=${EMPTY}    ${TEMPDIR}    /test.fdb
     Remove File    ${test_base_path}
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     IF    $ver != '2.6'
         firebird.driver.Create Database    database=${test_base_path}    user=SYSDBA    password=masterkey
     ELSE
-        ${home}=    Set Variable    ${info}[0]
-        ${system}=    platform.System
-        ${fd_lib}=    Set Variable If    '${system}' == 'Linux'    lib/libfbclient.so    bin/fbclient.dll
-        fdb.Load Api    ${home}${fd_lib}
+        VAR    ${home}=    ${info}[0]
+        fdb.Load Api    ${home}bin/fbclient.dll
         fdb.Create Database    database=${test_base_path}    user=SYSDBA    password=masterkey
     END
     Create Connect    ${test_base_path}    ${ver}

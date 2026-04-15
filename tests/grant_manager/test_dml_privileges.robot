@@ -15,10 +15,10 @@ test_check_filter
     Sleep    2s
     @{column_values}=    Get Table Column Values    0    Object
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     IF    $ver == '2.6'
-        @{expected_column_values1}=    Create List    SHOW_LANGS
-        @{expected_column_values2}=    Create List
+        VAR    @{expected_column_values1}=    SHOW_LANGS
+        VAR    @{expected_column_values2}=
         ...    COUNTRY
         ...    CUSTOMER
         ...    DEPARTMENT
@@ -40,8 +40,8 @@ test_check_filter
         ...    SHIP_ORDER
         ...    SUB_TOT_BUDGET
     ELSE
-        @{expected_column_values1}=    Create List    SHOW_LANGS    UNKNOWN_EMP_ID
-        @{expected_column_values2}=    Create List
+        VAR    @{expected_column_values1}=    SHOW_LANGS    UNKNOWN_EMP_ID
+        VAR    @{expected_column_values2}=
         ...    COUNTRY
         ...    CUSTOMER
         ...    DEPARTMENT
@@ -82,8 +82,8 @@ test_check_for_privileges_list
     [Setup]    NONE
     Lock Employee
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    ${srv_ver}=    Set Variable    ${info}[2]
+    VAR    ${ver}=    ${info}[1]
+    VAR    ${srv_ver}=    ${info}[2]
     IF    $ver != '2.6'
         Execute Immediate    CREATE OR ALTER FUNCTION NEW_FUNC RETURNS VARCHAR(5) AS begin RETURN 'five'; end
         Execute Immediate    CREATE PACKAGE NEW_PACK AS BEGIN END
@@ -91,17 +91,17 @@ test_check_for_privileges_list
     END
     Init Grant Manager
     @{privileges_for_list}=    Get List Values    0
-    @{expected_privileges_for_list}=    Create List    SYSDBA
+    VAR    @{expected_privileges_for_list}=    SYSDBA
     Should Be Equal As Strings    ${privileges_for_list}    ${expected_privileges_for_list}
 
     Select From Combo Box    userTypeCombo    Roles
     @{privileges_for_list}=    Get List Values    0
     IF    $ver == '2.6'
-        @{expected_privileges_for_list}=    Create List    RDB$ADMIN    SECADMIN    PUBLIC
+        VAR    @{expected_privileges_for_list}=    RDB$ADMIN    SECADMIN    PUBLIC
     ELSE IF    $srv_ver == 'Firebird'
-        @{expected_privileges_for_list}=    Create List    RDB$ADMIN    PUBLIC
+        VAR    @{expected_privileges_for_list}=    RDB$ADMIN    PUBLIC
     ELSE
-        @{expected_privileges_for_list}=    Create List
+        VAR    @{expected_privileges_for_list}=
         ...    RDB$ADMIN
         ...    RDB$DBADMIN
         ...    RDB$SYSADMIN
@@ -112,12 +112,12 @@ test_check_for_privileges_list
 
     Select From Combo Box    userTypeCombo    Views
     @{privileges_for_list}=    Get List Values    0
-    @{expected_privileges_for_list}=    Create List    PHONE_LIST
+    VAR    @{expected_privileges_for_list}=    PHONE_LIST
     Should Be Equal As Strings    ${privileges_for_list}    ${expected_privileges_for_list}
 
     Select From Combo Box    userTypeCombo    Triggers
     @{privileges_for_list}=    Get List Values    0
-    @{expected_privileges_for_list}=    Create List
+    VAR    @{expected_privileges_for_list}=
     ...    POST_NEW_ORDER
     ...    SAVE_SALARY_CHANGE
     ...    SET_CUST_NO
@@ -127,7 +127,7 @@ test_check_for_privileges_list
     Select From Combo Box    userTypeCombo    Procedures
     @{privileges_for_list}=    Get List Values    0
     Log Variables
-    @{expected_privileges_for_list}=    Create List
+    VAR    @{expected_privileges_for_list}=
     ...    ADD_EMP_PROJ
     ...    ALL_LANGS
     ...    DELETE_EMPLOYEE
@@ -143,25 +143,25 @@ test_check_for_privileges_list
     IF    $ver != '2.6'
         Select From Combo Box    userTypeCombo    Functions
         @{privileges_for_list}=    Get List Values    0
-        @{expected_privileges_for_list}=    Create List    NEW_FUNC
+        VAR    @{expected_privileges_for_list}=    NEW_FUNC
         Should Be Equal As Strings    ${privileges_for_list}    ${expected_privileges_for_list}
 
         Select From Combo Box    userTypeCombo    Packages
         @{privileges_for_list}=    Get List Values    0
-        @{expected_privileges_for_list}=    Create List    NEW_PACK
+        VAR    @{expected_privileges_for_list}=    NEW_PACK
         Should Be Equal As Strings    ${privileges_for_list}    ${expected_privileges_for_list}
     END
 
 test_show_system_obj
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    ${srv_ver}=    Set Variable    ${info}[2]
+    VAR    ${ver}=    ${info}[1]
+    VAR    ${srv_ver}=    ${info}[2]
     Check Check Box    Show System Objects
     Sleep    3s
     @{column_values}=    Get Table Column Values    0    Object
     IF    ${{$srv_ver == 'RedDatabase'}}
         IF    ${{$ver == '5'}}
-            @{expected_column_values}=    Create List
+            VAR    @{expected_column_values}=
             ...    COUNTRY
             ...    CUSTOMER
             ...    DEPARTMENT
@@ -271,7 +271,7 @@ test_show_system_obj
             ...    REASSIGN_SALES
             ...    UNKNOWN_EMP_ID
         ELSE IF    ${{$ver == '3'}}
-            @{expected_column_values}=    Create List
+            VAR    @{expected_column_values}=
             ...    COUNTRY
             ...    CUSTOMER
             ...    DEPARTMENT
@@ -363,7 +363,7 @@ test_show_system_obj
             ...    REASSIGN_SALES
             ...    UNKNOWN_EMP_ID
         ELSE
-            @{expected_column_values}=    Create List
+            VAR    @{expected_column_values}=
             ...    COUNTRY
             ...    CUSTOMER
             ...    DEPARTMENT
@@ -431,7 +431,7 @@ test_show_system_obj
         END
     ELSE
         IF    ${{$ver == '5'}}
-            @{expected_column_values}=    Create List
+            VAR    @{expected_column_values}=
             ...    COUNTRY
             ...    CUSTOMER
             ...    DEPARTMENT
@@ -531,7 +531,7 @@ test_show_system_obj
             ...    REASSIGN_SALES
             ...    UNKNOWN_EMP_ID
         ELSE
-            @{expected_column_values}=    Create List
+            VAR    @{expected_column_values}=
             ...    COUNTRY
             ...    CUSTOMER
             ...    DEPARTMENT
@@ -629,7 +629,7 @@ test_check_grant
     [Setup]    NONE
     Lock Employee
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     IF    $ver != '2.6'
         Execute Immediate    CREATE OR ALTER FUNCTION NEW_FUNC RETURNS VARCHAR(5) AS begin RETURN 'five'; end
         Execute Immediate    CREATE PACKAGE NEW_PACK AS BEGIN END

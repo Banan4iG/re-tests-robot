@@ -32,7 +32,7 @@ Check Tool
     Select From Main Menu    System|Preferences
     Select Dialog    Preferences
     Click On Tree Node    0    Tool Bar|Query Editor Tools
-    ${values}=    Get Table Values    0
+    Get Table Values    0
     ${row}=    Find Table Row    0    Execute single statement    2
     Click On Table Cell    0    ${row}    0
     Push Button    applyButton

@@ -53,7 +53,7 @@ Create DB
     # create
     Push Button    create-database-command
     Select Dialog    Create Database
-    Set Test Variable    ${DB_PATH}    ${TEMPDIR}${/}test_database.fdb
+    VAR    ${DB_PATH}=    ${TEMPDIR}${/}test_database.fdb    scope=TEST
     Remove File    ${DB_PATH}
     Type Into Combobox    hostCombo    localhost
     Type Into Text Field    portField    3050

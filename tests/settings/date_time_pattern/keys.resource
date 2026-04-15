@@ -55,7 +55,7 @@ Check Query Editor
 
 Setup
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     Skip If    ${{$ver != '5'}}
     Test Setup
 

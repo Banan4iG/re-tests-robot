@@ -29,7 +29,7 @@ test_2
 test_3
     ${bk_path}=    Init
     ${info}=    Get Server Info
-    ${home_dir}=    Set Variable    ${info}[0]
+    VAR    ${home_dir}=    ${info}[0]
     VAR    ${db_path}=    ${home_dir}examples/empbuild/employee.fdb
     Select Main Window
     Select Tab As Context    Database backup/restore

@@ -38,7 +38,7 @@ test_migrate_employee
 test_migrate_malahit
     [Timeout]    120s
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     Skip If    ${{$ver == '3'}}
     Test    ${EXECDIR}/files    STM.GDB
 
@@ -166,7 +166,7 @@ test_check_error_and_remove_migrated_db
 *** Keywords ***
 Suite Setup
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     Skip If    ${{$ver == '2.6'}}
     ${system}=    platform.System
     ${path_to_interclient}=    Set Variable If
@@ -193,7 +193,7 @@ Suite Setup
     Select From Combo Box    driverUrlCombo    jdbc:interbase://[host]:[port]/[source]
     Push Button    browseButton
     Select Dialog    Select JDBC Drivers...
-    ${path_to_lib}=    Get Path To Lib
+    Get Path To Lib
     Clear Text Field    0
     Type Into Text Field    0    ${path_to_interclient}
     Push Button    Select

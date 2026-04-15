@@ -20,8 +20,8 @@ test_check_boxs
 test_combo_boxs
     Init No Dependencies
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    ${srv}=    Set Variable    ${info}[2]
+    VAR    ${ver}=    ${info}[1]
+    VAR    ${srv}=    ${info}[2]
     IF    ${{$ver == '5' or ($ver == '3' and $srv == 'RedDatabase')}}
         Select From Combo Box    userContextComboBox    DEFINER
     END
@@ -41,7 +41,7 @@ test_text_fields
 
 test_external_module
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     Skip If    ${{$ver != '2.6'}}
     Init
     Check Check Box    useExternalCheck
@@ -90,7 +90,7 @@ test_ddl_to_create
     Init
     Select Tab As Context    DDL to create
     ${res}=    Get Text Field Value    0
-    ${text}=    Set Variable
+    VAR    ${text}=
     ...    CREATE OR ALTER TRIGGER TEST_TRIGGER FOR COUNTRY ACTIVE BEFORE INSERT POSITION 0 AS BEGIN IF (new.COUNTRY IS NULL) THEN new.COUNTRY = 'test'; END;
     Should Be Equal As Strings    ${res}    ${text}    strip_spaces=${True}    collapse_spaces=${True}
 
@@ -114,7 +114,7 @@ Init No Dependencies
     Select From Tree Node Popup Menu    0    New Connection|Table Triggers (5)|${name}    Edit table trigger
 
 Check Changes
-    [Arguments]    ${text}    ${name}=TEST_TRIGGER
+    [Arguments]    ${text}
     Select Main Window
     Push Button    submitButton
     Sleep    0.1s

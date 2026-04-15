@@ -9,7 +9,7 @@ Test Teardown       Teardown
 *** Test Cases ***
 test_1
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     Skip If    ${{$ver == '2.6'}}
     Execute Immediate    CREATE USER "DEMO" PASSWORD 'pass'
     Execute Immediate    CREATE USER "dEmO" PASSWORD 'pass'
@@ -18,8 +18,16 @@ test_1
     ${res1}=    Check User    DEMO
     Select Main Window
     ${res2}=    Check User    dEmO
-    Should Be Equal As Strings    ${res1}    CREATE USER DEMO ACTIVE USING PLUGIN SRP;\n    collapse_spaces=${True}    strip_spaces=${True}
-    Should Be Equal As Strings    ${res2}    CREATE USER "dEmO" ACTIVE USING PLUGIN SRP;\n    collapse_spaces=${True}    strip_spaces=${True}
+    Should Be Equal As Strings
+    ...    ${res1}
+    ...    CREATE USER DEMO ACTIVE USING PLUGIN SRP;\\n
+    ...    collapse_spaces=${True}
+    ...    strip_spaces=${True}
+    Should Be Equal As Strings
+    ...    ${res2}
+    ...    CREATE USER "dEmO" ACTIVE USING PLUGIN SRP;\\n
+    ...    collapse_spaces=${True}
+    ...    strip_spaces=${True}
 
 
 *** Keywords ***

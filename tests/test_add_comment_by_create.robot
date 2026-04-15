@@ -80,19 +80,19 @@ test_create_procedure_cursors
     Push Button    commitButton
 
 test_create_function
-    Check Skip 2.6
+    Check Skip 26
     VAR    ${title}    Create function
     Init Create    Functions    ${title}    ${title}
     Check Comment    ${title}
 
 test_create_function_arg
-    Check Skip 2.6
+    Check Skip 26
     VAR    ${title}    Create function
     Init Create    Functions    ${title}    ${title}
     Check Procedure    Arguments    ${title}
 
 test_create_function_variables
-    Check Skip 2.6
+    Check Skip 26
     VAR    ${title}    Create function
     Init Create    Functions    ${title}    ${title}
     Check Procedure    Variables    ${title}
@@ -118,13 +118,13 @@ test_create_ts
 *** Keywords ***
 Check Skip
     ${info}    Get Server Info
-    ${ver}    Set Variable    ${info}[1]
-    ${srv_ver}    Set Variable    ${info}[2]
+    VAR    ${ver}    ${info}[1]
+    VAR    ${srv_ver}    ${info}[2]
     Skip If    ${{not($ver == '5' and $srv_ver == 'RedDatabase')}}
 
-Check Skip 2.6
+Check Skip 26
     ${info}    Get Server Info
-    ${ver}    Set Variable    ${info}[1]
+    VAR    ${ver}    ${info}[1]
     Skip If    ${{$ver == '2.6'}}
 
 Init Create

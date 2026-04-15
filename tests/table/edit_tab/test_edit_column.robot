@@ -179,9 +179,9 @@ test_add_new_gen_without_identity
     Check Box Should Be Checked    requiredCheck
     Select Tab    Autoincrement
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     IF    ${{$ver != '2.6'}}
-        ${old}=    Set Jemmy Timeouts    100ms
+        Set Jemmy Timeouts    100ms
         Run Keyword And Expect Error
         ...    org.netbeans.jemmy.TimeoutExpiredException: Component enabled: class javax.swing.JRadioButton
         ...    Push Radio Button
@@ -216,9 +216,9 @@ test_add_use_gen_without_identity
     Check Box Should Be Checked    requiredCheck
     Select Tab    Autoincrement
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     IF    ${{$ver != '2.6'}}
-        ${old}=    Set Jemmy Timeouts    100ms
+        Set Jemmy Timeouts    100ms
         Run Keyword And Expect Error
         ...    org.netbeans.jemmy.TimeoutExpiredException: Component enabled: class javax.swing.JRadioButton
         ...    Push Radio Button
@@ -367,7 +367,7 @@ Check Edit Commit
 
     Push Button    commitButton
     Sleep    0.1s
-    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
+    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
     Run Keyword And Expect Error
     ...    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Edit table column'
     ...    Select Dialog
@@ -410,7 +410,7 @@ Check SQL Statements
     # Check CREATE OR ALTER SEQUENCE statement (only if check_sequence is TRUE)
     IF    ${check_sequence}
         ${info}=    Get Server Info
-        ${ver}=    Set Variable    ${info}[1]
+        VAR    ${ver}=    ${info}[1]
         IF    ${{$ver != '2.6'}}
             ${sequence_row}=    Find Table Row    0    CREATE SEQUENCE    Name operation
             Click On Table Cell    0    ${sequence_row}    Name operation
@@ -463,7 +463,7 @@ Check SQL Statements
 
     Push Button    commitButton
     Sleep    0.1s
-    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
+    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
     Run Keyword And Expect Error
     ...    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Edit table column'
     ...    Select Dialog
@@ -471,11 +471,11 @@ Check SQL Statements
 
 Check Skip
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     Skip If    ${{$ver != '5'}}
 
 Check Skip 26
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     Skip If    ${{$ver == '2.6'}}
     RETURN    ${ver}

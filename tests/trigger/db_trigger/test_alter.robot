@@ -15,21 +15,21 @@ test_active
     ...    CREATE OR ALTER TRIGGER TEST_TRIGGER INACTIVE ON CONNECT POSITION 0 AS DECLARE tmp INTEGER; BEGIN SELECT COUNT(*) FROM SHOW_LANGS('ENG', 1, 'USA') INTO tmp; END
 
 test_sql_security_1
-    Check Skip 2.6
+    Check Skip 26
     Init
     Select From Combo Box    userContextComboBox    DEFINER
     Check Changes
     ...    CREATE OR ALTER TRIGGER TEST_TRIGGER ACTIVE ON CONNECT POSITION 0 SQL SECURITY DEFINER AS DECLARE tmp INTEGER; BEGIN SELECT COUNT(*) FROM SHOW_LANGS('ENG', 1, 'USA') INTO tmp; END
 
 test_sql_security_2
-    Check Skip 2.6
+    Check Skip 26
     Init
     Select From Combo Box    userContextComboBox    INVOKER
     Check Changes
     ...    CREATE OR ALTER TRIGGER TEST_TRIGGER ACTIVE ON CONNECT POSITION 0 SQL SECURITY INVOKER AS DECLARE tmp INTEGER; BEGIN SELECT COUNT(*) FROM SHOW_LANGS('ENG', 1, 'USA') INTO tmp; END
 
 test_external_module
-    Check Skip 2.6
+    Check Skip 26
     Init
     Check Check Box    useExternalCheck
     Type Into Text Field    externalField    TestExternalMetod
@@ -91,7 +91,7 @@ test_ddl_to_create
     Init
     Select Tab As Context    DDL to create
     ${res}=    Get Text Field Value    0
-    ${text}=    Set Variable
+    VAR    ${text}=
     ...    CREATE OR ALTER TRIGGER TEST_TRIGGER ACTIVE ON CONNECT POSITION 0 AS DECLARE tmp INTEGER; BEGIN SELECT COUNT(*) FROM SHOW_LANGS('ENG', 1, 'USA') INTO tmp; END;
     Should Be Equal As Strings    ${res}    ${text}    strip_spaces=${True}    collapse_spaces=${True}
 
@@ -107,7 +107,7 @@ Init
     Select Tab As Context    ${name}:DATABASE TRIGGER:New Connection
 
 Check Changes
-    [Arguments]    ${text}    ${name}=TEST_TRIGGER
+    [Arguments]    ${text}
     Select Main Window
     Push Button    submitButton
     Sleep    0.1s
@@ -128,7 +128,7 @@ Check Comment
     ...    "${res}".replace("[(", "").replace(")]", "").replace(",", "").replace("'", "").replace("None", "")
     Should Be Equal As Strings    ${cleared_res}    ${text}
 
-Check Skip 2.6
+Check Skip 26
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     Skip If    ${{$ver == '2.6'}}

@@ -82,13 +82,13 @@ test_grant_manager
     Select From Main Menu    Tools|Grant Manager
     Sleep    1s
     @{privileges_for_list}=    Get List Values    0
-    @{expected_privileges_for_list}=    Create List    SYSDBA
+    VAR    @{expected_privileges_for_list}=    SYSDBA
     Should Be Equal As Strings    ${privileges_for_list}    ${expected_privileges_for_list}
 
 test_profiler
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    Skip if    ${{$ver != '5'}}
+    VAR    ${ver}=    ${info}[1]
+    Skip If    ${{$ver != '5'}}
     Lock Employee
     Click On Tree Node    0    New Connection (Copy)    2
     Select From Main Menu    Tools|Profiler
@@ -144,8 +144,8 @@ Setup
     Type Into Text Field    sshPortField    22
 
     ${ssh_info}=    Get User For Ssh
-    ${user}=    Set Variable    ${ssh_info}[0]
-    ${password}=    Set Variable    ${ssh_info}[1]
+    VAR    ${user}=    ${ssh_info}[0]
+    VAR    ${password}=    ${ssh_info}[1]
 
     Clear Text Field    sshUserField
     Type Into Text Field    sshUserField    ${user}

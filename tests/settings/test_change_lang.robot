@@ -1,6 +1,6 @@
 *** Settings ***
-Library             RemoteSwingLibrary
 Library             Process
+Library             RemoteSwingLibrary
 Resource            ../../files/keywords.resource
 
 Test Setup          Setup

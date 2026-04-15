@@ -15,7 +15,7 @@ test_check_no_ignore
     @{result}=    Check Ignore    ${script_without_properties}
     # Delete Objects    ${rdb5}
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     IF    '${ver}' == '2.6'
         Should Be Equal As Strings    ${result}    [12, 3, 10, 14, 3, 23]
     ELSE
@@ -32,9 +32,9 @@ test_check_ignore
 
 test_check_ignore_whitespace
     ${info}=    Get Server Info
-    ${home_dir}=    Set Variable    ${info}[0]
-    ${ver}=    Set Variable    ${info}[1]
-    ${srv_ver}=    Set Variable    ${info}[2]
+    VAR    ${home_dir}=    ${info}[0]
+    VAR    ${ver}=    ${info}[1]
+    VAR    ${srv_ver}=    ${info}[2]
     VAR    ${employee_path}=    ${home_dir}examples/empbuild/employee.fdb
     VAR    ${original_employee_path}=    ${home_dir}original_employee.fdb
     VAR    ${copy_employee_path}=    ${home_dir}copy_employee.fdb
@@ -136,7 +136,7 @@ Extract
 
 Check Ignore
     [Arguments]    ${script}
-    @{result}=    Create List
+    VAR    @{result}=
     ...    ${{$script.count("COMMENT ON")}}
     ...    ${{$script.count("COMPUTED BY")}}
     ...    ${{$script.count("PRIMARY KEY")}}
@@ -172,8 +172,8 @@ Local Teardown
 
     ${system}=    platform.System
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    ${srv_ver}=    Set Variable    ${info}[2]
+    VAR    ${ver}=    ${info}[1]
+    VAR    ${srv_ver}=    ${info}[2]
     IF    ${{$system == 'Linux'}}
         IF    ${{$ver == '5' and $srv_ver == 'RedDatabase'}}
             Change Owner    ${employee_path}    reddatabase

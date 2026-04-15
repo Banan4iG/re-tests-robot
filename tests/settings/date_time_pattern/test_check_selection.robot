@@ -15,7 +15,7 @@ Test Teardown       Test Teardown
 # H - 24 hour
 # m - minute of hour
 # M - month of year
-# n - nano of second 
+# n - nano of second
 # a - part of day (am/pm)
 # Q - quarter of year
 # s - second of minute
@@ -65,7 +65,7 @@ Test
     Run Keyword In Separate Thread    Click On Table Cell    0    ${row}    2    2    BUTTON1_MASK
     Select Dialog    Date/time format
     Clear Text Field    textField
-    ${params}=    Get List Values    0
+    Get List Values    0
     # Should Be Equal As Strings   ${params}    ${expected_params}
     FOR    ${param}    IN    @{expected_params}
         Click On List Item    0    ${param}    2
@@ -82,5 +82,5 @@ Test
 
 Check Skip
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     Skip If    ${{$ver != '5'}}

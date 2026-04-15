@@ -9,9 +9,9 @@ Test Teardown       Test Teardown
 *** Test Cases ***
 test_1
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    ${srv_ver}=    Set Variable    ${info}[2]
-    Skip if    ${{$ver == '2.6'}}
+    VAR    ${ver}=    ${info}[1]
+    VAR    ${srv_ver}=    ${info}[2]
+    Skip If    ${{$ver == '2.6'}}
     Init    NEW_SEQ    NEW_SEQ
     IF    ${{$ver == '5' and $srv_ver == 'RedDatabase'}}
         Clear Text Field    startValueField
@@ -52,14 +52,13 @@ test_1
 
 test_2
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    Skip if    ${{$ver == '2.6'}}
+    VAR    ${ver}=    ${info}[1]
+    Skip If    ${{$ver == '2.6'}}
     Init    NEW_SEQ    NEW_SEQ
     ${start_value}=    Get Text Field Value    startValueField
     ${increment}=    Get Text Field Value    incrementField
     ${current_value}=    Get Text Field Value    currentValueField
     Should Be Equal As Strings    ${start_value}    10
-    ${info}=    Get Server Info
     IF    ${{$ver == '5'}}
         Should Be Equal As Strings    ${current_value}    9
     ELSE
@@ -69,8 +68,8 @@ test_2
 
 test_3
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    Skip if    ${{$ver == '2.6'}}
+    VAR    ${ver}=    ${info}[1]
+    Skip If    ${{$ver == '2.6'}}
     Init    "NEW SEQ"    NEW SEQ
     Select Tab As Context    Privileges
     Sleep    1s
@@ -96,8 +95,8 @@ test_4
     @{tree_proc}=    Get Tree Node Child Names    0    New Connection|Procedures (1)
     Should Be Equal As Strings    ${tree_proc}    ['NEW_PROC']
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    ${srv_ver}=    Set Variable    ${info}[2]
+    VAR    ${ver}=    ${info}[1]
+    VAR    ${srv_ver}=    ${info}[2]
     IF    ${{$ver == '5' and $srv_ver == 'RedDatabase'}}
         ${connect_type}=    Get Environment Variable    CONNECT_TYPE    server
         IF    ${{$connect_type == 'embedded'}}
@@ -133,7 +132,7 @@ test_4
 
 test_5
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     Init    """NEW SEQ"""    "NEW SEQ"
     Select Tab As Context    DDL to create
     ${res}=    Get Text Field Value    0
@@ -153,8 +152,8 @@ test_5
 
 test_6
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    Skip if    ${{$ver == '2.6'}}
+    VAR    ${ver}=    ${info}[1]
+    Skip If    ${{$ver == '2.6'}}
     Init    NEW_SEQ    NEW_SEQ
     Push Button    Restart
 
@@ -162,8 +161,8 @@ test_6
 
 test_restart_with_on_rdb26
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    Skip if    ${{$ver != '2.6'}}
+    VAR    ${ver}=    ${info}[1]
+    Skip If    ${{$ver != '2.6'}}
     Init    NEW_SEQ    NEW_SEQ
 
     Clear Text Field    currentValueField
@@ -192,7 +191,7 @@ Init
     [Arguments]    ${create_name}    ${tree_name}
     Lock Employee
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
+    VAR    ${ver}=    ${info}[1]
     IF    ${{$ver == '2.6'}}
         Execute Immediate    CREATE SEQUENCE ${create_name}
         VAR    ${create_proc}=
@@ -258,7 +257,7 @@ Check
 
     Push Button    commitButton
     Sleep    0.1s
-    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
+    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
     Run Keyword And Expect Error
     ...    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Commiting changes'
     ...    Select Dialog
@@ -276,7 +275,7 @@ Single Check
 
     Push Button    commitButton
     Sleep    0.1s
-    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
+    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
     Run Keyword And Expect Error
     ...    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Commiting changes'
     ...    Select Dialog

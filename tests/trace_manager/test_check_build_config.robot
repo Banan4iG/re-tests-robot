@@ -1,6 +1,6 @@
 *** Settings ***
-Library             RemoteSwingLibrary
 Library             Collections
+Library             RemoteSwingLibrary
 Resource            ../../files/keywords.resource
 Resource            keys.resource
 
@@ -240,7 +240,7 @@ Check Incorrect Name
 
 Check Text Values
     [Arguments]    @{list_of_name_filed}
-    VAR    @{values}=
+    VAR    @{values}    @{EMPTY}
     FOR    ${par}    IN    @{list_of_name_filed}
         ${value}=    Get Text Field Value    ${par}
         Append To List    ${values}    ${value}
@@ -280,15 +280,15 @@ Check Database Properties
     [Arguments]    ${dbms_version}
     Select Tab    database
     IF    '${dbms_version}' == 'Firebird 2.5'
-        Check FB2.5
+        Check FB Two Five
     ELSE IF    '${dbms_version}' == 'Firebird 3.0' or '${dbms_version}' == 'Firebird 4.0'
-        Check FB3.0
+        Check FB Three Zero
     ELSE IF    '${dbms_version}' == 'Firebird 5.0'
-        Check FB5.0
+        Check FB Five Zero
     ELSE IF    '${dbms_version}' == 'RedDatabase 2.6'
-        Check RDB2.6
+        Check RDB Two Six
     ELSE IF    '${dbms_version}' == 'RedDatabase 3.0' or '${dbms_version}' == 'RedDatabase 5.0'
-        Check Services RDB3.0
+        Check Services RDB Three Zero
     END
 
 Check Common Prop
@@ -323,14 +323,14 @@ Check Common Prop
     Text Field Should Be Enabled    numberTextFieldmax_arg_count
     Text Field Should Be Enabled    numberTextFieldtime_threshold
 
-Check FB2.5
+Check FB Two Five
     Check Common Prop
     Check Box Should Be Enabled    checkBoxlog_errors
     Check Box Should Be Enabled    checkBoxlog_initfini
     Check Box Should Be Enabled    checkBoxlog_sweep
 
-Check FB3.0
-    Check FB2.5
+Check FB Three Zero
+    Check FB Two Five
     Check Box Should Be Enabled    checkBoxlog_function_start
     Check Box Should Be Enabled    checkBoxlog_function_finish
     Check Box Should Be Enabled    checkBoxexplain_plan
@@ -338,19 +338,19 @@ Check FB3.0
     Text Field Should Be Enabled    textFieldinclude_gds_codes
     Text Field Should Be Enabled    textFieldexclude_gds_codes
 
-Check FB5.0
-    Check FB3.0
+Check FB Five Zero
+    Check FB Three Zero
     Check Box Should Be Enabled    checkBoxlog_procedure_compile
     Check Box Should Be Enabled    checkBoxlog_function_compile
     Check Box Should Be Enabled    checkBoxlog_trigger_compile
 
-Check filters RDB
+Check Filters RDB
     Text Field Should Be Enabled    textFieldinclude_user_filter
     Text Field Should Be Enabled    textFieldexclude_user_filter
     Text Field Should Be Enabled    textFieldinclude_process_filter
     Text Field Should Be Enabled    textFieldexclude_process_filter
 
-Check RDB2.6
+Check RDB Two Six
     Check Common Prop
     Check Box Should Be Enabled    checkBoxlog_init
     Check Box Should Be Enabled    checkBoxlog_auth_factors
@@ -364,10 +364,10 @@ Check RDB2.6
     Check Box Should Be Enabled    checkBoxlog_object_relabeling
     Check Box Should Be Enabled    checkBoxlog_record_relabeling
 
-    Check filters RDB
+    Check Filters RDB
 
-Check RDB3.0
-    Check FB5.0
+Check RDB Three Zero
+    Check FB Five Zero
     Check Box Should Be Enabled    checkBoxcancel_on_error
     Check Box Should Be Enabled    checkBoxlog_changes_only
     Check Box Should Be Enabled    checkBoxlog_security_incidents
@@ -376,10 +376,10 @@ Check RDB3.0
     Check Box Should Be Enabled    checkBoxlog_security_type
     Check Box Should Be Enabled    checkBoxreset_counters
 
-    Check filters RDB
+    Check Filters RDB
 
-Check RDB5.0
-    Check RDB3.0
+Check RDB Five Zero
+    Check RDB Three Zero
     Check Box Should Be Enabled    checkBoxlog_message
     Check Box Should Be Enabled    checkBoxprint_hostname
     Combo Box Should Be Enabled    comboBoxtime_format
@@ -388,13 +388,13 @@ Check Services Properties
     [Arguments]    ${dbms_version}
     Select Tab    services
     IF    '${dbms_version}' == 'Firebird 2.5'
-        Check Services FB2.5
+        Check Services FB Two Five
     ELSE IF    '${dbms_version}' == 'Firebird 3.0' or '${dbms_version}' == 'Firebird 4.0' or '${dbms_version}' == 'Firebird 5.0'
-        Check Services FB3.0
+        Check Services FB Three Zero
     ELSE IF    '${dbms_version}' == 'RedDatabase 2.6'
-        Check Services RDB2.6
+        Check Services RDB Two Six
     ELSE IF    '${dbms_version}' == 'RedDatabase 3.0' or '${dbms_version}' == 'RedDatabase 5.0'
-        Check Services RDB3.0
+        Check Services RDB Three Zero
     END
 
 Check Common Services Prop
@@ -406,25 +406,25 @@ Check Common Services Prop
     Text Field Should Be Enabled    textFieldinclude_filter
     Text Field Should Be Enabled    textFieldexclude_filter
 
-Check Services FB2.5
+Check Services FB Two Five
     Check Common Services Prop
     Check Box Should Be Enabled    checkBoxlog_initfini
     Check Box Should Be Enabled    checkBoxlog_errors
 
-Check Services FB3.0
-    Check Services FB2.5
+Check Services FB Three Zero
+    Check Services FB Two Five
     Text Field Should Be Enabled    textFieldinclude_gds_codes
     Text Field Should Be Enabled    textFieldexclude_gds_codes
 
-Check Services RDB2.6
+Check Services RDB Two Six
     Check Common Services Prop
     Text Field Should Be Enabled    textFieldinclude_user_filter
     Text Field Should Be Enabled    textFieldexclude_user_filter
     Text Field Should Be Enabled    textFieldinclude_process_filter
     Text Field Should Be Enabled    textFieldexclude_process_filter
 
-Check Services RDB3.0
-    Check Services RDB2.6
+Check Services RDB Three Zero
+    Check Services RDB Two Six
     Check Box Should Be Enabled    checkBoxlog_initfini
     Check Box Should Be Enabled    checkBoxlog_errors
     Check Box Should Be Enabled    checkBoxcancel_on_error

@@ -17,8 +17,8 @@ test_1
     Sleep    1s
     @{values}=    Get Table Column Values    0    Object
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    ${srv_ver}=    Set Variable    ${info}[2]
+    VAR    ${ver}=    ${info}[1]
+    VAR    ${srv_ver}=    ${info}[2]
     IF    ${{$ver == '2.6'}}
         Should Be Equal As Strings
         ...    ${values}

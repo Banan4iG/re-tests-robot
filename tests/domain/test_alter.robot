@@ -97,7 +97,7 @@ test_ddl_to_create
     Init    CREATE DOMAIN TEST_DOMAIN AS BIGINT
     Select Tab As Context    DDL to create
     ${res}=    Get Text Field Value    0
-    ${text}=    Set Variable    CREATE DOMAIN TEST_DOMAIN AS BIGINT;
+    VAR    ${text}=    CREATE DOMAIN TEST_DOMAIN AS BIGINT;
     Should Be Equal As Strings    ${res}    ${text}    strip_spaces=${True}    collapse_spaces=${True}
 
 test_collation

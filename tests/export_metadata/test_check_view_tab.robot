@@ -10,13 +10,13 @@ Test Teardown       Test Teardown
 test_full_list
     Export
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    ${srv_ver}=    Set Variable    ${info}[2]
+    VAR    ${ver}=    ${info}[1]
+    VAR    ${srv_ver}=    ${info}[2]
     ${node_names}=    Get Tree Node Child Names    dbComponentsTree    Objects To Create
     IF    ${{$ver == '5' and $srv_ver == 'RedDatabase'}}
         ${connect_type}=    Get Environment Variable    CONNECT_TYPE    server
         IF    ${{$connect_type == 'embedded'}}
-            ${expected_names}=    Create List
+            VAR    @{expected_names}=
             ...    Domains (15)
             ...    Tables (10)
             ...    Global Temporary Tables (1)
@@ -35,7 +35,7 @@ test_full_list
             ...    Tablespaces
             ...    Collations (1)
         ELSE
-            ${expected_names}=    Create List
+            VAR    @{expected_names}=
             ...    Domains (15)
             ...    Tables (10)
             ...    Global Temporary Tables (1)
@@ -56,7 +56,7 @@ test_full_list
             ...    Collations (1)
         END
     ELSE IF    ${{$ver == '2.6'}}
-        ${expected_names}=    Create List
+        VAR    @{expected_names}=
         ...    Domains (15)
         ...    Tables (10)
         ...    Global Temporary Tables (1)
@@ -71,7 +71,7 @@ test_full_list
         ...    Indices (12)
         ...    Collations (1)
     ELSE
-        ${expected_names}=    Create List
+        VAR    @{expected_names}=
         ...    Domains (15)
         ...    Tables (10)
         ...    Global Temporary Tables (1)
@@ -90,10 +90,10 @@ test_full_list
         ...    Collations (1)
     END
     Should Be Equal As Strings    ${node_names}    ${expected_names}
-    # Delete Objects    ${rdb5}
+    # Delete Objects
 
 test_check_node
-    ${rdb5}=    Export
+    Export
     Click On Tree Node    dbComponentsTree    Objects To Create|Tables (10)|COUNTRY
     ${script}=    Get Text Field Value    0
     Should Be Equal As Strings
@@ -109,15 +109,15 @@ test_check_node
     ...    CREATE DOMAIN BUDGET AS DECIMAL(12,2) DEFAULT 50000 CHECK (VALUE > 10000 AND VALUE <= 2000000);
     ...    strip_spaces=${True}
     ...    collapse_spaces=${True}
-    # Delete Objects    ${rdb5}
+    # Delete Objects
 
 test_double_click_node
-    ${rdb5}=    Export
+    Export
     Click On Tree Node    dbComponentsTree    Objects To Create|Tables (10)|COUNTRY    clickCount=2
     ${script}=    Get Text Field Value    0
     Sleep    2s
     Should Not Be Equal As Strings    ${script}    ${EMPTY}
-    # Delete Objects    ${rdb5}
+    # Delete Objects
 
 
 *** Keywords ***

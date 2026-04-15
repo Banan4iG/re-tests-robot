@@ -7,10 +7,6 @@ Test Setup          Init Conn
 Test Teardown       Local Teardown
 
 
-*** Variables ***
-${db_path}      ${EMPTY}
-
-
 *** Test Cases ***
 test_no_use_default
     Push Button    No

@@ -10,8 +10,8 @@ Test Teardown       Test Teardown
 *** Test Cases ***
 test_1
     ${info}=    Get Server Info
-    ${ver}=    Set Variable    ${info}[1]
-    Skip if    ${{$ver != '2.6'}}
+    VAR    ${ver}=    ${info}[1]
+    Skip If    ${{$ver != '2.6'}}
     Lock Employee
     Open Connection
     Select From Tree Node Popup Menu    0    New Connection|Sequences (2)    Create sequence
@@ -36,7 +36,7 @@ test_1
 
     Push Button    commitButton
     Sleep    0.1s
-    ${old}=    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
+    Set Jemmy Timeout    DialogWaiter.WaitDialogTimeout    0
     Run Keyword And Expect Error
     ...    org.netbeans.jemmy.TimeoutExpiredException: Dialog with name or title 'Create sequence'
     ...    Select Dialog

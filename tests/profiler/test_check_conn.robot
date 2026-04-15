@@ -95,11 +95,11 @@ Check
     Should Not Be Equal As Integers    ${{$values[0][1].find('${ip}')}}    -1
     Should Be Equal As Strings
     ...    ${values}[0][2:]
-    ...    ['TEST_USER', 'TEST_ROLE', '${host}', '${name}']
+    ...    ['TEST_USER', 'TEST_ROLE', '${host}', '${name}', '${dist}']
     ...    ignore_case=${True}
 
     Should Not Be Equal As Integers    ${{$values[1][1].find('127.0.0.1')}}    -1
-    Should Be Equal As Strings    ${values}[1][2:]    ['SYSDBA', 'NONE', '${host}', '${name}']
+    Should Be Equal As Strings    ${values}[1][2:]    ['SYSDBA', 'NONE', '${host}', '${name}', '${dist}']
 
     Close Dialog    Select Attachment
 

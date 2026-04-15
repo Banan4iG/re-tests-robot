@@ -96,7 +96,7 @@ test_discard_yes
     Lock Employee
     Open Connection
     Close All Tabs
-    FOR    ${i}    IN RANGE    3
+    FOR    IN RANGE    3
         Select From Main Menu    Tools|Profiler
         Push Button    startButton
         Sleep    1s
@@ -351,7 +351,7 @@ test_auto-reload_tree
 
     @{values}=    Get Tree Node Child Names    0    New Connection|Indices (65)
 
-    @{filtered_values}=    Create List
+    VAR    @{filtered_values}=
     FOR    ${item}    IN    @{values}
         ${starts_with}=    Evaluate    $item.startswith('PLG$PROF_')
         IF    ${starts_with}    Append To List    ${filtered_values}    ${item}
