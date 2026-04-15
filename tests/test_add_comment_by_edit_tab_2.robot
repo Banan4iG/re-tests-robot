@@ -105,11 +105,11 @@ Check Table Comment
     Clear Text Field    1
     Type Into Text Field    1    test_comment
     Push Button    Save
-    ${res}=    Execute    select RDB$DESCRIPTION from RDB$RELATIONS where RDB$DESCRIPTION is not NULL
+    Select Dialog    Commiting changes
     Sleep    1s
-    Clear Text Field    1
-    Push Button    Save
-    Should Be Equal    ${res}    [('test_comment',)]
+    ${res}=    Get Text Field Value    0
+    Should Not Be Equal As Integers    ${{$res.find('test_comment')}}    -1
+    Push Button    rollbackButton
 
 Check Proc Tab Comment
     [Arguments]    ${group_name}    ${proc_name}    ${tab}    ${name}
