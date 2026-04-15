@@ -59,10 +59,22 @@ Teardown
     Close All Dialogs
     Close All Tabs
     Close Connection
-    Execute Immediate    REVOKE TEST_ROLE FROM TEST_USER;
-    Execute Immediate    DROP USER TEST_USER;
-    Execute Immediate    DROP ROLE TEST_ROLE;
-    Unlock Employee
+    IF    ${{$TEST_STATUS == 'FAIL'}}
+        Sleep    0.5s
+        VAR    ${file_name}=    ${{$SUITE_NAME.replace(' ', '_') + '_' + $TEST_NAME}}
+        Take Screenshot    ${file_name}    1080
+        Take Dump    ${OUTPUT_DIR}${/}${file_name}
+        Kill Rdbexpert
+        Sleep    0.5s
+        Unlock Employee
+        Clear History Files
+        Restore Savedconnections File
+    ELSE
+        Execute Immediate    REVOKE TEST_ROLE FROM TEST_USER;
+        Execute Immediate    DROP USER TEST_USER;
+        Execute Immediate    DROP ROLE TEST_ROLE;
+        Unlock Employee
+    END
 
 Check
     [Arguments]    ${ip}    ${dist}
@@ -83,11 +95,11 @@ Check
     Should Not Be Equal As Integers    ${{$values[0][1].find('${ip}')}}    -1
     Should Be Equal As Strings
     ...    ${values}[0][2:]
-    ...    ['TEST_USER', 'TEST_ROLE', '${host}', '${name}', '${dist}']
+    ...    ['TEST_USER', 'TEST_ROLE', '${host}', '${name}']
     ...    ignore_case=${True}
 
     Should Not Be Equal As Integers    ${{$values[1][1].find('127.0.0.1')}}    -1
-    Should Be Equal As Strings    ${values}[1][2:]    ['SYSDBA', 'NONE', '${host}', '${name}', '${dist}']
+    Should Be Equal As Strings    ${values}[1][2:]    ['SYSDBA', 'NONE', '${host}', '${name}']
 
     Close Dialog    Select Attachment
 
