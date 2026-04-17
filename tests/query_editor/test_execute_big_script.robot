@@ -18,7 +18,7 @@ test_execute
     ELSE
         Init    test_script3.sql
     END
-    Sleep    5s
+    Sleep    7s
     Push Button    editor-stop-on-error-command
 
 test_cancel
