@@ -38,13 +38,12 @@ test_1
     Select Main Window
     Tree Node Should Exist    0    New Connection|Roles (1)|NEW_ROLE_1
 
-    Select From Main Menu    Tools|User Manager
-    Sleep    1s
-    ${values}=    Get Table Cell Value    usersTable    0    User name
-    Should Be Equal As Strings    ${values}    SYSDBA
-
     ${connect_type}=    Get Environment Variable    CONNECT_TYPE    server
     IF    ${{$connect_type != 'embedded'}}
+        Select From Main Menu    Tools|User Manager
+        Sleep    1s
+        ${values}=    Get Table Cell Value    usersTable    0    User name
+        Should Be Equal As Strings    ${values}    SYSDBA
         ${result}=    Execute    select count (*) from mon$attachments where mon$user = 'SYSDBA'
         Should Be Equal As Strings    ${result}    [(4,)]
     END
