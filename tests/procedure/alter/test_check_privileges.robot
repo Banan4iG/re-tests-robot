@@ -56,6 +56,10 @@ test_1
         Should Be Equal As Strings
         ...    ${values}
         ...    ['DATABASE', 'TABLE', 'VIEW', 'PROCEDURE', 'FUNCTION', 'PACKAGE', 'SEQUENCE', 'DOMAIN', 'EXCEPTION', 'ROLE', 'CHARACTER SET', 'COLLATION', 'FILTER', 'JOB', 'TABLESPACE']
+    ELSE IF    ${{$ver == '2.6'}}
+        Should Be Equal As Strings
+        ...    ${values}
+        ...    ['TABLE', 'VIEW', 'PROCEDURE', 'FUNCTION', 'SEQUENCE', 'DOMAIN', 'EXCEPTION', 'ROLE']
     ELSE
         Should Be Equal As Strings
         ...    ${values}

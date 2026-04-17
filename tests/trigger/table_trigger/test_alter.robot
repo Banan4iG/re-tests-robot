@@ -24,11 +24,14 @@ test_combo_boxs
     VAR    ${srv}=    ${info}[2]
     IF    ${{$ver == '5' or ($ver == '3' and $srv == 'RedDatabase')}}
         Select From Combo Box    userContextComboBox    DEFINER
+        VAR    ${sql_security}    SQL SECURITY DEFINER${SPACE}
+    ELSE
+        VAR    ${sql_security}    ${EMPTY}
     END
     Select From Combo Box    tableCombo    PROJECT
     Select From Combo Box    beforeAfterCombo    AFTER
     Check Changes
-    ...    CREATE OR ALTER TRIGGER TEST_TRIGGER FOR PROJECT ACTIVE AFTER INSERT POSITION 0 SQL SECURITY DEFINER AS BEGIN /* Comment */ END
+    ...    CREATE OR ALTER TRIGGER TEST_TRIGGER FOR PROJECT ACTIVE AFTER INSERT POSITION 0 ${sql_security}AS BEGIN /* Comment */ END
 
 test_text_fields
     Init
@@ -42,7 +45,7 @@ test_text_fields
 test_external_module
     ${info}=    Get Server Info
     VAR    ${ver}=    ${info}[1]
-    Skip If    ${{$ver != '2.6'}}
+    Skip If    ${{$ver == '2.6'}}
     Init
     Check Check Box    useExternalCheck
     Type Into Text Field    externalField    TestExternalMetod

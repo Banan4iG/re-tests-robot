@@ -96,7 +96,7 @@ test_discard_yes
     Lock Employee
     Open Connection
     Close All Tabs
-    FOR    IN RANGE    3
+    FOR    ${_}    IN RANGE    3
         Select From Main Menu    Tools|Profiler
         Push Button    startButton
         Sleep    1s

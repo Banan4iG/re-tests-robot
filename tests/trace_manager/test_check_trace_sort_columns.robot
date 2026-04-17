@@ -90,7 +90,7 @@ Randoming
     Push Button    selectAllButton
     @{list_column}=    Get List Values    1    # robocop: off
     VAR    @{avaible_actions}=    movePageUpButton    moveUpButton    moveDownButton    movePageDownButton    # robocop: off
-    FOR    IN RANGE    5
+    FOR    ${_}    IN RANGE    5
         ${rel}=    random.Choice    ${list_column}
         ${ract}=    random.Choice    ${avaible_actions}
         Click On List Item    1    ${rel}

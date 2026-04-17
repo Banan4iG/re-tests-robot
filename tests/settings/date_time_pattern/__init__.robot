@@ -1,6 +1,6 @@
 *** Settings ***
 Resource            ../../../files/keywords.resource
-Suite Setup         Local Suite Teardown
+Suite Teardown         Local Suite Teardown
 
 
 *** Keywords ***
