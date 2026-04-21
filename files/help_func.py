@@ -662,7 +662,8 @@ def change_owner(file_path: str, owner:str):
 
 def take_dump(file_path: str):
     def _get_jstack_path():
-        return '/usr/java/jdk-22-oracle-x64/bin/jstack' if platform.system() == 'Linux' else "C:\\Program Files\\Java\\jdk-22\\bin\\jstack.exe"
+        java_home = os.getenv('JAVA_HOME')
+        return f"{java_home}/bin/jstack" if platform.system() == 'Linux' else "C:\\Program Files\\Java\\jdk-22\\bin\\jstack.exe"
     
     for proc in psutil.process_iter():
         if f'RDBExpert{get_exe()}' in proc.name() or proc.name() == f'java{get_exe()}':
