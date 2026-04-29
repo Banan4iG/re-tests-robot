@@ -102,7 +102,12 @@ Restore Databases Conf
     Teardown
     ${info}=    Get Server Info
     VAR    ${home_dir}=    ${info}[0]
-    VAR    ${databases_conf_path}=    ${home_dir}databases.conf
+    VAR    ${ver}=    ${info}[1]
+    IF    ${{$ver == '2.6'}}
+        VAR    ${databases_conf_path}=    ${home_dir}aliases.conf
+    ELSE
+        VAR    ${databases_conf_path}=    ${home_dir}databases.conf
+    END
     VAR    ${databases_conf_path_bk}=    ${databases_conf_path}.bak
     Copy File    ${databases_conf_path_bk}    ${databases_conf_path}
     Remove File    ${databases_conf_path_bk}
