@@ -13,43 +13,38 @@ ${DB_PATH}      ${TEMPDIR}${/}test_database.fdb
 
 *** Test Cases ***
 test_create_drop
-    Create DB
-    Select From Tree Node Popup Menu In Separate Thread    0    New Database    Drop Database
-    Select Dialog    Confirmation
-    ${label_content}=    Get Label Content    1
-    Should Contain    ${label_content}    Are you sure you want to drop database
-    Sleep    6s
-    Push Button    Yes
-    Sleep    1s
+    Test Body    Drop    drop
     File Should Not Exist    ${DB_PATH}
-    Select Main Window
 
 test_recreate
-    Create DB
-    Select From Tree Node Popup Menu In Separate Thread    0    New Database    Recreate Database
-    Select Dialog    Confirmation
-    ${label_content}=    Get Label Content    1
-    Should Contain    ${label_content}    Are you sure you want to recreate database
-    Sleep    6s
-    Push Button    Yes
-    Sleep    1s
+    Test Body    Recreate    recreate
     File Should Exist    ${DB_PATH}
+
+test_drop_alias
+    Add Alias To DBMS
+    Test Body    Drop    drop    ${True}
+    File Should Not Exist    ${DB_PATH}
+    [Teardown]    Restore Databases Conf
 
 test_recreate_alias
     Add Alias To DBMS
-    Create DB    alias=${True}
-    Select From Tree Node Popup Menu In Separate Thread    0    New Database    Recreate Database
-    Select Dialog    Confirmation
-    ${label_content}=    Get Label Content    1
-    Should Contain    ${label_content}    Are you sure you want to recreate database
-    Sleep    6s
-    Push Button    Yes
-    Sleep    1s
+    Test Body    Recreate    recreate    ${True}
     File Should Exist    ${DB_PATH}
     [Teardown]    Restore Databases Conf
 
 
 *** Keywords ***
+Test Body
+    [Arguments]    ${type1}    ${type2}    ${alias}=${False}
+    Create DB    ${alias}
+    Select From Tree Node Popup Menu In Separate Thread    0    New Database    ${type1} Database
+    Select Dialog    Confirmation
+    ${label_content}=    Get Label Content    1
+    Should Contain    ${label_content}    Are you sure you want to ${type2} database
+    Sleep    6s
+    Push Button    Yes
+    Sleep    1s
+
 Teardown
     Select Main Window
     Select From Tree Node Popup Menu In Separate Thread    0    New Database    Delete connection
@@ -60,7 +55,7 @@ Teardown
 
 Create DB
     # create
-    [Arguments]    ${alias}=${False}
+    [Arguments]    ${alias}
     Push Button    create-database-command
     Select Dialog    Create Database
     Remove File    ${DB_PATH}
