@@ -25,7 +25,6 @@ def get_pom_file():
                 print(context)
 
 def kill_rdbexpert():
-    time.sleep(10)
     for proc in psutil.process_iter():
         if f'RDBExpert{get_exe()}' in proc.name() or proc.name() == f'java{get_exe()}':
             proc.terminate()
@@ -160,6 +159,8 @@ def get_server_info():
         version = "2.6"
         srv_version = "RedDatabase"
     else:
+        import firebird.driver as fdb
+        fdb.driver_config.fb_client_library.value = "D:\\Program Files\\RedDatabase5\\fbclient.dll"
         with connect_server(server='localhost', user='SYSDBA', password='masterkey') as srv:
             home_directory = srv.info.home_directory
             version = str(srv._engine_version())[0]

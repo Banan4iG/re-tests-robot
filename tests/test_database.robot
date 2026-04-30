@@ -1,5 +1,4 @@
 *** Settings ***
-Library             OperatingSystem
 Library             RemoteSwingLibrary
 Resource            ../files/keywords.resource
 
