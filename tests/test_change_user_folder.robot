@@ -10,16 +10,13 @@ Test Timeout        120s
 *** Test Cases ***
 test_1
     ${DIST}=    Get Environment Variable    DIST    D:\\projects\\RDBExpert
+    ${user_home}=    Normalize Path    ~
+    VAR    ${rdbexpert_in_user_path}    ${user_home}${/}.rdbexpert
     VAR    ${rdbexpert_in_tmp_path}    ${TEMPDIR}${/}.rdbexpert
-    VAR    ${rdbexpert_in_dist_path}    ${DIST}${/}.rdbexpert
-    ${path_to_exe}=    Get Path
-    IF    'bin' in '${path_to_exe}'
-        VAR    ${rdbexpert_in_relative_path}    ${DIST}${/}bin${/}.rdbexpert
-    ELSE
-        VAR    ${rdbexpert_in_relative_path}    ${rdbexpert_in_dist_path}
-    END
+    VAR    ${rdbexpert_in_relative_path}    ${DIST}${/}.rdbexpert_test
+
+    ${rdbexpert_in_user_path_n}=    Replace String    ${rdbexpert_in_user_path}    \\    /
     ${rdbexpert_in_tmp_path_n}=    Replace String    ${rdbexpert_in_tmp_path}    \\    /
-    ${rdbexpert_in_dist_path_n}=    Replace String    ${rdbexpert_in_dist_path}    \\    /
     ${rdbexpert_in_relative_path_n}=    Replace String    ${rdbexpert_in_relative_path}    \\    /
 
     VAR    ${config_path}    ${DIST}${/}config${/}launcher.conf
@@ -44,11 +41,11 @@ test_1
 
     Create File    ${config_path}    ${new_config_content_1}
     Start RDB Expert
-    Directory Should Exist    ${rdbexpert_in_dist_path_n}
-    Directory Should Not Be Empty    ${rdbexpert_in_dist_path_n}
+    Directory Should Exist    ${rdbexpert_in_user_path_n}
+    Directory Should Not Be Empty    ${rdbexpert_in_user_path_n}
     Local Test Setup
     Sleep    5s
-    Remove Directory    ${rdbexpert_in_dist_path_n}    ${True}
+    Remove Directory    ${rdbexpert_in_user_path_n}    ${True}
 
     Create File    ${config_path}    ${new_config_content_2}
     Start RDB Expert
