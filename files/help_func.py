@@ -159,8 +159,6 @@ def get_server_info():
         version = "2.6"
         srv_version = "RedDatabase"
     else:
-        import firebird.driver as fdb
-        fdb.driver_config.fb_client_library.value = "D:\\Program Files\\RedDatabase5\\fbclient.dll"
         with connect_server(server='localhost', user='SYSDBA', password='masterkey') as srv:
             home_directory = srv.info.home_directory
             version = str(srv._engine_version())[0]
