@@ -41,11 +41,12 @@ test_1
 
     Create File    ${config_path}    ${new_config_content_1}
     Start RDB Expert
+    Select Main Window
+    Open Connection
+    Close Connection
     Directory Should Exist    ${rdbexpert_in_user_path_n}
     Directory Should Not Be Empty    ${rdbexpert_in_user_path_n}
     Local Test Setup
-    Sleep    5s
-    Remove Directory    ${rdbexpert_in_user_path_n}    ${True}
 
     Create File    ${config_path}    ${new_config_content_2}
     Start RDB Expert
@@ -76,6 +77,7 @@ Local Test Setup
     END
 
 Local Test Teardown
+    Local Test Setup
     [Arguments]    ${config_path}    ${config_path_bk}
     Copy File    ${config_path_bk}    ${config_path}
     Remove File    ${config_path_bk}
