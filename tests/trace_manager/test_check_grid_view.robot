@@ -73,7 +73,7 @@ test_1
     Push Button    pauseSessionButton
     Sleep    2s
 
-    Execute Immediate    CREATE TABLE TEST_TABLE (ID INT)
+    Execute Immediate    RECREATE TABLE TEST_TABLE (ID INT)
     Execute Immediate    INSERT INTO TEST_TABLE VALUES (1)
     Execute Immediate    INSERT INTO TEST_TABLE VALUES (2)
     Execute Immediate    INSERT INTO TEST_TABLE VALUES (3)
@@ -126,10 +126,10 @@ load_from_file
 *** Keywords ***
 Check Grid View
     Sleep    5s
-    ${row}=    Find Table Row    0    CREATE TABLE TEST_TABLE (ID INT)\n
+    ${row}=    Find Table Row    0    RECREATE TABLE TEST_TABLE (ID INT)\n
     Click On Table Cell    0    ${row}    STATEMENT_TEXT
     ${body}=    Get Text Field Value    0
-    Should Contain    ${body}    CREATE TABLE TEST_TABLE (ID INT)
+    Should Contain    ${body}    RECREATE TABLE TEST_TABLE (ID INT)
 
     ${index}=    Get Table Column Values    1    Index
     ${insert}=    Get Table Column Values    1    Insert
@@ -203,7 +203,7 @@ Check Filter
     Push Button    applyButton
 
     @{filtred_values}=    Get Table Column Values    0    STATEMENT_TEXT
-    Should Not Contain    ${filtred_values}    CREATE TABLE TEST_TABLE (ID INT)
+    Should Not Contain    ${filtred_values}    RECREATE TABLE TEST_TABLE (ID INT)
 
     Check Check Box    1
     Label Text Should Be    0    NOT(STATEMENT_TEXT NOT Contains 'CREATE')

@@ -102,7 +102,7 @@ test_SQL_export_to_folder
     ${blob_path1}    ${blob_path2}    ${blob_path3}=    Check Blobs In Folder    ${export_blob}
 
     VAR    ${expected_content}=
-    ...    -- table creating -- CREATE TABLE TEST_TABLE ( PROJ_NAME BLOB SUB_TYPE TEXT, PROJ_DESC BLOB SUB_TYPE TEXT ); -- inserting data -- INSERT INTO TEST_TABLE ( PROJ_NAME, PROJ_DESC ) VALUES ( 'Video Database', ?'${blob_path1}' ); INSERT INTO TEST_TABLE ( PROJ_NAME, PROJ_DESC ) VALUES ( 'DigiPizza', ?'${blob_path2}' ); INSERT INTO TEST_TABLE ( PROJ_NAME, PROJ_DESC ) VALUES ( 'AutoMap', ?'${blob_path3}' );
+    ...    -- table creating -- RECREATE TABLE TEST_TABLE ( PROJ_NAME BLOB SUB_TYPE TEXT, PROJ_DESC BLOB SUB_TYPE TEXT ); -- inserting data -- INSERT INTO TEST_TABLE ( PROJ_NAME, PROJ_DESC ) VALUES ( 'Video Database', ?'${blob_path1}' ); INSERT INTO TEST_TABLE ( PROJ_NAME, PROJ_DESC ) VALUES ( 'DigiPizza', ?'${blob_path2}' ); INSERT INTO TEST_TABLE ( PROJ_NAME, PROJ_DESC ) VALUES ( 'AutoMap', ?'${blob_path3}' );
     File Should Exist    ${export_path}
     ${content}=    Get File    ${export_path}
     Should Be Equal As Strings    ${content}    ${expected_content}    strip_spaces=${True}    collapse_spaces=${True}
@@ -198,7 +198,7 @@ test_SQL_export_to_file
     Sleep    5s
     Close Dialog    Message
     VAR    ${expected_content}=
-    ...    -- table creating -- CREATE TABLE TEST_TABLE ( PROJ_NAME BLOB SUB_TYPE TEXT, PROJ_DESC BLOB SUB_TYPE TEXT ); -- inserting data -- SET BLOBFILE '${export_blob}'; INSERT INTO TEST_TABLE ( PROJ_NAME, PROJ_DESC ) VALUES ( 'Video Database', :h00000000_00000059 ); INSERT INTO TEST_TABLE ( PROJ_NAME, PROJ_DESC ) VALUES ( 'DigiPizza', :h00000059_00000077 ); INSERT INTO TEST_TABLE ( PROJ_NAME, PROJ_DESC ) VALUES ( 'AutoMap', :h000000d0_00000055 );
+    ...    -- table creating -- RECREATE TABLE TEST_TABLE ( PROJ_NAME BLOB SUB_TYPE TEXT, PROJ_DESC BLOB SUB_TYPE TEXT ); -- inserting data -- SET BLOBFILE '${export_blob}'; INSERT INTO TEST_TABLE ( PROJ_NAME, PROJ_DESC ) VALUES ( 'Video Database', :h00000000_00000059 ); INSERT INTO TEST_TABLE ( PROJ_NAME, PROJ_DESC ) VALUES ( 'DigiPizza', :h00000059_00000077 ); INSERT INTO TEST_TABLE ( PROJ_NAME, PROJ_DESC ) VALUES ( 'AutoMap', :h000000d0_00000055 );
     File Should Exist    ${export_path}
     ${content}=    Get File    ${export_path}
     Should Be Equal As Strings    ${content}    ${expected_content}    strip_spaces=${True}    collapse_spaces=${True}

@@ -41,7 +41,6 @@ Test Teardown
         Take Screenshot    ${file_name}    1080
         Take Dump    ${OUTPUT_DIR}${/}${file_name}
         Kill Rdbexpert
-        Sleep    0.5s
         Unlock Employee
         Clear History Files
         Restore Savedconnections File
@@ -50,7 +49,6 @@ Test Teardown
         Close All Dialogs
         Close All Tabs
         Close Connection
-        Sleep    0.5s
         Unlock Employee
     END
 

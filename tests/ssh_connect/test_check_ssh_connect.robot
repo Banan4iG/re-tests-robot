@@ -30,6 +30,7 @@ test_backup
 test_execute_query
     Lock Employee
     Click On Tree Node    0    New Connection (Copy)    2
+    Close All Tabs
     Select From Main Menu    Tools|Query Editor
     Select Main Window
     Clear Text Field    0
@@ -106,7 +107,7 @@ test_table_validator
 
 test_import_data
     Lock Employee
-    Execute Immediate    CREATE TABLE TEST_TABLE (COUNTRY VARCHAR(1024), CURRENCY VARCHAR(1024))
+    Execute Immediate    RECREATE TABLE TEST_TABLE (COUNTRY VARCHAR(1024), CURRENCY VARCHAR(1024))
     Click On Tree Node    0    New Connection (Copy)    2
     Select From Main Menu    Tools|Import Data
     Check Check Box    importFromConnectionCheck
@@ -118,7 +119,7 @@ test_import_data
 
 test_data_generator
     Lock Employee
-    Execute Immediate    CREATE TABLE TEST_TABLE (COUNTRY VARCHAR(1024), CURRENCY VARCHAR(1024))
+    Execute Immediate    RECREATE TABLE TEST_TABLE (COUNTRY VARCHAR(1024), CURRENCY VARCHAR(1024))
     Click On Tree Node    0    New Connection (Copy)    2
     Select From Main Menu    Tools|Data Generator
     Select From Combo Box    tablesCombo    TEST_TABLE

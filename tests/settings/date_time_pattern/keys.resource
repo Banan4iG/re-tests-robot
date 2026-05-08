@@ -29,7 +29,7 @@ Set Pattern
 Init Table
     [Arguments]    ${type}    ${value}
     Lock Employee
-    Execute Immediate    CREATE TABLE TEST_TABLE (TEST ${type})
+    Execute Immediate    RECREATE TABLE TEST_TABLE (TEST ${type})
     Execute Immediate    INSERT INTO TEST_TABLE VALUES ('${value}')
 
 Test

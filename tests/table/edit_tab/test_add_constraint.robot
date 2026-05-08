@@ -198,7 +198,7 @@ Init
     [Arguments]    ${ts}=${False}
     Lock Employee
     IF    ${ts}    Execute Immediate    CREATE TABLESPACE TEST_TS FILE 'file.ts'
-    Execute Immediate    CREATE TABLE TEST_TABLE (ID INT NOT NULL)
+    Execute Immediate    RECREATE TABLE TEST_TABLE (ID INT NOT NULL)
     Open Connection
     Click On Tree Node    0    New Connection|Tables (11)|TEST_TABLE    2
     Select Tab As Context    TEST_TABLE:TABLE:New Connection
