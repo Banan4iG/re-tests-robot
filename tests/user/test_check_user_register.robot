@@ -20,12 +20,12 @@ test_1
     ${res2}=    Check User    dEmO
     Should Be Equal As Strings
     ...    ${res1}
-    ...    CREATE USER DEMO ACTIVE USING PLUGIN SRP;
+    ...    CREATE USER DEMO ACTIVE USING PLUGIN Srp;
     ...    collapse_spaces=${True}
     ...    strip_spaces=${True}
     Should Be Equal As Strings
     ...    ${res2}
-    ...    CREATE USER "dEmO" ACTIVE USING PLUGIN SRP;
+    ...    CREATE USER "dEmO" ACTIVE USING PLUGIN Srp;
     ...    collapse_spaces=${True}
     ...    strip_spaces=${True}
 
