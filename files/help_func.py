@@ -175,10 +175,7 @@ def lock_employee():
 def unlock_employee():
     home_directory, version, srv_version = get_server_info()
     bin_dir = "bin/" if platform.system() == "Linux" or is_rdb26() else ""
-    delta_file = home_directory + "examples/empbuild/employee.fdb.delta"
-    if os.path.exists(delta_file):
-        time.sleep(2) 
-        os.remove(delta_file)
+    if os.path.exists(f"{home_directory}examples/empbuild/employee.fdb.delta"):
         subprocess.run([f"{home_directory}{bin_dir}nbackup{get_exe()}", "-F", f"{home_directory}examples/empbuild/employee.fdb"])
 
 def execute(query: str):
