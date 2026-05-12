@@ -35,10 +35,6 @@ test_check_types
     ELSE IF    ${{$ver == '3'}}
         Check Type    BOOLEAN
     END
-    Select Main Window
-    Close All Tabs
-    Close Connection
-    Sleep    5s
 
 test_check_domain
     Init
@@ -336,7 +332,7 @@ test_check_autoupdate_object_tree
 *** Keywords ***
 Init
     Lock Employee
-    Execute Immediate    RECREATE TABLE TEST_TABLE (ID INT)
+    Execute Immediate    CREATE TABLE TEST_TABLE (ID INT)
     Open Connection
     Click On Tree Node    0    New Connection|Tables (11)|TEST_TABLE    2
     Select Tab As Context    TEST_TABLE:TABLE:New Connection
