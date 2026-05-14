@@ -4,6 +4,7 @@ Resource            ../files/keywords.resource
 
 Suite Setup         Skip If Embedded
 Test Teardown       Teardown
+Test Timeout        120s
 
 
 *** Test Cases ***
@@ -70,6 +71,10 @@ Start RDBExpert
 Teardown
     Stop Server
     Kill Rdbexpert
+    ${home_dir}=    Normalize Path    ~
+    VAR    ${log_path}=    ${home_dir}${/}.rdbexpert${/}logs${/}updater.log
+    VAR    ${file_name}=    ${TEST_NAME}_updater_fake_java_dump.txt
+    Copy File    ${log_path}    ${OUTPUT_DIR}${/}${file_name}
     Clear History Files
     Restore Savedconnections File
     Restore User Properties
@@ -80,7 +85,7 @@ Test Api
     Push Button    startUpdateButton
     Sleep    10s
     Select Dialog    Update downloaded
-    ${dist}=    Get Environment Variable    DIST    C:/Program Files/RDBExpert
+    ${dist}=    Get Environment Variable    DIST    D:/projects/RDBExpert
     Copy File    ${dist}${/}Updater.jar    ${TEMPDIR}${/}RDBExpert${/}Updater.jar
     RETURN    ${path_to_exe}
 
