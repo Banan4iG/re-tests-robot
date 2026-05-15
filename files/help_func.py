@@ -178,8 +178,19 @@ def unlock_employee():
     delta_file = home_directory + "examples/empbuild/employee.fdb.delta"
     if os.path.exists(delta_file):
         time.sleep(2) 
+        print_file_blocker(delta_file)
         os.remove(delta_file)
         subprocess.run([f"{home_directory}{bin_dir}nbackup{get_exe()}", "-F", f"{home_directory}examples/empbuild/employee.fdb"])
+
+def print_file_blocker(path: str):
+    for proc in psutil.process_iter(['pid', 'name']):
+        try:
+            files = proc.open_files()
+            for f in files:
+                if f.path == path:
+                    print(proc.info)
+        except (psutil.NoSuchProcess, psutil.AccessDenied):
+            pass
 
 def execute(query: str):
     """
