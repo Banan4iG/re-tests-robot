@@ -448,7 +448,7 @@ def check_xlsx(xlsx_path: str):
     return result
 
 def add_rows(rows_count: int):
-    execute_immediate("RERECREATE TABLE TEST_TABLE (ID BIGINT)")
+    execute_immediate("RECREATE TABLE TEST_TABLE (ID BIGINT)")
     import firebird.driver as fdb
     if is_rdb26():
         import fdb
