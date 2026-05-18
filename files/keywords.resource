@@ -31,8 +31,12 @@ Start RDB Expert
     END
 
 Suite Teardown
-    System Exit    0
-    Kill Rdbexpert
+    TRY
+        System Exit    0
+        Kill Rdbexpert
+    EXCEPT
+        Log    App is not run
+    END
 
 Test Teardown
     IF    ${{$TEST_STATUS == 'FAIL'}}
