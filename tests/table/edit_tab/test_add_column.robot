@@ -332,7 +332,7 @@ test_check_autoupdate_object_tree
 *** Keywords ***
 Init
     Lock Employee
-    Execute Immediate    CREATE TABLE TEST_TABLE (ID INT)
+    Execute Immediate    RECREATE TABLE TEST_TABLE (ID INT)
     Open Connection
     Click On Tree Node    0    New Connection|Tables (11)|TEST_TABLE    2
     Select Tab As Context    TEST_TABLE:TABLE:New Connection
