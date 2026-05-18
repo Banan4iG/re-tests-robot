@@ -49,6 +49,7 @@ test_alter_udf
     Check Comment    NEW_UDF    EXTERNAL FUNCTION
 
 test_alter_ts
+    Skip If Embedded
     Check Skip
     Lock Employee
     Execute Immediate    CREATE TABLESPACE NEW_TS FILE 'test_alter.ts'

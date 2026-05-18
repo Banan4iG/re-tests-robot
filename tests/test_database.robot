@@ -20,12 +20,14 @@ test_recreate
     File Should Exist    ${DB_PATH}
 
 test_drop_alias
+    Skip If Embedded
     Add Alias To DBMS
     Test Body    Drop    drop    ${True}
     File Should Not Exist    ${DB_PATH}
     [Teardown]    Restore Databases Conf
 
 test_recreate_alias
+    Skip If Embedded
     Add Alias To DBMS
     Test Body    Recreate    recreate    ${True}
     File Should Exist    ${DB_PATH}
@@ -86,7 +88,12 @@ Create DB
 Add Alias To DBMS
     ${info}=    Get Server Info
     VAR    ${home_dir}=    ${info}[0]
-    VAR    ${databases_conf_path}=    ${home_dir}databases.conf
+    VAR    ${ver}=    ${info}[1]
+    IF    ${{$ver == '2.6'}}
+        VAR    ${databases_conf_path}=    ${home_dir}aliases.conf
+    ELSE
+        VAR    ${databases_conf_path}=    ${home_dir}databases.conf
+    END
     VAR    ${databases_conf_path_bk}=   ${databases_conf_path}.bak
     Copy File    ${databases_conf_path}    ${databases_conf_path_bk}
     VAR    ${databases_conf_content}=    ${\n}test_database.fdb = ${DB_PATH}

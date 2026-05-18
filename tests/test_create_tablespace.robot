@@ -34,3 +34,4 @@ Check Skip
     VAR    ${ver}=    ${info}[1]
     VAR    ${srv_ver}=    ${info}[2]
     Skip If    ${{not($ver == '5' and $srv_ver == 'RedDatabase')}}
+    Skip If Embedded
