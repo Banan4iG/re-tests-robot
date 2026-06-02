@@ -57,7 +57,7 @@ test_check_library
     Select Dialog    Select JDBC Drivers...
     ${path_to_lib}=    Get Path To Lib
     Clear Text Field    0
-    Type Into Text Field    0    ${path_to_lib}/reddatabase.driver.5.jar
+    Type Into Text Field    0    ${path_to_lib}/rdb5/reddatabase.driver5.jar
     Push Button    Select
     Select Dialog    Add New Driver
     Sleep    2s
@@ -80,7 +80,7 @@ test_check_library
     Push Button    browseButton
     Select Dialog    Select JDBC Drivers...
     Clear Text Field    0
-    Type Into Text Field    0    ${path_to_lib}/batik-dom-1.16.jar
+    Type Into Text Field    0    ${path_to_lib}/poi-5.5.1.jar
     Push Button    Select
 
     Select Dialog    Add New Driver
@@ -98,7 +98,7 @@ test_connect_with_new_driver
     Select Dialog    Select JDBC Drivers...
     ${path_to_lib}=    Get Path To Lib
     Clear Text Field    0
-    Type Into Text Field    0    ${path_to_lib}/reddatabase.driver.5.jar
+    Type Into Text Field    0    ${path_to_lib}/rdb5/reddatabase.driver.5.jar
     Push Button    Select
     Sleep    2s
     Select Dialog    Add New Driver

@@ -25,6 +25,6 @@ test_1
     Sort List    ${paths_list}
     Should Be Equal As Strings
     ...    ${paths_list}
-    ...    ['lib/fbclient-5.jar', 'lib/reddatabase.crypto.6.jar', 'lib/reddatabase.driver.6.jar', 'lib/reddatabase.native.6.jar']
+    ...    ['lib/fbclient-5.jar', 'lib/rdb6/reddatabase.crypto6.jar', 'lib/rdb6/reddatabase.driver6.jar', 'lib/rdb6/reddatabase.native6.jar']
     ${classes}=    Get Selected Item From Combo Box    classField
     Should Be Equal As Strings    ${classes}    org.firebirdsql.jdbc.FBDriver
