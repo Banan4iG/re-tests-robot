@@ -112,8 +112,9 @@ def get_path():
     DIST = os.environ.get('DIST', 'D:\\projects\\RDBExpert')
     COVERAGE = os.environ.get('COVERAGE')
     bin = get_exe()
+    separator = ":" if platform.system() == "Linux" else ";"
     if COVERAGE:
-        path_to_exe = f'java -javaagent:./lib/jacocoagent.jar=destfile=./results/jacoco.exec,output=file -p "{DIST}/rdbexpert.jar;{DIST}/lib" -m ru.redsoft.rdbexpert/org.redsoft.RDBExpert -exe_path={DIST}/bin/RDBExpert{bin}'
+        path_to_exe = f'java -javaagent:./lib/jacocoagent.jar=destfile=./results/jacoco.exec,output=file -p "{DIST}/rdbexpert.jar{separator}{DIST}/lib" -m ru.redsoft.rdbexpert/org.redsoft.RDBExpert -exe_path={DIST}/bin/RDBExpert{bin}'
     else:
         path_to_exe = f"{DIST}/bin/RDBExpert{bin}"
     return path_to_exe
