@@ -24,7 +24,7 @@ Start RDB Expert
     # Log    ${path_to_exe}    console=True
     TRY
         Start Application    rdb_expert    ${path_to_exe}    timeout=20    remote_port=60900
-        # Start Application    rdb_expert    java -javaagent:D:/re-tests-robot/lib/jacocoagent.jar=destfile=D:/re-tests-robot/results/jacoco.exec,output=file -jar D:/projects/RDBExpert/rdbexpert.jar -exe_path=D:/projects/RDBExpert/bin/RDBExpert.exe    timeout=20
+        # Start Application    rdb_expert    java -javaagent:D:/re-tests-robot/lib/jacocoagent.jar=destfile=D:/re-tests-robot/results/jacoco.exec,output=file -p "D:/projects/RDBExpert/rdbexpert.jar;D:/projects/RDBExpert/lib" -m ru.redsoft.rdbexpert/org.redsoft.RDBExpert -exe_path=D:/projects/RDBExpert/bin/RDBExpert.exe    timeout=20
     EXCEPT    RemoteSwingLibraryTimeoutError: Agent port not received before timeout
         Kill Rdbexpert
         Fail    RDB Expert failed to launch
@@ -61,7 +61,7 @@ Open Connection
 
 Close Connection
     Select Main Window
-    Set Jemmy Timeouts    200ms
+    # Set Jemmy Timeouts    200ms
     ${names}=    Get Tree Node Child Names    0    New Connection
     IF    ${names}
        Select From Tree Node Popup Menu    0    New Connection    Disconnect
