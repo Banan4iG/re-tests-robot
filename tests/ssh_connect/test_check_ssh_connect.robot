@@ -132,8 +132,8 @@ test_data_generator
 
 *** Keywords ***
 Setup
-    # ${system}=    platform.System
-    # Skip If    '${system}' == 'Linux'
+    ${system}=    platform.System
+    Skip If    '${system}' == 'Linux'
     Test Setup
     Select From Tree Node Popup Menu    0    New Connection    Duplicate connection
     Select From Tree Node Popup Menu    0    New Connection (Copy)    Connection properties
@@ -152,6 +152,8 @@ Setup
     Type Into Text Field    sshUserField    ${user}
     Clear Text Field    10
     Type Into Text Field    10    ${password}
+
+    Check Check Box    storeSshPasswordCheck
 
     Select From Combo Box    charsetsCombo    UTF8
     Push Button    saveButton
