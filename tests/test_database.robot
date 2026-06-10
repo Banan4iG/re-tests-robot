@@ -64,13 +64,16 @@ Create DB
     Type Into Text Field    portField    3050
     IF    ${alias}
         Type Into Text Field    pathField    test_database.fdb
+        VAR    ${register_name}=    test_database.fdb
     ELSE
         Type Into Text Field    pathField    ${DB_PATH}
+        VAR    ${register_name}=    ${DB_PATH}
     END
     Type Into Text Field    userField    SYSDBA
     Type Into Text Field    passwordField    masterkey
     Check Check Box    registerCheck
-    List Components In Context
+    ${value}=    Get Text Field Value    connectionName
+    Should Be Equal As Strings    ${value}    localhost/3050:${register_name}
     Type Into Text Field    connectionName    New Database
     ${connect_type}=    Get Environment Variable    CONNECT_TYPE    server
     IF    ${{$connect_type == 'embedded'}}    Check Check Box    embeddedCheck
