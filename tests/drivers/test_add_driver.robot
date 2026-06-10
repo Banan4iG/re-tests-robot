@@ -98,7 +98,7 @@ test_connect_with_new_driver
     Select Dialog    Select JDBC Drivers...
     ${path_to_lib}=    Get Path To Lib
     Clear Text Field    0
-    Type Into Text Field    0    ${path_to_lib}/rdb5/reddatabase.driver.5.jar
+    Type Into Text Field    0    ${path_to_lib}/rdb5/reddatabase.driver5.jar
     Push Button    Select
     Sleep    2s
     Select Dialog    Add New Driver

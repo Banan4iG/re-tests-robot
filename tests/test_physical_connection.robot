@@ -1,21 +1,12 @@
 *** Settings ***
 Library             RemoteSwingLibrary
-Resource            ../../files/keywords.resource
+Resource            ../files/keywords.resource
 Test Setup          Test Setup
 Test Teardown       Local Test Teardown
 
 
 *** Test Cases ***
 test_1
-    Select From Main Menu    System|Preferences
-    Select Dialog    Preferences
-    Click On Tree Node    0    Connection
-    ${row}=    Find Table Row    0    Use physical connections
-    Click On Table Cell    0    ${row}    2
-    Push Button    applyButton
-    Close Dialog    Message
-    Close Dialog    Preferences
-    Select Main Window
     Lock Employee
     Open Connection
     Close All Tabs
@@ -55,12 +46,3 @@ Local Test Teardown
     Select Tab As Context    regexp=^Untitled.*
     Push Button    stop-execution-command
     Select Main Window
-    Select From Main Menu    System|Preferences
-    Sleep    1s
-    Select Dialog    Preferences
-    Push Button    restoreButton
-    Push Button    OK
-    Select Dialog    Message
-    Push Button    OK
-    Select Main Window
-    Test Teardown
