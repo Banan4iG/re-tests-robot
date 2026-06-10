@@ -61,7 +61,7 @@ Open Connection
 
 Close Connection
     Select Main Window
-    # Set Jemmy Timeouts    200ms
+    Set Jemmy Timeouts    200ms
     ${names}=    Get Tree Node Child Names    0    New Connection
     IF    ${names}
        Select From Tree Node Popup Menu    0    New Connection    Disconnect
