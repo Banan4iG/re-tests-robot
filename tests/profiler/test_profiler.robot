@@ -136,11 +136,6 @@ test_compact_view
     Start Profiler    execute procedure SUB_TOT_BUDGET(600)
     Push Button    finishButton
     Sleep    1s
-    # Load
-    # ${row}=    Find Table Row    sessionsTable    1    ID
-    # Click On Table Cell    sessionsTable    ${row}    ID
-    # Push Button    OK
-    # Select Main Window
 
     @{values}=    Get Table Column Values    0    PROCESS NAME
     Should Be Equal As Strings
@@ -168,10 +163,6 @@ test_display_with_data
     Push Button    finishButton
     Sleep    1s
 
-    # ${row}=    Find Table Row    sessionsTable    1    ID
-    # Click On Table Cell    sessionsTable    ${row}    ID
-    # Push Button    OK
-    # Select Main Window
     Click On Proc
 
     ${row}=    Find Table Row    0    2: SELECT SUM(budget), AVG(budget), MIN(budget), MAX(budget)    PROCESS NAME
@@ -181,7 +172,7 @@ test_display_with_data
     @{values}=    Get Table Column Values    1    ACCESS PATH
     Should Be Equal As Strings
     ...    ${values}
-    ...    ['Select Expression (line 12, column 2)', 'Singularity Check', 'Aggregate', 'Filter', 'Table "DEPARTMENT" Access By ID\\n Bitmap\\n Index "RDB$FOREIGN6" Range Scan (full match)']
+    ...    ['Select Expression (line 6, column 2)', 'Singularity Check', 'Aggregate', 'Filter', 'Table "DEPARTMENT" Access By ID\\n Bitmap\\n Index "RDB$FOREIGN6" Range Scan (full match)']
     ...    strip_spaces=${True}
     ...    collapse_spaces=${True}
 
@@ -208,10 +199,6 @@ test_display_no_data
 test_round
     Start Profiler    EXECUTE BLOCK AS DECLARE I INTEGER; BEGIN I = 0; WHILE ( I <> 100000) DO BEGIN I = I + 1; END end
     Push Button    finishButton
-    # ${row}=    Find Table Row    sessionsTable    1    ID
-    # Click On Table Cell    sessionsTable    ${row}    ID
-    # Push Button    OK
-    # Select Main Window
     Sleep    2s
     ${row}=    Find Table Row
     ...    0
@@ -329,8 +316,8 @@ test_stop_after_lose_connect
 test_auto-reload_tree
     Start Profiler    select * from employee
     Push Button    finishButton
+    Sleep    1s
     Select Main Window
-    Push Button    reload-connection-tree-selection-command    # temp
     Expand All Tree Nodes    0
     Sleep    1s
     @{values}=    Get Tree Node Child Names    0    New Connection|Tables (17)
@@ -368,9 +355,20 @@ Start Profiler
     Lock Employee
     Open Connection
     Close All Tabs
-    Select From Main Menu    Tools|Profiler
-    Push Button    startButton
     Push Button    editor-command
+    Select From Main Menu    Tools|Profiler
+    Select Tab As Context    Profiler
+    Push Button    attachmentButton
+    Sleep    2s
+    Select Dialog    Select Attachment
+    @{values}=    Get Table Column Values    attachmentsTable    ID
+    VAR    ${id}=    ${{max($values)}}
+    ${row}=    Find Table Row    attachmentsTable    ${id}    ID
+    Click On Table Cell    attachmentsTable    ${row}    ID    2
+    Select Main Window
+    Select Tab As Context    Profiler
+    Push Button    startButton
+    Select Main Window
     Select Tab As Context    regexp=^Untitled.*
     Clear Text Field    0
     Type Into Text Field    0    ${script}

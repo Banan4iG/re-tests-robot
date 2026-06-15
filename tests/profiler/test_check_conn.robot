@@ -72,6 +72,7 @@ Check
     [Arguments]    ${ip}
     ${name}=    os.Getlogin
     ${host}=    platform.Node
+    Close All Tabs
     Select From Main Menu    Tools|Profiler
     Select From Combo Box    connectionCombo    New Connection
     Push Button    attachmentButton
