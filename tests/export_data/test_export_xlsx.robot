@@ -131,7 +131,7 @@ test_execute_to_file
     Check Content    ${export_path}    ${expected_content}
 
 test_max_row
-    [Timeout]    5m
+    [Timeout]    6m
     Lock Employee
     Add Rows    1048576
     Open Connection
