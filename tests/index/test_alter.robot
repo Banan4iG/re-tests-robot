@@ -113,6 +113,7 @@ Init
         Execute Immediate    CREATE TABLESPACE NEW_TS FILE '${TEMPDIR}${/}new_ts.ts'
     END
     Open Connection
+    Close All Tabs
     Click On Tree Node    0    New Connection|Indices (39)|${tree_name}    2
     Select Tab As Context    ${tree_name}:INDEX:New Connection
     ${name}=    Get Text Field Value    nameField

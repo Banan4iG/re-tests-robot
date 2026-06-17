@@ -19,14 +19,12 @@ test_execute
         Init    test_script3.sql
     END
     Sleep    7s
-    Push Button    editor-stop-on-error-command
 
 test_cancel
     Init    test_script26.sql
     Sleep    0.5s
     Push Button    stop-execution-command
     Sleep    5s
-    Push Button    editor-stop-on-error-command
 
 
 *** Keywords ***
@@ -51,5 +49,6 @@ Teardown
     # Select Dialog    Confirmation
     # Push Button    No
     # Select Main Window
+    Push Button    editor-stop-on-error-command
     Test Teardown
     Run Keyword And Ignore Error    Execute Immediate    DROP USER TEST_USER
