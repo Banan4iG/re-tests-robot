@@ -23,14 +23,14 @@ test_1
     Push Button    submitButton
     Select Dialog    Commiting changes
     Sleep    1s
-    ${row_create}=    Find Table Row    0    CREATE SEQUENCE    Name Operation
-    ${row_alter}=    Find Table Row    0    ALTER SEQUENCE    Name Operation
+    ${row_create}=    Find Table Row    0    CREATE SEQUENCE    Name operation
+    ${row_alter}=    Find Table Row    0    ALTER SEQUENCE    Name operation
 
-    Click On Table Cell    0    ${row_create}    Name Operation
+    Click On Table Cell    0    ${row_create}    Name operation
     ${res_create}=    Get Text Field Value    0
     Should Be Equal As Strings    ${res_create}    CREATE SEQUENCE TEST_SEQUENCE
 
-    Click On Table Cell    0    ${row_alter}    Name Operation
+    Click On Table Cell    0    ${row_alter}    Name operation
     ${res_alter}=    Get Text Field Value    0
     Should Be Equal As Strings    ${res_alter}    ALTER SEQUENCE TEST_SEQUENCE RESTART WITH 1
 
